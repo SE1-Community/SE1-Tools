@@ -234,7 +234,7 @@ copy Release\$(TargetName).map $(SolutionDir)..\Bin\ &gt;nul </Command>
     <CustomBuild Include="Parser.y">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pushd $(SolutionDir)
-bison -o$(ProjectName)/Parser.c $(ProjectName)/Parser.y -d
+bison -oTools/$(ProjectName)/Parser.c Tools/$(ProjectName)/Parser.y -d
 popd
 copy %(RootDir)%(Directory)\Parser.c %(RootDir)%(Directory)\Parser.cpp  
 del %(RootDir)%(Directory)\Parser.c /q</Command>

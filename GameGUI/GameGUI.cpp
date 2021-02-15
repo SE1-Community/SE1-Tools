@@ -35,9 +35,9 @@ void Initialize(const CTFileName &fnGameSettings)
 {
   try {
     #ifndef NDEBUG 
-      #define GAMEDLL "Bin\\Debug\\GameMPD.dll"
+      #define GAMEDLL "Bin\\Debug\\GameD.dll"
     #else
-      #define GAMEDLL "Bin\\GameMP.dll"
+      #define GAMEDLL "Bin\\Game.dll"
     #endif
     CTFileName fnmExpanded;
     ExpandFilePath(EFP_READ, CTString(GAMEDLL), fnmExpanded);

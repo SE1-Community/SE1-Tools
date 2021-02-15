@@ -38,7 +38,7 @@ UINT _uiMessengerMsg=-1;
 UINT _uiMessengerForcePopup=-1;
 
 extern FLOAT _fFlyModeSpeedMultiplier = 1.0f;
-FLOAT _fLastMipBrushingOptionUsed = -10000.0f;
+TICK _llLastMipBrushingOptionUsed = -10000;
 extern INDEX wed_iMaxFPSActive = 500;
 extern FLOAT wed_fFrontClipDistance = 0.5f;
 extern struct GameGUI_interface *_pGameGUI = NULL;
@@ -558,12 +558,12 @@ BOOL CWorldEditorApp::SubInitInstance()
   SE_InitEngine("SeriousEditor");
   SE_LoadDefaultFonts();
 
-  // [Cecil] 2021-02-15: Replaced used-defined extension with the mod name
+  // [Cecil] 2021-02-14: Use mod name instead of the user-defined DLL extension
   // settings will be saved into registry instead of ini file
-  if (_strModName=="") {
-    SetRegistryKey( CString("CroTeam"));
+  if (_strModName == "") {
+    SetRegistryKey(CString("CroTeam"));
   } else {
-    SetRegistryKey( CString("CroTeam\\"+_strModName));
+    SetRegistryKey(CString("CroTeam\\"+_strModName));
   }
 
   CPrintF("%s", cmd_strOutput);
