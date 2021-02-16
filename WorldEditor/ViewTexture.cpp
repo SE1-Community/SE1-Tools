@@ -63,7 +63,7 @@ void CViewTexture::OnPaint()
   }
 
   CWnd *pwndRect = GetParent()->GetDlgItem( IDC_PREVIEW_FRAME);
-  if( pwndRect != NULL)
+  if (pwndRect != NULL)
   {
     CRect rectBorder;
     pwndRect->GetWindowRect( rectBorder);
@@ -71,14 +71,14 @@ void CViewTexture::OnPaint()
     MoveWindow( rectBorder);
   }
 
-  if( (m_pViewPort == NULL) && (m_pDrawPort == NULL) )
+  if ((m_pViewPort == NULL) && (m_pDrawPort == NULL) )
   {
     // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()))
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()))
   {
     PIX pixWidth = m_pDrawPort->GetWidth();
     PIX pixHeight = m_pDrawPort->GetHeight();
@@ -101,7 +101,7 @@ void CViewTexture::OnPaint()
       (void) strError;
     }
 
-    if( toTexture.GetData() != NULL)
+    if (toTexture.GetData() != NULL)
     {
       m_pDrawPort->PutTexture( &toTexture, rectPict);
     }
@@ -126,7 +126,7 @@ void CViewTexture::OnPaint()
 
 void CViewTexture::OnLButtonDown(UINT nFlags, CPoint point)
 {
-  if( !GetParent()->GetDlgItem( IDC_PREVIEW_FRAME)->IsWindowEnabled())
+  if (!GetParent()->GetDlgItem( IDC_PREVIEW_FRAME)->IsWindowEnabled())
   {
     return;
   }
@@ -145,7 +145,7 @@ void CViewTexture::OnLButtonDblClk(UINT nFlags, CPoint point)
 void CViewTexture::OnContextMenu(CWnd* pWnd, CPoint point)
 {
   CMenu menu;
-  if( menu.LoadMenu(IDR_THUMBNAIL_TEXTURE_POPUP))
+  if (menu.LoadMenu(IDR_THUMBNAIL_TEXTURE_POPUP))
   {
     CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu( TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -165,11 +165,11 @@ void CViewTexture::OnRecreateTexture()
     (void) strError;
   }
 
-  if( toTexture.GetData() != NULL)
+  if (toTexture.GetData() != NULL)
   {
     _EngineGUI.CreateTexture( CTString(m_strTexture));
     CWorldEditorDoc *pDoc = theApp.GetDocument();
-    if( pDoc != NULL)
+    if (pDoc != NULL)
     {
       pDoc->UpdateAllViews( NULL);
     }
@@ -180,7 +180,7 @@ void CViewTexture::OnDestroy()
 {
 	CWnd::OnDestroy();
 
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;

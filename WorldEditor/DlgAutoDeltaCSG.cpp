@@ -45,7 +45,7 @@ void CDlgAutoDeltaCSG::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     // get last used number of CSG clones
     m_ctNumberOfClones = theApp.GetProfileInt(L"World editor", L"Number of CSG clones", 2);

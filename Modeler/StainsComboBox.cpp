@@ -52,7 +52,7 @@ void CStainsComboBox::Refresh()
 
   ResetContent();
   
-  if( !pApp->m_WorkingPatches.IsEmpty())
+  if (!pApp->m_WorkingPatches.IsEmpty())
   {
     FOREACHINLIST( CWorkingPatch, wp_ListNode, pApp->m_WorkingPatches, it)
     {
@@ -70,7 +70,7 @@ void CStainsComboBox::Refresh()
 void CStainsComboBox::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);
@@ -79,7 +79,7 @@ void CStainsComboBox::OnDropdown()
   PIX pixMaxHeight = pixScreenHeight - rectCombo.top;
 
   CWnd *pwndParent = GetParent();
-  if( pwndParent == NULL) return;
+  if (pwndParent == NULL) return;
   pwndParent->ScreenToClient( &rectCombo);
   PIX pixNewHeight = GetItemHeight(0)*(ctItems+2);
   rectCombo.bottom = rectCombo.top + ClampUp( pixNewHeight, pixMaxHeight);

@@ -55,7 +55,7 @@ CChildFrame::~CChildFrame()
 
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	//if( !CMDIChildWnd::PreCreateWindow(cs) )
+	//if (!CMDIChildWnd::PreCreateWindow(cs) )
 	//	return FALSE;
 
   cs.style |= WS_VISIBLE | WS_MAXIMIZE;

@@ -72,11 +72,11 @@ void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView* pModelerView)
   m_strTextureSize = value;
 
   /* Flat (YES/NO) */
-  if( miModelInfo.mi_Flags & MF_FACE_FORWARD) m_strFlat = "Yes";
+  if (miModelInfo.mi_Flags & MF_FACE_FORWARD) m_strFlat = "Yes";
   else                                        m_strFlat = "No";
 
   /* High quality (YES/NO) */
-  if( miModelInfo.mi_Flags & MF_COMPRESSED_16BIT) m_strHighQuality = "Yes";
+  if (miModelInfo.mi_Flags & MF_COMPRESSED_16BIT) m_strHighQuality = "Yes";
   else                                            m_strHighQuality = "No";
 
   /* Set max shadow */
@@ -98,10 +98,10 @@ void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView* pModelerView)
   m_strSpecular = pModelerView->m_ModelObject.mo_toSpecular.GetName();
   m_strBump = pModelerView->m_ModelObject.mo_toBump.GetName();
 
-  if( m_strDifuse == "") m_strDifuse = "<none>";
-  if( m_strReflections == "") m_strReflections = "<none>";
-  if( m_strSpecular == "") m_strSpecular = "<none>";
-  if( m_strBump == "") m_strBump = "<none>";
+  if (m_strDifuse == "") m_strDifuse = "<none>";
+  if (m_strReflections == "") m_strReflections = "<none>";
+  if (m_strSpecular == "") m_strSpecular = "<none>";
+  if (m_strBump == "") m_strBump = "<none>";
 }
 
 void CDlgInfoPgGlobal::SetViewFromGlobalPage(CModelerView* pModelerView)
@@ -117,10 +117,10 @@ void CDlgInfoPgGlobal::SetViewFromGlobalPage(CModelerView* pModelerView)
 void CDlgInfoPgGlobal::DoDataExchange(CDataExchange* pDX)
 {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
 
-  //if(!::IsWindow( m_colorSpecular.m_hWnd)) return;
-  if( !pDX->m_bSaveAndValidate)  // if zero, model sets property sheet's data
+  //if (!::IsWindow( m_colorSpecular.m_hWnd)) return;
+  if (!pDX->m_bSaveAndValidate)  // if zero, model sets property sheet's data
   {
     SetGlobalPageFromView( pModelerView);
     // mark that the values have been updated to reflect the state of the view
@@ -144,7 +144,7 @@ void CDlgInfoPgGlobal::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_BUMP, m_strBump);
 	//}}AFX_DATA_MAP
 
-  if( pDX->m_bSaveAndValidate) {
+  if (pDX->m_bSaveAndValidate) {
     SetViewFromGlobalPage( pModelerView);
   }
 }

@@ -39,7 +39,7 @@ CCheckBox::~CCheckBox()
 }
 void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags)
 {
-  if(ulFlags&((1UL<<iFlagIndex))) {
+  if (ulFlags&((1UL<<iFlagIndex))) {
     SetCheck(1);
   } else {
     SetCheck(0);
@@ -61,7 +61,7 @@ void CCheckBox::OnClicked()
 {
   BOOL bCheched = FALSE;
   
-  switch(GetCheck()) {
+  switch (GetCheck()) {
     case 0:
       bCheched = FALSE;
     break;

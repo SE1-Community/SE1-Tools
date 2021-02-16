@@ -162,14 +162,14 @@ CWorldEditorDoc::CWorldEditorDoc()
   m_fnLastDroppedTemplate = CTString("");
 
   // initialize grid placement 
-  m_plGrid.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  m_plGrid.pl_OrientationAngle = ANGLE3D(0,0,0);
+  m_plGrid.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  m_plGrid.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   // initialize delta placement
-  m_plDeltaPlacement.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  m_plDeltaPlacement.pl_OrientationAngle = ANGLE3D(0,0,0);
+  m_plDeltaPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  m_plDeltaPlacement.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   // initialize last placement
-  m_plLastPlacement.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  m_plLastPlacement.pl_OrientationAngle = ANGLE3D(0,0,0);
+  m_plLastPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  m_plLastPlacement.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
 
   // initialize create box vertices
   char strIni[ 128];
@@ -182,7 +182,7 @@ CWorldEditorDoc::CWorldEditorDoc()
 
   // set default editing mode - polygon mode
   INDEX iMode=AfxGetApp()->GetProfileInt( L"World editor", L"Last editing mode", POLYGON_MODE);
-  if(iMode==POLYGON_MODE || iMode==VERTEX_MODE  || iMode==SECTOR_MODE || iMode==ENTITY_MODE || iMode==TERRAIN_MODE)
+  if (iMode==POLYGON_MODE || iMode==VERTEX_MODE  || iMode==SECTOR_MODE || iMode==ENTITY_MODE || iMode==TERRAIN_MODE)
   {
     SetEditingMode( iMode);
   }
@@ -196,7 +196,7 @@ CWorldEditorDoc::~CWorldEditorDoc()
 {
   DeleteTerrainUndo(this);
 
-  if(m_iMode==POLYGON_MODE || m_iMode==VERTEX_MODE  || m_iMode==SECTOR_MODE || m_iMode==ENTITY_MODE || m_iMode==TERRAIN_MODE)
+  if (m_iMode==POLYGON_MODE || m_iMode==VERTEX_MODE  || m_iMode==SECTOR_MODE || m_iMode==ENTITY_MODE || m_iMode==TERRAIN_MODE)
   {
     theApp.WriteProfileInt(L"World editor", L"Last editing mode", m_iMode);
   }
@@ -205,7 +205,7 @@ CWorldEditorDoc::~CWorldEditorDoc()
     theApp.WriteProfileInt(L"World editor", L"Last editing mode", POLYGON_MODE);
   }
 
-  if( m_pwoSecondLayer != NULL)
+  if (m_pwoSecondLayer != NULL)
     delete m_pwoSecondLayer;
 
   // delete stored undo members
@@ -223,11 +223,11 @@ CWorldEditorDoc::~CWorldEditorDoc()
 
 void CWorldEditorDoc::ClearSelections(ESelectionType stExcept /*=ST_NONE*/)
 {
-  if( stExcept != ST_VERTEX)  { m_selVertexSelection.Clear(); m_chSelections.MarkChanged();}
-  if( stExcept != ST_ENTITY)  { m_selEntitySelection.Clear(); m_chSelections.MarkChanged();}
-  if( stExcept != ST_VOLUME)  { m_cenEntitiesSelectedByVolume.Clear(); m_chSelections.MarkChanged();}
-  if( stExcept != ST_SECTOR)  { m_selSectorSelection.Clear(); m_chSelections.MarkChanged();}
-  if( stExcept != ST_POLYGON) { m_selPolygonSelection.Clear(); m_chSelections.MarkChanged();}
+  if (stExcept != ST_VERTEX)  { m_selVertexSelection.Clear(); m_chSelections.MarkChanged();}
+  if (stExcept != ST_ENTITY)  { m_selEntitySelection.Clear(); m_chSelections.MarkChanged();}
+  if (stExcept != ST_VOLUME)  { m_cenEntitiesSelectedByVolume.Clear(); m_chSelections.MarkChanged();}
+  if (stExcept != ST_SECTOR)  { m_selSectorSelection.Clear(); m_chSelections.MarkChanged();}
+  if (stExcept != ST_POLYGON) { m_selPolygonSelection.Clear(); m_chSelections.MarkChanged();}
 }
 
 /*
@@ -245,7 +245,7 @@ void CWorldEditorDoc::SetStatusLineModeInfoMessage( void)
 
   char strModeName[ 32];
   // write mode change on status line
-  switch( m_iMode)
+  switch (m_iMode)
   {
   case POLYGON_MODE:
     {
@@ -261,7 +261,7 @@ void CWorldEditorDoc::SetStatusLineModeInfoMessage( void)
     };
   case ENTITY_MODE:
     { 
-      if( m_bBrowseEntitiesMode)
+      if (m_bBrowseEntitiesMode)
       {
         sprintf( strModeName, "%d in volume", m_cenEntitiesSelectedByVolume.Count());
       }
@@ -286,9 +286,9 @@ void CWorldEditorDoc::SetStatusLineModeInfoMessage( void)
     };
   case TERRAIN_MODE:
     {
-      if(bCtrl&&bAlt)
+      if (bCtrl&&bAlt)
       {
-        if(theApp.m_iTerrainEditMode==TEM_HEIGHTMAP)
+        if (theApp.m_iTerrainEditMode==TEM_HEIGHTMAP)
         {
           sprintf( strModeName, "%s", "Pick altitude");
         }
@@ -297,11 +297,11 @@ void CWorldEditorDoc::SetStatusLineModeInfoMessage( void)
           sprintf( strModeName, "%s", "Pick layer");
         }
       }
-      else if(theApp.m_iTerrainEditMode==TEM_HEIGHTMAP)
+      else if (theApp.m_iTerrainEditMode==TEM_HEIGHTMAP)
       {
         INDEX iIcon;
         CTString strText;
-        if(theApp.m_iTerrainBrushMode==TBM_FILTER)
+        if (theApp.m_iTerrainBrushMode==TBM_FILTER)
         {
           sprintf( strModeName, "%s", GetFilterName(theApp.m_iFilter));
         }
@@ -330,7 +330,7 @@ void CWorldEditorDoc::SetStatusLineModeInfoMessage( void)
 void CWorldEditorDoc::SetEditingMode( INDEX iNewMode)
 {
 #if !ALLOW_TERRAINS
-  if(iNewMode==TERRAIN_MODE)
+  if (iNewMode==TERRAIN_MODE)
   {
     return;
   }
@@ -340,7 +340,7 @@ void CWorldEditorDoc::SetEditingMode( INDEX iNewMode)
   theApp.m_bCutModeOn = FALSE;
 
   // cancel browse entities mode
-  if( m_bBrowseEntitiesMode)
+  if (m_bBrowseEntitiesMode)
   {
     OnBrowseEntitiesMode();
   }
@@ -361,8 +361,8 @@ BOOL CWorldEditorDoc::OnNewDocument()
 
   // create the World entity
   CPlacement3D plWorld;
-  plWorld.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  plWorld.pl_OrientationAngle = ANGLE3D(0,0,0);
+  plWorld.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  plWorld.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
 
   CEntity *penWorldBase;
   try
@@ -419,7 +419,7 @@ void CWorldEditorDoc::SetupBackdropTextureObject( CTFileName fnPicture, CTexture
   {
     iiImageInfo.LoadAnyGfxFormat_t( fnPicture);
     // both dimension must be potentions of 2
-    if( (iiImageInfo.ii_Width  == 1<<((int)Log2( (FLOAT)iiImageInfo.ii_Width))) &&
+    if ((iiImageInfo.ii_Width  == 1<<((int)Log2( (FLOAT)iiImageInfo.ii_Width))) &&
         (iiImageInfo.ii_Height == 1<<((int)Log2( (FLOAT)iiImageInfo.ii_Height))) )
     {
       CTFileName fnTexture = fnPicture.FileDir()+fnPicture.FileName()+".tex";
@@ -441,13 +441,13 @@ BOOL CWorldEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
   CTFileName fnOpenFileName;
   // open the world
   fnOpenFileName = CTString(CStringA(lpszPathName));
-  if( fnOpenFileName.FileExt()!=".wld") return FALSE;
+  if (fnOpenFileName.FileExt()!=".wld") return FALSE;
   try
   {
     fnOpenFileName.RemoveApplicationPath_t();
 
     // if the file is read only
-    if(IsFileReadOnly(fnOpenFileName))
+    if (IsFileReadOnly(fnOpenFileName))
     {
       // warn user about it
       WarningMessage("'%s' is read only. You have to check it out to be able to save it.",
@@ -463,15 +463,15 @@ BOOL CWorldEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
     theApp.m_strCSGAndShadowStatistics.SaveVar(CTString("Temp\\Profile_Open.txt"));
 
     // try to load textures for backdrops
-    if( m_woWorld.wo_strBackdropUp != "")
+    if (m_woWorld.wo_strBackdropUp != "")
     {
       SetupBackdropTextureObject( m_woWorld.wo_strBackdropUp, m_toBackdropUp);
     }
-    if( m_woWorld.wo_strBackdropFt != "")
+    if (m_woWorld.wo_strBackdropFt != "")
     {
       SetupBackdropTextureObject( m_woWorld.wo_strBackdropFt, m_toBackdropFt);
     }
-    if( m_woWorld.wo_strBackdropRt != "")
+    if (m_woWorld.wo_strBackdropRt != "")
     {
       SetupBackdropTextureObject( m_woWorld.wo_strBackdropRt, m_toBackdropRt);
     }
@@ -490,7 +490,7 @@ BOOL CWorldEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
   }
 
   // try to load object for backdrops
-  if( m_woWorld.wo_strBackdropObject != "")
+  if (m_woWorld.wo_strBackdropObject != "")
   {
     // try to
     try
@@ -508,7 +508,7 @@ BOOL CWorldEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
     }
   }
 
-  if( theApp.m_Preferences.ap_bShowAllOnOpen)
+  if (theApp.m_Preferences.ap_bShowAllOnOpen)
   {
     OnShowAllEntities();
     OnShowAllSectors();
@@ -533,7 +533,7 @@ void CWorldEditorDoc::SetModifiedFlag( BOOL bModified /*= TRUE*/ )
     if (IsFileReadOnly(m_woWorld.wo_fnmFileName) && !m_bAskedToCheckOut)
     {
       // ask for check out
-      if( ::MessageBoxA( pMainFrame->m_hWnd, "Do you want to open the world for edit?",
+      if (::MessageBoxA( pMainFrame->m_hWnd, "Do you want to open the world for edit?",
                       "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1 | 
                       MB_TASKMODAL | MB_TOPMOST) == IDYES)
       {
@@ -558,7 +558,7 @@ BOOL CWorldEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
   {
     fnSaveFileName.RemoveApplicationPath_t();
     // if the file is read only
-    if(IsFileReadOnly(fnSaveFileName))
+    if (IsFileReadOnly(fnSaveFileName))
     {
       // don't allow saving
       WarningMessage( "World file is read-only. You can't save it.");
@@ -610,12 +610,12 @@ void CWorldEditorDoc::ApplyCurrentPrimitiveSettings(void)
 void CWorldEditorDoc::StartPrimitiveCSG( CPlacement3D plPrimitive, BOOL bResetAngles/*=TRUE*/)
 {
   ApplyAutoColorize();
-  if( theApp.m_ptdActiveTexture == NULL)
+  if (theApp.m_ptdActiveTexture == NULL)
   {
     AfxMessageBox( L"You have to select active texture first (double click on texture in browser).");
     return;
   }
-  if( !((theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS) ||
+  if (!((theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS) ||
         (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TORUS) ||
         (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_STAIRCASES) ||
         (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_SPHERE) ||
@@ -638,7 +638,7 @@ void CWorldEditorDoc::StartPrimitiveCSG( CPlacement3D plPrimitive, BOOL bResetAn
   // position the second layer
   m_plSecondLayer = plPrimitive;
   // if angle reset requested
-  if( bResetAngles)
+  if (bResetAngles)
   {
     // reset angles so they are alligned to current grid
     m_plSecondLayer.pl_OrientationAngle = m_plGrid.pl_OrientationAngle;
@@ -646,8 +646,8 @@ void CWorldEditorDoc::StartPrimitiveCSG( CPlacement3D plPrimitive, BOOL bResetAn
 
   // create the World entity
   CPlacement3D plPrimitiveEntity;
-  plPrimitiveEntity.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  plPrimitiveEntity.pl_OrientationAngle = ANGLE3D(0,0,0);
+  plPrimitiveEntity.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  plPrimitiveEntity.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   try
   {
     m_penPrimitive = m_pwoSecondLayer->CreateEntity_t( plPrimitiveEntity,
@@ -672,7 +672,7 @@ void CWorldEditorDoc::StartPrimitiveCSG( CPlacement3D plPrimitive, BOOL bResetAn
   //m_bPrimitiveCreatedFirstTime = TRUE;
   CreatePrimitive();
   // if preferences say so, show info
-  if( theApp.m_Preferences.ap_AutomaticInfo)
+  if (theApp.m_Preferences.ap_AutomaticInfo)
   {
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
     pMainFrame->ShowInfoWindow();
@@ -703,7 +703,7 @@ void CWorldEditorDoc::StartTemplateCSG( CPlacement3D plTemplate,
   m_plSecondLayer = plTemplate;
 
   // if angle reset was requested
-  if( bResetAngles)
+  if (bResetAngles)
   {
     // reset angles so they are alligned to current grid
     m_plSecondLayer.pl_OrientationAngle = m_plGrid.pl_OrientationAngle;
@@ -731,7 +731,7 @@ void CWorldEditorDoc::StartTemplateCSG( CPlacement3D plTemplate,
   m_chSelections.MarkChanged();
 
   // if preferences say so, show info
-  if( theApp.m_Preferences.ap_AutomaticInfo)
+  if (theApp.m_Preferences.ap_AutomaticInfo)
   {
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
     pMainFrame->ShowInfoWindow();
@@ -745,11 +745,11 @@ void CWorldEditorDoc::StartTemplateCSG( CPlacement3D plTemplate,
   {
     CEntity::RenderType rt = iten->GetRenderType();
     // if the entity is brush and it is not empty
-    if( (rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH) && ( !iten->IsEmptyBrush()) &&
+    if ((rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH) && ( !iten->IsEmptyBrush()) &&
         (CTString(iten->GetClass()->ec_pdecDLLClass->dec_strName) == "WorldBase") )
     {
       // if preferences say so, show info
-      if( theApp.m_Preferences.ap_AutomaticInfo)
+      if (theApp.m_Preferences.ap_AutomaticInfo)
       {
         CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
         pMainFrame->ShowInfoWindow();
@@ -767,7 +767,7 @@ void CWorldEditorDoc::StartTemplateCSG( CPlacement3D plTemplate,
 // apply current CSG operation
 void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
 {
-  if((CSGType==CSG_ADD ||
+  if ((CSGType==CSG_ADD ||
       CSGType==CSG_ADD_REVERSE ||
       CSGType==CSG_REMOVE ||
       CSGType==CSG_REMOVE_REVERSE ||
@@ -783,7 +783,7 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
   // set wait cursor
   CWaitCursor StartWaitCursor;
 
-  if( theApp.m_bCSGReportEnabled)
+  if (theApp.m_bCSGReportEnabled)
   {
     _pfWorldEditingProfile.Reset();
   }
@@ -817,10 +817,10 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
   // remember current values for primitive as last used ones
   theApp.m_vfpLast = theApp.m_vfpCurrent;
 
-  if( m_bPrimitiveMode)
+  if (m_bPrimitiveMode)
   {
     // if there are too many primitives in history buffer
-    if( theApp.m_lhPrimitiveHistory.Count() >= CT_PRIMITIVES_IN_HISTORY_BUFFER)
+    if (theApp.m_lhPrimitiveHistory.Count() >= CT_PRIMITIVES_IN_HISTORY_BUFFER)
     {
       // remove last used one
       CPrimitiveInHistoryBuffer *ppihbLast = 
@@ -855,7 +855,7 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
 
     // remember used values for primitive to be used as default values for next primitive
     // of same type
-    switch( theApp.m_vfpCurrent.vfp_ptPrimitiveType)
+    switch (theApp.m_vfpCurrent.vfp_ptPrimitiveType)
     {
     case PT_CONUS:{ theApp.m_vfpConus = theApp.m_vfpCurrent; break;}
     case PT_TORUS:{ theApp.m_vfpTorus = theApp.m_vfpCurrent; break;}
@@ -877,15 +877,15 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
     CSGType==CSG_JOIN_ALL_POLYGONS ||
     CSGType==CSG_JOIN_ALL_POLYGONS_KEEP_TEXTURES);
 
-  if( !bJoinOperation)
+  if (!bJoinOperation)
   {
     // for real CSG operations search for invalving entities
     penThis = pMainFrame->m_CSGDesitnationCombo.GetSelectedBrushEntity();
-    if( penThis != NULL)
+    if (penThis != NULL)
     {
       bThisFound = TRUE;
     }
-    if( !bThisFound) 
+    if (!bThisFound) 
     {
       WarningMessage( "Destination for CSG can't be optained, canceling CSG.");
       StopCSG();
@@ -901,14 +901,14 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
       }
     }}
     // if other entity can't be obtained, switch to join layers mode
-    if( !bOtherFound)
+    if (!bOtherFound)
     {
       CSGType = CSG_JOIN_LAYERS;
     }
   }
 
   // act acording requested CSG operation
-  switch( CSGType)
+  switch (CSGType)
   {
     case CSG_ADD:
     {
@@ -1004,7 +1004,7 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
       // remove empty brushes from it
       {FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, iten)
       {
-        if( iten->IsEmptyBrush() && (iten->GetFlags()&ENF_ZONING))
+        if (iten->IsEmptyBrush() && (iten->GetFlags()&ENF_ZONING))
         {
           cenToCopy.Remove(iten);
         }
@@ -1029,7 +1029,7 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
   m_chDocument.MarkChanged();
   StopCSG();
 
-  if( theApp.m_bCSGReportEnabled)
+  if (theApp.m_bCSGReportEnabled)
   {
     // create CSG report
     _pfWorldEditingProfile.Report( theApp.m_strCSGAndShadowStatistics);
@@ -1041,7 +1041,7 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType)
 // clean up after doing a CSG
 void CWorldEditorDoc::StopCSG(void)
 {
-  if( m_pwoSecondLayer == NULL) return;
+  if (m_pwoSecondLayer == NULL) return;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   // destroy second layer world
   delete m_pwoSecondLayer;
@@ -1049,7 +1049,7 @@ void CWorldEditorDoc::StopCSG(void)
   m_bPrimitiveMode = FALSE;
 
   // if preferences say so, hide info
-  if( theApp.m_Preferences.ap_AutomaticInfo)
+  if (theApp.m_Preferences.ap_AutomaticInfo)
   {
     pMainFrame->HideInfoWindow();
   }
@@ -1057,7 +1057,7 @@ void CWorldEditorDoc::StopCSG(void)
   SetEditingMode( m_iPreCSGMode);
 
   // if info frame exist
-  if( pMainFrame->m_pInfoFrame != NULL)
+  if (pMainFrame->m_pInfoFrame != NULL)
   {
     // force immidiate page refilling
     pMainFrame->m_pInfoFrame->m_pInfoSheet->OnIdle( 0);
@@ -1076,7 +1076,7 @@ void CWorldEditorDoc::CancelCSG(void)
 void CWorldEditorDoc::OnIdle(void)
 {
   CValuesForPrimitive &vfp=theApp.m_vfpCurrent;
-  if( m_pwoSecondLayer!=NULL && m_bPrimitiveMode &&
+  if (m_pwoSecondLayer!=NULL && m_bPrimitiveMode &&
       vfp.vfp_ptPrimitiveType==PT_TERRAIN &&
       vfp.vfp_fnDisplacement!="" &&
       theApp.m_Preferences.ap_bAutoUpdateDisplaceMap)
@@ -1084,7 +1084,7 @@ void CWorldEditorDoc::OnIdle(void)
     try
     {
       SLONG slFileTime=GetFileTimeStamp_t(vfp.vfp_fnDisplacement);
-      if(slFileTime>m_slDisplaceTexTime)
+      if (slFileTime>m_slDisplaceTexTime)
       {
         CreatePrimitive();
         UpdateAllViews( NULL);
@@ -1101,11 +1101,11 @@ void CWorldEditorDoc::OnIdle(void)
   FOREVER
   {
     pWedView = (CWorldEditorView *) GetNextView(pos);
-    if( pWedView == NULL) break;
+    if (pWedView == NULL) break;
     pWedView->OnIdle();
   }
 
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     UpdateAllViews( NULL);
   }
@@ -1143,8 +1143,8 @@ void CWorldEditorDoc::SnapAngle( ANGLE &angDest, ANGLE angStep /* SNAP_ANGLE_GRI
 void CWorldEditorDoc::SnapToGrid( CPlacement3D &plPlacement, FLOAT fSnapValue)
 {
   FLOAT fAngleSnap = SNAP_ANGLE_GRID;
-  if( fSnapValue < SNAP_FLOAT_CM) fSnapValue = SNAP_FLOAT_CM;
-  if( !m_bAutoSnap)
+  if (fSnapValue < SNAP_FLOAT_CM) fSnapValue = SNAP_FLOAT_CM;
+  if (!m_bAutoSnap)
   {
     fSnapValue = SNAP_FLOAT_CM;
     fAngleSnap = ANGLE_SNAP/32.0f;
@@ -1195,7 +1195,7 @@ void DisplaceVertex( DOUBLE3D &vVtx, CImageInfo *pII,
                      DOUBLE fMinX, DOUBLE fMaxX, DOUBLE fMinZ, DOUBLE fMaxZ, 
                      INDEX iSlicesPerW, INDEX iSlicesPerL, FLOAT fAmplitude)
 {
-  if( pII == NULL) return;
+  if (pII == NULL) return;
 
   FLOAT fPix = (fMaxX-fMinX)/(pII->ii_Width-1);
   FLOAT fDelta = (vVtx(1)-fMinX);
@@ -1204,8 +1204,8 @@ void DisplaceVertex( DOUBLE3D &vVtx, CImageInfo *pII,
 
   PIX pixX = (PIX)((pII->ii_Width-1) /(fMaxX-fMinX) * (vVtx(1) + fPix/2.0f -fMinX) );
   PIX pixY = (PIX)((pII->ii_Height-1)/(fMaxZ-fMinZ) * (vVtx(3) + fPix/2.0f -fMinZ) );
-  if( pixX >= pII->ii_Width)  pixX = pII->ii_Width -1;
-  if( pixY >= pII->ii_Height) pixY = pII->ii_Height-1;
+  if (pixX >= pII->ii_Width)  pixX = pII->ii_Width -1;
+  if (pixY >= pII->ii_Height) pixY = pII->ii_Height-1;
   SLONG slPicPosition = (pII->ii_Width*pixY +pixX) * (pII->ii_BitsPerPixel/8);
   vVtx(2) += fAmplitude/256.0f * pII->ii_Picture[slPicPosition];
 }
@@ -1225,18 +1225,18 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
   // copy array of vertices
   DOUBLE3D *avVtxCopy = new DOUBLE3D[vtxCt];
   
-  for( INDEX iCopy=0; iCopy<vtxCt; iCopy++)
+  for (INDEX iCopy=0; iCopy<vtxCt; iCopy++)
   {
     avVtxCopy[iCopy] = avVtx[iCopy];
   }
 
   
   // displace all vertices
-  if( pII != NULL)
+  if (pII != NULL)
   {
-    for( INDEX iVtx=0; iVtx<vtxCt; iVtx++)
+    for (INDEX iVtx=0; iVtx<vtxCt; iVtx++)
     {
-      if( Abs(avVtxCopy[iVtx](2)-fRaiseHeight)<HEIGHT_EPSILON)
+      if (Abs(avVtxCopy[iVtx](2)-fRaiseHeight)<HEIGHT_EPSILON)
       {
         DisplaceVertex( avVtxCopy[iVtx], pII, fMinX, fMaxX, fMinZ, fMaxZ,
           iSlicesPerW, iSlicesPerL, fAmplitude);
@@ -1247,7 +1247,7 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
   /*
   // report it
   _RPT1(_CRT_WARN, "\n%d:", vtxCt);
-  for(INDEX ivx=0; ivx<vtxCt; ivx++) {
+  for (INDEX ivx=0; ivx<vtxCt; ivx++) {
     // report it
     _RPT3(_CRT_WARN, " (%f, %f, %f)",
       avVtx[ivx](1),
@@ -1256,14 +1256,14 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
   }
   */
   
-  switch( theApp.m_vfpCurrent.vfp_ttTriangularisationType)
+  switch (theApp.m_vfpCurrent.vfp_ttTriangularisationType)
   {
     case TT_NONE:
     {
       // create polygon
       CObjectPolygon *pObjectPolygon = _poscSector->CreatePolygon( 
         vtxCt, avVtxCopy, *_pomMaterial, NULL, bInvert);
-      if( pObjectPolygon != NULL) {
+      if (pObjectPolygon != NULL) {
         // set shadow cluster size to 2m
         ((CBrushPolygonProperties&)(pObjectPolygon->opo_ubUserData)).bpp_sbShadowClusterSize=2;
       }
@@ -1274,7 +1274,7 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
       // calculate center vertex
       DOUBLE3D vCenter = DOUBLE3D( 0.0, 0.0, 0.0);
       INDEX iVtx=0;
-      for( ; iVtx<vtxCt; iVtx++)
+      for (; iVtx<vtxCt; iVtx++)
       {
         vCenter+=avVtxCopy[iVtx];
       }
@@ -1282,7 +1282,7 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
 
       // create polygons
       DOUBLE3D avPolygon[ 3];
-      for( iVtx=0; iVtx<vtxCt; iVtx++)
+      for (iVtx=0; iVtx<vtxCt; iVtx++)
       {
         INDEX iNextVtx = (iVtx+1)%vtxCt;
         avPolygon[ 0] = avVtxCopy[iVtx];
@@ -1290,7 +1290,7 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
         avPolygon[ 2] = vCenter;
         CObjectPolygon *pObjectPolygon = _poscSector->CreatePolygon( 
           3, avPolygon, *_pomMaterial, NULL, bInvert);
-        if( pObjectPolygon != NULL) {
+        if (pObjectPolygon != NULL) {
           // set shadow cluster size to 2m
           ((CBrushPolygonProperties&)(pObjectPolygon->opo_ubUserData)).bpp_sbShadowClusterSize=2;
         }
@@ -1300,26 +1300,26 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
     default:
     {
       INDEX iStartVtx = 0;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX00) iStartVtx = 0;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX01) iStartVtx = 1;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX02) iStartVtx = 2;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX03) iStartVtx = 3;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX04) iStartVtx = 4;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX05) iStartVtx = 5;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX06) iStartVtx = 6;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX07) iStartVtx = 7;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX08) iStartVtx = 8;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX09) iStartVtx = 9;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX10) iStartVtx =10;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX11) iStartVtx =11;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX12) iStartVtx =12;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX13) iStartVtx =13;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX14) iStartVtx =14;
-      if( theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX15) iStartVtx =15;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX00) iStartVtx = 0;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX01) iStartVtx = 1;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX02) iStartVtx = 2;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX03) iStartVtx = 3;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX04) iStartVtx = 4;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX05) iStartVtx = 5;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX06) iStartVtx = 6;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX07) iStartVtx = 7;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX08) iStartVtx = 8;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX09) iStartVtx = 9;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX10) iStartVtx =10;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX11) iStartVtx =11;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX12) iStartVtx =12;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX13) iStartVtx =13;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX14) iStartVtx =14;
+      if (theApp.m_vfpCurrent.vfp_ttTriangularisationType == TT_FROM_VTX15) iStartVtx =15;
       iStartVtx %= vtxCt;
       // create polygons
       DOUBLE3D avPolygon[ 3];
-      for( INDEX iVtx=iStartVtx; iVtx<iStartVtx+vtxCt-2; iVtx++)
+      for (INDEX iVtx=iStartVtx; iVtx<iStartVtx+vtxCt-2; iVtx++)
       {
         INDEX iNextVtx = (iVtx+1)%vtxCt;
         INDEX iNextNextVtx = (iNextVtx+1)%vtxCt;
@@ -1328,7 +1328,7 @@ void AddPolygon(INDEX vtxCt, DOUBLE3D *avVtx, BOOL bInvert,
         avPolygon[ 2] = avVtxCopy[iNextNextVtx];
         CObjectPolygon *pObjectPolygon = _poscSector->CreatePolygon( 
           3, avPolygon, *_pomMaterial, NULL, bInvert);
-        if( pObjectPolygon != NULL) {
+        if (pObjectPolygon != NULL) {
           // set shadow cluster size to 2m
           ((CBrushPolygonProperties&)(pObjectPolygon->opo_ubUserData)).bpp_sbShadowClusterSize=2;
         }
@@ -1353,20 +1353,20 @@ void CWorldEditorDoc::ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjected
     #ifndef NDEBUG
     //theApp.m_vfpCurrent.vfp_o3dPrimitive.DebugDump();
     #endif //NDEBUG
-    if( !obTmp.ArePolygonsPlanar())
+    if (!obTmp.ArePolygonsPlanar())
     {
       throw( "ERROR: Primitive that You want to use has non planar polygons.\n"
         "Make sure that stretch x and stretch y are same or use triangularisation.");
     }
 
-    if( bApplyProjectedMapping)
+    if (bApplyProjectedMapping)
     {
       DOUBLE xMin = theApp.m_vfpCurrent.vfp_fXMin;
       DOUBLE xMax = theApp.m_vfpCurrent.vfp_fXMax;
       DOUBLE zMin = theApp.m_vfpCurrent.vfp_fZMin;
       DOUBLE zMax = theApp.m_vfpCurrent.vfp_fZMax;
       // create mapping to be stretched over the top of primitive
-      FLOATplane3D plHorizontal(FLOAT3D(0,1,0),0);
+      FLOATplane3D plHorizontal(FLOAT3D(0.0f, 1.0f, 0.0f),0);
       CMappingDefinitionUI mduiHorizontal;
       mduiHorizontal.mdui_aURotation = mduiHorizontal.mdui_aVRotation = AngleDeg(90.0f);
       mduiHorizontal.mdui_fUStretch = FLOAT((xMax-xMin)/_fTextureWidth);
@@ -1395,14 +1395,14 @@ void CWorldEditorDoc::ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjected
 
     // convert it into brush
     CBrush3D *pbr = m_penPrimitive->GetBrush();
-    if( iMipBrush == 0)
+    if (iMipBrush == 0)
     {
       pbr->Clear();
     }
 
     pbr->AddMipBrushFromObject3D_t(obTmp, fSwitchFactor);
     
-    if( bApplyDefaultPolygonProperties)
+    if (bApplyDefaultPolygonProperties)
     {
       // --- Apply default values for primitive polygons ---
       // for each mip in its brush
@@ -1429,7 +1429,7 @@ void CWorldEditorDoc::ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjected
 void CWorldEditorDoc::ApplyAutoColorize(void)
 {
   // if primitive auto colorization is on
-  if( theApp.m_Preferences.ap_bAutoColorize)
+  if (theApp.m_Preferences.ap_bAutoColorize)
   {
     theApp.m_vfpCurrent.vfp_colPolygonsColor = acol_ColorizePallete[theApp.m_iLastAutoColorizeColor];
     theApp.m_vfpCurrent.vfp_colSectorsColor = theApp.m_vfpCurrent.vfp_colPolygonsColor;
@@ -1444,7 +1444,7 @@ void CWorldEditorDoc::CreateConusPrimitive(void)
   */
   // calculate height
   DOUBLE fHeight = theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin;
-  if( fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
+  if (fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
   // get count of vertices on the base
   INDEX vtxCt = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.Count();
   // get shear values
@@ -1456,7 +1456,7 @@ void CWorldEditorDoc::CreateConusPrimitive(void)
 
   // base polygon
   DOUBLE3D *avBottomPolygon = new DOUBLE3D[ vtxCt];
-  for(INDEX iVtxBottom=0; iVtxBottom<vtxCt; iVtxBottom++)
+  for (INDEX iVtxBottom=0; iVtxBottom<vtxCt; iVtxBottom++)
   {
     avBottomPolygon[ iVtxBottom] = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[ iVtxBottom];
     avBottomPolygon[ iVtxBottom](2) = theApp.m_vfpCurrent.vfp_fYMin;
@@ -1465,21 +1465,21 @@ void CWorldEditorDoc::CreateConusPrimitive(void)
 
   // top polygon
   DOUBLE3D *avTopPolygon = new DOUBLE3D[ vtxCt];
-  for(INDEX iVtxTop=0; iVtxTop<vtxCt; iVtxTop++)
+  for (INDEX iVtxTop=0; iVtxTop<vtxCt; iVtxTop++)
   {
     avTopPolygon[ iVtxTop] = DOUBLE3D( 
      theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[ iVtxTop](1) * fStretchX + dx,
      theApp.m_vfpCurrent.vfp_fYMax,
      theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[ iVtxTop](3) * fStretchY + dz);
   }
-  if( (fStretchX != 0.0f) && (fStretchY != 0.0f) )
+  if ((fStretchX != 0.0f) && (fStretchY != 0.0f) )
   {
     AddPolygon( vtxCt, avTopPolygon, !_bClosed);
   }
 
   // side polygons
   DOUBLE3D *avSidePolygon = new DOUBLE3D[ 4];
-  for( INDEX iBaseVtx=0; iBaseVtx<vtxCt; iBaseVtx++)
+  for (INDEX iBaseVtx=0; iBaseVtx<vtxCt; iBaseVtx++)
   {
     INDEX iNextVtx = (iBaseVtx+1) % vtxCt;
     avSidePolygon[ 0] = avBottomPolygon[ iBaseVtx];
@@ -1536,8 +1536,8 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
   INDEX iNoOfSlices = theApp.m_vfpCurrent.vfp_iNoOfSlices;
   FLOAT fHeight = theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin;
   // clamp no of slices
-  if(iNoOfSlices<1) iNoOfSlices=1;
-  //if(iNoOfSlices>iSlicesIn360) iNoOfSlices=iSlicesIn360;
+  if (iNoOfSlices<1) iNoOfSlices=1;
+  //if (iNoOfSlices>iSlicesIn360) iNoOfSlices=iSlicesIn360;
 
   DOUBLE3D **papvBases = new DOUBLE3D *[iNoOfSlices+1];
   DOUBLE3D vCenter = DOUBLE3D( theApp.m_vfpCurrent.vfp_fRadius, 0.0f, 0.0f);
@@ -1545,11 +1545,11 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
 
   // rotate base vertices to calculate torus slices
   INDEX iSlice=0;
-  for( ; iSlice<iNoOfSlices+1; iSlice++)
+  for (; iSlice<iNoOfSlices+1; iSlice++)
   {
     // create rotation matrix
-    ANGLE3D angSlice = ANGLE3D( 0, 0, AngleDeg( (360.0f/iSlicesIn360)*iSlice));
-    if( theApp.m_vfpCurrent.vfp_fRadius>0.0f)
+    ANGLE3D angSlice = ANGLE3D(0, 0, AngleDeg( (360.0f/iSlicesIn360)*iSlice));
+    if (theApp.m_vfpCurrent.vfp_fRadius>0.0f)
     {
       angSlice(3) = -angSlice(3);
     }
@@ -1557,7 +1557,7 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
     matrixRot ^= angSlice;
     papvBases[iSlice] = new DOUBLE3D[vtxCt];
     // calculate vertex coordinates for each slice
-    for(INDEX iBaseVtx=0; iBaseVtx<vtxCt; iBaseVtx++)
+    for (INDEX iBaseVtx=0; iBaseVtx<vtxCt; iBaseVtx++)
     {
       // create vector from center to rotating vertex
       DOUBLE3D vCT = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[ iBaseVtx]-vCenter;
@@ -1566,7 +1566,7 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
     }
   }
 
-  if(iNoOfSlices!=iSlicesIn360 || fHeight!=0)
+  if (iNoOfSlices!=iSlicesIn360 || fHeight!=0)
   {
     // create torus starting polygon
     AddPolygon( vtxCt, papvBases[0], bInvert);
@@ -1576,10 +1576,10 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
 
   DOUBLE3D avPolygonVertices[4];
   // create polygons on sides
-  for(iSlice=0; iSlice<iNoOfSlices; iSlice++)
+  for (iSlice=0; iSlice<iNoOfSlices; iSlice++)
   {
     INDEX iNextSlice = (iSlice+1)%(iNoOfSlices+1);
-    for(INDEX iVtx=0; iVtx<vtxCt; iVtx++)         
+    for (INDEX iVtx=0; iVtx<vtxCt; iVtx++)         
     {
       INDEX iNextVtx = (iVtx+1)%vtxCt;
       avPolygonVertices[0] = papvBases[iSlice][iVtx];
@@ -1590,7 +1590,7 @@ void CWorldEditorDoc::CreateTorusPrimitive(void)
     }
   }
   // free allocated arrays
-  for( INDEX iFree=0; iFree<iNoOfSlices+1; iFree++)
+  for (INDEX iFree=0; iFree<iNoOfSlices+1; iFree++)
   {
     delete papvBases[iFree];
   }
@@ -1608,11 +1608,11 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
   */
   // calculate height
   DOUBLE fWidth = theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin;
-  if( fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
+  if (fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
   DOUBLE fHeight = theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin;
-  if( fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
+  if (fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
   DOUBLE fLenght = (theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin);
-  if( fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
+  if (fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
   
   // get parameters for staircases 
   INDEX iStairsIn360 = theApp.m_vfpCurrent.vfp_iSlicesIn360;
@@ -1622,7 +1622,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
   DOUBLE angle = 360.0/iStairsIn360;
   DOUBLE angleAdd = 0.0;
   // if base is created inside circle
-  if( theApp.m_vfpCurrent.vfp_bOuter && !theApp.m_vfpCurrent.vfp_bLinearStaircases) 
+  if (theApp.m_vfpCurrent.vfp_bOuter && !theApp.m_vfpCurrent.vfp_bLinearStaircases) 
   {
     fRadius = fRadius/Cos(FLOAT(angle/2));
     angleAdd = -angle/2.0;
@@ -1641,21 +1641,21 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
 
   // rotate base vertices to calculate rotating staircases
   INDEX iStair=0;
-  for( ; iStair<iNoOfStairs; iStair++)
+  for (; iStair<iNoOfStairs; iStair++)
   {
     // create rotation matrix
     ANGLE3D angRotation1;
     ANGLE3D angRotation2;
     
-    if( fRadius>0.0f)
+    if (fRadius>0.0f)
     {
-      angRotation1 = ANGLE3D( -AngleDeg( FLOAT((angle)*iStair+angleAdd)), 0, 0);
-      angRotation2 = ANGLE3D( -AngleDeg( FLOAT((angle)*(iStair+1)+angleAdd)), 0, 0);
+      angRotation1 = ANGLE3D(-AngleDeg( FLOAT((angle)*iStair+angleAdd)), 0, 0);
+      angRotation2 = ANGLE3D(-AngleDeg( FLOAT((angle)*(iStair+1)+angleAdd)), 0, 0);
     }
     else
     {
-      angRotation1 = ANGLE3D( AngleDeg( FLOAT((angle)*iStair+angleAdd)), 0, 0);
-      angRotation2 = ANGLE3D( AngleDeg( FLOAT((angle)*(iStair+1)+angleAdd)), 0, 0);
+      angRotation1 = ANGLE3D(AngleDeg( FLOAT((angle)*iStair+angleAdd)), 0, 0);
+      angRotation2 = ANGLE3D(AngleDeg( FLOAT((angle)*(iStair+1)+angleAdd)), 0, 0);
     }
     
     DOUBLEmatrix3D matrixRot1;
@@ -1663,7 +1663,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     DOUBLEmatrix3D matrixRot2;
     matrixRot2 ^= angRotation2;
     papvBases[iStair] = new DOUBLE3D[4];
-    if( theApp.m_vfpCurrent.vfp_bLinearStaircases)
+    if (theApp.m_vfpCurrent.vfp_bLinearStaircases)
     {
       papvBases[iStair][0] = DOUBLE3D( -fWidth/2.0f, fHeight*iStair, -fLenght*iStair);
       papvBases[iStair][1] = DOUBLE3D( -fWidth/2.0f, fHeight*iStair, -fLenght*(iStair+1));
@@ -1673,11 +1673,11 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     else
     {
       // calculate vertex coordinates for each rotating stair base
-      for(INDEX iBaseVtx=0; iBaseVtx<4; iBaseVtx++)
+      for (INDEX iBaseVtx=0; iBaseVtx<4; iBaseVtx++)
       {
         DOUBLE3D vCT1, vCT2;
         // create vector from center to rotating vertex
-        if( fRadius>0.0f)
+        if (fRadius>0.0f)
         {
           vCT1 = DOUBLE3D(-fRadius,0.0,0.0)-vCenter;
           vCT2 = DOUBLE3D(-fRadius+fWidth,0.0,0.0)-vCenter;
@@ -1702,16 +1702,16 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
 
   DOUBLE3D avVtx[8];
   // create polygons of stairs
-  for(iStair=0; iStair<iNoOfStairs; iStair++)
+  for (iStair=0; iStair<iNoOfStairs; iStair++)
   {
     // add only first front polygon if rest are eaten by stairs material
     BOOL bAddFrontVerticalPolygon = TRUE;
-    if( (bTopSlope || bTopCeiling) && (iStair != 0) )
+    if ((bTopSlope || bTopCeiling) && (iStair != 0) )
       bAddFrontVerticalPolygon = FALSE;
 
     // add only last back polygon if rest are eaten by stairs material
     BOOL bAddBackVerticalPolygon = TRUE;
-    if( (bBottomSlope || bBottomFloor) && (iStair != (iNoOfStairs-1)) )
+    if ((bBottomSlope || bBottomFloor) && (iStair != (iNoOfStairs-1)) )
       bAddBackVerticalPolygon = FALSE;
 
     avVtx[0] = papvBases[iStair][0];
@@ -1729,13 +1729,13 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     avVtx[7](2) += fHeight;
 
     // if bottom shape is slope
-    if( bBottomSlope)
+    if (bBottomSlope)
     {
       avVtx[1](2) += fHeight;
       avVtx[2](2) += fHeight;
     }
     // if top shape is slope
-    if( bTopSlope)
+    if (bTopSlope)
     {
       avVtx[5](2) += fHeight;
       avVtx[6](2) += fHeight;
@@ -1746,13 +1746,13 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     avPolygon[2] = avVtx[5];
     avPolygon[3] = avVtx[4];
     // if bottom shape is floor
-    if( bBottomFloor)
+    if (bBottomFloor)
     {
       avPolygon[0](2) = 0.0;
       avPolygon[1](2) = 0.0;
     }
     // if top shape is ceiling
-    if( bTopCeiling)
+    if (bTopCeiling)
     {
       avPolygon[2](2) = fHeight*iNoOfStairs;
       avPolygon[3](2) = fHeight*iNoOfStairs;
@@ -1763,26 +1763,26 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     avPolygon[2] = avVtx[6];
     avPolygon[3] = avVtx[7];
     // if bottom shape is floor
-    if( bBottomFloor)
+    if (bBottomFloor)
     {
       avPolygon[0](2) = 0.0;
       avPolygon[1](2) = 0.0;
     }
     // if top shape is ceiling
-    if( bTopCeiling)
+    if (bTopCeiling)
     {
       avPolygon[2](2) = fHeight*iNoOfStairs;
       avPolygon[3](2) = fHeight*iNoOfStairs;
     }
     AddPolygon( 4, avPolygon, bInvert);
-    if( bAddFrontVerticalPolygon)
+    if (bAddFrontVerticalPolygon)
     {
       avPolygon[0] = avVtx[0];
       avPolygon[1] = avVtx[4];
       avPolygon[2] = avVtx[7];
       avPolygon[3] = avVtx[3];
       // if top shape is ceiling
-      if( bTopCeiling)
+      if (bTopCeiling)
       {
         avPolygon[1](2) = fHeight*iNoOfStairs;
         avPolygon[2](2) = fHeight*iNoOfStairs;
@@ -1791,13 +1791,13 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     }
 
     // if bottom shape is slope, top is stairs, don't create polygon because its area is 0
-    if( !(bBottomSlope && !bTopSlope) && bAddBackVerticalPolygon)
+    if (!(bBottomSlope && !bTopSlope) && bAddBackVerticalPolygon)
     {
       avPolygon[0] = avVtx[1];
       avPolygon[1] = avVtx[5];
       avPolygon[2] = avVtx[6];
       avPolygon[3] = avVtx[2];
-      if( bBottomFloor)
+      if (bBottomFloor)
       {
         avPolygon[0](2) = 0.0;
         avPolygon[3](2) = 0.0;
@@ -1805,7 +1805,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
       AddPolygon( 4, avPolygon, bInvert);
     }
     // if top shape is slope
-    if( bTopSlope == 1)
+    if (bTopSlope == 1)
     {
       avPolygon[0] = avVtx[4];
       avPolygon[1] = avVtx[6];
@@ -1823,7 +1823,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
       avPolygon[2] = avVtx[6];
       avPolygon[3] = avVtx[7];
       // if top shape is ceiling
-      if( bTopCeiling)
+      if (bTopCeiling)
       {
         avPolygon[0](2) = fHeight*iNoOfStairs;
         avPolygon[1](2) = fHeight*iNoOfStairs;
@@ -1833,7 +1833,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
       AddPolygon( 4, avPolygon, !bInvert);
     }
     // if bottom shape is slope
-    if( bBottomSlope == 1)
+    if (bBottomSlope == 1)
     {
       avPolygon[0] = avVtx[0];
       avPolygon[1] = avVtx[2];
@@ -1851,7 +1851,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
       avPolygon[2] = avVtx[2];
       avPolygon[3] = avVtx[3];
       // if bottom shape is floor
-      if( bBottomFloor)
+      if (bBottomFloor)
       {
         avPolygon[0](2) = 0.0;
         avPolygon[1](2) = 0.0;
@@ -1862,7 +1862,7 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void)
     }
   }
   // free allocated arrays
-  for( INDEX iFree=0; iFree<iNoOfStairs; iFree++)
+  for (INDEX iFree=0; iFree<iNoOfStairs; iFree++)
   {
     delete papvBases[iFree];
   }
@@ -1876,11 +1876,11 @@ void CWorldEditorDoc::CreateSpherePrimitive(void)
 {
   // calculate width, lenght and height but as radiuses !!! (divided by 2)
   DOUBLE fWidth = (theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin)/2.0;
-  if( fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
+  if (fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
   DOUBLE fHeight = (theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin)/2.0;
-  if( fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
+  if (fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
   DOUBLE fLenght = (theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin)/2.0;
-  if( fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
+  if (fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
   // get parameters for staircases 
   INDEX iMeridians = theApp.m_vfpCurrent.vfp_iMeridians;
   INDEX iParalels = theApp.m_vfpCurrent.vfp_iParalels;
@@ -1892,11 +1892,11 @@ void CWorldEditorDoc::CreateSpherePrimitive(void)
   ANGLE angleSlice = -90.0f;
   // calculate all slices on sphere
   INDEX iSlice=0;
-  for( ; iSlice<iParalels+1; iSlice++)
+  for (; iSlice<iParalels+1; iSlice++)
   {
     DOUBLE fSliceHeight, dA, dB;
     // if equal slices
-    if( theApp.m_vfpCurrent.vfp_bLinearStaircases)
+    if (theApp.m_vfpCurrent.vfp_bLinearStaircases)
     {
       fSliceHeight = -fHeight + (fHeight*2/iParalels*iSlice);
     }
@@ -1918,7 +1918,7 @@ void CWorldEditorDoc::CreateSpherePrimitive(void)
     papvSlices[iSlice] = new DOUBLE3D[iMeridians];
     ANGLE angle = AngleDeg(360.0f)/iMeridians;
     ANGLE angleCt = 0;
-    for( INDEX iVtx=0; iVtx<iMeridians; iVtx++)
+    for (INDEX iVtx=0; iVtx<iMeridians; iVtx++)
     {
       DOUBLE x = Cos( angleCt) * dA + (theApp.m_vfpCurrent.vfp_fXMin+theApp.m_vfpCurrent.vfp_fXMax)/2.0f;
       DOUBLE z = Sin( angleCt) * dB + (theApp.m_vfpCurrent.vfp_fZMin+theApp.m_vfpCurrent.vfp_fZMax)/2.0f;
@@ -1933,10 +1933,10 @@ void CWorldEditorDoc::CreateSpherePrimitive(void)
   }
   DOUBLE3D avPolygon[4];
   // create polygons
-  for( iSlice=0; iSlice<iParalels; iSlice++)
+  for (iSlice=0; iSlice<iParalels; iSlice++)
   {
     INDEX iNextSlice = iSlice+1;
-    for( INDEX iVtx=0; iVtx<iMeridians; iVtx++)
+    for (INDEX iVtx=0; iVtx<iMeridians; iVtx++)
     {
       INDEX iNextVtx = (iVtx+1)%iMeridians;
       if (iSlice == 0) {
@@ -1960,7 +1960,7 @@ void CWorldEditorDoc::CreateSpherePrimitive(void)
   }
 
   // free allocated arrays
-  for( INDEX iFree=0; iFree<iParalels+1; iFree++)
+  for (INDEX iFree=0; iFree<iParalels+1; iFree++)
   {
     delete papvSlices[iFree];
   }
@@ -1998,7 +1998,7 @@ void CWorldEditorDoc::CreateTerrainPrimitive(void)
 {
   CImageInfo iiDisplace;
   CImageInfo *piiDisplace = &iiDisplace;
-  if( theApp.m_vfpCurrent.vfp_fnDisplacement != "")
+  if (theApp.m_vfpCurrent.vfp_fnDisplacement != "")
   {
     try
     {
@@ -2018,13 +2018,13 @@ void CWorldEditorDoc::CreateTerrainPrimitive(void)
   
   // get parameters for slices
   INDEX iSlicesX = theApp.m_vfpCurrent.vfp_iSlicesPerWidth;
-  if( iSlicesX < 1) iSlicesX = 1;
+  if (iSlicesX < 1) iSlicesX = 1;
   INDEX iSlicesZ = theApp.m_vfpCurrent.vfp_iSlicesPerHeight;
-  if( iSlicesZ < 1) iSlicesZ = 1;
+  if (iSlicesZ < 1) iSlicesZ = 1;
 
   INDEX iMip=0;
   // auto create mip brushes
-  while( iSlicesX>=1 && iSlicesZ>=1 && ((iMip==0)||_bAutoCreateMipBrushes))
+  while (iSlicesX>=1 && iSlicesZ>=1 && ((iMip==0)||_bAutoCreateMipBrushes))
   {
     CreateTerrainObject3D( piiDisplace, iSlicesX, iSlicesZ, iMip);
     ConvertObject3DToBrush(theApp.m_vfpCurrent.vfp_o3dPrimitive, TRUE, iMip, 5.0f+iMip*1.5, FALSE);
@@ -2038,11 +2038,11 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
 {
   // calculate width, lenght and heigth
   DOUBLE fWidth = (theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin);
-  if( fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
+  if (fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
   DOUBLE fHeight = (theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin);
-  if( fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
+  if (fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
   DOUBLE fLenght = (theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin);
-  if( fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
+  if (fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
   
   DOUBLE fMinX = theApp.m_vfpCurrent.vfp_fXMin;
   DOUBLE fMaxX = theApp.m_vfpCurrent.vfp_fXMax;
@@ -2057,7 +2057,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
   FLOAT fAmplitude = theApp.m_vfpCurrent.vfp_fAmplitude;
 
   ULONG ulNonFllorPolygonFlags = BPOF_FULLBRIGHT|BPOF_DETAILPOLYGON|BPOF_PORTAL;
-  if( !_bClosed)
+  if (!_bClosed)
   {
     // swap min and max y coordinates
     FLOAT fTemp = fMinY;
@@ -2076,8 +2076,8 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
   osec.osc_aovxVertices.Lock();
 
   // create 'floor' vertices
-  {for( INDEX iz=0; iz<=iSlicesZ; iz++) {
-    {for( INDEX ix=0; ix<=iSlicesX; ix++) {
+  {for (INDEX iz=0; iz<=iSlicesZ; iz++) {
+    {for (INDEX ix=0; ix<=iSlicesX; ix++) {
       INDEX iVtx = iz*(iSlicesX+1)+ix;
       CObjectVertex &ov = osec.osc_aovxVertices[iVtx];
       ov = DOUBLE3D(fMinX+fDX*ix, fMinY, fMinZ+fDZ*iz);
@@ -2099,9 +2099,9 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
   // create edges from vertices
   osec.osc_aoedEdges.Lock();
   // create horizontal edges
-  {for( INDEX iz=0; iz<iSlicesZ+1; iz++)
+  {for (INDEX iz=0; iz<iSlicesZ+1; iz++)
   {
-    {for( INDEX ix=0; ix<iSlicesX; ix++)
+    {for (INDEX ix=0; ix<iSlicesX; ix++)
     {
       INDEX iVtx1 = iz*(iSlicesX+1)+ix;
       INDEX iEdg = iz*iSlicesX+ix;
@@ -2114,9 +2114,9 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
 
   // create vertical edges
 #define START_OF_VERTICAL_EDGES (iSlicesX*(iSlicesZ+1))
-  {for( INDEX iz=0; iz<iSlicesZ; iz++)
+  {for (INDEX iz=0; iz<iSlicesZ; iz++)
   {
-    {for( INDEX ix=0; ix<iSlicesX+1; ix++)
+    {for (INDEX ix=0; ix<iSlicesX+1; ix++)
     {
       INDEX iVtx1 = iz*(iSlicesX+1)+ix;
       INDEX iEdg = START_OF_VERTICAL_EDGES + iz*(iSlicesX+1)+ix;
@@ -2129,9 +2129,9 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
 
   // create slope edges
 #define START_OF_SLOPE_EDGES (iSlicesX*(iSlicesZ+1)+(iSlicesX+1)*iSlicesZ)
-  {for( INDEX iz=0; iz<iSlicesZ; iz++)
+  {for (INDEX iz=0; iz<iSlicesZ; iz++)
   {
-    {for( INDEX ix=0; ix<iSlicesX; ix++)
+    {for (INDEX ix=0; ix<iSlicesX; ix++)
     {
       INDEX iVtx1 = iz*(iSlicesX+1)+ix;
       INDEX iEdg = START_OF_SLOPE_EDGES + iz*iSlicesX+ix;
@@ -2220,7 +2220,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
   osec.osc_aoplPlanes.Lock();
 
   // create floor polygons and their planes
-  for( INDEX iPolygon=0; iPolygon<iSlicesX*iSlicesZ; iPolygon++)
+  for (INDEX iPolygon=0; iPolygon<iSlicesX*iSlicesZ; iPolygon++)
   {
     // obtain edges of one broken checked polygon
     CObjectEdge *poe0, *poe1, *poe2, *poe3, *poe4;
@@ -2287,7 +2287,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
     opo.opo_PolygonEdges.New(iSlicesX+3);
     opo.opo_PolygonEdges.Lock();
     INDEX iEdg=0;
-    for( ; iEdg<iSlicesX; iEdg++)
+    for (; iEdg<iSlicesX; iEdg++)
     {
       INDEX iEdgeIdx = iSlicesX*iSlicesZ+iEdg;
       opo.opo_PolygonEdges[iEdg].ope_Edge = &osec.osc_aoedEdges[ iEdgeIdx];
@@ -2316,7 +2316,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
     opo.opo_PolygonEdges.New(iSlicesZ+3);
     opo.opo_PolygonEdges.Lock();
     INDEX iEdg=0;
-    for( ; iEdg<iSlicesZ; iEdg++)
+    for (; iEdg<iSlicesZ; iEdg++)
     {
       opo.opo_PolygonEdges[iEdg].ope_Edge = &osec.osc_aoedEdges[ START_OF_VERTICAL_EDGES+iSlicesX+iEdg*(iSlicesX+1)];
       opo.opo_PolygonEdges[iEdg].ope_Backward = FALSE;
@@ -2344,7 +2344,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
     opo.opo_PolygonEdges.New(iSlicesX+3);
     opo.opo_PolygonEdges.Lock();
     INDEX iEdg=0;
-    for( ; iEdg<iSlicesX; iEdg++)
+    for (; iEdg<iSlicesX; iEdg++)
     {
       opo.opo_PolygonEdges[iEdg].ope_Edge = &osec.osc_aoedEdges[ iEdg];
       opo.opo_PolygonEdges[iEdg].ope_Backward = FALSE;
@@ -2372,7 +2372,7 @@ void CWorldEditorDoc::CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSli
     opo.opo_PolygonEdges.New(iSlicesZ+3);
     opo.opo_PolygonEdges.Lock();
     INDEX iEdg=0;
-    for( ; iEdg<iSlicesZ; iEdg++)
+    for (; iEdg<iSlicesZ; iEdg++)
     {
       opo.opo_PolygonEdges[iEdg].ope_Edge = &osec.osc_aoedEdges[ START_OF_VERTICAL_EDGES+iEdg*(iSlicesX+1)];
       opo.opo_PolygonEdges[iEdg].ope_Backward = TRUE;
@@ -2450,13 +2450,13 @@ void GetTerrainPolygonEdges(CObjectSector &osec, INDEX iPolygon,  INDEX iSlicesX
 void CWorldEditorDoc::CreatePrimitive(void)
 {
   // this is patch because deleting of primitive property page can call this
-  if( m_iMode != CSG_MODE) return;
+  if (m_iMode != CSG_MODE) return;
   // activ texture must exist
   ASSERT( theApp.m_ptdActiveTexture != NULL);
 
   InitializeObject3DForPrimitive();
 
-  switch( theApp.m_vfpCurrent.vfp_ptPrimitiveType)
+  switch (theApp.m_vfpCurrent.vfp_ptPrimitiveType)
   {
   case PT_CONUS:
   case PT_TORUS:
@@ -2466,9 +2466,9 @@ void CWorldEditorDoc::CreatePrimitive(void)
       DOUBLE fHeight = theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin;
       DOUBLE fLenght = theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin;
       // some values must be valid, so if they are not, coorect them
-      if( fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
-      if( fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
-      if( fLenght < SNAP_FLOAT_GRID) fLenght = SNAP_FLOAT_GRID;
+      if (fWidth < SNAP_FLOAT_GRID) fWidth = SNAP_FLOAT_GRID;
+      if (fHeight < SNAP_FLOAT_GRID) fHeight = SNAP_FLOAT_GRID;
+      if (fLenght < SNAP_FLOAT_GRID) fLenght = SNAP_FLOAT_GRID;
       // divide width and lenght by two because these values are used as radiuses
       fWidth /= 2.0f;
       fLenght/= 2.0f;
@@ -2477,7 +2477,7 @@ void CWorldEditorDoc::CreatePrimitive(void)
 
       // if currently used number of vertices is not same as one used for last create primitive,
       // or if change occure in width or lenght
-      if( (m_bPrimitiveCreatedFirstTime) ||
+      if ((m_bPrimitiveCreatedFirstTime) ||
           (m_ctLastPrimitiveVertices != vtxCt) ||
           (m_fLastPrimitiveWidth != fWidth) ||
           (m_fLastPrimitiveLenght != fLenght) ||
@@ -2485,7 +2485,7 @@ void CWorldEditorDoc::CreatePrimitive(void)
           (m_ttLastTriangularisationType != theApp.m_vfpCurrent.vfp_ttTriangularisationType) )
       {
         // recreate base vertices (discard vertex dragging)
-        if( !_bDontRecalculateBase)
+        if (!_bDontRecalculateBase)
         {
           theApp.m_vfpCurrent.CalculatePrimitiveBase();
         }
@@ -2500,7 +2500,7 @@ void CWorldEditorDoc::CreatePrimitive(void)
         m_ttLastTriangularisationType = theApp.m_vfpCurrent.vfp_ttTriangularisationType;
       }
       // create primitive for the first time
-      if( theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS)
+      if (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS)
       {
         CreateConusPrimitive();
       }
@@ -2542,7 +2542,7 @@ void CWorldEditorDoc::RefreshPrimitivePage(void)
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   // if info exists and active page is primitive page
-  if( (pMainFrame->m_pInfoFrame != NULL) &&
+  if ((pMainFrame->m_pInfoFrame != NULL) &&
       (pMainFrame->m_pInfoFrame->m_pInfoSheet->GetActivePage() == 
        &pMainFrame->m_pInfoFrame->m_pInfoSheet->m_PgPrimitive) )
   {
@@ -2557,17 +2557,17 @@ void CWorldEditorDoc::RefreshCurrentInfoPage(void)
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   // if info exists 
-  if( pMainFrame->m_pInfoFrame != NULL)
+  if (pMainFrame->m_pInfoFrame != NULL)
   {
     // if active page is position page
-    if( pMainFrame->m_pInfoFrame->m_pInfoSheet->GetActivePage() == 
+    if (pMainFrame->m_pInfoFrame->m_pInfoSheet->GetActivePage() == 
          &pMainFrame->m_pInfoFrame->m_pInfoSheet->m_PgPosition)
     {
       // refresh position page
       pMainFrame->m_pInfoFrame->m_pInfoSheet->m_PgPosition.UpdateData( FALSE);
     }
     // if active page is texture page
-    else if( pMainFrame->m_pInfoFrame->m_pInfoSheet->GetActivePage() == 
+    else if (pMainFrame->m_pInfoFrame->m_pInfoSheet->GetActivePage() == 
               &pMainFrame->m_pInfoFrame->m_pInfoSheet->m_PgTexture)
     {
       // refresh polygon page
@@ -2669,7 +2669,7 @@ void CWorldEditorDoc::SaveWorldIntoUndoRedoList( CListHead &lhList)
 void CWorldEditorDoc::RememberUndo(void)
 {
   // if undo remembering is disabled
-  if( !theApp.m_bRememberUndo)
+  if (!theApp.m_bRememberUndo)
   {
     return;
   }
@@ -2680,7 +2680,7 @@ void CWorldEditorDoc::RememberUndo(void)
   }
 
   // while there are more members in undo buffer than allowed or list isn't empty
-  while( (m_lhUndo.Count() >= theApp.m_Preferences.ap_iUndoLevels) &&
+  while ((m_lhUndo.Count() >= theApp.m_Preferences.ap_iUndoLevels) &&
          (!m_lhUndo.IsEmpty()) )
   {
     // get first member in undo list
@@ -2692,7 +2692,7 @@ void CWorldEditorDoc::RememberUndo(void)
   }
   
   // if undo level is 0, don't remember any undo
-  if( theApp.m_Preferences.ap_iUndoLevels == 0)
+  if (theApp.m_Preferences.ap_iUndoLevels == 0)
   {
     return;
   }
@@ -2707,7 +2707,7 @@ void CWorldEditorDoc::RememberUndo(void)
 void CWorldEditorDoc::Undo(void)
 {
   // if undo level is 0, or undo list is empty, don't do any undo
-  if( (theApp.m_Preferences.ap_iUndoLevels == 0) ||
+  if ((theApp.m_Preferences.ap_iUndoLevels == 0) ||
       (m_lhUndo.IsEmpty()) )
   {
     return;
@@ -2734,7 +2734,7 @@ void CWorldEditorDoc::Undo(void)
 void CWorldEditorDoc::Redo(void)
 {
   // if redo list is empty, don't do any redo
-  if( m_lhRedo.IsEmpty() )
+  if (m_lhRedo.IsEmpty() )
   {
     return;
   }
@@ -2757,9 +2757,9 @@ void CWorldEditorDoc::Redo(void)
 
 void CWorldEditorDoc::OnEditUndo() 
 {
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
-    if( m_iCurrentTerrainUndo>=0)
+    if (m_iCurrentTerrainUndo>=0)
     {
       ApplyTerrainUndo(&m_dcTerrainUndo[m_iCurrentTerrainUndo]);
     }
@@ -2775,7 +2775,7 @@ void CWorldEditorDoc::OnEditUndo()
 
 void CWorldEditorDoc::OnUpdateEditUndo(CCmdUI* pCmdUI) 
 {
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     pCmdUI->Enable( m_iCurrentTerrainUndo>=0);
   }
@@ -2787,10 +2787,10 @@ void CWorldEditorDoc::OnUpdateEditUndo(CCmdUI* pCmdUI)
 
 void CWorldEditorDoc::OnEditRedo() 
 {
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     INDEX ctRedos=m_dcTerrainUndo.Count()-1-m_iCurrentTerrainUndo;
-    if( ctRedos>0)
+    if (ctRedos>0)
     {
       ApplyTerrainRedo(&m_dcTerrainUndo[m_iCurrentTerrainUndo+1]);
     }
@@ -2806,7 +2806,7 @@ void CWorldEditorDoc::OnEditRedo()
 
 void CWorldEditorDoc::OnUpdateEditRedo(CCmdUI* pCmdUI) 
 {
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     INDEX ctRedos=m_dcTerrainUndo.Count()-1-m_iCurrentTerrainUndo;
     pCmdUI->Enable( ctRedos>0);
@@ -2824,7 +2824,7 @@ void CWorldEditorDoc::PasteTextureOverSelection_t( CTFileName fnTexName)
   FOREACHINDYNAMICCONTAINER( m_selPolygonSelection, CBrushPolygon, itbpo)
   {
     CTextureData *pTD = (CTextureData *) itbpo->bpo_abptTextures[m_iTexture].bpt_toTexture.GetData();
-    if( (pTD == NULL) || (pTD->GetName() != fnTexName) )
+    if ((pTD == NULL) || (pTD->GetName() != fnTexName) )
     {
       itbpo->bpo_abptTextures[m_iTexture].bpt_toTexture.SetData_t( fnTexName); 
       // mark that document has been modified
@@ -2843,7 +2843,7 @@ TICK _llLastTimeDeselectAllUsed = -10000;
 void CWorldEditorDoc::DeselectAll(void)
 {
   // if browse entities mode is on
-  if( m_bBrowseEntitiesMode)
+  if (m_bBrowseEntitiesMode)
   {
     // cancel browse entities mode
     OnBrowseEntitiesMode();
@@ -2860,7 +2860,7 @@ void CWorldEditorDoc::DeselectAll(void)
     _llLastTimeDeselectAllUsed = llCurrentTime;
 
     // according to current selection mode clear selected members
-    switch( GetEditingMode())
+    switch (GetEditingMode())
     {
     case POLYGON_MODE:
       { 
@@ -2909,7 +2909,7 @@ void CWorldEditorDoc::OnWorldSettings()
 {
   CDlgWorldSettings dlgWorldSettings;
   dlgWorldSettings.SetupBcgSettings( FALSE);
-  if( dlgWorldSettings.DoModal() != IDOK) return;
+  if (dlgWorldSettings.DoModal() != IDOK) return;
   try
   {
 // !!!!    m_woWorld.SetBackgroundTexture_t(CTString(dlgWorldSettings.m_fnBackgroundPicture));
@@ -2930,18 +2930,18 @@ void CWorldEditorDoc::OnWorldSettings()
 void CWorldEditorDoc::OnCsgAdd() 
 {
   BOOL bShift = (GetKeyState( VK_SHIFT)&0x8000) != 0;
-  if( bShift) PreApplyCSG( CSG_ADD_REVERSE); // reverse priorities
+  if (bShift) PreApplyCSG( CSG_ADD_REVERSE); // reverse priorities
   else        PreApplyCSG( CSG_ADD);
 }
 
 void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType) 
 {
-  if( GetEditingMode() != CSG_MODE)
+  if (GetEditingMode() != CSG_MODE)
   {
     // search for destination entity
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
     CEntity *penTarget = pMainFrame->m_CSGDesitnationCombo.GetSelectedBrushEntity();
-    if( (penTarget == NULL) || (penTarget->IsSelected( ENF_SELECTED)) )
+    if ((penTarget == NULL) || (penTarget->IsSelected( ENF_SELECTED)) )
     {
       AfxMessageBox( L"Illegal CSG operands (target must not be selected) !");
       return;
@@ -2951,8 +2951,8 @@ void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType)
 
     // create zero placement
     CPlacement3D plZeroPlacement;
-    plZeroPlacement.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-    plZeroPlacement.pl_OrientationAngle = ANGLE3D(0,0,0);
+    plZeroPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    plZeroPlacement.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
 
     CDynamicContainer<CEntity> dcenDummy;
     // for all still selected brush entities
@@ -2960,7 +2960,7 @@ void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType)
     {
       CEntity::RenderType rt = iten->GetRenderType();
       // if the entity is brush and it is not empty
-      if( rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH)
+      if (rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH)
       {
         // copy entity into dummy world
         woDummyWorld.CopyOneEntity( *iten, plZeroPlacement);
@@ -3002,7 +3002,7 @@ void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType)
       // copy entity from dummy world to world containing only one brush
       CEntity *penOnlyBrush = woOneBrush.CopyOneEntity( *iten, plZeroPlacement);
       // ----------- Do CSG beetween current entity and destination combo's entity
-      switch( CSGType)
+      switch (CSGType)
       {
       case CSG_ADD:
       {
@@ -3050,15 +3050,15 @@ void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType)
 
 BOOL CWorldEditorDoc::IsEntityCSGEnabled(void) 
 {
-  if(m_pwoSecondLayer != NULL) return TRUE;
+  if (m_pwoSecondLayer != NULL) return TRUE;
   // if we are in entity mode
-  if( GetEditingMode() != CSG_MODE)
+  if (GetEditingMode() != CSG_MODE)
   {
     // for all selected entities
     FOREACHINDYNAMICCONTAINER(m_selEntitySelection, CEntity, iten)
     {
       CEntity::RenderType rt = iten->GetRenderType();
-      if( rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH)
+      if (rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH)
       {
         return TRUE;
       }
@@ -3137,7 +3137,7 @@ void CWorldEditorDoc::OnCsgJoinPolygons()
 void CWorldEditorDoc::OnUpdateCsgJoinPolygons(CCmdUI* pCmdUI) 
 {
   // check for polygon mode and count (crashed here right after merging vertices)
-  if( (m_iMode == POLYGON_MODE) && (m_selPolygonSelection.Count() != 0) )
+  if ((m_iMode == POLYGON_MODE) && (m_selPolygonSelection.Count() != 0) )
   {
     pCmdUI->Enable( m_woWorld.CanJoinPolygons(m_selPolygonSelection));
   }
@@ -3167,7 +3167,7 @@ void CWorldEditorDoc::OnUpdateCsgJoinAllPolygons(CCmdUI* pCmdUI)
  */
 void CWorldEditorDoc::OnCsgCancel() 
 {
-  if( m_iMode == CSG_MODE)
+  if (m_iMode == CSG_MODE)
   {
     CancelCSG();	
   }
@@ -3211,10 +3211,10 @@ void CWorldEditorDoc::OnCalculateShadows()
   _pfWorldEditingProfile.Reset();
   m_woWorld.CalculateDirectionalShadows();
 
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     CTerrain *ptTerrain=GetTerrain();
-    if(ptTerrain!=NULL) ptTerrain->UpdateShadowMap();
+    if (ptTerrain!=NULL) ptTerrain->UpdateShadowMap();
   }
 
   // create shadows report
@@ -3230,7 +3230,7 @@ void CWorldEditorDoc::OnCalculateShadows()
 
 void CWorldEditorDoc::OnHideSelected() 
 {
-  if( m_iMode == ENTITY_MODE)
+  if (m_iMode == ENTITY_MODE)
   {
     OnHideSelectedEntities();
   }
@@ -3242,15 +3242,15 @@ void CWorldEditorDoc::OnHideSelected()
 
 void CWorldEditorDoc::OnHideUnselected() 
 {
-  if( m_iMode == ENTITY_MODE)
+  if (m_iMode == ENTITY_MODE)
   {
     OnHideUnselectedEntities();
   }
-  if( m_iMode == SECTOR_MODE)
+  if (m_iMode == SECTOR_MODE)
   {
     OnHideUnselectedSectors();
   }
-  if( m_iMode == TERRAIN_MODE)
+  if (m_iMode == TERRAIN_MODE)
   {
     theApp.m_iTerrainBrushMode=TBM_MAXIMUM;
     theApp.m_ctTerrainPageCanvas.MarkChanged();
@@ -3260,11 +3260,11 @@ void CWorldEditorDoc::OnHideUnselected()
 
 void CWorldEditorDoc::OnShowAll() 
 {
-  if( m_iMode == ENTITY_MODE)
+  if (m_iMode == ENTITY_MODE)
   {
     OnShowAllEntities();
   }
-  if( m_iMode == SECTOR_MODE)
+  if (m_iMode == SECTOR_MODE)
   {
     OnShowAllSectors();
   }
@@ -3273,7 +3273,7 @@ void CWorldEditorDoc::OnShowAll()
 void CWorldEditorDoc::OnUpdateHideSelected(CCmdUI* pCmdUI) 
 {
 	// enable button if selection is not empty
-  if( m_iMode == ENTITY_MODE)
+  if (m_iMode == ENTITY_MODE)
   {
     pCmdUI->Enable( m_selEntitySelection.Count() != 0);
   }
@@ -3365,10 +3365,10 @@ void CWorldEditorDoc::SelectGivenEntity( INDEX iEntityToSelect)
   // clear normal entity selection
   m_selEntitySelection.Clear();
   // if there is any entity in volume container
-  if( m_cenEntitiesSelectedByVolume.Count() != 0)
+  if (m_cenEntitiesSelectedByVolume.Count() != 0)
   {
     // clip requested entity
-    if( iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count())
+    if (iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count())
     {
       iEntityToSelect = 0;
     }
@@ -3407,9 +3407,9 @@ void CWorldEditorDoc::SelectEntitiesByVolumeBox(void)
   vMinMax[0] = m_vCreateBoxVertice0;
   vMinMax[1] = m_vCreateBoxVertice1;
   // create coordinates for box's vertices
-  for( INDEX iBoxVertice=0;iBoxVertice<8;iBoxVertice++)
+  for (INDEX iBoxVertice=0;iBoxVertice<8;iBoxVertice++)
   {
-    m_avVolumeBoxVertice[iBoxVertice] = FLOAT3D( vMinMax[_aiBoxCreation[iBoxVertice][0]](1),
+    m_avVolumeBoxVertice[iBoxVertice] = FLOAT3D(vMinMax[_aiBoxCreation[iBoxVertice][0]](1),
                                            vMinMax[_aiBoxCreation[iBoxVertice][1]](2),
                                            vMinMax[_aiBoxCreation[iBoxVertice][2]](3) );
   }
@@ -3424,7 +3424,7 @@ void CWorldEditorDoc::SelectEntitiesByVolumeBox(void)
   {
     CPlacement3D plEntityPlacement = iten->GetPlacement();
     // if entity handle is inside volume box
-    if( bboxVolume.HasContactWith( FLOATaabbox3D(plEntityPlacement.pl_PositionVector)) )
+    if (bboxVolume.HasContactWith( FLOATaabbox3D(plEntityPlacement.pl_PositionVector)) )
     {
       // add entity into volume container
       m_cenEntitiesSelectedByVolume.Add( iten);
@@ -3439,9 +3439,9 @@ void CWorldEditorDoc::SelectEntitiesByVolumeBox(void)
  */
 void CWorldEditorDoc::CorrectBox(INDEX iMovedVtx, FLOAT3D vNewPosition) 
 {
-  for( INDEX iCoordinate=0;iCoordinate<3; iCoordinate++)
+  for (INDEX iCoordinate=0;iCoordinate<3; iCoordinate++)
   {
-    for( INDEX iVtxToCorrect=0;iVtxToCorrect<3; iVtxToCorrect++)
+    for (INDEX iVtxToCorrect=0;iVtxToCorrect<3; iVtxToCorrect++)
     {
       // copy coordinate
       m_avVolumeBoxVertice[ _aiCorrectVertices[iMovedVtx][iCoordinate*3+iVtxToCorrect]]
@@ -3459,7 +3459,7 @@ void CWorldEditorDoc::OnBrowseEntitiesMode()
 {
   m_bBrowseEntitiesMode = !m_bBrowseEntitiesMode;
   // if we should start select by volume (or browse entities) mode
-  if( m_bBrowseEntitiesMode)
+  if (m_bBrowseEntitiesMode)
   {
     SelectEntitiesByVolumeBox();
   }
@@ -3492,7 +3492,7 @@ void CWorldEditorDoc::OnPreviousSelectedEntity()
     m_cenEntitiesSelectedByVolume.Count()-1)%m_cenEntitiesSelectedByVolume.Count();
   
   // clip entity index
-  if( iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count())
+  if (iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count())
   {
     iEntityToSelect = 0;
   }
@@ -3509,7 +3509,7 @@ void CWorldEditorDoc::OnNextSelectedEntity()
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   INDEX iEntityToSelect = (m_iSelectedEntityInVolume+1)%m_cenEntitiesSelectedByVolume.Count();
   // clip entity index
-  if( iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count() )
+  if (iEntityToSelect >= m_cenEntitiesSelectedByVolume.Count() )
   {
     iEntityToSelect = 0;
   }
@@ -3535,7 +3535,7 @@ void CWorldEditorDoc::OnSelectAllInVolume( void)
   // for each of the entities selected by volume
   FOREACHINDYNAMICCONTAINER( m_cenEntitiesSelectedByVolume, CEntity, iten)
   {
-    if( !iten->IsSelected( ENF_SELECTED))
+    if (!iten->IsSelected( ENF_SELECTED))
     {
       // add entity into normal selection
       m_selEntitySelection.Select( *iten);
@@ -3544,7 +3544,7 @@ void CWorldEditorDoc::OnSelectAllInVolume( void)
   // clear volume container
   //m_cenEntitiesSelectedByVolume.Clear();
   // go out of browse by volume mode
-  if( m_bBrowseEntitiesMode) OnBrowseEntitiesMode();
+  if (m_bBrowseEntitiesMode) OnBrowseEntitiesMode();
   // mark that selections have been changed
   m_chSelections.MarkChanged();
   // obtain main frame ptr
@@ -3572,12 +3572,12 @@ void CWorldEditorDoc::OnSelectByClass()
   INDEX ctEntities = m_cenEntitiesSelectedByVolume.Count();
   // auto start in all entities mode if no entities are selected
   dlgBrowseByClass.m_bShowVolume = (ctEntities != 0);
-  if( dlgBrowseByClass.DoModal() == IDOK)
+  if (dlgBrowseByClass.DoModal() == IDOK)
   {
     m_chSelections.MarkChanged();
     SetEditingMode( ENTITY_MODE);
     UpdateAllViews( NULL);
-    if( (pWorldEditorView != NULL) && 
+    if ((pWorldEditorView != NULL) && 
         (dlgBrowseByClass.m_bCenterSelected) )
     {                                                                    
       pWorldEditorView->CenterSelected();
@@ -3590,12 +3590,12 @@ void CWorldEditorDoc::OnSelectByClassImportant()
   CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
   CDlgBrowseByClass dlgBrowseByClass;
   dlgBrowseByClass.m_bShowImportants = TRUE;
-  if( dlgBrowseByClass.DoModal() == IDOK)
+  if (dlgBrowseByClass.DoModal() == IDOK)
   {
     m_chSelections.MarkChanged();
     SetEditingMode( ENTITY_MODE);
     UpdateAllViews( NULL);
-    if( (pWorldEditorView != NULL) && 
+    if ((pWorldEditorView != NULL) && 
         (dlgBrowseByClass.m_bCenterSelected) )
     {
       pWorldEditorView->CenterSelected();
@@ -3605,7 +3605,7 @@ void CWorldEditorDoc::OnSelectByClassImportant()
 
 void CWorldEditorDoc::OnCrossroadForN() 
 {
-  if( m_iMode == VERTEX_MODE)
+  if (m_iMode == VERTEX_MODE)
   {
     CDlgSnapVertex dlg;
     dlg.DoModal();
@@ -3621,12 +3621,12 @@ void CWorldEditorDoc::OnSelectByClassAll()
   CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
   CDlgBrowseByClass dlgBrowseByClass;
   dlgBrowseByClass.m_bShowVolume = FALSE;
-  if( dlgBrowseByClass.DoModal() == IDOK)
+  if (dlgBrowseByClass.DoModal() == IDOK)
   {
     m_chSelections.MarkChanged();
     SetEditingMode( ENTITY_MODE);
     UpdateAllViews( NULL);
-    if( (pWorldEditorView != NULL) && 
+    if ((pWorldEditorView != NULL) && 
         (dlgBrowseByClass.m_bCenterSelected) )
     {
       pWorldEditorView->CenterSelected();
@@ -3669,16 +3669,16 @@ void CWorldEditorDoc::OnUpdateTexture3(CCmdUI* pCmdUI)
 
 void CWorldEditorDoc::SetActiveTextureLayer(INDEX iLayer)
 {
-  if( GetEditingMode()==TERRAIN_MODE)
+  if (GetEditingMode()==TERRAIN_MODE)
   {
     CTerrain *ptTerrain=GetTerrain();
-    if(ptTerrain==NULL) return;
-    if(iLayer>=ptTerrain->tr_atlLayers.Count()) return;
+    if (ptTerrain==NULL) return;
+    if (iLayer>=ptTerrain->tr_atlLayers.Count()) return;
     SelectLayer(iLayer);
     m_chSelections.MarkChanged();
     theApp.m_ctTerrainPageCanvas.MarkChanged();
   }
-  else if(iLayer<3)
+  else if (iLayer<3)
   {
     m_iTexture = iLayer;
     m_chSelections.MarkChanged();
@@ -3740,7 +3740,7 @@ void CWorldEditorDoc::OnSaveThumbnail( void)
 {
   // remember current position for thumbnail saving into world
   CWorldEditorView *pViewForThumbnail = theApp.GetActiveView();
-  if( pViewForThumbnail == NULL) return;
+  if (pViewForThumbnail == NULL) return;
   CChildFrame *pChild = pViewForThumbnail->GetChildFrame();
   // set new viewer settings
   m_woWorld.wo_plThumbnailFocus = pChild->m_mvViewer.mv_plViewer;
@@ -3758,10 +3758,10 @@ void CWorldEditorDoc::SaveThumbnail()
   ULONG flags = NONE;
 
   // if document isn't saved, call save as
-  if( GetPathName() == "")
+  if (GetPathName() == "")
   {
     // if failed
-    if( !DoFileSave()) return;
+    if (!DoFileSave()) return;
   }
 
   // try to find perspective view
@@ -3771,22 +3771,22 @@ void CWorldEditorDoc::SaveThumbnail()
   FOREVER
   {
     pWedView = (CWorldEditorView *) GetNextView(pos);
-    if( pWedView == NULL) return;
-    if( pWedView->m_ptProjectionType == CSlaveViewer::PT_PERSPECTIVE)
+    if (pWedView == NULL) return;
+    if (pWedView->m_ptProjectionType == CSlaveViewer::PT_PERSPECTIVE)
     {
       pViewForThumbnail = pWedView;
       break;
     }
   }
   // if perspective view can't be found, don't do anything
-  if( pViewForThumbnail == NULL) return;
+  if (pViewForThumbnail == NULL) return;
   CChildFrame *pChild = pViewForThumbnail->GetChildFrame();
 
   // create canvas to render picture
   _pGfx->CreateWorkCanvas( 128, 128, &pDrawPort);
-  if( pDrawPort != NULL)
+  if (pDrawPort != NULL)
   {
-    if( pDrawPort->Lock())
+    if (pDrawPort->Lock())
     {
       // remember old viewer settings
       CPlacement3D plOrgPlacement = pChild->m_mvViewer.mv_plViewer;
@@ -3834,7 +3834,7 @@ void CWorldEditorDoc::SaveThumbnail()
 
 void CWorldEditorDoc::ResetPrimitive() 
 {
-  if( !m_bPrimitiveMode) return;
+  if (!m_bPrimitiveMode) return;
   FLOAT fDX = (theApp.m_vfpCurrent.vfp_fXMax+theApp.m_vfpCurrent.vfp_fXMin)/2.0f;
   FLOAT fDY = theApp.m_vfpCurrent.vfp_fYMin;
   FLOAT fDZ = (theApp.m_vfpCurrent.vfp_fZMax+theApp.m_vfpCurrent.vfp_fZMin)/2.0f;
@@ -3843,7 +3843,7 @@ void CWorldEditorDoc::ResetPrimitive()
   FLOAT fHeight = theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin;
   FLOAT fLenght = (theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin);
 
-  FLOAT3D vDelta = FLOAT3D( fDX, fDY, fDZ);
+  FLOAT3D vDelta = FLOAT3D(fDX, fDY, fDZ);
   m_plSecondLayer.pl_PositionVector += vDelta;
   theApp.m_vfpCurrent.vfp_plPrimitive = m_plSecondLayer;
 
@@ -3865,14 +3865,14 @@ void CWorldEditorDoc::DeletePrimitiveVertex(INDEX iVtxToDelete)
 {
   // get count of vertices on the base
   INDEX vtxCt = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.Count();
-  if( vtxCt < 4) return;
+  if (vtxCt < 4) return;
 
   CStaticArray<DOUBLE3D> avDecreased;
   avDecreased.New(vtxCt-1);
   INDEX iVtxNew = 0;
-  for( INDEX iVtxOld = 0; iVtxOld<vtxCt; iVtxOld++)
+  for (INDEX iVtxOld = 0; iVtxOld<vtxCt; iVtxOld++)
   {
-    if( iVtxOld != iVtxToDelete)
+    if (iVtxOld != iVtxToDelete)
     {
       avDecreased[iVtxNew] = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[iVtxOld];
       iVtxNew++;
@@ -3881,7 +3881,7 @@ void CWorldEditorDoc::DeletePrimitiveVertex(INDEX iVtxToDelete)
   // copy new array back to primitive
   theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.Clear();
   theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.New(vtxCt-1);
-  for( INDEX iVtx=0; iVtx<vtxCt-1; iVtx++)
+  for (INDEX iVtx=0; iVtx<vtxCt-1; iVtx++)
   {
     theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[iVtx] = avDecreased[iVtx];
   }
@@ -3898,11 +3898,11 @@ void CWorldEditorDoc::InsertPrimitiveVertex(INDEX iEdge, FLOAT3D vVertexToInsert
   CStaticArray<DOUBLE3D> avIncreased;
   avIncreased.New(vtxCt+1);
   INDEX iVtxNew = 0;
-  for( INDEX iVtxOld = 0; iVtxOld<vtxCt; iVtxOld++)
+  for (INDEX iVtxOld = 0; iVtxOld<vtxCt; iVtxOld++)
   {
     avIncreased[iVtxNew] = theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[iVtxOld];
     iVtxNew++;
-    if( iVtxOld == iEdge)
+    if (iVtxOld == iEdge)
     {
       avIncreased[iVtxNew] = FLOATtoDOUBLE(vVertexToInsert);
       avIncreased[iVtxNew](2) = 0.0f;
@@ -3912,7 +3912,7 @@ void CWorldEditorDoc::InsertPrimitiveVertex(INDEX iEdge, FLOAT3D vVertexToInsert
   // copy new array back to primitive
   theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.Clear();
   theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.New(vtxCt+1);
-  for( INDEX iVtx=0; iVtx<vtxCt+1; iVtx++)
+  for (INDEX iVtx=0; iVtx<vtxCt+1; iVtx++)
   {
     theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive[iVtx] = avIncreased[iVtx];
   }
@@ -3943,7 +3943,7 @@ void CWorldEditorDoc::OnMirrorAndStretch()
     } else {
       dlg.m_strName = "Mirror and stretch entire world";
     }
-    if( dlg.DoModal() == IDOK)
+    if (dlg.DoModal() == IDOK)
     {
       ApplyMirrorAndStretch( dlg.m_iMirror, dlg.m_fStretch);
     }
@@ -3972,7 +3972,7 @@ void CWorldEditorDoc::ApplyMirrorAndStretch(INDEX iMirror, FLOAT fStretch)
   try
   {
     CWorld woDummy;
-    if( m_pwoSecondLayer != NULL)
+    if (m_pwoSecondLayer != NULL)
     {
       woDummy.MirrorAndStretch( *m_pwoSecondLayer, fStretch, 
         (enum WorldMirrorType)iMirror);
@@ -4020,7 +4020,7 @@ BOOL CWorldEditorDoc::IsCloneUpdatingAllowed(void)
   INDEX ctEntities = m_selEntitySelection.Count();
 
   // if only one entity is selected
-  if( ctEntities == 1)
+  if (ctEntities == 1)
   {
     // get only selected entity
     m_selEntitySelection.Lock();
@@ -4028,7 +4028,7 @@ BOOL CWorldEditorDoc::IsCloneUpdatingAllowed(void)
     m_selEntitySelection.Unlock();
 
     // if entity doesn't have parent
-    if( penOnlySelected->GetParent() == NULL)
+    if (penOnlySelected->GetParent() == NULL)
     {
       // allow clone updating
       return TRUE;
@@ -4056,7 +4056,7 @@ void DeleteEntityWithDescendents( CWorld &woWorld, CEntity *penParent)
 void CWorldEditorDoc::OnUpdateClones() 
 {
   // for each case
-  if( m_selEntitySelection.Count() == 0)
+  if (m_selEntitySelection.Count() == 0)
   {
     return;
   }
@@ -4071,10 +4071,10 @@ void CWorldEditorDoc::OnUpdateClones()
 
   // remember placements and delete all clones (entities with same name)
   CTString strName = penOnlySelected->GetName();
-  if( strName == "World Base")
+  if (strName == "World Base")
   {
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-    if( ::MessageBoxA( pMainFrame->m_hWnd, "Are you sure that you want to execute update clones\n"
+    if (::MessageBoxA( pMainFrame->m_hWnd, "Are you sure that you want to execute update clones\n"
       "on entity named: \"World Base\"?", "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1|
                MB_SYSTEMMODAL | MB_TOPMOST) != IDYES)
     {
@@ -4088,7 +4088,7 @@ void CWorldEditorDoc::OnUpdateClones()
   {FOREACHINDYNAMICCONTAINER( m_woWorld.wo_cenEntities, CEntity, iten)
   {
     // if this is clone (by name), it is not original and it is not child of some other entity
-    if( (strName == iten->GetName()) && ( &*iten != penOnlySelected) && (iten->GetParent() == NULL) )
+    if ((strName == iten->GetName()) && ( &*iten != penOnlySelected) && (iten->GetParent() == NULL) )
     {
       apenClones.Add( &*iten);
     }
@@ -4099,19 +4099,19 @@ void CWorldEditorDoc::OnUpdateClones()
   CStaticArray<CPlacement3D> aplClones;
   INDEX ctEntities = apenClones.Count();
   aplClones.New( ctEntities);
-  {for( INDEX iEntity=0; iEntity<ctEntities; iEntity++)
+  {for (INDEX iEntity=0; iEntity<ctEntities; iEntity++)
   {
     aplClones[ iEntity] = apenClones[ iEntity].GetPlacement();
   }}
 
   // delete clones with their descendents
-  {for( INDEX iEntity=0; iEntity<ctEntities; iEntity++)
+  {for (INDEX iEntity=0; iEntity<ctEntities; iEntity++)
   {
     DeleteEntityWithDescendents( m_woWorld, &apenClones[ iEntity]);
   }}
 
   // clone entity(ies) for each remembered placement
-  {for( INDEX iEntity=0; iEntity<ctEntities; iEntity++)
+  {for (INDEX iEntity=0; iEntity<ctEntities; iEntity++)
   {
     m_woWorld.CopyEntityInWorld( *penOnlySelected, aplClones[ iEntity]);
   }}
@@ -4131,8 +4131,8 @@ void CWorldEditorDoc::SetCutMode( CWorldEditorView *pwedView)
   FOREVER
   {
     pwedTemp = (CWorldEditorView *) GetNextView(pos);
-    if( pwedTemp == NULL) return;
-    if( pwedTemp == pwedView)
+    if (pwedTemp == NULL) return;
+    if (pwedTemp == pwedView)
     {
       pwedTemp->m_bCutMode = TRUE;
     }
@@ -4143,7 +4143,7 @@ void CreateCuttingWorld( FLOATplane3D &plPolygon, FLOATaabbox3D &box, CObject3D 
 {
   // ------------------- Create polygon that will be used for cutting
   FLOAT3D v0, v1, v2, v3;
-  v0=v1=v2=v3= FLOAT3D( 0.0f, 0.0f, 0.0f);
+  v0=v1=v2=v3= FLOAT3D(0.0f, 0.0f, 0.0f);
 
   // find major axes of the polygon plane
   INDEX iMajorAxis1, iMajorAxis2;
@@ -4215,7 +4215,7 @@ void CWorldEditorDoc::ApplyCut( void)
   // find the view that defines cut plane
   POSITION posView = GetFirstViewPosition();
 
-  if( m_pCutLineView == NULL)
+  if (m_pCutLineView == NULL)
   {
     ASSERTALWAYS( "Cut line view wasn't set properly!");
     // don't allow calling without cutting view ptr set
@@ -4227,13 +4227,13 @@ void CWorldEditorDoc::ApplyCut( void)
   {
     pwedView = (CWorldEditorView *) GetNextView(posView);
     // if we didn't find it in list of views
-    if( pwedView == NULL)
+    if (pwedView == NULL)
     {
       // don't do anything
       return;
     }
     // if we found it
-    if( pwedView == m_pCutLineView)
+    if (pwedView == m_pCutLineView)
     {
       // stop looping
       break;
@@ -4277,17 +4277,17 @@ void CWorldEditorDoc::ApplyCut( void)
   CBrush3D *pbrBrush = NULL;
 
   // if we are in polygon mode
-  if( GetEditingMode() == POLYGON_MODE)
+  if (GetEditingMode() == POLYGON_MODE)
   {
     CBrushPolygon *pbpo = m_selPolygonSelection.GetFirstInSelection();
-    if( pbpo == NULL)
+    if (pbpo == NULL)
     {
       ASSERTALWAYS( "Apply cut called in polygon mode, but none polygon is selected.");
       return;
     }
     pbrBrush = pbpo->bpo_pbscSector->bsc_pbmBrushMip->bm_pbrBrush;
   }
-  else if( GetEditingMode() == ENTITY_MODE)
+  else if (GetEditingMode() == ENTITY_MODE)
   {
     // do nothing
   }
@@ -4297,7 +4297,7 @@ void CWorldEditorDoc::ApplyCut( void)
     ASSERT( GetEditingMode() == SECTOR_MODE);
 
     CBrushSector *pbsc = m_selSectorSelection.GetFirstInSelection();
-    if( pbsc == NULL)
+    if (pbsc == NULL)
     {
       ASSERTALWAYS( "Apply cut called in sector mode, but none sector is selected.");
       return;
@@ -4306,7 +4306,7 @@ void CWorldEditorDoc::ApplyCut( void)
   }
   // brush containing polygon or sector will be our target entity
   CEntity *penTarget = NULL;
-  if( pbrBrush != NULL)
+  if (pbrBrush != NULL)
   {
     penTarget=pbrBrush->br_penEntity;
   }
@@ -4324,8 +4324,8 @@ void CWorldEditorDoc::ApplyCut( void)
   CWorld woCutter;
   // create zero-placement
   CPlacement3D plOrigin;
-  plOrigin.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-  plOrigin.pl_OrientationAngle = ANGLE3D(0,0,0);
+  plOrigin.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  plOrigin.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   // create main brush entity
   CEntity *penCutter = NULL;
   try
@@ -4340,7 +4340,7 @@ void CWorldEditorDoc::ApplyCut( void)
   // prepare the entity
   penCutter->Initialize();
 
-  if( GetEditingMode() == ENTITY_MODE)
+  if (GetEditingMode() == ENTITY_MODE)
   {
   }
   else
@@ -4348,7 +4348,7 @@ void CWorldEditorDoc::ApplyCut( void)
     // ------------------- Create brush mip and sector
     CBrush3D *pbr = penCutter->GetBrush();
     // brush must exist
-    if( pbr == NULL)
+    if (pbr == NULL)
     {
       ASSERTALWAYS( "Brush not properly initialized!");
       return;
@@ -4356,14 +4356,14 @@ void CWorldEditorDoc::ApplyCut( void)
 
     FLOATaabbox3D box;
     // obtain bounding box of selected polygons/sectors
-    if( GetEditingMode() == POLYGON_MODE)
+    if (GetEditingMode() == POLYGON_MODE)
     {
       FOREACHINDYNAMICCONTAINER(m_selPolygonSelection, CBrushPolygon, itbpo)
       {
         box |= itbpo->bpo_boxBoundingBox;
       }
     }
-    else if( GetEditingMode() == SECTOR_MODE)
+    else if (GetEditingMode() == SECTOR_MODE)
     {
       FOREACHINDYNAMICCONTAINER(m_selSectorSelection, CBrushSector, itbsc)
       {
@@ -4389,7 +4389,7 @@ void CWorldEditorDoc::ApplyCut( void)
 
 
     // -------- Apply BSP cut operation
-    if( GetEditingMode() == POLYGON_MODE)
+    if (GetEditingMode() == POLYGON_MODE)
     {
       // clear all selections except polygon seletion
       ClearSelections( ST_POLYGON);
@@ -4444,7 +4444,7 @@ void CWorldEditorDoc::OnCheckEdit(void)
   strCommand.PrintF("p4 edit %s", fnmFileName);
 
   INDEX iResult = system(strCommand);
-  if(iResult != 0) {
+  if (iResult != 0) {
     WarningMessage( "Unable to perform open for edit!");
     return;
   }
@@ -4465,7 +4465,7 @@ void CWorldEditorDoc::OnCheckAdd()
   strCommand.PrintF("p4 add %s", fnmFileName);
 
   INDEX iResult = system(strCommand);
-  if(iResult != 0) {
+  if (iResult != 0) {
     WarningMessage( "Unable to perform open for add!");
     return;
   }
@@ -4486,7 +4486,7 @@ void CWorldEditorDoc::OnCheckDelete()
   strCommand.PrintF("p4 delete %s", fnmFileName);
 
   INDEX iResult = system(strCommand);
-  if(iResult != 0) {
+  if (iResult != 0) {
     WarningMessage( "Unable to perform open for delete!");
     return;
   }
@@ -4522,7 +4522,7 @@ void CWorldEditorDoc::OnUpdateCheckDelete(CCmdUI* pCmdUI)
 BOOL CWorldEditorDoc::IsBrushUpdatingAllowed(void) 
 {
   // if only one entity is selected
-  if( m_selEntitySelection.Count()==1)
+  if (m_selEntitySelection.Count()==1)
   {
     // get only selected entity
     CEntity *pen = m_selEntitySelection.GetFirstInSelection();
@@ -4548,7 +4548,7 @@ void CWorldEditorDoc::OnUpdateBrushes()
   CTString strClone=pen->GetName();
   FOREACHINDYNAMICCONTAINER(m_woWorld.wo_cenEntities, CEntity, iten)
   {
-    if(iten!=pen &&
+    if (iten!=pen &&
        iten->GetName()==strClone &&
        iten->en_RenderType==CEntity::RT_BRUSH)
     {
@@ -4569,7 +4569,7 @@ void CWorldEditorDoc::OnExport3dObject()
 {
   CTFileName fnName = _EngineGUI.FileRequester( "Export polygons as ...",
     "Raw 3D object\0*.raw\0" FILTER_ALL FILTER_END, "Export geometry directory", "Worlds\\");
-  if( fnName == "") return;
+  if (fnName == "") return;
   
   try
   {
@@ -4580,7 +4580,7 @@ void CWorldEditorDoc::OnExport3dObject()
     FOREACHINDYNAMICCONTAINER( m_selPolygonSelection, CBrushPolygon, itbpo)
     {
       CBrushPolygon &bpo = *itbpo;
-      for( INDEX iVtx=0; iVtx<bpo.bpo_aiTriangleElements.Count(); iVtx+=3)
+      for (INDEX iVtx=0; iVtx<bpo.bpo_aiTriangleElements.Count(); iVtx+=3)
       {
         CBrushVertex &vtx1=*bpo.bpo_apbvxTriangleVertices[bpo.bpo_aiTriangleElements[iVtx+0]];
         CBrushVertex &vtx2=*bpo.bpo_apbvxTriangleVertices[bpo.bpo_aiTriangleElements[iVtx+1]];
@@ -4650,7 +4650,7 @@ void CWorldEditorDoc::OnExportPlacements()
       // dump class name and placement
       CTString strLine;
       CTString strName=en.GetName();
-      if(strName=="") {
+      if (strName=="") {
         strName="Dummy name";
       }
       strLine.PrintF("Class: \"%s\", Name: \"%s\", Position: (%f, %f, %f), Rotation: (%f, %f, %f)",
@@ -4658,38 +4658,38 @@ void CWorldEditorDoc::OnExportPlacements()
       strmFile.PutLine_t(strLine);
 
       // if this is model holder 3 class, we should also dump model path
-      if(CTString(pdecDLLClass->dec_strName)=="ModelHolder3")
+      if (CTString(pdecDLLClass->dec_strName)=="ModelHolder3")
       {
         CTFileName fnmFile=CTString("Unknown");
         FLOAT3D vStretch=FLOAT3D(1.0f,1.0f,1.0f);
         // for all classes in hierarchy of this entity
-        for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+        for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
         {
           // for all properties
-          for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+          for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
           {
             CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-            if( pepProperty->ep_eptType == CEntityProperty::EPT_FILENAME &&
+            if (pepProperty->ep_eptType == CEntityProperty::EPT_FILENAME &&
                 CTString(pepProperty->ep_strName) == "Model file (.smc)")
             {
               // obtain file name
               fnmFile = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, CTFileName);
               BOOL bExistsInList=FALSE;
-              for(INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
+              for (INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
               {
-                if(astrNeddedSmc[iSmc]==CTString(fnmFile))
+                if (astrNeddedSmc[iSmc]==CTString(fnmFile))
                 {
                   bExistsInList=TRUE;
                   break;
                 }
               }
-              if(!bExistsInList)
+              if (!bExistsInList)
               {
                 CTString &strNew=astrNeddedSmc.Push();
                 strNew=CTString(fnmFile);
               }
             }
-            if( pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT &&
+            if (pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT &&
                 CTString(pepProperty->ep_strName) == "StretchAll")
             {
               FLOAT fStretchAll = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, FLOAT);
@@ -4697,7 +4697,7 @@ void CWorldEditorDoc::OnExportPlacements()
               vStretch(2)*=fStretchAll;
               vStretch(3)*=fStretchAll;
             }
-            if( pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE3D &&
+            if (pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE3D &&
                 CTString(pepProperty->ep_strName) == "StretchXYZ")
             {
               ANGLE3D vStretchXYZ = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, ANGLE3D);
@@ -4719,7 +4719,7 @@ void CWorldEditorDoc::OnExportPlacements()
     CTFileStream strmSmlFile;
     strmSmlFile.Create_t( fnSml, CTStream::CM_TEXT);
     // save needed smc's
-    for(INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
+    for (INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
     {
       strmSmlFile.PutLine_t(astrNeddedSmc[iSmc]);
     }
@@ -4735,9 +4735,9 @@ void CWorldEditorDoc::OnExportPlacements()
 CTFileName CorrectSlashes(const CTFileName &fnmFile)
 {
   char afnmSlash[1024];
-  for(INDEX iChar=0; iChar<fnmFile.Length(); iChar++) {
+  for (INDEX iChar=0; iChar<fnmFile.Length(); iChar++) {
     afnmSlash[iChar] = fnmFile[iChar];
-    if(afnmSlash[iChar]=='\\') {
+    if (afnmSlash[iChar]=='\\') {
       afnmSlash[iChar] = '/';
     }
   }
@@ -4749,7 +4749,7 @@ CTFileName CorrectSlashes(const CTFileName &fnmFile)
 // Detects detail texture and replaces it with normal map texture
 CTFileName RemapDetailTexturePath(CTFileName &fnmFile)
 {
-  if(fnmFile.FindSubstr("/Detail/") >=0) {
+  if (fnmFile.FindSubstr("/Detail/") >=0) {
     return fnmFile.FileDir() + fnmFile.FileName() + "_NM.tex";
   }
   return fnmFile;
@@ -4759,9 +4759,9 @@ CTString FixQuotes(const CTString &strOrg)
 {
   char achrFixed[1024];
   INDEX iFixedChar = 0;
-  for(INDEX iChar=0; iChar<strOrg.Length(); iChar++) {
+  for (INDEX iChar=0; iChar<strOrg.Length(); iChar++) {
     // if we found a quote
-    if(strOrg[iChar]=='\"') {
+    if (strOrg[iChar]=='\"') {
       // replace it with \"
       achrFixed[iFixedChar++] = '\\';
       achrFixed[iFixedChar++] = '\"';
@@ -4801,14 +4801,14 @@ _nextNgon:
   CAmfNGon &aNgon = amfp_aangNgons.Push();
   // find first triangle that is not handled
   INDEX iFirstNGonTriangle = -1;
-  {for(INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
-    if(aiTriangles[iTri*3] != -1) {
+  {for (INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
+    if (aiTriangles[iTri*3] != -1) {
       iFirstNGonTriangle=iTri;
       break;
     }
   }}
   // triangle must be found
-  if(iFirstNGonTriangle==-1) {
+  if (iFirstNGonTriangle==-1) {
     return;
   }
   
@@ -4820,29 +4820,29 @@ _nextNgon:
   // re-entry point for expanding loop
 _nextLoopEdge:;
   // for each loop's edge
-  for(INDEX iLoopEdge=0; iLoopEdge<aNgon.ang_cbpoVertices.Count(); iLoopEdge++) {
+  for (INDEX iLoopEdge=0; iLoopEdge<aNgon.ang_cbpoVertices.Count(); iLoopEdge++) {
     // get edge vertices
     CBrushVertex *pbvLoop0 = &aNgon.ang_cbpoVertices[iLoopEdge];
     CBrushVertex *pbvLoop1 = &aNgon.ang_cbpoVertices[(iLoopEdge+1)%aNgon.ang_cbpoVertices.Count()];
     // find triangle that shares edge
-    for(INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
+    for (INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
       // for each edge in triangle
-      for(INDEX iTriEdge=0; iTriEdge<3; iTriEdge++) {
+      for (INDEX iTriEdge=0; iTriEdge<3; iTriEdge++) {
         // fetch edge vertex indices
         INDEX iTriVtx0 = aiTriangles[iTri*3+iTriEdge];
         INDEX iTriVtx1 = aiTriangles[iTri*3+(iTriEdge+1)%3];
         // if triangle is already  handled
-        if(iTriVtx0==-1 || iTriVtx1==-1) {
+        if (iTriVtx0==-1 || iTriVtx1==-1) {
           break;
         }
         CBrushVertex *pbvEdg0 = pbpo->bpo_apbvxTriangleVertices[iTriVtx0];
         CBrushVertex *pbvEdg1 = pbpo->bpo_apbvxTriangleVertices[iTriVtx1];
         // if this edge is the same as the loop edge
-        if(pbvLoop0==pbvEdg1 && pbvLoop1==pbvEdg0) {
+        if (pbvLoop0==pbvEdg1 && pbvLoop1==pbvEdg0) {
           // find index of vertex to insert (third vertex)
           INDEX iThirdVtxNo;
-          if(iTriEdge==0) { iThirdVtxNo=2;}
-          else if(iTriEdge==1) { iThirdVtxNo=0;}
+          if (iTriEdge==0) { iThirdVtxNo=2;}
+          else if (iTriEdge==1) { iThirdVtxNo=0;}
           else { iThirdVtxNo=1;}
           INDEX iThirdVertex = aiTriangles[iTri*3+iThirdVtxNo];
           // mark that triangle is integrated into the loop
@@ -4858,9 +4858,9 @@ _nextLoopEdge:;
   }
 
   // test if all triangles are cleared
-  {for(INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
+  {for (INDEX iTri=0; iTri<aiTriangles.Count()/3; iTri++) {
     // if not all are cleared
-    if(aiTriangles[iTri*3] != -1) {
+    if (aiTriangles[iTri*3] != -1) {
       // add another ngon
       goto _nextNgon;
     }
@@ -4887,7 +4887,7 @@ public:
   // Calculates count of ngons
   INDEX GetNGonCount(void) {
     INDEX ctNgons = 0;
-    for(INDEX iPlg=0; iPlg<sf_cbpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<sf_cbpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = sf_cbpoPolygons[iPlg];
       CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
       ctNgons += amfp->amfp_aangNgons.Count();
@@ -4898,10 +4898,10 @@ public:
   // Calculates count of ngon vertices
   INDEX GetNGonVertexCount(void) {
     INDEX ctVertices = 0;
-    for(INDEX iPlg=0; iPlg<sf_cbpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<sf_cbpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = sf_cbpoPolygons[iPlg];
       CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-      for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+      for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
         CAmfNGon &aNgon = amfp->amfp_aangNgons[iNgon];
         ctVertices += aNgon.ang_cbpoVertices.Count();
       }
@@ -4914,14 +4914,14 @@ public:
 BOOL IsPolygonVisible(const CBrushPolygon &bpo)
 {
   // if is invisible
-  if(bpo.bpo_ulFlags&BPOF_INVISIBLE) {
+  if (bpo.bpo_ulFlags&BPOF_INVISIBLE) {
     return FALSE;
   }
 
   // if is portal
-  if(bpo.bpo_ulFlags&BPOF_PORTAL) {
+  if (bpo.bpo_ulFlags&BPOF_PORTAL) {
     // if is translucent portal
-    if(bpo.bpo_ulFlags&BPOF_TRANSLUCENT) {
+    if (bpo.bpo_ulFlags&BPOF_TRANSLUCENT) {
       // it is visible
       return TRUE;
     }
@@ -4944,23 +4944,23 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   
   // for each sector in the brush mip
   INDEX iPlgGlobal=0;
-  {for(INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
+  {for (INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
     CBrushSector &bs = pbmMip->bm_abscSectors[iSector];
     // for each polygon in the sector
-    for(INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = bs.bsc_abpoPolygons[iPlg];
       // if we are exporting collision (e.g. for empty brushes)
-      if(etExportType==ET_RENDERING) {
-        if(!bFieldBrush && (!IsPolygonVisible(bpo) && !bCollisionOnlyBrush) ) {
+      if (etExportType==ET_RENDERING) {
+        if (!bFieldBrush && (!IsPolygonVisible(bpo) && !bCollisionOnlyBrush) ) {
           continue;
         }
         CAnimData *pad = bpo.bpo_abptTextures[0].bpt_toTexture.GetData();
         UBYTE ubMaterial = bpo.bpo_bppProperties.bpp_ubSurfaceType;
         BOOL bFound = FALSE;
-        for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+        for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
           CAmfSurface &asSurf = cbpoSurfaces[iSurf];
           // if this surface for the texture-surface pair is already defined
-          if( (asSurf.sf_padAnimData==pad) && (asSurf.sf_ubMaterial==ubMaterial) ) {
+          if ((asSurf.sf_padAnimData==pad) && (asSurf.sf_ubMaterial==ubMaterial) ) {
             // add polygon to existing surface
             asSurf.sf_cbpoPolygons.Add(&bpo);
             bFound = TRUE;
@@ -4968,39 +4968,39 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
           }
         }
         // if surface with current texture and material is not yet defined
-        if(!bFound) {
+        if (!bFound) {
           CAmfSurface *pSurf = (CAmfSurface *) new(CAmfSurface);
           cbpoSurfaces.Add(pSurf);
           pSurf->sf_cbpoPolygons.Add(&bpo);
           pSurf->sf_padAnimData = pad;
           pSurf->sf_ubMaterial = ubMaterial;
         }
-      } else if(etExportType==ET_VISIBILITY) {
+      } else if (etExportType==ET_VISIBILITY) {
         BOOL bClassifier = FALSE;
         BOOL bOccluder = FALSE;
         BOOL bPortal = FALSE;
         // if this polygon is not involved in visibility
-        if(bpo.bpo_ulFlags&BPOF_DETAILPOLYGON) {
+        if (bpo.bpo_ulFlags&BPOF_DETAILPOLYGON) {
           bClassifier = TRUE;
         }
-        else if(bpo.bpo_ulFlags&BPOF_OCCLUDER) {
+        else if (bpo.bpo_ulFlags&BPOF_OCCLUDER) {
           bOccluder = TRUE;
         }
-        else if(bpo.bpo_ulFlags&BPOF_PORTAL) {
+        else if (bpo.bpo_ulFlags&BPOF_PORTAL) {
           bPortal = TRUE;
         }
         // if surface is not yet defined
-        if(cbpoSurfaces.Count()==0) {
+        if (cbpoSurfaces.Count()==0) {
           // add one
           CAmfSurface *pSurf = (CAmfSurface *) new(CAmfSurface);
           cbpoSurfaces.Add(pSurf);
         }
 
         CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-        for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
-          if(bClassifier) { ciClassifiers.Push() = iPlgGlobal; }
-          if(bOccluder) { ciOccluders.Push() = iPlgGlobal; }
-          if(bPortal) { ciPortals.Push() = iPlgGlobal; }
+        for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+          if (bClassifier) { ciClassifiers.Push() = iPlgGlobal; }
+          if (bOccluder) { ciOccluders.Push() = iPlgGlobal; }
+          if (bPortal) { ciPortals.Push() = iPlgGlobal; }
           iPlgGlobal++;
         }
         cbpoSurfaces[0].sf_cbpoPolygons.Add(&bpo);
@@ -5011,14 +5011,14 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   // count total surface polygons and vertices
   INDEX ctTotalPolygons = 0;
   INDEX ctTotalVertices = 0;
-  {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+  {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
     CAmfSurface &amfs = cbpoSurfaces[iSurf];
     ctTotalPolygons+=amfs.GetNGonCount();
     ctTotalVertices+=amfs.GetNGonVertexCount();
   }}
 
   // if there is no polygons to export
-  if(ctTotalPolygons==0) {
+  if (ctTotalPolygons==0) {
     return;
   }
   
@@ -5032,14 +5032,14 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   strmAmf.PutLine_t("      {");
   strmAmf.FPrintF_t("        ELEMENTS %d\n", ctTotalVertices);
   strmAmf.PutLine_t("        {");
-  {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+  {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
     CAmfSurface &asSurf = cbpoSurfaces[iSurf];
-    for(INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[iPlg];
       CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-      for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+      for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
         CAmfNGon &aNgon = amfp->amfp_aangNgons[iNgon];
-        for(INDEX iVtx=0; iVtx<aNgon.ang_cbpoVertices.Count(); iVtx++) {
+        for (INDEX iVtx=0; iVtx<aNgon.ang_cbpoVertices.Count(); iVtx++) {
           CBrushVertex &bVtx = aNgon.ang_cbpoVertices[iVtx];
           strmAmf.FPrintF_t("          { %f, %f, %f; }\n", bVtx.bvx_vdPreciseRelative(1), bVtx.bvx_vdPreciseRelative(2), bVtx.bvx_vdPreciseRelative(3));
         }
@@ -5048,15 +5048,15 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   }}
   strmAmf.PutLine_t("        }");
   strmAmf.PutLine_t("      }");
-  if(etExportType==ET_RENDERING) {
-    for(INDEX iTextureLayer=0; iTextureLayer<3; iTextureLayer++) {
+  if (etExportType==ET_RENDERING) {
+    for (INDEX iTextureLayer=0; iTextureLayer<3; iTextureLayer++) {
       strmAmf.FPrintF_t("      VERTEX_MAP \"texcoord.Texture %d\"", iTextureLayer+1);
       strmAmf.PutLine_t("      {");
       strmAmf.FPrintF_t("        ELEMENTS %d\n", ctTotalVertices);
       strmAmf.PutLine_t("        {");
-      {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+      {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
         CAmfSurface &asSurf = cbpoSurfaces[iSurf];
-        for(INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
+        for (INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
           CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[iPlg];
           // fetch mapping parameters
           CMappingVectors mvDefault;
@@ -5065,7 +5065,7 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
           CMappingDefinition &md = bpo.bpo_abptTextures[iTextureLayer].bpt_mdMapping;
           // if there is no texture
           MEX mexTexSizeU, mexTexSizeV;
-          if(bpo.bpo_abptTextures[iTextureLayer].bpt_toTexture.GetData()==NULL) {
+          if (bpo.bpo_abptTextures[iTextureLayer].bpt_toTexture.GetData()==NULL) {
             mexTexSizeU = 1024;
             mexTexSizeV = 1024;
           } else {
@@ -5078,9 +5078,9 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
           CMappingVectors mvTransform;
           md.MakeMappingVectors(mvDefault, mvTransform);
           CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-          for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+          for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
             CAmfNGon &aNgon = amfp->amfp_aangNgons[iNgon];
-            for(INDEX iVtx=0; iVtx<aNgon.ang_cbpoVertices.Count(); iVtx++) {
+            for (INDEX iVtx=0; iVtx<aNgon.ang_cbpoVertices.Count(); iVtx++) {
               CBrushVertex &bVtx = aNgon.ang_cbpoVertices[iVtx];
               // calculate mapping coordinates
               FLOAT3D vUV = bVtx.bvx_vRelative-mvTransform.mv_vO;
@@ -5089,8 +5089,8 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
               fU *= fMulU;
               fV *= fMulV;
               // fix qnans
-              if(!_finite(fU)) { fU=0;}
-              if(!_finite(fV)) { fV=0;}
+              if (!_finite(fU)) { fU=0;}
+              if (!_finite(fV)) { fV=0;}
               strmAmf.FPrintF_t("          { %f, %f; }\n", fU, fV);
             }
           }
@@ -5103,8 +5103,8 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   strmAmf.PutLine_t("    }");
   strmAmf.FPrintF_t("    VERTICES %d\n", ctTotalVertices);
   strmAmf.PutLine_t("    {");
-  for(INDEX iVtx=0; iVtx<ctTotalVertices; iVtx++) {
-    if(etExportType==ET_RENDERING) {
+  for (INDEX iVtx=0; iVtx<ctTotalVertices; iVtx++) {
+    if (etExportType==ET_RENDERING) {
       strmAmf.FPrintF_t("      { 4: 0[%d], 1[%d], 2[%d], 3[%d];}\n", iVtx, iVtx, iVtx, iVtx);
     } else {
       strmAmf.FPrintF_t("      { 1: 0[%d]; }\n", iVtx);
@@ -5114,20 +5114,20 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   strmAmf.FPrintF_t("    POLYGONS %d\n", ctTotalPolygons);
   strmAmf.PutLine_t("    {");
   INDEX iPlgVtx = 0;
-  {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+  {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
     CAmfSurface &asSurf = cbpoSurfaces[iSurf];
-    for(INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[iPlg];
       CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-      for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+      for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
         CAmfNGon &aNgon = amfp->amfp_aangNgons[iNgon];
         INDEX ctPlgVertices = aNgon.ang_cbpoVertices.Count();
-        if(ctPlgVertices==0) {
+        if (ctPlgVertices==0) {
           strmAmf.FPrintF_t("      { 3: 0, 0, 0; }\n");
         } else {
           strmAmf.FPrintF_t("      { %d: ", ctPlgVertices);
-          for(INDEX iVtx=0; iVtx<ctPlgVertices; iVtx++) {
-            if(iVtx==ctPlgVertices-1) {
+          for (INDEX iVtx=0; iVtx<ctPlgVertices; iVtx++) {
+            if (iVtx==ctPlgVertices-1) {
               strmAmf.FPrintF_t("%d; }\n", iPlgVtx++);
             } else {
               strmAmf.FPrintF_t("%d, ", iPlgVtx++);
@@ -5140,18 +5140,18 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
   strmAmf.PutLine_t("    }");
 
   // for rendering
-  if(etExportType==ET_RENDERING) {
+  if (etExportType==ET_RENDERING) {
     strmAmf.FPrintF_t("    POLYGON_MAPS %d\n", cbpoSurfaces.Count());
     strmAmf.PutLine_t("    {");
     // dump surfaces
     INDEX iPlgGlobal=0;
-    {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+    {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
       CAmfSurface &asSurf = cbpoSurfaces[iSurf];
       CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[0];
       strmAmf.FPrintF_t("      POLYGON_MAP_NAME \"surface.Default_%d_%d\"\n", en.en_ulID, iSurf);
 #if 1
       // dump surface data
-      if(bCollisionOnlyBrush) {
+      if (bCollisionOnlyBrush) {
         strmAmf.PutLine_t("      POLYGON_MAP_SHADER \"\"");
       } else {
         strmAmf.PutLine_t("      POLYGON_MAP_SHADER \"Bin/Shaders.module|Standard\"");
@@ -5165,13 +5165,13 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
       strPath = bpo.bpo_abptTextures[0].bpt_toTexture.GetName();
       strPath = CorrectSlashes(strPath);
       strPath = RemapDetailTexturePath(strPath);
-      if(bFieldBrush) {
+      if (bFieldBrush) {
         strmAmf.FPrintF_t("        \"base color\" Color %d;\n", C_GREEN|128);
         strmAmf.FPrintF_t("        \"blend type\" BlendType \"%translucent\";\n");
         strmAmf.FPrintF_t("        \"double sided\" Bool \"TRUE\";\n");
       } else {
         // setup blend type for translucent portals
-        if( (bpo.bpo_ulFlags&BPOF_PORTAL) && (bpo.bpo_ulFlags&BPOF_TRANSLUCENT) ) {
+        if ((bpo.bpo_ulFlags&BPOF_PORTAL) && (bpo.bpo_ulFlags&BPOF_TRANSLUCENT) ) {
           strmAmf.FPrintF_t("        \"blend type\" BlendType \"%translucent\";\n");
         }
         //strPath.SetAbsolutePath();
@@ -5227,13 +5227,13 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
       strmAmf.FPrintF_t("      POLYGONS_COUNT %d\n", ctSurfacePolygons);
       strmAmf.PutLine_t("      {");
 
-      for(INDEX iPlg=0; iPlg<ctSurfacePolygons; iPlg++) {
+      for (INDEX iPlg=0; iPlg<ctSurfacePolygons; iPlg++) {
         strmAmf.FPrintF_t("        %d;\n", iPlgGlobal++);
       }
       strmAmf.PutLine_t("      }");
     }}
     strmAmf.PutLine_t("    }");
-  } else if(etExportType==ET_VISIBILITY) {
+  } else if (etExportType==ET_VISIBILITY) {
     // for visibility
     INDEX ctSectors = pbmMip->bm_abscSectors.Count();
     INDEX iOccluderPolyMaps = ciOccluders.Count()>0 ? 1 : 0;
@@ -5242,15 +5242,15 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
     strmAmf.FPrintF_t("    POLYGON_MAPS %d\n", ctSectors+iOccluderPolyMaps+iPortalPolyMaps+iClassifierPolyMaps);
     strmAmf.PutLine_t("    {");
     // dump sectors as separate polygon maps
-    {for(INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
+    {for (INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
       // count sector polygons
       INDEX ctSectorPolygons = 0;
       CBrushSector *pbs = &pbmMip->bm_abscSectors[iSector];
-      {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+      {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
         CAmfSurface &asSurf = cbpoSurfaces[iSurf];
-        for(INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
+        for (INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
           CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[iPlg];
-          if(bpo.bpo_pbscSector==pbs) {
+          if (bpo.bpo_pbscSector==pbs) {
             CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
             INDEX ctNgons = amfp->amfp_aangNgons.Count();
             ctSectorPolygons += ctNgons;
@@ -5262,13 +5262,13 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
       strmAmf.PutLine_t("      {");
       // dump polygon indices
       INDEX iPlgGlobal = 0;
-      {for(INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
+      {for (INDEX iSurf=0; iSurf<cbpoSurfaces.Count(); iSurf++) {
         CAmfSurface &asSurf = cbpoSurfaces[iSurf];
-        for(INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
+        for (INDEX iPlg=0; iPlg<asSurf.sf_cbpoPolygons.Count(); iPlg++) {
           CBrushPolygon &bpo = asSurf.sf_cbpoPolygons[iPlg];
           CAmfPolygon *amfp = (CAmfPolygon *)bpo.bpo_pspoScreenPolygon;
-          for(INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
-            if(bpo.bpo_pbscSector==pbs) {
+          for (INDEX iNgon=0; iNgon<amfp->amfp_aangNgons.Count(); iNgon++) {
+            if (bpo.bpo_pbscSector==pbs) {
               strmAmf.FPrintF_t("        %d;\n", iPlgGlobal);
             }
             iPlgGlobal++;
@@ -5279,36 +5279,36 @@ void ExportLayer_t(CWorldEditorDoc *pDoc, CEntity &en, ExportType etExportType, 
     }}
 
     // dump portals
-    if(ciPortals.Count()>0) {
+    if (ciPortals.Count()>0) {
       strmAmf.PutLine_t("      POLYGON_MAP_NAME \"portal.VisPortal\"");
       strmAmf.FPrintF_t("      POLYGONS_COUNT %d\n", ciPortals.Count());
       strmAmf.PutLine_t("      {");
       // dump polygon indices
-      {for(INDEX iPlg=0; iPlg<ciPortals.Count(); iPlg++) {
+      {for (INDEX iPlg=0; iPlg<ciPortals.Count(); iPlg++) {
           strmAmf.FPrintF_t("        %d;\n", ciPortals[iPlg]);
       }}
       strmAmf.PutLine_t("      }");
     }
 
     // dump occluders
-    if(ciOccluders.Count()>0) {
+    if (ciOccluders.Count()>0) {
       strmAmf.PutLine_t("      POLYGON_MAP_NAME \"portal.VisOccluder\"");
       strmAmf.FPrintF_t("      POLYGONS_COUNT %d\n", ciOccluders.Count());
       strmAmf.PutLine_t("      {");
       // dump polygon indices
-      {for(INDEX iPlg=0; iPlg<ciOccluders.Count(); iPlg++) {
+      {for (INDEX iPlg=0; iPlg<ciOccluders.Count(); iPlg++) {
           strmAmf.FPrintF_t("        %d;\n", ciOccluders[iPlg]);
       }}
       strmAmf.PutLine_t("      }");
     }
 
     // dump classifiers
-    if(ciClassifiers.Count()>0) {
+    if (ciClassifiers.Count()>0) {
       strmAmf.PutLine_t("      POLYGON_MAP_NAME \"portal.VisClassifier\"");
       strmAmf.FPrintF_t("      POLYGONS_COUNT %d\n", ciClassifiers.Count());
       strmAmf.PutLine_t("      {");
       // dump polygon indices
-      {for(INDEX iPlg=0; iPlg<ciClassifiers.Count(); iPlg++) {
+      {for (INDEX iPlg=0; iPlg<ciClassifiers.Count(); iPlg++) {
           strmAmf.FPrintF_t("        %d;\n", ciClassifiers[iPlg]);
       }}
       strmAmf.PutLine_t("      }");
@@ -5323,16 +5323,16 @@ BOOL IsBrushVisible(CEntity &en)
 {
   // fetch first mip
   CBrushMip *pbmMip = en.en_pbrBrush->GetFirstMip();
-  if(pbmMip==NULL) {
+  if (pbmMip==NULL) {
     return FALSE;
   }
   INDEX ctPolygons = 0;
-  for(INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
+  for (INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
     CBrushSector &bs = pbmMip->bm_abscSectors[iSector];
     // for each polygon in the sector
-    for(INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = bs.bsc_abpoPolygons[iPlg];
-      if(!IsPolygonVisible(bpo)) {
+      if (!IsPolygonVisible(bpo)) {
         continue;
       }
       ctPolygons++;
@@ -5347,13 +5347,13 @@ BOOL IsBrushEmpty(CEntity &en)
 {
   // fetch first mip
   CBrushMip *pbmMip = en.en_pbrBrush->GetFirstMip();
-  if(pbmMip==NULL) {
+  if (pbmMip==NULL) {
     return FALSE;
   }
   INDEX ctPolygons = 0;
-  for(INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
+  for (INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
     CBrushSector &bs = pbmMip->bm_abscSectors[iSector];
-    if(bs.bsc_abpoPolygons.Count()>0) {
+    if (bs.bsc_abpoPolygons.Count()>0) {
       return FALSE;
     }
   }
@@ -5368,10 +5368,10 @@ void ExportEntityToAMF_t(CWorldEditorDoc *pDoc, CEntity &en, const CTFileName &f
 
   // convert all of the brush polygons into ngons
   // for each sector in the brush mip
-  {for(INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
+  {for (INDEX iSector=0; iSector<pbmMip->bm_abscSectors.Count(); iSector++) {
     CBrushSector &bs = pbmMip->bm_abscSectors[iSector];
     // for each polygon in the sector
-    for(INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
+    for (INDEX iPlg=0; iPlg<bs.bsc_abpoPolygons.Count(); iPlg++) {
       CBrushPolygon &bpo = bs.bsc_abpoPolygons[iPlg];
       // convert it into ngons
       CAmfPolygon *pap = new(CAmfPolygon);
@@ -5389,17 +5389,17 @@ void ExportEntityToAMF_t(CWorldEditorDoc *pDoc, CEntity &en, const CTFileName &f
     strmAmf.PutLine_t("");
     // export visibility for zoning brushes
     INDEX ctLayers = en.en_ulFlags&ENF_ZONING ? 2 : 1;
-    if(bEmptyBrush) {
+    if (bEmptyBrush) {
       ctLayers = 0;
     }
     strmAmf.FPrintF_t("LAYERS %d\n", ctLayers);
     strmAmf.PutLine_t("{");
-    if(bInvisibleBrush) {
+    if (bInvisibleBrush) {
       ExportLayer_t(pDoc, en, ET_RENDERING, pbmMip, strmAmf, "Collision", 0, bFieldBrush, TRUE);
     } else {
       ExportLayer_t(pDoc, en, ET_RENDERING, pbmMip, strmAmf, "Rendering", 0, bFieldBrush, FALSE);
     }
-    if(ctLayers>1) {
+    if (ctLayers>1) {
       ExportLayer_t(pDoc, en, ET_VISIBILITY, pbmMip, strmAmf, "Visibility", 1, bFieldBrush, FALSE);
     }
     strmAmf.PutLine_t("}");
@@ -5451,18 +5451,18 @@ void CWorldEditorDoc::OnExportEntities()
       INDEX ctEntityAttributes = 0;
       // for all classes in hierarchy of this entity
       CDLLEntityClass *pdecDLLClassCount = pdecDLLClass;
-      for(;pdecDLLClassCount!=NULL; pdecDLLClassCount = pdecDLLClassCount->dec_pdecBase) {
+      for (;pdecDLLClassCount!=NULL; pdecDLLClassCount = pdecDLLClassCount->dec_pdecBase) {
         // for all properties
-        for(INDEX iProperty=0; iProperty<pdecDLLClassCount->dec_ctProperties; iProperty++) {
+        for (INDEX iProperty=0; iProperty<pdecDLLClassCount->dec_ctProperties; iProperty++) {
           CEntityProperty *pepProperty = &pdecDLLClassCount->dec_aepProperties[iProperty];
-          if(pepProperty->ep_strName!=CTString("")) {
+          if (pepProperty->ep_strName!=CTString("")) {
             ctEntityAttributes++;
           }
         }
       }
 
       // if render type is brush
-      if( (en.en_RenderType==CEntity::RT_BRUSH || en.en_RenderType==CEntity::RT_FIELDBRUSH) && en.en_pbrBrush!=NULL) {
+      if ((en.en_RenderType==CEntity::RT_BRUSH || en.en_RenderType==CEntity::RT_FIELDBRUSH) && en.en_pbrBrush!=NULL) {
         // add one more property because we will add one that will hint "InvisibleBrush"
         ctEntityAttributes++;
       }
@@ -5482,12 +5482,12 @@ void CWorldEditorDoc::OnExportEntities()
       strmFile.PutLine_t(strLine);
       // entity name
       CTString strName=en.GetName();
-      if(strName=="") {
+      if (strName=="") {
         strName="<unnamed>";
       }
       SLONG idParent=-1;
       CEntity *penParent = en.GetParent();
-      if(penParent!=NULL) {
+      if (penParent!=NULL) {
         idParent = penParent->en_ulID;
       }
       strLine.PrintF("    \"PARENT\" = long(%d);", idParent);
@@ -5502,51 +5502,51 @@ void CWorldEditorDoc::OnExportEntities()
       strmFile.PutLine_t(strLine);
 
       // for all classes in hierarchy of this entity
-      for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase) {
+      for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase) {
         // for all properties
-        for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++) {
+        for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++) {
           CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-          if(pepProperty->ep_strName==CTString("")) {
+          if (pepProperty->ep_strName==CTString("")) {
             continue;
           }
           // enumerator
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ENUM) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ENUM) {
             INDEX iEnumValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, INDEX);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iEnumValue);
             strmFile.PutLine_t(strLine);
           }
           // boolean
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_BOOL) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_BOOL) {
             INDEX iBooleanValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, BOOL);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iBooleanValue);
             strmFile.PutLine_t(strLine);
           }
           // float value
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT) {
             FLOAT fFloat = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, FLOAT);
             strLine.PrintF("    \"%s\" = float(%f);", pepProperty->ep_strName, fFloat);
             strmFile.PutLine_t(strLine);
           }
           // color
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_COLOR) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_COLOR) {
             COLOR colValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, COLOR);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, colValue);
             strmFile.PutLine_t(strLine);
           }
           // string
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_STRING) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_STRING) {
             CTString strString = FixQuotes(ENTITYPROPERTY( &en, pepProperty->ep_slOffset, CTString));
             strLine.PrintF("    \"%s\" = string(\"%s\");", pepProperty->ep_strName, strString);
             strmFile.PutLine_t(strLine);
           }
           // range
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_RANGE) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_RANGE) {
             FLOAT fFloat = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, FLOAT);
             strLine.PrintF("    \"%s\" = float(%f);", pepProperty->ep_strName, fFloat);
             strmFile.PutLine_t(strLine);
           }
           // entity ptr
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR) {
             // get the pointer
             CEntityPointer &penPointed = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, CEntityPointer);
             SLONG ulID = penPointed==NULL ? -1 : penPointed->en_ulID;
@@ -5554,62 +5554,62 @@ void CWorldEditorDoc::OnExportEntities()
             strmFile.PutLine_t(strLine);
           }          
           // file name
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_FILENAME || 
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_FILENAME || 
               pepProperty->ep_eptType == CEntityProperty::EPT_FILENAMENODEP) {
             CTFileName fnmFile = CorrectSlashes(ENTITYPROPERTY( &en, pepProperty->ep_slOffset, CTFileName));
             strLine.PrintF("    \"%s\" = string(\"%s\");", pepProperty->ep_strName, fnmFile);
             strmFile.PutLine_t(strLine);
           }
           // index value
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_INDEX) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_INDEX) {
             INDEX iValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, INDEX);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iValue);
             strmFile.PutLine_t(strLine);
           }
           // animation value
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ANIMATION) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ANIMATION) {
             INDEX iValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, INDEX);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iValue);
             strmFile.PutLine_t(strLine);
           }
           // illumination type
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ILLUMINATIONTYPE) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ILLUMINATIONTYPE) {
             INDEX iValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, INDEX);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iValue);
             strmFile.PutLine_t(strLine);
           }
           // angle
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE) {
             INDEX iValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, INDEX);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, iValue);
             strmFile.PutLine_t(strLine);
           }
           // float 3D
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT3D) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_FLOAT3D) {
             FLOAT3D vValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, FLOAT3D);
             strLine.PrintF("    \"%s\" = float3(%f, %f, %f);", pepProperty->ep_strName, vValue(1), vValue(2), vValue(3));
             strmFile.PutLine_t(strLine);
           }
           // angle 3D
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE3D) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ANGLE3D) {
             ANGLE3D vAngle3D = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, ANGLE3D);
             strLine.PrintF("    \"%s\" = float3(%f, %f, %f);", pepProperty->ep_strName, vAngle3D(1), vAngle3D(2), vAngle3D(3));
             strmFile.PutLine_t(strLine);
           }
           // string trans
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_STRINGTRANS) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_STRINGTRANS) {
             CTString strString = FixQuotes(ENTITYPROPERTY( &en, pepProperty->ep_slOffset, CTString));
             strLine.PrintF("    \"%s\" = string(\"%s\");", pepProperty->ep_strName, strString);
             strmFile.PutLine_t(strLine);
           }          
           // flags
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_FLAGS) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_FLAGS) {
             ULONG ulValue = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, ULONG);
             strLine.PrintF("    \"%s\" = long(%d);", pepProperty->ep_strName, ulValue);
             strmFile.PutLine_t(strLine);
           }
           // EPT_FLOATAABBOX3D - bounding box
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_FLOATAABBOX3D) {
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_FLOATAABBOX3D) {
             // get value for bounding box
             FLOATaabbox3D bboxOld = ENTITYPROPERTY( &en, pepProperty->ep_slOffset, FLOATaabbox3D);
             FLOAT3D vMin = bboxOld.Min();
@@ -5622,7 +5622,7 @@ void CWorldEditorDoc::OnExportEntities()
       }
 
       // if render type is brush
-      if( (en.en_RenderType==CEntity::RT_BRUSH || en.en_RenderType==CEntity::RT_FIELDBRUSH) && en.en_pbrBrush!=NULL) {
+      if ((en.en_RenderType==CEntity::RT_BRUSH || en.en_RenderType==CEntity::RT_FIELDBRUSH) && en.en_pbrBrush!=NULL) {
         // add one "fake" property that will hint "invisible brush" status
         BOOL bInvisibleBrush = !IsBrushVisible(en);
         BOOL bEmptyBrush = IsBrushEmpty(en);
@@ -5653,7 +5653,7 @@ void CWorldEditorDoc::OnExportEntities()
     CTFileStream strmSmlFile;
     strmSmlFile.Create_t( fnSml, CTStream::CM_TEXT);
     // save needed smc's
-    for(INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
+    for (INDEX iSmc=0; iSmc<astrNeddedSmc.Count(); iSmc++)
     {
       strmSmlFile.PutLine_t(astrNeddedSmc[iSmc]);
     }

@@ -39,7 +39,7 @@ static char THIS_FILE[] = __FILE__;
 void CDlgCreateAnimatedTexture::ReleaseCreatedTexture(void)
 {
   // if there is texture obtained, release it
-  if( m_ptdCreated!= NULL)
+  if (m_ptdCreated!= NULL)
   {
     // free obtained texture
     _pTextureStock->Release( m_ptdCreated);
@@ -51,10 +51,10 @@ void CDlgCreateAnimatedTexture::ReleaseCreatedTexture(void)
 void CDlgCreateAnimatedTexture::InitAnimationsCombo(void)
 {
   m_ctrlAnimationsCombo.ResetContent();
-  if( m_ptdCreated != NULL)
+  if (m_ptdCreated != NULL)
   {
     CAnimInfo aiInfo;
-    for( INDEX iAnim=0; iAnim<m_ptdCreated->GetAnimsCt(); iAnim++)
+    for (INDEX iAnim=0; iAnim<m_ptdCreated->GetAnimsCt(); iAnim++)
     {
       m_ptdCreated->GetAnimInfo( iAnim, aiInfo);
       m_ctrlAnimationsCombo.AddString(CString(aiInfo.ai_AnimName));
@@ -69,7 +69,7 @@ void CDlgCreateAnimatedTexture::InitAnimationsCombo(void)
 
 void CDlgCreateAnimatedTexture::OnSelchangeTextureAnimations() 
 {
-  if( m_ptdCreated != NULL)
+  if (m_ptdCreated != NULL)
   {
     // set selected animation
     INDEX iAnim = m_ctrlAnimationsCombo.GetCurSel();
@@ -140,7 +140,7 @@ CDlgCreateAnimatedTexture::CDlgCreateAnimatedTexture(
   CTFileName fnInputFile = afnPictures[0];
   afnPictures.Unlock();
   
-  if( (fnInputFile != "") && 
+  if ((fnInputFile != "") && 
       ((fnInputFile.FileExt() == ".tex") || (fnInputFile.FileExt() == ".scr")) )
   {
     m_strCreatedTextureName = fnInputFile.FileDir() + fnInputFile.FileName() + ".tex";
@@ -170,7 +170,7 @@ void CDlgCreateAnimatedTexture::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
   }
 
@@ -183,7 +183,7 @@ void CDlgCreateAnimatedTexture::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
   }
 }
@@ -207,7 +207,7 @@ void CDlgCreateAnimatedTexture::OnPaint()
 	CPaintDC dc(this); // device context for painting
 	
   // if texture preview windows are not yet created
-  if( !m_bPreviewWindowsCreated)
+  if (!m_bPreviewWindowsCreated)
   {
     // ---------------- Create custom window that will show how created texture will look like
     CWnd *pWndCreatedTexturePreview = GetDlgItem(IDC_TEXTURE_PREVIEW_WINDOW);
@@ -247,7 +247,7 @@ void CDlgCreateAnimatedTexture::OnCreateTexture()
   CTFileName fnFullFinalTexture = _fnmApplicationPath+m_fnCreatedFileName;
   
   CTFileName fnSaveName;
-  if( m_strCreatedTextureName == "Unnamed")
+  if (m_strCreatedTextureName == "Unnamed")
   {
     // extract last sub directory name
     char achrLastSubDir[ 256];
@@ -260,7 +260,7 @@ void CDlgCreateAnimatedTexture::OnCreateTexture()
       strLastSubDir+".tex", // default name
       KEY_NAME_CREATE_ANIMATED_TEXTURE_DIR, "Choose texture name",
       FALSE/* bOpenFileRequester*/);
-    if( fnSaveName == "") return;
+    if (fnSaveName == "") return;
   }
   else
   {
@@ -284,7 +284,7 @@ BOOL CDlgCreateAnimatedTexture::OnInitDialog()
 	CDialog::OnInitDialog();
 	
   // if we received script as input
-  if( m_fnSourceFileName.FileExt() == ".scr")
+  if (m_fnSourceFileName.FileExt() == ".scr")
   {
     // load script file into edit control
     try

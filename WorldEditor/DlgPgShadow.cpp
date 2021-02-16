@@ -44,7 +44,7 @@ CDlgPgShadow::~CDlgPgShadow()
 
 void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   CPropertyPage::DoDataExchange(pDX);
   // mark that property page has been modified
@@ -52,14 +52,14 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
 
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   // polygon mode must be on
-  if( pDoc->GetEditingMode() != POLYGON_MODE)  return;
+  if (pDoc->GetEditingMode() != POLYGON_MODE)  return;
   // get flags of control activity
   BOOL bSelectionExists = pDoc->m_selPolygonSelection.Count() != 0;
   
   // if dialog is recieving data and control window is valid
-  if( (pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_NoShadow.m_hWnd) )  
+  if ((pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_NoShadow.m_hWnd) )  
   {
     // initialize combo boxes
     InitComboBoxes();
@@ -87,7 +87,7 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
 	  m_ctrlShadowColor.EnableWindow( bSelectionExists);
 
     // if selection exists, calculate tri-state value of attribute intersection
-    if( bSelectionExists)
+    if (bSelectionExists)
     {
       // get properties from first polygon
       UBYTE ubFirstIllumination;
@@ -109,7 +109,7 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
         ulFlagsOn &= itbpo->bpo_ulFlags;
         ulFlagsOff &= ~itbpo->bpo_ulFlags;
 
-        if( iPolygon == 0)
+        if (iPolygon == 0)
         {
           ubFirstIllumination = itbpo->bpo_bppProperties.bpp_ubIlluminationType;
           sbFirstShadowClusterSize = itbpo->bpo_bppProperties.bpp_sbShadowClusterSize;
@@ -119,22 +119,22 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
         }
         else
         {
-        	if( m_ctrlShadowColor.GetColor() != itbpo->bpo_colShadow)
+        	if (m_ctrlShadowColor.GetColor() != itbpo->bpo_colShadow)
           {
             m_ctrlShadowColor.SetMixedColor();
           }
-          if( itbpo->bpo_bppProperties.bpp_ubIlluminationType != ubFirstIllumination) bSameIllumination = FALSE;
-          if( itbpo->bpo_bppProperties.bpp_sbShadowClusterSize != sbFirstShadowClusterSize) bSameShadowClusterSize = FALSE;
-          if( itbpo->bpo_bppProperties.bpp_ubShadowBlend != ubFirstShadowBlend) bSameShadowBlend = FALSE;
-          if( itbpo->bpo_bppProperties.bpp_ubGradientType != ubFirstGradient) bSameGradient = FALSE;
+          if (itbpo->bpo_bppProperties.bpp_ubIlluminationType != ubFirstIllumination) bSameIllumination = FALSE;
+          if (itbpo->bpo_bppProperties.bpp_sbShadowClusterSize != sbFirstShadowClusterSize) bSameShadowClusterSize = FALSE;
+          if (itbpo->bpo_bppProperties.bpp_ubShadowBlend != ubFirstShadowBlend) bSameShadowBlend = FALSE;
+          if (itbpo->bpo_bppProperties.bpp_ubGradientType != ubFirstGradient) bSameGradient = FALSE;
         }
         iPolygon++;
       }
 
 // apply flags to controls
 #define SET_TRI_STATE_TO_CTRL( ctrl, flag)\
-  if((ulFlagsOn & flag) && !(ulFlagsOff & flag)) ctrl.SetCheck( 1);\
-  else if(!(ulFlagsOn & flag) && (ulFlagsOff & flag)) ctrl.SetCheck( 0);\
+  if ((ulFlagsOn & flag) && !(ulFlagsOff & flag)) ctrl.SetCheck( 1);\
+  else if (!(ulFlagsOn & flag) && (ulFlagsOff & flag)) ctrl.SetCheck( 0);\
   else ctrl.SetCheck( 2);
 
       SET_TRI_STATE_TO_CTRL( m_bHasDirectionalShadows, BPOF_HASDIRECTIONALLIGHT);
@@ -148,12 +148,12 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
       SET_TRI_STATE_TO_CTRL( m_bNoDynamicLights, BPOF_NODYNAMICLIGHTS);
       SET_TRI_STATE_TO_CTRL( m_NoShadow, BPOF_FULLBRIGHT);
 
-      if( bSameIllumination)
+      if (bSameIllumination)
       {
-        for( INDEX iIllumination=0; iIllumination<m_ComboIllumination.GetCount(); iIllumination++)
+        for (INDEX iIllumination=0; iIllumination<m_ComboIllumination.GetCount(); iIllumination++)
         {
           INDEX iIlluminationData = m_ComboIllumination.GetItemData( iIllumination);
-          if( iIlluminationData==ubFirstIllumination)
+          if (iIlluminationData==ubFirstIllumination)
           {
             m_ComboIllumination.SetCurSel( iIllumination);
             break;
@@ -161,11 +161,11 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
         }        
       }
       else m_ComboIllumination.SetCurSel(-1);
-      if( bSameShadowClusterSize) m_ctrlComboClusterSize.SetCurSel( sbFirstShadowClusterSize+4);
+      if (bSameShadowClusterSize) m_ctrlComboClusterSize.SetCurSel( sbFirstShadowClusterSize+4);
       else m_ctrlComboClusterSize.SetCurSel(-1);
-      if( bSameShadowBlend) m_comboShadowBlend.SetCurSel( ubFirstShadowBlend);
+      if (bSameShadowBlend) m_comboShadowBlend.SetCurSel( ubFirstShadowBlend);
       else m_comboShadowBlend.SetCurSel(-1);
-      if( bSameGradient) m_ctrlComboGradient.SetCurSel( ubFirstGradient);
+      if (bSameGradient) m_ctrlComboGradient.SetCurSel( ubFirstGradient);
       else m_ctrlComboGradient.SetCurSel(-1);
     }
     // mark that page is updated
@@ -191,7 +191,7 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     BOOL bFindShadowLayers = FALSE;
     BOOL bOnlySelected = TRUE;
@@ -202,12 +202,12 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
     {
       boxBoundingBoxPolygonSelection |= itbpo->bpo_boxBoundingBox;
 
-      if( m_comboShadowBlend.GetCurSel()!=-1) itbpo->bpo_bppProperties.bpp_ubShadowBlend = m_comboShadowBlend.GetCurSel();
+      if (m_comboShadowBlend.GetCurSel()!=-1) itbpo->bpo_bppProperties.bpp_ubShadowBlend = m_comboShadowBlend.GetCurSel();
       INDEX iItem = m_ComboIllumination.GetCurSel();
-      if( iItem!=CB_ERR)
+      if (iItem!=CB_ERR)
       {
         INDEX iIlluminationToSet = m_ComboIllumination.GetItemData( iItem);
-        if( itbpo->bpo_bppProperties.bpp_ubIlluminationType != iIlluminationToSet)
+        if (itbpo->bpo_bppProperties.bpp_ubIlluminationType != iIlluminationToSet)
         {
           itbpo->bpo_bppProperties.bpp_ubIlluminationType = (UBYTE) iIlluminationToSet;
 
@@ -218,7 +218,7 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
         }
       }
       INDEX iShadowClusterSize = m_ctrlComboClusterSize.GetCurSel()-4;
-      if( (m_ctrlComboClusterSize.GetCurSel()!=-1) &&
+      if ((m_ctrlComboClusterSize.GetCurSel()!=-1) &&
           (itbpo->bpo_bppProperties.bpp_sbShadowClusterSize != iShadowClusterSize) )
       {
         itbpo->bpo_bppProperties.bpp_sbShadowClusterSize = (SBYTE) iShadowClusterSize;
@@ -229,9 +229,9 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
       }
 
       INDEX iGradient = m_ctrlComboGradient.GetCurSel();
-      if( iGradient!=CB_ERR)
+      if (iGradient!=CB_ERR)
       {
-        if( itbpo->bpo_bppProperties.bpp_ubGradientType != iGradient)
+        if (itbpo->bpo_bppProperties.bpp_ubGradientType != iGradient)
         {
           itbpo->bpo_bppProperties.bpp_ubGradientType = (UBYTE) iGradient;
           itbpo->bpo_smShadowMap.DiscardAllLayers();
@@ -242,16 +242,16 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
 
 // set polygon's flags acording witg given tri-state ctrl
 #define TRI_STATE_CTRL_TO_FLAGS( ctrl, flag, buncache, bdiscardshadows, bfindshadowlayers, bonlyselected)\
-  if( (ctrl.GetCheck() == 1) && !(itbpo->bpo_ulFlags & flag) ) {\
+  if ((ctrl.GetCheck() == 1) && !(itbpo->bpo_ulFlags & flag) ) {\
     itbpo->bpo_ulFlags |= flag;\
-    if( buncache) itbpo->bpo_smShadowMap.Uncache();\
-    if( bdiscardshadows) itbpo->DiscardShadows();\
+    if (buncache) itbpo->bpo_smShadowMap.Uncache();\
+    if (bdiscardshadows) itbpo->DiscardShadows();\
     bFindShadowLayers |= bfindshadowlayers;\
     bOnlySelected &= bonlyselected ;\
-  } else if( (ctrl.GetCheck() == 0) && (itbpo->bpo_ulFlags & flag) ) {\
+  } else if ((ctrl.GetCheck() == 0) && (itbpo->bpo_ulFlags & flag) ) {\
     itbpo->bpo_ulFlags &= ~flag;\
-    if( buncache) itbpo->bpo_smShadowMap.Uncache();\
-    if( bdiscardshadows) itbpo->DiscardShadows();\
+    if (buncache) itbpo->bpo_smShadowMap.Uncache();\
+    if (bdiscardshadows) itbpo->DiscardShadows();\
     bFindShadowLayers |= bfindshadowlayers;\
     bOnlySelected &= bonlyselected ;\
   }
@@ -266,12 +266,12 @@ void CDlgPgShadow::DoDataExchange(CDataExchange* pDX)
       TRI_STATE_CTRL_TO_FLAGS( m_bNoDynamicLights, BPOF_NODYNAMICLIGHTS, FALSE, FALSE, FALSE, TRUE);
       TRI_STATE_CTRL_TO_FLAGS( m_NoShadow, BPOF_FULLBRIGHT, TRUE, TRUE, TRUE, TRUE);
 
-      if( m_ctrlShadowColor.IsColorValid()) {
+      if (m_ctrlShadowColor.IsColorValid()) {
         itbpo->bpo_colShadow = m_ctrlShadowColor.GetColor();
       }
     }
     // if we should find shadow layers
-    if( bFindShadowLayers)
+    if (bFindShadowLayers)
     {
       pDoc->m_woWorld.FindShadowLayers( boxBoundingBoxPolygonSelection, bOnlySelected);
     }
@@ -311,29 +311,29 @@ void CDlgPgShadow::InitComboBoxes(void)
 	m_comboShadowBlend.ResetContent();
 	m_ctrlComboGradient.ResetContent();
   // add all available illuminations
-  for(INDEX iIllumination=0; iIllumination<MAX_UBYTE; iIllumination++)
+  for (INDEX iIllumination=0; iIllumination<MAX_UBYTE; iIllumination++)
   {
     strIlluminationName = pDoc->m_woWorld.wo_aitIlluminationTypes[iIllumination].it_strName;
-    if(strIlluminationName == "") break;
+    if (strIlluminationName == "") break;
     INDEX iAddedAs = m_ComboIllumination.AddString( CString(strIlluminationName));
     m_ComboIllumination.SetItemData( iAddedAs, (ULONG) iIllumination);
   }
-  for(INDEX iBlend=0; iBlend<256; iBlend++)
+  for (INDEX iBlend=0; iBlend<256; iBlend++)
   {
     CTString strBlendName = pDoc->m_woWorld.wo_atbTextureBlendings[iBlend].tb_strName;
-    if( strBlendName != CTString("") ) m_comboShadowBlend.AddString( CString(strBlendName));
+    if (strBlendName != CTString("") ) m_comboShadowBlend.AddString( CString(strBlendName));
   }    
 
   // none must exist
   m_ctrlComboGradient.AddString( L"None");
 
   // add gradients
-  if( pDoc->m_selPolygonSelection.Count() != 0)
+  if (pDoc->m_selPolygonSelection.Count() != 0)
   {
     // obtain first polygon's brush
     CBrush3D *pbrBrush = NULL;
     pDoc->m_selPolygonSelection.Lock();
-    if( !pDoc->m_selPolygonSelection.IsMember( pDoc->m_pbpoLastCentered))
+    if (!pDoc->m_selPolygonSelection.IsMember( pDoc->m_pbpoLastCentered))
     {
       pbrBrush = pDoc->m_selPolygonSelection[0].bpo_pbscSector->bsc_pbmBrushMip->bm_pbrBrush;
     }
@@ -344,7 +344,7 @@ void CDlgPgShadow::InitComboBoxes(void)
     FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo)
     {
       // disable gradient combo box if all polygons are not from same brush
-      if( pbrBrush != itbpo->bpo_pbscSector->bsc_pbmBrushMip->bm_pbrBrush)
+      if (pbrBrush != itbpo->bpo_pbscSector->bsc_pbmBrushMip->bm_pbrBrush)
       {
         bEnableGradient = FALSE;
         break;
@@ -352,13 +352,13 @@ void CDlgPgShadow::InitComboBoxes(void)
     }
   
     // if gradient combo is enabled
-    if( bEnableGradient)
+    if (bEnableGradient)
     {
       // add gradients
-      for(INDEX iGradient=0; iGradient<MAX_UBYTE; iGradient++)
+      for (INDEX iGradient=0; iGradient<MAX_UBYTE; iGradient++)
       {
         CTString strGradientName = pbrBrush->br_penEntity->GetGradientName( iGradient);
-        if( strGradientName == "") break;
+        if (strGradientName == "") break;
         m_ctrlComboGradient.AddString( CString(strGradientName));
       }
     }
@@ -386,12 +386,12 @@ void CDlgPgShadow::InitComboBoxes(void)
 BOOL CDlgPgShadow::OnIdle(LONG lCount)
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( (pDoc == NULL) || !IsWindow(m_hWnd) )
+  if ((pDoc == NULL) || !IsWindow(m_hWnd) )
   {
     return TRUE;
   }
   // if selections have been changed (they are not up to date)
-  if( !pDoc->m_chSelections.IsUpToDate( m_udPolygonSelection) )
+  if (!pDoc->m_chSelections.IsUpToDate( m_udPolygonSelection) )
   {
     // update dialog data
     UpdateData( FALSE);
@@ -401,7 +401,7 @@ BOOL CDlgPgShadow::OnIdle(LONG lCount)
 
 BOOL CDlgPgShadow::PreTranslateMessage(MSG* pMsg) 
 {
-	if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     // move data from page to polygon
     UpdateData( TRUE);
@@ -415,7 +415,7 @@ BOOL CDlgPgShadow::OnInitDialog()
 {
   EnableToolTips( TRUE);
 	CPropertyPage::OnInitDialog();
-  if( IsWindow( m_ComboIllumination.m_hWnd))
+  if (IsWindow( m_ComboIllumination.m_hWnd))
   {
     InitComboBoxes();
   }
@@ -480,12 +480,12 @@ void CDlgPgShadow::OnContextMenu(CWnd* pWnd, CPoint point)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   
   CMenu menu;
-  if( pDoc->GetEditingMode() == POLYGON_MODE)
+  if (pDoc->GetEditingMode() == POLYGON_MODE)
   {
-    if( menu.LoadMenu(IDR_INFO_POLYGON_POPUP))
+    if (menu.LoadMenu(IDR_INFO_POLYGON_POPUP))
     {
 		  CMenu* pPopup = menu.GetSubMenu(0);
-      if( pDoc->m_selPolygonSelection.Count() != 1)
+      if (pDoc->m_selPolygonSelection.Count() != 1)
       {
         menu.EnableMenuItem(ID_SET_AS_DEFAULT, MF_DISABLED|MF_GRAYED);
       }
@@ -504,7 +504,7 @@ BOOL CDlgPgShadow::OnToolTipNotify( UINT id, NMHDR * pNMHDR, LRESULT * pResult )
   {
     // idFrom is actually the HWND of the tool
     nID = ::GetDlgCtrlID((HWND)nID);
-    if(nID)
+    if (nID)
     {
       pTTT->lpszText = MAKEINTRESOURCE(nID);
       pTTT->hinst = AfxGetResourceHandle();

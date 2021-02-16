@@ -111,7 +111,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
   // create toolbar IDR_NAVIGATION
-  if( (!m_wndNavigationToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy,IDW_TOOLBAR_NAVIGATION)) ||
+  if ((!m_wndNavigationToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy,IDW_TOOLBAR_NAVIGATION)) ||
 		  (!m_wndNavigationToolBar.LoadToolBar(IDR_NAVIGATION)) )
 	{
 		TRACE0("Failed to create FX toolbar\n");
@@ -169,7 +169,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;		// fail to create
 	}
 
-  if(!theApp.m_dlgErrorList.Create(this,IDD_ERROR_LIST,
+  if (!theApp.m_dlgErrorList.Create(this,IDD_ERROR_LIST,
 		CBRS_BOTTOM/* | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC*/,
     ID_VIEW_ERRORLIST)) {
 		TRACE0("Failed to create dialog bar m_dlgErrorList\n");
@@ -208,7 +208,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if( !CMDIFrameWnd::PreCreateWindow(cs) )
+	if (!CMDIFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 	return TRUE;
 }
@@ -234,7 +234,7 @@ void CMainFrame::OnViewTreeview()
 {
 	// OnBarCheck();
 
-  if(theApp.m_dlgBarTreeView.IsWindowVisible() )
+  if (theApp.m_dlgBarTreeView.IsWindowVisible() )
   {
     ShowControlBar(&theApp.m_dlgBarTreeView, FALSE, FALSE);
     theApp.m_dlgBarTreeView.SetFocus();
@@ -270,7 +270,7 @@ void CMainFrame::OnClose()
   while (pos!=NULL)
   {
     CSeriousSkaStudioDoc *pmdCurrent = (CSeriousSkaStudioDoc *)theApp.m_pdtDocTemplate->GetNextDoc(pos);
-    if(!pmdCurrent->BeforeDocumentClose()) {
+    if (!pmdCurrent->BeforeDocumentClose()) {
        return;
     }
   }

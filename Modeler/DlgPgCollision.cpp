@@ -55,11 +55,11 @@ CDlgPgCollision::~CDlgPgCollision()
 void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
 
   // if transfering data from document to dialog
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
     // get collision min vector
     FLOAT3D vMinCollisionBox = pDoc->m_emEditModel.GetCollisionBoxMin();
@@ -96,12 +96,12 @@ void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
 
     m_bCollideAsBox = pDoc->m_emEditModel.edm_md.md_bCollideAsCube;
     // if we are colliding using sphere approximation
-    switch( iEqualityType)
+    switch (iEqualityType)
     {
       case HEIGHT_EQ_WIDTH:
       {
         m_EqualityRadio = 0;
-        if( !m_bCollideAsBox)
+        if (!m_bCollideAsBox)
         {
           GetDlgItem( IDC_STATIC_HEIGHT)->EnableWindow( FALSE);
           GetDlgItem( IDC_EDIT_HEIGHT)->EnableWindow( FALSE);
@@ -112,7 +112,7 @@ void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
       case LENGTH_EQ_WIDTH:
       {
         m_EqualityRadio = 1;
-        if( !m_bCollideAsBox)
+        if (!m_bCollideAsBox)
         {
           GetDlgItem( IDC_STATIC_LENGHT)->EnableWindow( FALSE);
           GetDlgItem( IDC_EDIT_LENGHT)->EnableWindow( FALSE);
@@ -123,7 +123,7 @@ void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
       case LENGTH_EQ_HEIGHT:
       {
         m_EqualityRadio = 2;
-        if( !m_bCollideAsBox)
+        if (!m_bCollideAsBox)
         {
           GetDlgItem( IDC_STATIC_LENGHT)->EnableWindow( FALSE);
           GetDlgItem( IDC_EDIT_LENGHT)->EnableWindow( FALSE);
@@ -155,13 +155,13 @@ void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if transfering data from dialog to document
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
     // if we are colliding using sphere approximation
-    if( !pDoc->m_emEditModel.edm_md.md_bCollideAsCube)
+    if (!pDoc->m_emEditModel.edm_md.md_bCollideAsCube)
     {
       INDEX iEqualityType;
-      switch( m_EqualityRadio)
+      switch (m_EqualityRadio)
       {
         case 0:
         {
@@ -193,7 +193,7 @@ void CDlgPgCollision::DoDataExchange(CDataExchange* pDX)
         }
       }
       // set collision equality value
-      if( pDoc->m_emEditModel.GetCollisionBoxDimensionEquality() != iEqualityType)
+      if (pDoc->m_emEditModel.GetCollisionBoxDimensionEquality() != iEqualityType)
       {
         pDoc->m_emEditModel.SetCollisionBoxDimensionEquality( iEqualityType);
       }
@@ -264,7 +264,7 @@ BOOL CDlgPgCollision::OnIdle(LONG lCount)
 BOOL _bAvoidingLooping = FALSE;
 void CDlgPgCollision::OnChangeEditWidth() 
 {
-	if( !_bAvoidingLooping)
+	if (!_bAvoidingLooping)
   {
 	  _bAvoidingLooping = TRUE;
     UpdateData(TRUE);
@@ -275,7 +275,7 @@ void CDlgPgCollision::OnChangeEditWidth()
 
 void CDlgPgCollision::OnChangeEditHeight() 
 {
-	if( !_bAvoidingLooping)
+	if (!_bAvoidingLooping)
   {
 	  _bAvoidingLooping = TRUE;
     UpdateData(TRUE);
@@ -286,7 +286,7 @@ void CDlgPgCollision::OnChangeEditHeight()
 
 void CDlgPgCollision::OnChangeEditLenght() 
 {
-	if( !_bAvoidingLooping)
+	if (!_bAvoidingLooping)
   {
 	  _bAvoidingLooping = TRUE;
     UpdateData(TRUE);
@@ -337,7 +337,7 @@ void CDlgPgCollision::OnLEqH()
 void CDlgPgCollision::OnChangeCollisionBoxName() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   // document has been changed
   pDoc->SetModifiedFlag();
@@ -347,7 +347,7 @@ void CDlgPgCollision::OnChangeCollisionBoxName()
 void CDlgPgCollision::OnNextCollisionBox() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   pDoc->m_emEditModel.ActivateNextCollisionBox();
   UpdateData(FALSE);
@@ -358,7 +358,7 @@ void CDlgPgCollision::OnNextCollisionBox()
 void CDlgPgCollision::OnPreviousCollisionBox() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   pDoc->m_emEditModel.ActivatePreviousCollisionBox();
   UpdateData(FALSE);
@@ -369,7 +369,7 @@ void CDlgPgCollision::OnPreviousCollisionBox()
 void CDlgPgCollision::OnAddCollisionBox() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   pDoc->m_emEditModel.AddCollisionBox();
   UpdateData(FALSE);
@@ -383,7 +383,7 @@ void CDlgPgCollision::OnAddCollisionBox()
 void CDlgPgCollision::OnRemoveCollisionBox() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   pDoc->m_emEditModel.DeleteCurrentCollisionBox();
   UpdateData(FALSE);
@@ -397,7 +397,7 @@ void CDlgPgCollision::OnRemoveCollisionBox()
 void CDlgPgCollision::OnCollideAsBox() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();
   pDoc->m_emEditModel.edm_md.md_bCollideAsCube = !pDoc->m_emEditModel.edm_md.md_bCollideAsCube;
   UpdateData(TRUE);
@@ -410,7 +410,7 @@ void CDlgPgCollision::OnCollideAsBox()
 void CDlgPgCollision::OnAllignToSize() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();
   FLOATaabbox3D MaxBB;
   pDoc->m_emEditModel.edm_md.GetAllFramesBBox( MaxBB);

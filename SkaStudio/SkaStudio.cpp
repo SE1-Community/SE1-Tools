@@ -213,7 +213,7 @@ BOOL CSeriousSkaStudioApp::SubInitInstance()
   }
   catch(char *strError) 
   {
-    if(pmiLight) pmiLight->Clear();
+    if (pmiLight) pmiLight->Clear();
     ErrorMessage("%s",strError);
     // return FALSE;
   }
@@ -244,7 +244,7 @@ void CSeriousSkaStudioApp::OnFileNew()
 {
   // add new model instance
   CModelInstance *pmi = OnAddNewModelInstance();
-  if(pmi == NULL)
+  if (pmi == NULL)
   {
     //delete pDocument;
     theApp.ErrorMessage("Failed to create model instance");
@@ -302,7 +302,7 @@ void CSeriousSkaStudioApp::OnFileOpen()
   fnFull = _fnmApplicationPath + fnSim;
 
   CModelInstance *pmi = OnOpenExistingInstance(fnSim);
-  if(pmi == NULL)
+  if (pmi == NULL)
   {
     // if faile to open smc
     theApp.ErrorMessage("Failed to open model instance '%s'",(const char*)fnSim);
@@ -359,7 +359,7 @@ CSeriousSkaStudioDoc *CSeriousSkaStudioApp::GetDocument()
   // obtain current view ptr
   CSeriousSkaStudioView *pSKAView = GetActiveView();
   // if view does not exist, return
-  if( pSKAView == NULL)
+  if (pSKAView == NULL)
   {
     return NULL;
   }
@@ -406,7 +406,7 @@ BOOL StartParser(CTString fnParseFile)
     WarningMessage(strError);
     // AfxMessageBox(strError);
     theApp.ErrorMessage(strError);
-    if(yyin!=NULL) fclose(yyin);
+    if (yyin!=NULL) fclose(yyin);
     return FALSE;
   }
 return TRUE;
@@ -418,7 +418,7 @@ BOOL CSeriousSkaStudioApp::ConvertMesh(CTFileName fnMesh)
   CMesh mesh;
   _yy_pMesh = &mesh;
   // parse fnMesh
-  if(!StartParser(fnMesh))
+  if (!StartParser(fnMesh))
   {
     // if failed clear mesh and return
     mesh.Clear();              
@@ -427,7 +427,7 @@ BOOL CSeriousSkaStudioApp::ConvertMesh(CTFileName fnMesh)
   // count optimization results
   int ctmlods = mesh.msh_aMeshLODs.Count();
   int imlod=0;
-  for(;imlod<ctmlods;imlod++)
+  for (;imlod<ctmlods;imlod++)
   {
     ctMeshVxBeforeOpt += mesh.msh_aMeshLODs[imlod].mlod_aVertices.Count();
   }
@@ -435,7 +435,7 @@ BOOL CSeriousSkaStudioApp::ConvertMesh(CTFileName fnMesh)
   mesh.Optimize();
   mesh.NormalizeWeights();
   // count optimization results
-  for(imlod=0;imlod<ctmlods;imlod++)
+  for (imlod=0;imlod<ctmlods;imlod++)
   {
     ctMeshVxAfterOpt += mesh.msh_aMeshLODs[imlod].mlod_aVertices.Count();
   }
@@ -465,7 +465,7 @@ BOOL CSeriousSkaStudioApp::ConvertMesh(CTFileName fnMesh)
   }
   catch(char *strError)
   {
-    if(strError != NULL) ErrorMessage(strError);
+    if (strError != NULL) ErrorMessage(strError);
     return FALSE;
   }
   return TRUE;
@@ -476,7 +476,7 @@ BOOL CSeriousSkaStudioApp::ConvertSkeleton(CTFileName fnSkeleton)
 {
   CSkeleton skeleton;
   _yy_pSkeleton = &skeleton;
-  if(!StartParser(fnSkeleton))
+  if (!StartParser(fnSkeleton))
   {
     //if failed clear skeleton and return
     skeleton.Clear();
@@ -510,7 +510,7 @@ BOOL CSeriousSkaStudioApp::ConvertSkeleton(CTFileName fnSkeleton)
   }
   catch(char *strError)
   {
-    if(strError != NULL) ErrorMessage("%s",strError);
+    if (strError != NULL) ErrorMessage("%s",strError);
     return FALSE;
   }
   return TRUE;
@@ -521,7 +521,7 @@ BOOL CSeriousSkaStudioApp::ConvertAnimSet(CTFileName fnAnimSet)
 {
   CAnimSet animset;
   _yy_pAnimSet = &animset;
-  if(!StartParser(fnAnimSet))
+  if (!StartParser(fnAnimSet))
   {
     //if failed clear animset and return
     animset.Clear();
@@ -554,7 +554,7 @@ BOOL CSeriousSkaStudioApp::ConvertAnimSet(CTFileName fnAnimSet)
   }
   catch(char *strError)
   {
-    if(strError != NULL) ErrorMessage("%s",strError);
+    if (strError != NULL) ErrorMessage("%s",strError);
     return FALSE;
   }
   return TRUE;
@@ -570,7 +570,7 @@ void CSeriousSkaStudioApp::SaveSmcFile(CModelInstance &mi,BOOL bSaveChildren)
   CModelInstance *pmiFirst=&mi;
   CTFileName fnSmc = mi.mi_fnSourceFile;
   CModelInstance *pfmi = mi.GetFirstNonReferencedParent(GetDocument()->m_ModelInstance);
-  if(pfmi!=NULL) {
+  if (pfmi!=NULL) {
     pmiParent = pfmi->GetParent(pDoc->m_ModelInstance);
     pmiFirst = pfmi;
     fnSmc = pfmi->mi_fnSourceFile;
@@ -581,7 +581,7 @@ void CSeriousSkaStudioApp::SaveSmcFile(CModelInstance &mi,BOOL bSaveChildren)
   {
     fnSmc.RemoveApplicationPath_t();
   }
-  catch(char *){}
+  catch(char *) {}
 
   CTFileStream ostrFile;
   // try to save model instance
@@ -605,12 +605,12 @@ BOOL CSeriousSkaStudioApp::SaveMeshListFile(MeshInstance &mshi, BOOL bConvert)
   fnMeshList = fnMeshList.NoExt() + ".aml";
   try {
     fnMeshList.RemoveApplicationPath_t();
-  } catch(char *){}
+  } catch(char *) {}
   CTString strBackUp;
   try {
     // back up current mesh list file
     strBackUp.Load_t(fnMeshList);
-  } catch(char*){}
+  } catch(char*) {}
   // save mesh instance in new mesh list file
   CTFileStream ostrFile;
   try {
@@ -624,14 +624,14 @@ BOOL CSeriousSkaStudioApp::SaveMeshListFile(MeshInstance &mshi, BOOL bConvert)
   }
 
   // if new mesh list file needs to be converted
-  if(bConvert) {
-    if(!ConvertMesh(fnMeshList)) {
+  if (bConvert) {
+    if (!ConvertMesh(fnMeshList)) {
       // convert failed
-      if(strBackUp.Length()>0) {
+      if (strBackUp.Length()>0) {
         // try returning old mesh list file
         try {
           strBackUp.Save_t(fnMeshList);
-        } catch(char*){}
+        } catch(char*) {}
       }
     }
   }
@@ -648,14 +648,14 @@ BOOL CSeriousSkaStudioApp::SaveSkeletonListFile(CSkeleton &skl, BOOL bConvert)
   try {
     fnSkeletonList.RemoveApplicationPath_t();
   }
-  catch(char *){}
+  catch(char *) {}
 
   // back up current skeleton list file
   CTString strBackUp;
   try {
     strBackUp.Load_t(fnSkeletonList);
   }
-  catch(char*){}
+  catch(char*) {}
 
   CTFileStream ostrFile;
   try {
@@ -668,15 +668,15 @@ BOOL CSeriousSkaStudioApp::SaveSkeletonListFile(CSkeleton &skl, BOOL bConvert)
     return FALSE;
   }
 
-  if(bConvert) {
-    if(!ConvertSkeleton(fnSkeletonList)) {
+  if (bConvert) {
+    if (!ConvertSkeleton(fnSkeletonList)) {
       // convert failed
-      if(strBackUp.Length()>0) {
+      if (strBackUp.Length()>0) {
         // try returning old mesh list file
         try {
           strBackUp.Save_t(fnSkeletonList);
         }
-        catch(char*){}
+        catch(char*) {}
       }
     }
   }
@@ -692,13 +692,13 @@ BOOL CSeriousSkaStudioApp::SaveAnimSetFile(CAnimSet &as, BOOL bConvert)
   fnAnimSet = fnAnimSet.NoExt() + ".aal";
   try {
     fnAnimSet.RemoveApplicationPath_t();
-  } catch(char *){}
+  } catch(char *) {}
 
   // back up current skeleton list file
   CTString strBackUp;
   try {
     strBackUp.Load_t(fnAnimSet); 
-  } catch(char*){}
+  } catch(char*) {}
 
   CTFileStream ostrFile;
   try {
@@ -711,7 +711,7 @@ BOOL CSeriousSkaStudioApp::SaveAnimSetFile(CAnimSet &as, BOOL bConvert)
     return FALSE;
   }
 
-  if(bConvert) {
+  if (bConvert) {
     ConvertAnimSet(fnAnimSet);
   }
 
@@ -728,22 +728,22 @@ BOOL CSeriousSkaStudioApp::ConvertAnimationInAnimSet(CAnimSet *pas,Animation *pa
   CTString strAnimSet;
   CTString strCustomSpeed;
   CTString strCompresion = "FALSE";
-  if(pan->an_bCompresed) strCompresion = "TRUE";
-  if(pan->an_bCustomSpeed) strCustomSpeed.PrintF("  ANIMSPEED %g;",pan->an_fSecPerFrame);
+  if (pan->an_bCompresed) strCompresion = "TRUE";
+  if (pan->an_bCustomSpeed) strCustomSpeed.PrintF("  ANIMSPEED %g;",pan->an_fSecPerFrame);
   strAnimSet.PrintF("ANIMSETLIST\n{\n  TRESHOLD %g;\n  COMPRESION %s;\n%s\n  #INCLUDE \"%s\"\n}\n",
     pan->an_fTreshold,(const char*)strCompresion,(const char*)strCustomSpeed,(const char*)pan->an_fnSourceFile);
 
   try
   {
     strAnimSet.Save_t(fnTemp + ".aal");
-    if(!ConvertAnimSet(fnTemp + ".aal")) {
+    if (!ConvertAnimSet(fnTemp + ".aal")) {
       EnableRendering();
       return FALSE;
     }
     CAnimSet as;
     // load new animset
     as.Load_t(fnTemp + ".ba");
-    if(as.as_Anims.Count()>0)
+    if (as.as_Anims.Count()>0)
     {
       Animation &anNew = as.as_Anims[0];
       // overwrite old animation with new one
@@ -765,9 +765,9 @@ BOOL CSeriousSkaStudioApp::ConvertAnimationInAnimSet(CAnimSet *pas,Animation *pa
 void CSeriousSkaStudioApp::UpdateRootModelInstance()
 {
   CSeriousSkaStudioDoc *pDoc = GetDocument();
-  if(pDoc!=NULL) {
+  if (pDoc!=NULL) {
     CModelInstance *pmi = pDoc->m_ModelInstance;
-    if(pmi!=NULL) {
+    if (pmi!=NULL) {
       m_dlgBarTreeView.UpdateModelInstInfo(pmi);
     }
   }
@@ -779,12 +779,12 @@ void CSeriousSkaStudioApp::ReloadRootModelInstance()
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
   CModelInstance *pmi=NULL;
 
-  if(pDoc==NULL) pmi = NULL;
+  if (pDoc==NULL) pmi = NULL;
   else pmi = pDoc->m_ModelInstance;
   // flag for parser to remember source file names
   CModelInstance::EnableSrcRememberFN(TRUE);
   // if model instance is valid
-  if(pmi != NULL)
+  if (pmi != NULL)
   {
     // clear current model instance
     pDoc->m_ModelInstance->Clear();
@@ -794,7 +794,7 @@ void CSeriousSkaStudioApp::ReloadRootModelInstance()
     } catch(char *strError) {
       // error in parsing occured
       ErrorMessage("%s",strError);
-      if(pDoc->m_ModelInstance != NULL) pDoc->m_ModelInstance->Clear();
+      if (pDoc->m_ModelInstance != NULL) pDoc->m_ModelInstance->Clear();
       pDoc->m_ModelInstance = NULL;
     }
     UpdateRootModelInstance();
@@ -811,7 +811,7 @@ void CSeriousSkaStudioApp::ReloadRootModelInstance()
 void CSeriousSkaStudioApp::ReselectCurrentItem()
 {
   HTREEITEM hSelected = m_dlgBarTreeView.m_TreeCtrl.GetSelectedItem();
-  if(hSelected != NULL) {
+  if (hSelected != NULL) {
     m_dlgBarTreeView.SelItemChanged(hSelected);
   }
 }
@@ -838,28 +838,28 @@ void CSeriousSkaStudioApp::OnImportConvert()
     char *pchDot = strrchr(fnCurent, '.');
     if (pchDot==NULL) 
       continue;
-    else if(strcmp((_strlwr(pchDot)),".aml")==0) 
+    else if (strcmp((_strlwr(pchDot)),".aml")==0) 
     {
-      if(ConvertMesh(itConvert.Current()))
+      if (ConvertMesh(itConvert.Current()))
       {
         ctMeshes++;
       }
     }
-    else if(strcmp((_strlwr(pchDot)),".asl")==0)
+    else if (strcmp((_strlwr(pchDot)),".asl")==0)
     {
-      if(ConvertSkeleton(itConvert.Current()))
+      if (ConvertSkeleton(itConvert.Current()))
         ctSkeletons++;
     }
-    else if(strcmp((_strlwr(pchDot)),".aal")==0)
+    else if (strcmp((_strlwr(pchDot)),".aal")==0)
     {
-      if(ConvertAnimSet(itConvert.Current()))
+      if (ConvertAnimSet(itConvert.Current()))
         ctAnimSets++;
     }
   }
   
   CTimerValue tvStop = _pTimer->GetHighPrecisionTimer();
 
-  if(ctMeshes+ctSkeletons+ctAnimSets == 0) return;
+  if (ctMeshes+ctSkeletons+ctAnimSets == 0) return;
   char strText[256];
   char strOptimizeText[128];
   sprintf(strText,"Convert results:\n\n  Meshes    \t%d\n  Skeletons \t%d\n  AnimSets  \t%d\n\nTime to convert: \t%d ms",ctMeshes,ctSkeletons,ctAnimSets,(int)((tvStop-tvStartOptimizer).GetSeconds()*1000));
@@ -879,17 +879,17 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
   ANGLE3D aRot;
   BOOL bSaveOffSet = TRUE;
   // if model instance have parent
-  if(pmiParent!=NULL) {
+  if (pmiParent!=NULL) {
     // if source file names are same, save offsets in file
     bSaveOffSet = (pmi->mi_fnSourceFile == pmiParent->mi_fnSourceFile);
   }
   
-  if(bSaveOffSet)
+  if (bSaveOffSet)
   {
     pmi->mi_qvOffset.qRot.ToMatrix(mat);
     DecomposeRotationMatrix(aRot,mat);
     // if offset exists
-    if((vPos(1)) || (vPos(2)) || (vPos(3)) || (aRot(1)) || (aRot(2)) || (aRot(3))) {
+    if ((vPos(1)) || (vPos(2)) || (vPos(3)) || (aRot(1)) || (aRot(2)) || (aRot(3))) {
       ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
       ostrFile.FPrintF_t("OFFSET    \t%g,%g,%g,%g,%g,%g;\n",vPos(1),vPos(2),vPos(3),aRot(1),aRot(2),aRot(3));
     }
@@ -902,7 +902,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
   iCurSpaces+=2;
   INDEX ctmi=pmi->mi_aMeshInst.Count();
   // for each mesh instance
-  for(INDEX imi=0;imi<ctmi;imi++) {
+  for (INDEX imi=0;imi<ctmi;imi++) {
     MeshInstance &mshi = pmi->mi_aMeshInst[imi];
     ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
     CTString fnMesh = mshi.mi_pMesh->GetName();
@@ -914,7 +914,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
     ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
     ostrFile.FPrintF_t("{\n");
     // for each texture instance
-    for(INDEX iti=0;iti<ctti;iti++) {
+    for (INDEX iti=0;iti<ctti;iti++) {
       TextureInstance &ti = mshi.mi_tiTextures[iti];
       ostrFile.FPrintF_t(MAKESPACE(iCurSpaces+2));
       ostrFile.FPrintF_t("\"%s\"\tTFNM \"%s\";\n",(const char*)ska_GetStringFromTable(ti.GetID()),(const char*)ti.ti_toTexture.GetName());
@@ -924,13 +924,13 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
   }
 
   // write skeleton
-  if(pmi->mi_psklSkeleton != NULL) {
+  if (pmi->mi_psklSkeleton != NULL) {
     ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
     ostrFile.FPrintF_t("SKELETON  \tTFNM \"%s\";\n",(const char*)pmi->mi_psklSkeleton->GetName());
   }
   INDEX ctas=pmi->mi_aAnimSet.Count();
   // write animset
-  for(INDEX ias=0;ias<ctas;ias++)
+  for (INDEX ias=0;ias<ctas;ias++)
   {
     ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
     ostrFile.FPrintF_t("ANIMSET   \tTFNM \"%s\";\n",(const char*)pmi->mi_aAnimSet[ias].GetName());
@@ -949,7 +949,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
   ostrFile.FPrintF_t("{\n");
   // write each colison box
   INDEX ctcb = pmi->mi_cbAABox.Count();
-  for(INDEX icb=0;icb<ctcb;icb++)
+  for (INDEX icb=0;icb<ctcb;icb++)
   {
     ostrFile.FPrintF_t(MAKESPACE(iCurSpaces+2));
     ColisionBox &cb = pmi->mi_cbAABox[icb];
@@ -966,7 +966,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
 
   // write children
   INDEX ctmic = pmi->mi_cmiChildren.Count();
-  for(INDEX imic=0;imic<ctmic;imic++)
+  for (INDEX imic=0;imic<ctmic;imic++)
   {
     CModelInstance *pcmi = &pmi->mi_cmiChildren[imic];
 
@@ -981,7 +981,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
     ostrFile.FPrintF_t("PARENTBONE\t\"%s\";\n",(const char*)ska_GetStringFromTable(pcmi->mi_iParentBoneID));
 
     // attachment was in same file
-    if(pcmi->mi_fnSourceFile == pmi->mi_fnSourceFile)
+    if (pcmi->mi_fnSourceFile == pmi->mi_fnSourceFile)
     {
       // continue writing in this file
       SaveModelInstance_t(pcmi,pmi,ostrFile,bSaveChildren);
@@ -989,7 +989,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
     else // attachment has its own file
     {
       // write child offset
-      if((vPos(1)) || (vPos(2)) || (vPos(3)) || (aRot(1)) || (aRot(2)) || (aRot(3)))
+      if ((vPos(1)) || (vPos(2)) || (vPos(3)) || (aRot(1)) || (aRot(2)) || (aRot(3)))
       {
         ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
         ostrFile.FPrintF_t("OFFSET    \t%g,%g,%g,%g,%g,%g;\n",vPos(1),vPos(2),vPos(3),aRot(1),aRot(2),aRot(3));
@@ -1002,7 +1002,7 @@ void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstanc
       ostrFile.FPrintF_t(MAKESPACE(iCurSpaces));
       // include that file
       ostrFile.FPrintF_t("#INCLUDE\t\"%s\"\n",(const char*)fnCmiSourceFile);
-      if(bSaveChildren) 
+      if (bSaveChildren) 
       {
         INDEX itmpSpaces = iCurSpaces;
         iCurSpaces = 0;
@@ -1023,12 +1023,12 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
   ostrFile.Create_t(fnShaderParams,CTStream::CM_TEXT);
   INDEX ctsrf=pmlod->mlod_aSurfaces.Count();
   ostrFile.FPrintF_t("SHADER_PARAMS 1.0;\nSHADER_SURFACES %d\n{\n",ctsrf);
-  for(INDEX isrf=0;isrf<ctsrf;isrf++)
+  for (INDEX isrf=0;isrf<ctsrf;isrf++)
   {
     MeshSurface &msrf = pmlod->mlod_aSurfaces[isrf];
     ShaderParams *pShdParams = &msrf.msrf_ShadingParams;
     CTString strShaderName;
-    if(msrf.msrf_pShader!=NULL) strShaderName = msrf.msrf_pShader->GetName();
+    if (msrf.msrf_pShader!=NULL) strShaderName = msrf.msrf_pShader->GetName();
     CTString strSurfName = ska_GetStringFromTable(msrf.msrf_iSurfaceID);
     
     ostrFile.FPrintF_t("  SHADER_SURFACE \"%s\";\n  {\n",(const char*)strSurfName);
@@ -1036,7 +1036,7 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
     // write texture names
     INDEX cttx = pShdParams->sp_aiTextureIDs.Count();
     ostrFile.FPrintF_t("    SHADER_TEXTURES %d\n    {\n",cttx);
-    for(INDEX itx=0;itx<cttx;itx++)
+    for (INDEX itx=0;itx<cttx;itx++)
     {
       CTString strTextID = ska_GetStringFromTable(pShdParams->sp_aiTextureIDs[itx]);
       ostrFile.FPrintF_t("      \"%s\";\n",(const char*)strTextID);
@@ -1045,7 +1045,7 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
     // write uvmaps
     INDEX cttxc = pShdParams->sp_aiTexCoordsIndex.Count();
     ostrFile.FPrintF_t("    SHADER_UVMAPS %d\n    {\n",cttxc);
-    for(INDEX itxc=0;itxc<cttxc;itxc++)
+    for (INDEX itxc=0;itxc<cttxc;itxc++)
     {
       ostrFile.FPrintF_t("      %d;\n",pShdParams->sp_aiTexCoordsIndex[itxc]);
     }
@@ -1053,7 +1053,7 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
     // write colors
     INDEX ctcol=pShdParams->sp_acolColors.Count();
     ostrFile.FPrintF_t("    SHADER_COLORS %d\n    {\n",ctcol);
-    for(INDEX icol=0;icol<ctcol;icol++)
+    for (INDEX icol=0;icol<ctcol;icol++)
     {
       CTString strColor = CTString(0,"%.8X",pShdParams->sp_acolColors[icol]);
       ostrFile.FPrintF_t("      0x%s;\n",(const char*)strColor);
@@ -1062,7 +1062,7 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
     //write floats
     INDEX ctfl=pShdParams->sp_afFloats.Count();
     ostrFile.FPrintF_t("    SHADER_FLOATS %d\n    {\n",ctfl);
-    for(INDEX ifl=0;ifl<ctfl;ifl++)
+    for (INDEX ifl=0;ifl<ctfl;ifl++)
     {
       ostrFile.FPrintF_t("      %g;\n",pShdParams->sp_afFloats[ifl]);
     }
@@ -1084,7 +1084,7 @@ void CSeriousSkaStudioApp::SaveMeshInstance_t(MeshInstance &mshi,CTFileStream &o
   ostrFile.FPrintF_t("MESHLODLIST\n{\n");
 
   INDEX ctmlod = msh.msh_aMeshLODs.Count();
-  for(INDEX imlod=0;imlod<ctmlod;imlod++)
+  for (INDEX imlod=0;imlod<ctmlod;imlod++)
   {
     MeshLOD &mlod = msh.msh_aMeshLODs[imlod];
     ostrFile.FPrintF_t("  MAX_DISTANCE %g;\n",mlod.mlod_fMaxDistance);
@@ -1092,7 +1092,7 @@ void CSeriousSkaStudioApp::SaveMeshInstance_t(MeshInstance &mshi,CTFileStream &o
     CTFileName fnSource = mlod.mlod_fnSourceFile;
     CTFileName fnShaderParams = fnSource.FileDir()+fnSource.FileName()+".shp";
     try { fnSource.RemoveApplicationPath_t(); }
-    catch(char *){}
+    catch(char *) {}
     ostrFile.FPrintF_t("  #INCLUDE \"%s\"\n",(const char*)fnShaderParams);
     ostrFile.FPrintF_t("  #INCLUDE \"%s\"\n",(const char*)fnSource);
     SaveShaderParams_t(&mlod,fnShaderParams);
@@ -1105,17 +1105,17 @@ void CSeriousSkaStudioApp::SaveAnimSet_t(CAnimSet &as,CTFileStream &ostrFile)
   ostrFile.FPrintF_t("ANIMSETLIST\n{\n");
 
   INDEX ctan = as.as_Anims.Count();
-  for(INDEX ian=0;ian<ctan;ian++)
+  for (INDEX ian=0;ian<ctan;ian++)
   {
     Animation &an = as.as_Anims[ian];
     // try to remove app path from source
     CTFileName fnSource = an.an_fnSourceFile;
     try { fnSource.RemoveApplicationPath_t(); }
-    catch(char *){}
+    catch(char *) {}
     ostrFile.FPrintF_t("  TRESHOLD %g;\n",an.an_fTreshold);
-    if(an.an_bCompresed) ostrFile.FPrintF_t("  COMPRESION TRUE;\n");
+    if (an.an_bCompresed) ostrFile.FPrintF_t("  COMPRESION TRUE;\n");
     else ostrFile.FPrintF_t("  COMPRESION FALSE;\n");
-    if(an.an_bCustomSpeed) ostrFile.FPrintF_t("  ANIMSPEED %g;\n",an.an_fSecPerFrame);
+    if (an.an_bCustomSpeed) ostrFile.FPrintF_t("  ANIMSPEED %g;\n",an.an_fSecPerFrame);
     ostrFile.FPrintF_t("  #INCLUDE \"%s\"\n",(const char*)fnSource);
   }
   ostrFile.FPrintF_t("}\n");
@@ -1126,14 +1126,14 @@ void CSeriousSkaStudioApp::SaveSkeletonList_t(CSkeleton &skl,CTFileStream &ostrF
   ostrFile.FPrintF_t("SKELETONLODLIST\n{\n");
 
   INDEX ctslod = skl.skl_aSkeletonLODs.Count();
-  for(INDEX islod=0;islod<ctslod;islod++)
+  for (INDEX islod=0;islod<ctslod;islod++)
   {
     SkeletonLOD &slod = skl.skl_aSkeletonLODs[islod];
     ostrFile.FPrintF_t("  MAX_DISTANCE %g;\n",slod.slod_fMaxDistance);
     // try to remove app path from source
     CTFileName fnSource = slod.slod_fnSourceFile;
     try { fnSource.RemoveApplicationPath_t(); }
-    catch(char *){}
+    catch(char *) {}
     ostrFile.FPrintF_t("  #INCLUDE \"%s\"\n",(const char*)fnSource);
   }
   ostrFile.FPrintF_t("}\n");
@@ -1153,7 +1153,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
   CTFileName fnAnimSet = fnSmcSource.NoExt() + ".aal";
 
   // if mesh list with that name does not exists
-  if(!FileExists(fnMeshList)) {
+  if (!FileExists(fnMeshList)) {
     // create new empty one
     CTFileStream ostrFile;
     try {
@@ -1164,7 +1164,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
       // close file
       ostrFile.Close();
       // convert it to binary (just to exist)
-      if(theApp.ConvertMesh(fnMeshList)) {
+      if (theApp.ConvertMesh(fnMeshList)) {
         fnMeshList = fnMeshList.NoExt() + ".bm";
         // add it to selected model instance
           mi.AddMesh_t(fnMeshList);
@@ -1174,7 +1174,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
     }
   }
   // if skeleton list with that name does not exists
-  if(!FileExists(fnSkeletonList)) {
+  if (!FileExists(fnSkeletonList)) {
     // create new empty one
     CTFileStream ostrFile;
     try {
@@ -1185,7 +1185,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
       // close file
       ostrFile.Close();
       // convert it to binary (just to exist)
-      if(theApp.ConvertSkeleton(fnSkeletonList)) {
+      if (theApp.ConvertSkeleton(fnSkeletonList)) {
         fnSkeletonList = fnSkeletonList.NoExt() + ".bs";
         // add it to selected model instance
           mi.AddSkeleton_t(fnSkeletonList);
@@ -1195,7 +1195,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
     }
   }
   // if animset with that name does not exists
-  if(!FileExists(fnAnimSet)) {
+  if (!FileExists(fnAnimSet)) {
     // create new empty one
     CTFileStream ostrFile;
     try {
@@ -1206,7 +1206,7 @@ void CSeriousSkaStudioApp::AddEmptyListsToModelInstance(CModelInstance &mi)
       // close file
       ostrFile.Close();
       // convert it to binary (just to exist)
-      if(theApp.ConvertAnimSet(fnAnimSet)) {
+      if (theApp.ConvertAnimSet(fnAnimSet)) {
         fnAnimSet = fnAnimSet.NoExt() + ".ba";
         // add it to selected model instance
           mi.AddAnimSet_t(fnAnimSet);
@@ -1234,11 +1234,11 @@ CModelInstance *CSeriousSkaStudioApp::OnAddNewModelInstance()
   CModelInstance::EnableSrcRememberFN(TRUE);
 
   // check if file allready exist
-  if(FileExists(fnSim))
+  if (FileExists(fnSim))
   {
     CTString strText = CTString(0,"'%s' already exists.\nDo you want to overwrite it?",fnSim);
     int iRet = AfxMessageBox(CString(strText),MB_YESNO);
-    if(iRet == IDNO) {
+    if (iRet == IDNO) {
       return NULL;
     }
   }
@@ -1258,7 +1258,7 @@ CModelInstance *CSeriousSkaStudioApp::OnAddNewModelInstance()
   catch(char *strError)
   {
     ErrorMessage("%s",strError);
-    if(pmi != NULL) pmi->Clear();
+    if (pmi != NULL) pmi->Clear();
     return NULL;
   }
 
@@ -1274,7 +1274,7 @@ CModelInstance *CSeriousSkaStudioApp::OnOpenExistingInstance(CTString strModelIn
 
   CModelInstance::EnableSrcRememberFN(TRUE);
   // check if file exist
-  if(FileExists(strModelInstance))
+  if (FileExists(strModelInstance))
   {
     // start parsing smc file
     try
@@ -1285,7 +1285,7 @@ CModelInstance *CSeriousSkaStudioApp::OnOpenExistingInstance(CTString strModelIn
     {
       // error in parsing occured
       ErrorMessage("%s",strError);
-      if(pmi != NULL) pmi->Clear();
+      if (pmi != NULL) pmi->Clear();
       return NULL;
     }
   }
@@ -1341,7 +1341,7 @@ void CSeriousSkaStudioApp::ErrorMessage(const char *strFormat, ...)
   CTime tm = CTime::GetCurrentTime();
   // set time and error
   strText.PrintF("%.2d:%.2d:%.2d %s",tm.GetHour(),tm.GetMinute(),tm.GetSecond(),(const char*)strBuffer);
-  if(bAppInitialized) {
+  if (bAppInitialized) {
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
     pMainFrame->m_wndStatusBar.SetPaneText(0,CString(strText),TRUE);
     // add message in log list
@@ -1366,7 +1366,7 @@ void CSeriousSkaStudioApp::NotificationMessage(const char *strFormat, ...)
   CTime tm = CTime::GetCurrentTime();
   // set time and error
   strText.PrintF("%.2d:%.2d:%.2d %s",tm.GetHour(),tm.GetMinute(),tm.GetSecond(),(const char*)strBuffer);
-  if(bAppInitialized) {
+  if (bAppInitialized) {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   pMainFrame->m_wndStatusBar.SetPaneText(0,CString(strText),TRUE);
   // add message in log list
@@ -1395,7 +1395,7 @@ void CSeriousSkaStudioApp::SaveRootModelAs()
 {
   CSeriousSkaStudioDoc *pDoc = GetDocument();
   CModelInstance *pmi = pDoc->m_ModelInstance;
-  if(pmi != NULL) {
+  if (pmi != NULL) {
     SaveModelAs(pmi);
     // update tile name
     pDoc->SetTitle(CString(pmi->mi_fnSourceFile.FileName() + pmi->mi_fnSourceFile.FileExt()));
@@ -1405,7 +1405,7 @@ void CSeriousSkaStudioApp::SaveRootModelAs()
 BOOL CSeriousSkaStudioApp::SaveModelAs(CModelInstance *pmi)
 {
   ASSERT(pmi!=NULL);
-  if(pmi==NULL) return FALSE;
+  if (pmi==NULL) return FALSE;
   CModelInstance *pmiParent = NULL;
   CString fnOldSmcFile;
 
@@ -1435,7 +1435,7 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
   // count mesh instances
   INDEX ctmshi = mi.mi_aMeshInst.Count();
   // for each mesh instance
-  for(INDEX imshi=0;imshi<ctmshi;imshi++) {
+  for (INDEX imshi=0;imshi<ctmshi;imshi++) {
     MeshInstance &mshi = mi.mi_aMeshInst[imshi];
     CMesh *pMesh = mshi.mi_pMesh;
     // try to save mesh
@@ -1449,7 +1449,7 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
     SaveMeshListFile(mshi,FALSE);
   }
   CSkeleton *psklSkeleton = mi.mi_psklSkeleton;
-  if(psklSkeleton!=NULL) {
+  if (psklSkeleton!=NULL) {
     // try to save skeleton
     try {
       psklSkeleton->Save_t(psklSkeleton->ser_FileName);
@@ -1463,7 +1463,7 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
   // count animsets
   INDEX ctas = mi.mi_aAnimSet.Count();
   // for each animset 
-  for(INDEX ias=0;ias<ctas;ias++)
+  for (INDEX ias=0;ias<ctas;ias++)
   {
     CAnimSet *pas = &mi.mi_aAnimSet[ias];
     // try to save animset
@@ -1479,7 +1479,7 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
   // count children
   INDEX ctcmi = mi.mi_cmiChildren.Count();
   // for each child model instance
-  for(INDEX icmi=0;icmi<ctcmi;icmi++) {
+  for (INDEX icmi=0;icmi<ctcmi;icmi++) {
     CModelInstance &cmi = mi.mi_cmiChildren[icmi];
     // save child model
     SaveModel(cmi);

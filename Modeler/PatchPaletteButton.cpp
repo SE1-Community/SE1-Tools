@@ -53,7 +53,7 @@ void CPatchPaletteButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
   {
     pDC->FillSolidRect( &lpDrawItemStruct->rcItem, 0x00aaaaaa);
     pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_RAISED, BF_RECT);
@@ -66,22 +66,22 @@ void CPatchPaletteButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
     ULONG ulExistingMask = pDoc->m_emEditModel.GetExistingPatchesMask();
     pDC->FillSolidRect( &lpDrawItemStruct->rcItem, 0x00aaaaaa);
     // If this patch doesn't exist
-    if( (ulExistingMask & (1UL << iButtonNo)) == 0)
+    if ((ulExistingMask & (1UL << iButtonNo)) == 0)
     {
       pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_RAISED, BF_RECT);
     }
     // If this patch exists but it is not turned on
-    else if( (ulCurrentMask & (1UL << iButtonNo)) == 0)
+    else if ((ulCurrentMask & (1UL << iButtonNo)) == 0)
     {
       // If this is active patch
-      if( iButtonNo == pModelerView->m_iActivePatchBitIndex)
+      if (iButtonNo == pModelerView->m_iActivePatchBitIndex)
         pDC->DrawIcon( 2, 2, pMainFrame->m_dlgPatchesPalette->m_PatchActiveIcon);
       else
         pDC->DrawIcon( 2, 2, pMainFrame->m_dlgPatchesPalette->m_PatchExistIcon);
       pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_RAISED, BF_RECT);
     }
     // If this patch is turned on and it is active patch
-    else if( iButtonNo == pModelerView->m_iActivePatchBitIndex)
+    else if (iButtonNo == pModelerView->m_iActivePatchBitIndex)
     {
       pDC->DrawIcon( 2, 2, pMainFrame->m_dlgPatchesPalette->m_PatchActiveIcon);
       pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_SUNKEN, BF_RECT);
@@ -101,12 +101,12 @@ void CPatchPaletteButton::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	INDEX iButtonNo = GetDlgCtrlID()-IDC_PATCH_BUTTON_BASE;
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     ULONG ulCurrentMask = pModelerView->m_ModelObject.GetPatchesMask();
     CModelerDoc* pDoc = pModelerView->GetDocument();
     ULONG ulExistingMask = pDoc->m_emEditModel.GetExistingPatchesMask();
-    if( (ulExistingMask & (1UL << iButtonNo)) != 0)
+    if ((ulExistingMask & (1UL << iButtonNo)) != 0)
     {
       pModelerView->m_iActivePatchBitIndex = iButtonNo;
       CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -122,14 +122,14 @@ void CPatchPaletteButton::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	INDEX iButtonNo = GetDlgCtrlID()-IDC_PATCH_BUTTON_BASE;
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     ULONG ulCurrentMask = pModelerView->m_ModelObject.GetPatchesMask();
     CModelerDoc* pDoc = pModelerView->GetDocument();
     ULONG ulExistingMask = pDoc->m_emEditModel.GetExistingPatchesMask();
-    if( (ulExistingMask & (1UL << iButtonNo)) != 0)
+    if ((ulExistingMask & (1UL << iButtonNo)) != 0)
     {
-      if( (ulCurrentMask & (1UL << iButtonNo)) != 0)
+      if ((ulCurrentMask & (1UL << iButtonNo)) != 0)
         pModelerView->m_ModelObject.HidePatch( iButtonNo);
       else
         pModelerView->m_ModelObject.ShowPatch( iButtonNo);

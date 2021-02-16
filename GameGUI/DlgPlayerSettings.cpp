@@ -47,7 +47,7 @@ void CDlgPlayerSettings::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // get selected player
     INDEX iSelectedPlayer = m_listAvailablePlayers.GetCurSel();
@@ -94,7 +94,7 @@ void CDlgPlayerSettings::OnPlayerAppearance()
     // call player appearance dialog
 	  CDlgPlayerAppearance dlgPlayerAppearance( plPlayerInfo.pi_pcPlayerCharacter);
     // if user wants to change player's appearance
-    if( dlgPlayerAppearance.DoModal() == IDOK)
+    if (dlgPlayerAppearance.DoModal() == IDOK)
     {
       // set new appearance
       plPlayerInfo.pi_pcPlayerCharacter = dlgPlayerAppearance.m_pcPlayerCharacter;
@@ -113,12 +113,12 @@ void CDlgPlayerSettings::OnPlayerAppearance()
 
 void CDlgPlayerSettings::InitPlayersAndControlsLists(void)
 {
-  if( !::IsWindow( m_listAvailablePlayers.m_hWnd)) return;
+  if (!::IsWindow( m_listAvailablePlayers.m_hWnd)) return;
   m_listAvailablePlayers.ResetContent();
   m_listAvailableControls.ResetContent();
 
   // fill players and controls lists
-  for( INDEX iPC=0; iPC<8; iPC++)
+  for (INDEX iPC=0; iPC<8; iPC++)
   {
     CTString strPlayer = _pGame->gm_apcPlayers[ iPC].pc_strName;
     m_listAvailablePlayers.AddString( strPlayer);
@@ -153,7 +153,7 @@ void CDlgPlayerSettings::OnEditControls()
     // call controls dialog
     CDlgPlayerControls dlgControls( ctrlControls);
     // if user wants to change controls
-    if( dlgControls.DoModal() == IDOK)
+    if (dlgControls.DoModal() == IDOK)
     {
       // set new controls
       ctrlControls = dlgControls.m_ctrlControls;
@@ -183,7 +183,7 @@ void CDlgPlayerSettings::OnRenameControls()
 //  CTString strName = _pGame->gm_actrlControls[ iSelectedControls].ctrl_strName;
   dlgRename.m_strName = "dummy";
   // if new file properly edited and ok pressed
-  if( (dlgRename.DoModal() == IDOK) &&
+  if ((dlgRename.DoModal() == IDOK) &&
       (strlen( dlgRename.m_strName) != 0) )
   {
 //    _pGame->gm_actrlControls[ iSelectedControls].ctrl_strName = dlgRename.m_strName;
@@ -203,7 +203,7 @@ void CDlgPlayerSettings::OnRenamePlayer()
   CTString strName = _pGame->gm_apcPlayers[ iSelectedPlayer].pc_strName;
   dlgRename.m_strName = strName;
   // if new file properly edited and ok pressed
-  if( (dlgRename.DoModal() == IDOK) &&
+  if ((dlgRename.DoModal() == IDOK) &&
       (strlen( dlgRename.m_strName) != 0) )
   {
     _pGame->gm_apcPlayers[ iSelectedPlayer].pc_strName = dlgRename.m_strName;

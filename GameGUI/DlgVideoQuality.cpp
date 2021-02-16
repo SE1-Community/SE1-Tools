@@ -45,10 +45,10 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
   
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     // set current state of texture quality radio button
-/*    switch( Flesh.gm_tqTextureQuality)
+/*    switch (Flesh.gm_tqTextureQuality)
     {
     case CGame::TQ_LOW:     { m_radioTextureQuality = 0; break; }
     case CGame::TQ_MEDIUM:  { m_radioTextureQuality = 1; break; }
@@ -56,7 +56,7 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
     default:                 { ASSERTALWAYS( "Illegal texture quality value found!"); }
     }
     // set current state of object shadow quality radio button
-    switch( Flesh.gm_osqObjectShadowQuality)
+    switch (Flesh.gm_osqObjectShadowQuality)
     {
     case CGame::OSQ_OFF:    { m_radioObjectShadowQuality = 0; break; }
     case CGame::OSQ_LOW:    { m_radioObjectShadowQuality = 1; break; }
@@ -64,7 +64,7 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
     default:                 { ASSERTALWAYS( "Illegal object shadow quality value found!"); }
     }
     // set current state of world shadow quality radio button
-    switch( Flesh.gm_wsqWorldShadowQuality)
+    switch (Flesh.gm_wsqWorldShadowQuality)
     {
     case CGame::WSQ_LOW:    { m_radioWorldShadowQuality = 0; break; }
     case CGame::WSQ_MEDIUM: { m_radioWorldShadowQuality = 1; break; }
@@ -81,10 +81,10 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // pick up states of texture quality radio button
-/*    switch( m_radioTextureQuality)
+/*    switch (m_radioTextureQuality)
     {
     case 0:    { Flesh.gm_tqTextureQuality = CGame::TQ_LOW; break; }
     case 1:    { Flesh.gm_tqTextureQuality = CGame::TQ_MEDIUM; break; }
@@ -92,7 +92,7 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
     default:   { ASSERTALWAYS( "Illegal texture quality radio value found!"); }
     }
     // pick up states of object shadow quality radio button
-    switch( m_radioObjectShadowQuality)
+    switch (m_radioObjectShadowQuality)
     {
     case 0:    { Flesh.gm_osqObjectShadowQuality = CGame::OSQ_OFF; break; }
     case 1:    { Flesh.gm_osqObjectShadowQuality = CGame::OSQ_LOW; break; }
@@ -100,7 +100,7 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
     default:   { ASSERTALWAYS( "Illegal object shadow quality radio value found!"); }
     }
     // pick up states of world shadow quality radio button
-    switch( m_radioWorldShadowQuality)
+    switch (m_radioWorldShadowQuality)
     {
     case 0:    { Flesh.gm_wsqWorldShadowQuality = CGame::WSQ_LOW; break; }
     case 1:    { Flesh.gm_wsqWorldShadowQuality = CGame::WSQ_MEDIUM; break; }

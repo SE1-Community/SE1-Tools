@@ -44,10 +44,10 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     // set current state of audio quality radio button
-/*    switch( Flesh.gm_aqAudioQuality)
+/*    switch (Flesh.gm_aqAudioQuality)
     {
     case CGame::AQ_LOW:{ m_iAudioQualityRadio = 0; break; }
     case CGame::AQ_MEDIUM:{ m_iAudioQualityRadio = 1; break; }
@@ -64,10 +64,10 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // apply selected state of audio quality radio button
-/*    switch( m_iAudioQualityRadio)
+/*    switch (m_iAudioQualityRadio)
     {
     case 0:{ Flesh.gm_aqAudioQuality = CGame::AQ_LOW; break; }
     case 1:{ Flesh.gm_aqAudioQuality = CGame::AQ_MEDIUM; break; }

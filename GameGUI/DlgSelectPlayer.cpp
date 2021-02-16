@@ -47,12 +47,12 @@ void CDlgSelectPlayer::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
     INDEX iSelectedControls = m_comboAvailableControls.GetCurSel();
     // if there is no player selected
-    if( (iSelectedPlayer == CB_ERR) || ( iSelectedControls == CB_ERR) )
+    if ((iSelectedPlayer == CB_ERR) || ( iSelectedControls == CB_ERR) )
     {
       // end dialog as if user pressed escape key
       EndDialog( IDCANCEL);
@@ -81,7 +81,7 @@ BOOL CDlgSelectPlayer::OnInitDialog()
 	CDialog::OnInitDialog();
 	
   // fill players and controls combo boxes
-  for( INDEX iPC=0; iPC<8; iPC++)
+  for (INDEX iPC=0; iPC<8; iPC++)
   {
     CTString strPlayer = _pGame->gm_apcPlayers[ iPC].pc_strName;
     m_comboAvailablePlayers.AddString( strPlayer);
@@ -97,13 +97,13 @@ BOOL CDlgSelectPlayer::OnInitDialog()
 void CDlgSelectPlayer::OnSelchangeComboAvailablePlayers() 
 {
   INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
-  if( iSelectedPlayer == CB_ERR) return;
+  if (iSelectedPlayer == CB_ERR) return;
   m_comboAvailableControls.SetCurSel( iSelectedPlayer);
 }
 
 void CDlgSelectPlayer::OnSelchangeComboAvailableControls() 
 {
   INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
-  if( iSelectedPlayer == CB_ERR) return;
+  if (iSelectedPlayer == CB_ERR) return;
   INDEX iSelectedControls = m_comboAvailableControls.GetCurSel();
 }

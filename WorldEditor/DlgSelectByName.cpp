@@ -51,18 +51,18 @@ void CDlgSelectByName::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog gives data
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
     // loop all list box's entries
-    for( INDEX i=0; i<m_ListBox.GetCount(); i++)
+    for (INDEX i=0; i<m_ListBox.GetCount(); i++)
     {
       // obtain entity ptr
       CEntity &penEntity = *((CEntity *) m_ListBox.GetItemData( i));
       // if entity was selected
-      if( m_pDoc->m_selEntitySelection.IsSelected( penEntity))
+      if (m_pDoc->m_selEntitySelection.IsSelected( penEntity))
       {
         // and check box is now not checked
-        if( m_ListBox.GetCheck( i) == 0)
+        if (m_ListBox.GetCheck( i) == 0)
         {
           // deselect entity
           m_pDoc->m_selEntitySelection.Deselect( penEntity);
@@ -72,7 +72,7 @@ void CDlgSelectByName::DoDataExchange(CDataExchange* pDX)
       // else if entity was not selected
       {
         // and check box is now checked
-        if( m_ListBox.GetCheck( i) == 1)
+        if (m_ListBox.GetCheck( i) == 1)
         {
           // select entity
           m_pDoc->m_selEntitySelection.Select( penEntity);
@@ -103,14 +103,14 @@ BOOL CDlgSelectByName::OnInitDialog()
   {
     CTString strEntityName = iten->GetDescription();
     // and it has name property defined
-    if( strEntityName != "")
+    if (strEntityName != "")
     {
       // add it to list box
       INDEX iListEntry = m_ListBox.AddString( CString(strEntityName));
       // set item's data as ptr to current entity
       m_ListBox.SetItemData( iListEntry, (ULONG)(&*iten));
       // if current entity is selected
-      if( iten->IsSelected( ENF_SELECTED))
+      if (iten->IsSelected( ENF_SELECTED))
       {
         // set check to on
         m_ListBox.SetCheck( iListEntry, 1);
@@ -131,7 +131,7 @@ BOOL CDlgSelectByName::OnInitDialog()
 void CDlgSelectByName::OnDeselectAll() 
 {
   // loop all list box's entries
-  for( INDEX i=0; i<m_ListBox.GetCount(); i++)
+  for (INDEX i=0; i<m_ListBox.GetCount(); i++)
   {
     // slect check box 
     m_ListBox.SetCheck( i, 0);
@@ -142,7 +142,7 @@ void CDlgSelectByName::OnDeselectAll()
 void CDlgSelectByName::OnSelectAll() 
 {
   // loop all list box's entries
-  for( INDEX i=0; i<m_ListBox.GetCount(); i++)
+  for (INDEX i=0; i<m_ListBox.GetCount(); i++)
   {
     // slect check box 
     m_ListBox.SetCheck( i, 1);

@@ -48,7 +48,7 @@ void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     m_strButtonActionName = m_pbaButtonAction->ba_strName;
     m_strButtonDownCommand = m_pbaButtonAction->ba_strCommandLineWhenPressed;
@@ -62,7 +62,7 @@ void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     m_pbaButtonAction->ba_strName = m_strButtonActionName;
     m_pbaButtonAction->ba_strCommandLineWhenPressed = m_strButtonDownCommand;

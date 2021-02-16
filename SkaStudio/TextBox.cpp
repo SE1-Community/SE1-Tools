@@ -59,15 +59,15 @@ void CTextBox::ValueChanged()
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   // get selected item in tree view
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected == NULL) return;
-  if(pmiSelected == NULL) return;
+  if (hSelected == NULL) return;
+  if (pmiSelected == NULL) return;
 
   INDEX iSelected = m_TreeCtrl.GetItemData(hSelected);
   INDEX iParent;
   // get parent of selected item in tree view
   HTREEITEM hParent = m_TreeCtrl.GetParentItem(hSelected);
   // if no parent set iParent to = 1 
-  if(hParent == NULL) iParent = -1;
+  if (hParent == NULL) iParent = -1;
   else iParent = m_TreeCtrl.GetItemData(hParent);
 
   NodeInfo &niSelected = theApp.aNodeInfo[iSelected];
@@ -79,10 +79,10 @@ void CTextBox::ValueChanged()
   DecomposeRotationMatrix(aRot,mat);
   // colison
   ColisionBox *pcb = NULL;
-  if(pmiSelected->mi_iCurentBBox >= 0 && pmiSelected->mi_iCurentBBox < pmiSelected->mi_cbAABox.Count()) {
+  if (pmiSelected->mi_iCurentBBox >= 0 && pmiSelected->mi_iCurentBBox < pmiSelected->mi_cbAABox.Count()) {
     pcb = &pmiSelected->mi_cbAABox[pmiSelected->mi_iCurentBBox];
   }
-  if(niSelected.ni_iType == NT_ALLFRAMESBBOX) {
+  if (niSelected.ni_iType == NT_ALLFRAMESBBOX) {
     pcb = &pmiSelected->mi_cbAllFramesBBox;
   }
 
@@ -90,7 +90,7 @@ void CTextBox::ValueChanged()
   FLOAT fOffset[6] = {vPos(1),vPos(2),vPos(3),aRot(1),aRot(2),aRot(3)};
 
   INDEX ictrlID = GetDlgCtrlID();
-  switch(ictrlID)
+  switch (ictrlID)
   {
     case IDC_TB_OFFSET_POSX:
       fOffset[0] = atof(strText);
@@ -131,10 +131,10 @@ void CTextBox::ValueChanged()
     case IDC_EB_DISTANCE:
     {
       // set lod distance
-      if(niSelected.ni_iType == NT_SKELETONLOD)
+      if (niSelected.ni_iType == NT_SKELETONLOD)
       {
         // if no parent return
-        if(iParent < 0) return;
+        if (iParent < 0) return;
         NodeInfo &niParent   = theApp.aNodeInfo[iParent];
         // get references to objects
         CSkeleton *psk = (CSkeleton*)niParent.ni_pPtr;
@@ -143,10 +143,10 @@ void CTextBox::ValueChanged()
         slod->slod_fMaxDistance = atof(strText);
         theApp.UpdateRootModelInstance();
       }
-      else if(niSelected.ni_iType == NT_MESHLOD)
+      else if (niSelected.ni_iType == NT_MESHLOD)
       {
         // if no parent return
-        if(iParent < 0) return;
+        if (iParent < 0) return;
         NodeInfo &niParent = theApp.aNodeInfo[iParent];
         // get references to objects
         MeshInstance *pmshi = (MeshInstance*)niParent.ni_pPtr;
@@ -160,10 +160,10 @@ void CTextBox::ValueChanged()
     break;
     case IDC_EB_TRESHOLD:
     {
-      if(niSelected.ni_iType == NT_ANIMATION)
+      if (niSelected.ni_iType == NT_ANIMATION)
       {
         // if no parent return
-        if(iParent < 0) return;
+        if (iParent < 0) return;
         NodeInfo &niParent = theApp.aNodeInfo[iParent];
         // get references to objects
         CAnimSet *pas = (CAnimSet*)niParent.ni_pPtr;
@@ -172,7 +172,7 @@ void CTextBox::ValueChanged()
         FLOAT fOldTreshold = pan->an_fTreshold;
         pan->an_fTreshold = atof(strText);
         // convert only one animation in animset
-        if(!theApp.ConvertAnimationInAnimSet(pas,pan)) {
+        if (!theApp.ConvertAnimationInAnimSet(pas,pan)) {
           pan->an_fTreshold = fOldTreshold;
         }
         // update model instance
@@ -183,7 +183,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLWIDTH:
     {
       // change width of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fWidth = atof(strText);
         FLOAT fPosX = (pcb->Max()(1)+pcb->Min()(1)) / 2;
@@ -195,7 +195,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLHEIGHT:
     {
       // change height of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fHeight = atof(strText);
         FLOAT fPosY = pcb->Min()(2);
@@ -207,7 +207,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLLENGTH:
     {                  
       // change length of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fLength = atof(strText);
         FLOAT fPosZ = (pcb->Max()(3)+pcb->Min()(3)) / 2;
@@ -219,7 +219,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSX:
     {
       // change pos x of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fPosX = atof(strText);
         FLOAT fWidth = (pcb->Max()(1)-pcb->Min()(1));
@@ -231,7 +231,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSY:
     {
       // change pos y of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fPosY = atof(strText);
         FLOAT fHeight = (pcb->Max()(2)-pcb->Min()(2));
@@ -244,7 +244,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSZ:
     {
       // change pos z of colision box
-      if(pcb!=NULL)
+      if (pcb!=NULL)
       {
         FLOAT fPosZ = atof(strText);
         FLOAT fLength = (pcb->Max()(3)-pcb->Min()(3));
@@ -256,7 +256,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLNAME:
     {
       // change name of colision box
-      if(pcb!=NULL) {
+      if (pcb!=NULL) {
         pcb->SetName(strText);
         m_TreeCtrl.SetItemText(hSelected, CString(strText));
       }
@@ -266,12 +266,12 @@ void CTextBox::ValueChanged()
     case IDC_EB_SECPERFRAME:
     {
       // if no parent return
-      if(iParent < 0) return;
+      if (iParent < 0) return;
       NodeInfo &niParent = theApp.aNodeInfo[iParent];
       Animation *pan = (Animation*)niSelected.ni_pPtr;
       CAnimSet *pas = (CAnimSet*)niParent.ni_pPtr;
       pan->an_fSecPerFrame = atof(strText);
-      if(pan->an_fSecPerFrame == 0) pan->an_fSecPerFrame = 0.00001f;
+      if (pan->an_fSecPerFrame == 0) pan->an_fSecPerFrame = 0.00001f;
       // update model instance
       theApp.UpdateRootModelInstance();
     }
@@ -310,7 +310,7 @@ void CTextBox::ValueChanged()
     default:
     {
       // check if this text box is in shader dialog
-      if((ictrlID>FIRSTSHADEID) && (ictrlID<LASTSHADEID))
+      if ((ictrlID>FIRSTSHADEID) && (ictrlID<LASTSHADEID))
       {
         // control is in shader dialog
         theApp.m_dlgBarTreeView.ChangeFloatOnSelectedSurfaces(m_strID,atof(strText));
@@ -323,7 +323,7 @@ void CTextBox::ValueChanged()
 
 BOOL CTextBox::PreTranslateMessage(MSG* pMsg) 
 {
-  if((pMsg->message==WM_KEYDOWN) && ((int)pMsg->wParam==VK_RETURN))
+  if ((pMsg->message==WM_KEYDOWN) && ((int)pMsg->wParam==VK_RETURN))
   {
     ValueChanged();
     //SetSel(0,-1);

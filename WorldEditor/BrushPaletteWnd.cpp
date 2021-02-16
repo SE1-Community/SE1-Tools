@@ -40,7 +40,7 @@ CBrushPaletteWnd::CBrushPaletteWnd()
 
 CBrushPaletteWnd::~CBrushPaletteWnd()
 {
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;
@@ -89,7 +89,7 @@ void CBrushPaletteWnd::OnPaint()
   CPaintDC dc(this); // device context for painting
   }
 
-  if( m_iTimerID == -1)
+  if (m_iTimerID == -1)
   {
     m_iTimerID = (int) SetTimer( 1, 10, NULL);
   }
@@ -99,7 +99,7 @@ void CBrushPaletteWnd::OnPaint()
   ScreenToClient( &ptMouse);
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
     CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
     ASSERT( pWorldEditorView != NULL);
@@ -108,7 +108,7 @@ void CBrushPaletteWnd::OnPaint()
     // erase z-buffer
     m_pDrawPort->FillZBuffer(ZBUF_BACK);
     // for all brushes
-    for( INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
+    for (INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
     {
       // get current brush's box in pixels inside window
       PIXaabbox2D boxBrush = GetBrushBBox( iBrush);
@@ -116,9 +116,9 @@ void CBrushPaletteWnd::OnPaint()
 
       TIME tm = CTimer::InSeconds(_pTimer->GetTimeTick());
       // if we are drawing selected brush
-      if(iBrush==theApp.m_fCurrentTerrainBrush)
+      if (iBrush==theApp.m_fCurrentTerrainBrush)
       {
-        if(m_pDrawPort->Lock())
+        if (m_pDrawPort->Lock())
         {
           FLOAT fFactor=sin(tm*8)/2.0f+0.5f;
           COLOR colSelected=LerpColor(C_lGRAY,C_RED,fFactor);
@@ -129,9 +129,9 @@ void CBrushPaletteWnd::OnPaint()
         }
       }
       PIXaabbox2D boxPoint( PIX2D( ptMouse.x, ptMouse.y), PIX2D(ptMouse.x, ptMouse.y) );
-      if( (boxBrush & boxPoint) == boxPoint)
+      if ((boxBrush & boxPoint) == boxPoint)
       {
-        if(m_pDrawPort->Lock())
+        if (m_pDrawPort->Lock())
         {
           INDEX iRot=((ULONG)(tm*25.0f))&7;
           ULONG ulLineType=0x0f0f0f0f<<iRot;
@@ -157,7 +157,7 @@ void CBrushPaletteWnd::OnPaint()
 void CBrushPaletteWnd::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if( pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
   {
     // destroy brush palette
     _pBrushPalette = NULL;
@@ -173,9 +173,9 @@ void CBrushPaletteWnd::OnRButtonDown(UINT nFlags, CPoint point)
 {
   PIXaabbox2D boxPoint( PIX2D( point.x, point.y), PIX2D(point.x, point.y) );
   // for all brushes
-  for( INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
+  for (INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
   {
-    if( (GetBrushBBox( iBrush) & boxPoint) == boxPoint)
+    if ((GetBrushBBox( iBrush) & boxPoint) == boxPoint)
     {
       // destroy brush palette
       _pBrushPalette = NULL;
@@ -207,7 +207,7 @@ void CBrushPaletteWnd::OnTimer(UINT nIDEvent)
   GetCursorPos( &pt);
   CRect rectWnd;
   GetWindowRect(rectWnd);
-  if(pt.x<rectWnd.left || pt.x>rectWnd.right ||
+  if (pt.x<rectWnd.left || pt.x>rectWnd.right ||
      pt.y<rectWnd.top  || pt.y>rectWnd.bottom)
   {
     DestroyWindow();
@@ -221,7 +221,7 @@ void CBrushPaletteWnd::OnTimer(UINT nIDEvent)
 
 BOOL CBrushPaletteWnd::PreTranslateMessage(MSG* pMsg) 
 {
-  if( pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();
@@ -236,9 +236,9 @@ void CBrushPaletteWnd::OnLButtonUp(UINT nFlags, CPoint point)
   PIXaabbox2D boxPoint( PIX2D( point.x, point.y), PIX2D(point.x, point.y) );
 
   // for all brushes
-  for( INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
+  for (INDEX iBrush=0; iBrush<CT_BRUSHES; iBrush++)
   {
-    if( (GetBrushBBox( iBrush) & boxPoint) == boxPoint)
+    if ((GetBrushBBox( iBrush) & boxPoint) == boxPoint)
     {
       theApp.m_fCurrentTerrainBrush=iBrush;
       break;

@@ -92,7 +92,7 @@ Destroy( SurfaceInstance *inst )
 {
   SurfaceInstance **ppsi = &_psiFirst;
 
-  while(*ppsi!=NULL) {
+  while (*ppsi!=NULL) {
     if (*ppsi == inst) {
       *ppsi = (*ppsi)->si_psiNext;
       break;

@@ -60,7 +60,7 @@ void CDlgExportForSkinning::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
   
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE )
+  if (pDX->m_bSaveAndValidate == FALSE )
   {
   }
 	//{{AFX_DATA_MAP(CDlgExportForSkinning)
@@ -75,7 +75,7 @@ void CDlgExportForSkinning::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE )
+  if (pDX->m_bSaveAndValidate != FALSE )
   {
     INDEX iSelected = m_ctrlExportPictureSize.GetCurSel();
     m_iTextureWidth = m_ctrlExportPictureSize.GetItemData( iSelected);
@@ -110,12 +110,12 @@ BOOL CDlgExportForSkinning::OnInitDialog()
   CTString strTemp;
   INDEX iWidth = 8;
   INDEX iToSelect = 0;
-  while( iWidth <= 2048)
+  while (iWidth <= 2048)
   {
     strTemp.PrintF( "%d x %d", iWidth, INDEX(iWidth/fWHRatio));
     INDEX iAddedAs = m_ctrlExportPictureSize.AddString( CString(strTemp));
     m_ctrlExportPictureSize.SetItemData( iAddedAs, iWidth);
-    if( iWidth == m_iTextureWidth)
+    if (iWidth == m_iTextureWidth)
     {
       iToSelect = iAddedAs;
     }

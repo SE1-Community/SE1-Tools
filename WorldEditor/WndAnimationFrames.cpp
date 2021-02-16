@@ -84,7 +84,7 @@ void CWndAnimationFrames::OnPaint()
   CPaintDC dc(this); // device context for painting
   }
 
-  if( (m_pViewPort == NULL) && (m_pDrawPort == NULL) )
+  if ((m_pViewPort == NULL) && (m_pDrawPort == NULL) )
   {
     // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
@@ -94,7 +94,7 @@ void CWndAnimationFrames::OnPaint()
   m_iFramesInLine = m_pDrawPort->GetWidth()/FRAME_BOX_WIDTH;
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
     // clear window background
     m_pDrawPort->Fill( C_GRAY | CT_OPAQUE);
@@ -107,14 +107,14 @@ void CWndAnimationFrames::OnPaint()
     CAnimInfo aiInfo;
     pAD->GetAnimInfo(iLightAnimation, aiInfo);
     // for all frames
-    for( INDEX iFrame=0; iFrame<aiInfo.ai_NumberOfFrames; iFrame++)
+    for (INDEX iFrame=0; iFrame<aiInfo.ai_NumberOfFrames; iFrame++)
     {
       PIX pixX=(iFrame-m_iStartingFrame)*FRAME_BOX_WIDTH;
       PIX pixY=0;
       PIX pixDX=FRAME_BOX_WIDTH;
       PIX pixDY=m_pDrawPort->GetHeight()-KEY_FRAME_BOX_SIZE*2;
       // if frame is visible
-      if( IsFrameVisible( iFrame))
+      if (IsFrameVisible( iFrame))
       {
         // get frame (color)
         COLOR colorFrame = pAD->GetFrame(iLightAnimation, iFrame);
@@ -122,7 +122,7 @@ void CWndAnimationFrames::OnPaint()
         m_pDrawPort->Fill( pixX, pixY, pixDX, pixDY, colorFrame|CT_OPAQUE);
         
         // if this is key-frame marker
-        if( (colorFrame & 0x000000FF) == 0xFF)
+        if ((colorFrame & 0x000000FF) == 0xFF)
         {
           // calculate key-frame marker coordinates
           PIX pixKFX = pixX+(FRAME_BOX_WIDTH-KEY_FRAME_BOX_SIZE)/2;
@@ -132,7 +132,7 @@ void CWndAnimationFrames::OnPaint()
         }
 
         // if this is selected frame
-        if( iFrame == m_iSelectedFrame)
+        if (iFrame == m_iSelectedFrame)
         {
           // set looks of rectangle
           ULONG ulLineType = _FULL_;
@@ -170,7 +170,7 @@ BOOL CWndAnimationFrames::IsFrameVisible(INDEX iFrame)
   // get animation data
   CAnimData *pAD = m_pParentDlg->m_padAnimData;
   pAD->GetAnimInfo(iLightAnimation, aiInfo);
-  if( (iFrame>=m_iStartingFrame) && 
+  if ((iFrame>=m_iStartingFrame) && 
       (iFrame<(m_iStartingFrame+m_iFramesInLine)) &&
       (iFrame>=0) &&
       (iFrame<aiInfo.ai_NumberOfFrames) )
@@ -183,7 +183,7 @@ BOOL CWndAnimationFrames::IsFrameVisible(INDEX iFrame)
 // clears key-frame marker on selected frame
 void CWndAnimationFrames::DeleteSelectedFrame( void)
 {
-  if( !IsFrameVisible( m_iSelectedFrame)) return;
+  if (!IsFrameVisible( m_iSelectedFrame)) return;
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_pParentDlg->GetSelectedLightAnimation();
   // get animation data
@@ -192,7 +192,7 @@ void CWndAnimationFrames::DeleteSelectedFrame( void)
   CAnimInfo aiInfo;
   pAD->GetAnimInfo(iLightAnimation, aiInfo);
   // if this is first or last frame in animation, no deletion is allowed
-  if( (m_iSelectedFrame == 0) || (m_iSelectedFrame == (aiInfo.ai_NumberOfFrames-1)) ) return;
+  if ((m_iSelectedFrame == 0) || (m_iSelectedFrame == (aiInfo.ai_NumberOfFrames-1)) ) return;
   // get frame (color) for selected frame
   COLOR colorFrame = pAD->GetFrame(iLightAnimation, m_iSelectedFrame);
   // clear key-frame marker
@@ -208,11 +208,11 @@ void CWndAnimationFrames::OnLButtonDown(UINT nFlags, CPoint point)
   // get clicked frame
   INDEX iFrame = point.x/FRAME_BOX_WIDTH+m_iStartingFrame;
   // return if frame is not visible (clicked beyond last frame)
-  if( !IsFrameVisible(iFrame)) return;
+  if (!IsFrameVisible(iFrame)) return;
   
   Invalidate(FALSE);
   // if clicked frame was not selected previously
-  if( iFrame != m_iSelectedFrame)
+  if (iFrame != m_iSelectedFrame)
   {
     // select clicked frame
     m_iSelectedFrame = iFrame;
@@ -229,7 +229,7 @@ void CWndAnimationFrames::OnLButtonDown(UINT nFlags, CPoint point)
   // get animation data
   CAnimData *pAD = m_pParentDlg->m_padAnimData;
   COLORREF newFrameColor = CLRF_CLR( pAD->GetFrame(iLightAnimation, iFrame));
-  if( MyChooseColor( newFrameColor, *m_pParentDlg) )
+  if (MyChooseColor( newFrameColor, *m_pParentDlg) )
   {
     // set new key frame value
     pAD->SetFrame(iLightAnimation, iFrame, CLR_CLRF(newFrameColor)|0x000000FF);
@@ -251,7 +251,7 @@ void CWndAnimationFrames::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 void CWndAnimationFrames::ScrollLeft(void)
 {
-  if( m_iStartingFrame > 0)
+  if (m_iStartingFrame > 0)
   {
     // scroll left
     m_iStartingFrame --;
@@ -273,7 +273,7 @@ void CWndAnimationFrames::ScrollRight(void)
   // calculate possible new starting frame
   INDEX iNewLastDisplayedFrame = m_iStartingFrame+1+m_iFramesInLine;
   // if new last displayed frame is valid
-  if( iNewLastDisplayedFrame <= aiInfo.ai_NumberOfFrames)
+  if (iNewLastDisplayedFrame <= aiInfo.ai_NumberOfFrames)
   {
     // scroll page right
     m_iStartingFrame ++;
@@ -285,7 +285,7 @@ void CWndAnimationFrames::ScrollRight(void)
 
 void CWndAnimationFrames::ScrollPgLeft() 
 {
-  if( (m_iStartingFrame-m_iFramesInLine) > 0)
+  if ((m_iStartingFrame-m_iFramesInLine) > 0)
   {
     // scroll page left
     m_iStartingFrame -= m_iFramesInLine;
@@ -311,7 +311,7 @@ void CWndAnimationFrames::ScrollPgRight()
   // calculate possible new starting frame
   INDEX iNewStart = m_iStartingFrame+m_iFramesInLine;
   // if new start frame is valid one
-  if( iNewStart < aiInfo.ai_NumberOfFrames)
+  if (iNewStart < aiInfo.ai_NumberOfFrames)
   {
     // scroll page right
     m_iStartingFrame = iNewStart;
@@ -325,7 +325,7 @@ void CWndAnimationFrames::OnDestroy()
 {
 	CWnd::OnDestroy();
 	
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;

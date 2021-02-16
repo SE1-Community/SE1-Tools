@@ -61,7 +61,7 @@ void CActionsListControl::OnLButtonDown(UINT nFlags, CPoint point)
   // get no of items
   INDEX iButtonsCt = ((CDlgPlayerControls *)GetParent())->m_listButtonActions.GetItemCount();
   // get no of items
-  for( INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
+  for (INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
   {
     ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetItemState( iListItem, 0, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
   }
@@ -96,7 +96,7 @@ void CActionsListControl::OnSetFocus(CWnd* pOldWnd)
   // get selected action
   INDEX iSelectedAction = GetNextItem( -1, LVIS_SELECTED);
   // if none is selected (initial state)
-  if( iSelectedAction == -1)
+  if (iSelectedAction == -1)
   {
     iSelectedAction = 0;
     SetItemState( iSelectedAction, LVIS_FOCUSED|LVIS_SELECTED, LVIS_FOCUSED|LVIS_SELECTED);
@@ -124,7 +124,7 @@ void CActionsListControl::OnKillFocus(CWnd* pNewWnd)
 BOOL CActionsListControl::PreTranslateMessage(MSG* pMsg) 
 {
 	// if return pressed
-  if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     ((CDlgPlayerControls *)GetParent())->m_editFirstControl.SetFocus();
     // don't translate messages
@@ -136,7 +136,7 @@ BOOL CActionsListControl::PreTranslateMessage(MSG* pMsg)
 void CActionsListControl::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
   CMenu menu;
-  if( menu.LoadMenu( IDR_BUTTON_ACTION_POPUP))
+  if (menu.LoadMenu( IDR_BUTTON_ACTION_POPUP))
   {
 		CMenu* pPopup = menu.GetSubMenu(0);
 		ASSERT(pPopup != NULL);

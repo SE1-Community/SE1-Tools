@@ -36,8 +36,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CTextureControl
 {
 public:
-  CTextureControl::CTextureControl(){}
-  CTextureControl::~CTextureControl(){}
+  CTextureControl::CTextureControl() {}
+  CTextureControl::~CTextureControl() {}
   void AddControl(CTString strLabelText, INDEX *piItemID);
   CStatic txc_Label;
   CDropDown txc_Combo;
@@ -45,8 +45,8 @@ public:
 class CTexCoordControl
 {
 public:
-  CTexCoordControl::CTexCoordControl(){}
-  CTexCoordControl::~CTexCoordControl(){}
+  CTexCoordControl::CTexCoordControl() {}
+  CTexCoordControl::~CTexCoordControl() {}
   void AddControl(CTString strLabelText, INDEX *piItemID);
   CStatic txcc_Label;
   CDropDown txcc_Combo;
@@ -54,8 +54,8 @@ public:
 class CColorControl
 {
 public:
-  CColorControl::CColorControl(){}
-  CColorControl::~CColorControl(){}
+  CColorControl::CColorControl() {}
+  CColorControl::~CColorControl() {}
   void AddControl(CTString strLabelText, COLOR *pcolColor);
   CStatic cc_Label;
   CColoredButton cc_Button;
@@ -63,8 +63,8 @@ public:
 class CFloatControl
 {
 public:
-  CFloatControl::CFloatControl(){}
-  CFloatControl::~CFloatControl(){}
+  CFloatControl::CFloatControl() {}
+  CFloatControl::~CFloatControl() {}
   void AddControl(CTString strLabelText, FLOAT *pFloat);
   CStatic fc_Label;
   CTextBox fc_TextBox;
@@ -72,8 +72,8 @@ public:
 class CFlagControl
 {
 public:
-  CFlagControl::CFlagControl(){}
-  CFlagControl::~CFlagControl(){}
+  CFlagControl::CFlagControl() {}
+  CFlagControl::~CFlagControl() {}
   void AddControl(CTString strLabelText, INDEX iFlagIndex, ULONG ulFlags);
   CCheckBox fc_CheckBox;
 };

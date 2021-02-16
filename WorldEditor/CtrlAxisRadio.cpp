@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 void CCtrlAxisRadio::OnClicked() 
 {
   // don't do anything if document doesn't exist
-  if( theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL) return;
   // select clicked axis radio
   m_pDialog->SelectAxisRadio( this);
   // show that second axis have been selected

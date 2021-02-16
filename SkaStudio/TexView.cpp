@@ -63,7 +63,7 @@ void CTexView::OnPaint()
   // clear browsing window
   m_pDrawPort->FillZBuffer( ZBUF_BACK);
   m_pDrawPort->Fill( C_BLACK | CT_OPAQUE);
-  if(m_ptoPreview.GetData()!=NULL) {
+  if (m_ptoPreview.GetData()!=NULL) {
     PIXaabbox2D rectPict;
     rectPict = PIXaabbox2D( PIX2D(0, 0), PIX2D(m_pDrawPort->GetWidth(), m_pDrawPort->GetHeight()));
     m_pDrawPort->PutTexture(&m_ptoPreview,rectPict);
@@ -92,9 +92,9 @@ void CTexView::OnSize(UINT nType, int cx, int cy)
   CRect rc;
   GetParent()->GetClientRect(&rc);
   INDEX iWidth = cx;
-  if(cy<cx) iWidth=cy;
+  if (cy<cx) iWidth=cy;
   INDEX iX = rc.right/2-cx/2;
-  if(iX!=0 && iWidth>0)
+  if (iX!=0 && iWidth>0)
   {
     ::SetWindowPos(m_pViewPort->vp_hWndParent,wndTop,iX,55,iWidth,cy,SWP_NOZORDER);
     m_pViewPort->Resize();

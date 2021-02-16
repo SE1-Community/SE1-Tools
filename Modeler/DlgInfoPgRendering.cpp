@@ -61,10 +61,10 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
 	CPropertyPage::DoDataExchange(pDX);
   
   CModelerDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
   // if dialog is recieving data
-  if( (!pDX->m_bSaveAndValidate) && IsWindow(m_colorDiffuse.m_hWnd) )
+  if ((!pDX->m_bSaveAndValidate) && IsWindow(m_colorDiffuse.m_hWnd) )
   {
     enum SurfaceShadingType sstFirstShading = SST_INVALID;
     enum SurfaceTranslucencyType sttFirstTranslucency = STT_INVALID;
@@ -88,20 +88,20 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
     BOOL bSelectionExists = ctSelectedSurfaces != 0;
     BOOL bFirstSelected = TRUE;
     ModelMipInfo &mmi = pDoc->m_emEditModel.edm_md.md_MipInfos[ pDoc->m_iCurrentMip];
-    for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+    for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
     {
       MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
       // skip non selected surfaces
-      if( !(ms.ms_ulRenderingFlags&SRF_SELECTED)) continue;
+      if (!(ms.ms_ulRenderingFlags&SRF_SELECTED)) continue;
       strFirstName = ms.ms_Name;
       ULONG ulRenderFlags = ms.ms_ulRenderingFlags;
       ulFlagsOn &= ulRenderFlags;
       ulFlagsOff &= ~ulRenderFlags;
       
-      if( sstFirstShading == SST_INVALID) sstFirstShading = ms.ms_sstShadingType;
-      if( sttFirstTranslucency == STT_INVALID) sttFirstTranslucency = ms.ms_sttTranslucencyType;
+      if (sstFirstShading == SST_INVALID) sstFirstShading = ms.ms_sstShadingType;
+      if (sttFirstTranslucency == STT_INVALID) sttFirstTranslucency = ms.ms_sttTranslucencyType;
 
-      if( bFirstSelected)
+      if (bFirstSelected)
       {
         bFirstSelected = FALSE;
         colFirstDiffuse = ms.ms_colDiffuse;
@@ -111,28 +111,28 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
       }
       else
       {
-        if( ms.ms_colDiffuse != colFirstDiffuse) bSameDiffuse = FALSE;
-        if( ms.ms_colReflections != colFirstReflections) bSameReflections = FALSE;
-        if( ms.ms_colSpecular != colFirstSpecular) bSameSpecular = FALSE;
-        if( ms.ms_colBump != colFirstBump) bSameBump = FALSE;
+        if (ms.ms_colDiffuse != colFirstDiffuse) bSameDiffuse = FALSE;
+        if (ms.ms_colReflections != colFirstReflections) bSameReflections = FALSE;
+        if (ms.ms_colSpecular != colFirstSpecular) bSameSpecular = FALSE;
+        if (ms.ms_colBump != colFirstBump) bSameBump = FALSE;
       }
       
-      if( sstFirstShading != ms.ms_sstShadingType) bSameShading = FALSE;
-      if( sttFirstTranslucency != ms.ms_sttTranslucencyType) bSameTranslucency = FALSE;
+      if (sstFirstShading != ms.ms_sstShadingType) bSameShading = FALSE;
+      if (sttFirstTranslucency != ms.ms_sttTranslucencyType) bSameTranslucency = FALSE;
     }
 	  
-    if( bSameDiffuse) m_colorDiffuse.SetColor( colFirstDiffuse);
+    if (bSameDiffuse) m_colorDiffuse.SetColor( colFirstDiffuse);
     else m_colorDiffuse.SetMixedColor();
-    if( bSameReflections) m_colorReflections.SetColor( colFirstReflections);
+    if (bSameReflections) m_colorReflections.SetColor( colFirstReflections);
     else m_colorReflections.SetMixedColor();
-    if( bSameSpecular) m_colorSpecular.SetColor( colFirstSpecular);
+    if (bSameSpecular) m_colorSpecular.SetColor( colFirstSpecular);
     else m_colorSpecular.SetMixedColor();
-    if( bSameBump) m_colorBump.SetColor( colFirstBump);
+    if (bSameBump) m_colorBump.SetColor( colFirstBump);
     else m_colorBump.SetMixedColor();
 
     CTString strText;
-    if( ctSelectedSurfaces == 0) strText = "No surfaces selected";
-    else if( ctSelectedSurfaces > 1) strText.PrintF( "%d surfaces selected", ctSelectedSurfaces);
+    if (ctSelectedSurfaces == 0) strText = "No surfaces selected";
+    else if (ctSelectedSurfaces > 1) strText.PrintF( "%d surfaces selected", ctSelectedSurfaces);
     else strText.PrintF( "Surface: %s", strFirstName);
     m_strSurfaceName = strText;
 
@@ -141,8 +141,8 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
 
 // apply flags to controls
 #define SET_TRI_STATE_TO_CTRL( ctrl, flag)\
-  if((ulFlagsOn & flag) && !(ulFlagsOff & flag)) ctrl.SetCheck( 1);\
-  else if(!(ulFlagsOn & flag) && (ulFlagsOff & flag)) ctrl.SetCheck( 0);\
+  if ((ulFlagsOn & flag) && !(ulFlagsOff & flag)) ctrl.SetCheck( 1);\
+  else if (!(ulFlagsOn & flag) && (ulFlagsOff & flag)) ctrl.SetCheck( 0);\
   else ctrl.SetCheck( 2);
 
     SET_TRI_STATE_TO_CTRL( m_IsBump,        SRF_BUMP);
@@ -153,11 +153,11 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
     SET_TRI_STATE_TO_CTRL( m_IsInvisible,   SRF_INVISIBLE);
     SET_TRI_STATE_TO_CTRL( m_IsDoubleSided, SRF_DOUBLESIDED);
 
-    if( !bSameShading) m_comboShading.SetCurSel( -1);
+    if (!bSameShading) m_comboShading.SetCurSel( -1);
     else
     {
       INDEX iShadingCombo = -1;
-      switch( sstFirstShading)
+      switch (sstFirstShading)
       {
       case SST_FULLBRIGHT:   { iShadingCombo = 0; break;};
       case SST_MATTE:        { iShadingCombo = 1; break;};
@@ -166,11 +166,11 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
       m_comboShading.SetCurSel( iShadingCombo);
     }
   
-    if( !bSameTranslucency) m_comboTranslucency.SetCurSel( -1);
+    if (!bSameTranslucency) m_comboTranslucency.SetCurSel( -1);
     else
     {
       INDEX iTranslucency = -1;
-      switch( sttFirstTranslucency)
+      switch (sttFirstTranslucency)
       {
       case STT_OPAQUE: {            iTranslucency = 0; break;};
       case STT_TRANSPARENT:{        iTranslucency = 1; break;};
@@ -232,24 +232,24 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
 
 // set flags back to surface
 #define TRI_STATE_CTRL_TO_FLAGS( ctrl, flag)\
-  if( (ctrl.GetCheck() == 1) && !(ms.ms_ulRenderingFlags & flag) ) {\
+  if ((ctrl.GetCheck() == 1) && !(ms.ms_ulRenderingFlags & flag) ) {\
     ms.ms_ulRenderingFlags |= flag;\
-  } else if( (ctrl.GetCheck() == 0) && (ms.ms_ulRenderingFlags & flag) ) {\
+  } else if ((ctrl.GetCheck() == 0) && (ms.ms_ulRenderingFlags & flag) ) {\
     ms.ms_ulRenderingFlags &= ~flag;\
   }
   // if dialog gives data
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
     INDEX iComboShadow = m_comboShading.GetCurSel();
     INDEX iComboTranslucency = m_comboTranslucency.GetCurSel();
 
     ModelMipInfo &mmi = pDoc->m_emEditModel.edm_md.md_MipInfos[ pDoc->m_iCurrentMip];
-    for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+    for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
     {
       MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
       ULONG ulFlagsBefore = ms.ms_ulRenderingFlags;
       // skip non selected surfaces
-      if( !(ms.ms_ulRenderingFlags&SRF_SELECTED)) continue;
+      if (!(ms.ms_ulRenderingFlags&SRF_SELECTED)) continue;
       TRI_STATE_CTRL_TO_FLAGS( m_IsBump,        SRF_BUMP);
       TRI_STATE_CTRL_TO_FLAGS( m_IsDetail,      SRF_DETAIL);
       TRI_STATE_CTRL_TO_FLAGS( m_IsDiffuse,     SRF_DIFFUSE);
@@ -262,28 +262,28 @@ void CDlgInfoPgRendering::DoDataExchange(CDataExchange* pDX)
       BOOL bBumpSet = ((ulFlagsBefore&SRF_BUMP)!=(ulFlagsAfter&SRF_BUMP))&&(ulFlagsAfter&SRF_BUMP);
       BOOL bDetailSet = ((ulFlagsBefore&SRF_DETAIL)!=(ulFlagsAfter&SRF_DETAIL))&&(ulFlagsAfter&SRF_DETAIL);
       // if bump set
-      if( bBumpSet)
+      if (bBumpSet)
       {
         // turn off detail
         ms.ms_ulRenderingFlags &= ~SRF_DETAIL;
         theApp.m_chGlobal.MarkChanged();
       }
       // if detail set
-      if( bDetailSet)
+      if (bDetailSet)
       {
         // turn off bump
         ms.ms_ulRenderingFlags &= ~SRF_BUMP;
         theApp.m_chGlobal.MarkChanged();
       }
 
-      switch( iComboShadow)
+      switch (iComboShadow)
       {
       case 0:{ ms.ms_sstShadingType = SST_FULLBRIGHT; break;};
       case 1:{ ms.ms_sstShadingType = SST_MATTE; break;};
       case 2:{ ms.ms_sstShadingType = SST_FLAT; break;};
       }
 
-      switch( iComboTranslucency)
+      switch (iComboTranslucency)
       {
       case 0:{ ms.ms_sttTranslucencyType = STT_OPAQUE; break;};
       case 1:{ ms.ms_sttTranslucencyType = STT_TRANSPARENT; break;};
@@ -339,18 +339,18 @@ void CDlgInfoPgRendering::OnSelchangeTranslucency()
 BOOL CDlgInfoPgRendering::PreTranslateMessage(MSG* pMsg) 
 {
   CModelerDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return TRUE;
+  if (pDoc == NULL) return TRUE;
 	BOOL bShift = (GetKeyState( VK_SHIFT)&0x8000) != 0;
   
-  if(pMsg->message==WM_KEYDOWN)
+  if (pMsg->message==WM_KEYDOWN)
   {
-    if( pMsg->wParam==VK_TAB)
+    if (pMsg->wParam==VK_TAB)
     {
-      if( bShift) pDoc->SelectPreviousSurface();
+      if (bShift) pDoc->SelectPreviousSurface();
       else        pDoc->SelectNextSurface();
       return TRUE;
     }
-    if( pMsg->wParam=='Z')
+    if (pMsg->wParam=='Z')
     {
       pDoc->OnLinkSurfaces();
       return TRUE;
@@ -363,7 +363,7 @@ BOOL CDlgInfoPgRendering::PreTranslateMessage(MSG* pMsg)
 void CDlgInfoPgRendering::OnSelectAllSurfaces() 
 {
   CModelerDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
   pDoc->SelectAllSurfaces();
   UpdateData( FALSE);
 }

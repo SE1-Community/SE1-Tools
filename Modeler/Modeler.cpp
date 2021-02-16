@@ -31,7 +31,7 @@ static char THIS_FILE[] = __FILE__;
 #define INI_READ( strname, def)                               \
   wcscpy( strIni, theApp.GetProfileString( L"Modeler prefs", CString(strname), CString(def)))
 #define GET_FLAG( var)                                        \
-  if( wcscmp( strIni, L"YES") == 0)   var = TRUE;              \
+  if (wcscmp( strIni, L"YES") == 0)   var = TRUE;              \
   else                          var = FALSE;
 #define GET_COLOR( var)                                       \
   swscanf( strIni, L"0X%08x", &var);
@@ -41,7 +41,7 @@ static char THIS_FILE[] = __FILE__;
   swscanf( strIni, L"%f", &var);
 
 #define SET_FLAG( var)                                        \
-  if( var) wcscpy( strIni, L"YES");                            \
+  if (var) wcscpy( strIni, L"YES");                            \
   else     wcscpy( strIni, L"NO");
 #define SET_COLOR( var)                                       \
   swprintf( strIni, L"0x%08x", var);                            \
@@ -58,16 +58,16 @@ static char THIS_FILE[] = __FILE__;
 BOOL GetFlagFromProfile( CTString strVarName, BOOL bDefault)
 {
   CTString strDefault;
-  if( bDefault) strDefault = "YES";
+  if (bDefault) strDefault = "YES";
   else          strDefault = "NO";
   CTString strTemp = CStringA(theApp.GetProfileString( L"Modeler prefs", CString(strVarName), CString(strDefault)));
-  if( strTemp == "YES") return TRUE;
+  if (strTemp == "YES") return TRUE;
   return FALSE;
 };
 
 void SetFlagToProfile( CTString strVarName, BOOL bValue)
 {
-  if( bValue) theApp.WriteProfileString( L"Modeler prefs", CString(strVarName), L"YES");
+  if (bValue) theApp.WriteProfileString( L"Modeler prefs", CString(strVarName), L"YES");
   else        theApp.WriteProfileString( L"Modeler prefs", CString(strVarName), L"NO");
 };
 
@@ -125,7 +125,7 @@ END_MESSAGE_MAP()
 
 UINT APIENTRY ModelerFileRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARAM lParam)
 {
-  if( uiMsg == WM_INITDIALOG)
+  if (uiMsg == WM_INITDIALOG)
   {
     CRect rectMainFrame, rectFileReqPos, rectFileReqNewPos;
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -171,39 +171,39 @@ CBcgTexture::~CBcgTexture()
 
 CModelerApp::~CModelerApp()
 {
-  if( m_pLampModelData != NULL)
+  if (m_pLampModelData != NULL)
   {
     _pModelStock->Release( m_pLampModelData);
     delete m_LampModelObject;
   }
   
-  if( m_pCollisionBoxModelData != NULL)
+  if (m_pCollisionBoxModelData != NULL)
   {
     _pModelStock->Release( m_pCollisionBoxModelData);
     delete m_pCollisionBoxModelObject;
     m_pCollisionBoxModelObject = NULL;
   }
 
-  if( m_pFloorModelData != NULL)
+  if (m_pFloorModelData != NULL)
   {
     _pModelStock->Release( m_pFloorModelData);
     delete m_pFloorModelObject;
     m_pFloorModelObject = NULL;
   }
   
-  if( m_ptdCollisionBoxTexture != NULL)
+  if (m_ptdCollisionBoxTexture != NULL)
   {
     _pTextureStock->Release( m_ptdCollisionBoxTexture);
     m_ptdCollisionBoxTexture = NULL;
   }
 
-  if( m_ptdLamp != NULL)
+  if (m_ptdLamp != NULL)
   {
     _pTextureStock->Release( m_ptdLamp);
     m_ptdLamp = NULL;
   }
   
-  if( m_ptdFloorTexture != NULL)
+  if (m_ptdFloorTexture != NULL)
   {
     _pTextureStock->Release( m_ptdFloorTexture);
     m_ptdFloorTexture = NULL;
@@ -288,7 +288,7 @@ BOOL CModelerApp::SubInitInstance()
 
 	// create main MDI Frame window
 	CMainFrame* pMainFrame = new CMainFrame;
-	if( !pMainFrame->LoadFrame(IDR_MAINFRAME)) return FALSE;
+	if (!pMainFrame->LoadFrame(IDR_MAINFRAME)) return FALSE;
   m_pMainWnd = pMainFrame;
   
   // set main window for engine
@@ -318,9 +318,9 @@ BOOL CModelerApp::SubInitInstance()
   // load background textures
   INDEX iWorkingTexturesCt = theApp.GetProfileInt( L"Modeler prefs", 
                                                    L"Modeler working textures count", -1);
-  if( iWorkingTexturesCt != -1) {
+  if (iWorkingTexturesCt != -1) {
     char strWTName[ 128];
-    for( INDEX i=0; i<iWorkingTexturesCt; i++) {
+    for (INDEX i=0; i<iWorkingTexturesCt; i++) {
       sprintf( strWTName, "Working texture %02d", i);
       INI_READ( strWTName, "Error in INI .file!");
       AddModelerWorkingTexture( CTString(CStringA(strIni)));
@@ -330,7 +330,7 @@ BOOL CModelerApp::SubInitInstance()
   INDEX iWorkingPatchesCt = theApp.GetProfileInt( L"Modeler prefs", 
                                                  L"Modeler working patches count", -1);
   char strWPName[ 128];
-  for( INDEX i=0; i<iWorkingPatchesCt; i++) {
+  for (INDEX i=0; i<iWorkingPatchesCt; i++) {
     sprintf( strWPName, "Working patch %02d", i);
     INI_READ( strWPName, "Error in INI .file!");
     AddModelerWorkingPatch( CTString(CStringA(strIni)));
@@ -387,33 +387,33 @@ BOOL CModelerApp::SubInitInstance()
     AfxMessageBox( CString(err_str));
 
     // if we allocated model object for collision box
-    if( m_pCollisionBoxModelObject != NULL) {
+    if (m_pCollisionBoxModelObject != NULL) {
       // delete it
       delete m_pCollisionBoxModelObject;
       m_pCollisionBoxModelObject = NULL;
     }
     // if we loaded collision box's texture
-    if( m_ptdCollisionBoxTexture != NULL) {
+    if (m_ptdCollisionBoxTexture != NULL) {
       // release it and
       _pTextureStock->Release( m_ptdCollisionBoxTexture);
       m_ptdCollisionBoxTexture = NULL;
     }
 
     // if we loaded lamp's texture
-    if( m_ptdLamp != NULL) {
+    if (m_ptdLamp != NULL) {
       // release it and
       _pTextureStock->Release( m_ptdLamp);
       m_ptdLamp = NULL;
     }
 
     // if we allocated model object for floor
-    if( m_pFloorModelObject != NULL) {
+    if (m_pFloorModelObject != NULL) {
       // delete it
       delete m_pFloorModelObject;
       m_pFloorModelObject = NULL;
     }
     // if we loaded floor's texture
-    if( m_ptdFloorTexture != NULL) {
+    if (m_ptdFloorTexture != NULL) {
       // release it and
       _pTextureStock->Release( m_ptdFloorTexture);
       m_ptdFloorTexture = NULL;
@@ -424,7 +424,7 @@ BOOL CModelerApp::SubInitInstance()
   m_pfntFont = _pfdDisplayFont;
 
   // Dispatch commands specified on the command line
-	if( !ProcessShellCommand(cmdInfo)) return FALSE;
+	if (!ProcessShellCommand(cmdInfo)) return FALSE;
 
 	// The main window has been initialized, so show and update it.
   m_nCmdShow = SW_SHOWMAXIMIZED; // maximize main frame !!!
@@ -432,7 +432,7 @@ BOOL CModelerApp::SubInitInstance()
 	pMainFrame->UpdateWindow();
 
   // if stating modeler for the first time
-  if( m_bFirstTimeStarted) {
+  if (m_bFirstTimeStarted) {
     // call preferences
     OnFilePreferences();
   }
@@ -499,7 +499,7 @@ void CModelerApp::OnAppAbout()
 static TICK _llLastTick = 0;
 BOOL CModelerApp::OnIdle(LONG lCount) 
 {
-  if( _pTimer != NULL)
+  if (_pTimer != NULL)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
     if ((llCurrentTick > _llLastTick) && !m_OnIdlePaused)
@@ -535,11 +535,11 @@ void CModelerApp::CreateNewDocument( CTFileName fnRequestedFile)
   CTFileName fnMdlFile    = fnRequestedFile.FileDir() + fnRequestedFile.FileName() + ".mdl";
   CTFileName fnScriptFile = fnRequestedFile.FileDir() + fnRequestedFile.FileName() + ".scr";
   
-  if( fnRequestedFile.FileExt() != ".scr")
+  if (fnRequestedFile.FileExt() != ".scr")
   {
-    if( GetFileAttributesA( _fnmApplicationPath + fnScriptFile) != -1)
+    if (GetFileAttributesA( _fnmApplicationPath + fnScriptFile) != -1)
     {
-      if( MessageBoxA( m_pMainWnd->m_hWnd, "Script file allready exists, "
+      if (MessageBoxA( m_pMainWnd->m_hWnd, "Script file allready exists, "
                                           "do you want to overwrite it?",
                  "Warning !", MB_YESNO | MB_ICONWARNING |
                  MB_DEFBUTTON1| MB_SYSTEMMODAL | MB_TOPMOST) == IDYES)
@@ -563,9 +563,9 @@ void CModelerApp::CreateNewDocument( CTFileName fnRequestedFile)
       return;
     }
   }
-  else if( GetFileAttributesA( _fnmApplicationPath + fnMdlFile) != -1)
+  else if (GetFileAttributesA( _fnmApplicationPath + fnMdlFile) != -1)
   {
-    if( MessageBoxA( m_pMainWnd->m_hWnd, "Model file allready exists, do you want to "
+    if (MessageBoxA( m_pMainWnd->m_hWnd, "Model file allready exists, do you want to "
                     "overwrite it and loose all possible data describing mapping, "
                     "colored polygons, patch positions, ... ?",
                     "Warning !", MB_YESNO | MB_ICONWARNING | 
@@ -600,7 +600,7 @@ void CModelerApp::CreateNewDocument( CTFileName fnRequestedFile)
   pDocument->SetTitle( CString(fnMdlFile.FileName() + ".mdl"));       
 
   char strError[ 256];
-  if( !((CModelerDoc *)pDocument)->CreateModelFromScriptFile( fnScriptFile, strError))
+  if (!((CModelerDoc *)pDocument)->CreateModelFromScriptFile( fnScriptFile, strError))
   {
   	pDocument->OnCloseDocument();       // explicit delete on error
     AfxMessageBox( CString(strError));
@@ -644,7 +644,7 @@ void CModelerApp::OnFileOpen()
     // choose right document template using file's extension
     CDocTemplate *pDocTemplate = m_pdtModelDocTemplate;
     BOOL bScriptDocument = FALSE;
-    if( fnFullRequestedFile.FileExt() == ".scr")
+    if (fnFullRequestedFile.FileExt() == ".scr")
     {
       pDocTemplate = m_pdtScriptTemplate;
       bScriptDocument = TRUE;
@@ -661,9 +661,9 @@ void CModelerApp::OnFileOpen()
 	  ASSERT_VALID(pDocument);
 	  
     // Model documents must be opened before view creation
-    if( !bScriptDocument)
+    if (!bScriptDocument)
     {
-      if( !pDocument->OnOpenDocument( CString(fnFullRequestedFile)))
+      if (!pDocument->OnOpenDocument( CString(fnFullRequestedFile)))
       {
 		    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
 		    //delete pDocument;       // explicit delete on error
@@ -685,9 +685,9 @@ void CModelerApp::OnFileOpen()
 	  ASSERT_VALID(pFrame);
 
     // Script documents must be opened after view creation
-    if( bScriptDocument)
+    if (bScriptDocument)
     {
-      if( !pDocument->OnOpenDocument( CString(fnFullRequestedFile)))
+      if (!pDocument->OnOpenDocument( CString(fnFullRequestedFile)))
       {
 		    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
 		    delete pDocument;       // explicit delete on error
@@ -706,16 +706,16 @@ void CModelerApp::OnFilePreferences()
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CDlgPreferences dlg;
-  if( dlg.DoModal() == IDOK)
+  if (dlg.DoModal() == IDOK)
   { 
     m_Preferences = dlg.m_Prefs;
     // change wiew's background texture
     CModelerView *pModelerView = CModelerView::GetActiveView();
-    if( pModelerView != NULL) {
+    if (pModelerView != NULL) {
       pModelerView->m_fnBcgTexture = dlg.m_Prefs.ap_DefaultWinBcgTexture;
     }
     pModelerView = CModelerView::GetActiveMappingNormalView();
-    if( pModelerView != NULL) {
+    if (pModelerView != NULL) {
       CModelerDoc *pDoc = pModelerView->GetDocument();
       pDoc->UpdateAllViews( NULL);
     }
@@ -741,7 +741,7 @@ BOOL CModelerApp::AddModelerWorkingTexture( CTFileName fnTexName)
   catch( char *err_str)
   {
     MessageBoxA( m_pMainWnd->m_hWnd, err_str, "Warning!", MB_OK|MB_ICONHAND|MB_SYSTEMMODAL);
-    if( pNewWT != NULL) delete pNewWT;
+    if (pNewWT != NULL) delete pNewWT;
     return FALSE;
   }
   pNewWT->wt_toTexture.SetData( pNewWT->wt_TextureData);
@@ -754,7 +754,7 @@ BOOL CModelerApp::AddModelerWorkingPatch( CTFileName fnPatchName)
 {
   FOREACHINLIST( CWorkingPatch, wp_ListNode, m_WorkingPatches, itPatch)
   {
-    if( itPatch->wp_FileName == fnPatchName)
+    if (itPatch->wp_FileName == fnPatchName)
     {
       char achrMessage[ 256];
       sprintf( achrMessage, "Working patch \"%s\" already exists.", (CTString&)fnPatchName);
@@ -784,12 +784,12 @@ const CTextureObject *CModelerApp::GetValidBcgTexture( CTFileName fnTexName)
 	const CTextureObject *ptoResult = NULL;
   FOREACHINLIST( CBcgTexture, wt_ListNode, m_WorkingTextures, it_wt)
   {
-    if( it_wt->wt_FileName == fnTexName)
+    if (it_wt->wt_FileName == fnTexName)
     {
       return &it_wt->wt_toTexture;
     }
   }
-  if( !m_WorkingTextures.IsEmpty())
+  if (!m_WorkingTextures.IsEmpty())
   {
     ptoResult = &(LIST_HEAD( m_WorkingTextures, CBcgTexture, wt_ListNode)->wt_toTexture);
   }
@@ -810,7 +810,7 @@ const CTFileName CModelerApp::NextPrevBcgTexture( CTFileName fnTexName, INDEX iN
   FOREACHINLIST( CBcgTexture, wt_ListNode, m_WorkingTextures, it_wt)
   {
     afnTemp[iIter] = it_wt->wt_FileName;
-    if( it_wt->wt_FileName == fnTexName)
+    if (it_wt->wt_FileName == fnTexName)
     {
       iCurrent = iIter;
     }
@@ -981,7 +981,7 @@ CModelerDoc *CModelerApp::GetDocument()
   // obtain current view ptr
   CModelerView *pModelerView = GetActiveView();
   // if view does not exist, return
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
   {
     return NULL;
   }

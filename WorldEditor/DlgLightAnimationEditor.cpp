@@ -37,7 +37,7 @@ INDEX CDlgLightAnimationEditor::GetSelectedLightAnimation(void)
 {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if( iLightAnimation == CB_ERR)
+  if (iLightAnimation == CB_ERR)
   {
     return 0;
   }
@@ -105,7 +105,7 @@ void CDlgLightAnimationEditor::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     InitializeData();
   }
@@ -121,7 +121,7 @@ void CDlgLightAnimationEditor::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE )
+  if (pDX->m_bSaveAndValidate != FALSE )
   {
     StoreData();
   }
@@ -156,10 +156,10 @@ END_MESSAGE_MAP()
 
 void CDlgLightAnimationEditor::InitializeData(void)
 {
-  if( !IsWindow( m_LightAnimationCombo.m_hWnd)) return;
+  if (!IsWindow( m_LightAnimationCombo.m_hWnd)) return;
   // set dialog window title
   CTString strTitle = m_padAnimData->GetName();
-  if( (strTitle == "") || (strTitle ==DEFAULT_ANIMATION_FILE) )
+  if ((strTitle == "") || (strTitle ==DEFAULT_ANIMATION_FILE) )
   {
     strTitle = "<unnamed>";
   }
@@ -167,7 +167,7 @@ void CDlgLightAnimationEditor::InitializeData(void)
 
   // get currently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if( iLightAnimation != CB_ERR)
+  if (iLightAnimation != CB_ERR)
   {
     m_wndTestAnimation.m_aoAnimObject.StartAnim( iLightAnimation);
     // obtain information about animation
@@ -183,7 +183,7 @@ void CDlgLightAnimationEditor::InitializeData(void)
     sprintf( achrFrame, "Frame: %d", m_wndAnimationFrames.m_iSelectedFrame);
     m_strCurrentFrame = achrFrame;
     // redraw frames
-    if( IsWindow(m_wndAnimationFrames.m_hWnd))
+    if (IsWindow(m_wndAnimationFrames.m_hWnd))
     {
       // enable/disable delete key-frame button
       GetDlgItem(IDC_DELETE_MARKER)->EnableWindow(
@@ -197,7 +197,7 @@ void CDlgLightAnimationEditor::StoreData(void)
 {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if( iLightAnimation == CB_ERR)
+  if (iLightAnimation == CB_ERR)
   {
     return;
   }
@@ -216,14 +216,14 @@ void CDlgLightAnimationEditor::StoreData(void)
   INDEX *piNewFrames = new INDEX[ m_iAnimationFrames];
   // now copy old array over new one but if new one is longer than old one, added
   // frames will be filled with last value (RGBA format)
-  for( INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
+  for (INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
   {
     // if we are copying old frames
-    if( iFrame<ctOldFrames)
+    if (iFrame<ctOldFrames)
     {
       piNewFrames[iFrame]=pAD->GetFrame(iLightAnimation, iFrame);
       // if we are adding last frame, delete its key-frame marker
-      if( (m_iAnimationFrames>ctOldFrames) && (iFrame==(ctOldFrames-1)) && (iFrame != 0) )
+      if ((m_iAnimationFrames>ctOldFrames) && (iFrame==(ctOldFrames-1)) && (iFrame != 0) )
       {
         piNewFrames[iFrame] &= 0xFFFFFF00;
       }
@@ -256,7 +256,7 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
 {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if( iLightAnimation == CB_ERR)
+  if (iLightAnimation == CB_ERR)
   {
     return;
   }
@@ -270,7 +270,7 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
   // create array to be copy of current frames array
   INDEX *piFrames = new INDEX[ ctFrames];
   // now copy old array over new one
-  for( INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
+  for (INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
   {
     piFrames[iFrame]=pAD->GetFrame(iLightAnimation, iFrame);
   }
@@ -281,10 +281,10 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
   {
     // find first next key frame
     INDEX iKeySearcher=iStart+1;
-    for( ; iKeySearcher<ctFrames; iKeySearcher++)
+    for (; iKeySearcher<ctFrames; iKeySearcher++)
     {
       // is this gradient key frame?
-      if( (piFrames[iKeySearcher] & 0x000000FF) != 0)
+      if ((piFrames[iKeySearcher] & 0x000000FF) != 0)
       {
         // yes it is, stop searching
         break;
@@ -304,7 +304,7 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
                   ((piFrames[iStart]>>8)        & 0x000000FF) )/(iKeySearcher-iStart);
     INDEX iDeltaTimes=1;
     // create gradients beetween  iStart and iKeySearcher
-    for( INDEX iGradient=iStart+1; iGradient<iKeySearcher; iGradient++)
+    for (INDEX iGradient=iStart+1; iGradient<iKeySearcher; iGradient++)
     {
       FLOAT fCurrentR = fStartR+fdR*iDeltaTimes;
       FLOAT fCurrentG = fStartG+fdG*iDeltaTimes;
@@ -319,13 +319,13 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
     // next gradient will start at last key frame
     iStart = iKeySearcher;
   }
-  while( iStart < ctFrames);
+  while (iStart < ctFrames);
   // set new frames
   pAD->SetFrames( iLightAnimation, ctFrames, piFrames);
   // delete allocated array
   delete piFrames;
   // redraw frames
-  if( IsWindow(m_wndAnimationFrames.m_hWnd))
+  if (IsWindow(m_wndAnimationFrames.m_hWnd))
   {
     m_wndAnimationFrames.Invalidate( FALSE);
   }
@@ -336,7 +336,7 @@ void CDlgLightAnimationEditor::OnPaint()
   CPaintDC dc(this); // device context for painting
   }
 
-  if( !m_bCustomWindowsCreated)
+  if (!m_bCustomWindowsCreated)
   {
     // ---------------- Create custom window that will hold graphical representation of frames
     // obtain frames area window
@@ -387,7 +387,7 @@ void CDlgLightAnimationEditor::OnDeleteMarker()
 void CDlgLightAnimationEditor::OnChangeLightAnimationFrames()
 {
   // store data state from dialog into animation data
-  if( IsWindow(m_LightAnimationCombo.m_hWnd))
+  if (IsWindow(m_LightAnimationCombo.m_hWnd))
   {
     // reset starting and selected frames
     m_wndAnimationFrames.m_iStartingFrame = 0;
@@ -403,7 +403,7 @@ void CDlgLightAnimationEditor::InitLightAnimationCombo(void)
   // limit animation lenght
   m_LightAnimationCombo.LimitText(NAME_SIZE);
   // initialize light animations combo box
-  for(INDEX iAnimation=0;iAnimation<m_padAnimData->GetAnimsCt(); iAnimation++)
+  for (INDEX iAnimation=0;iAnimation<m_padAnimData->GetAnimsCt(); iAnimation++)
   {
     // obtain information about animation
     CAnimInfo aiInfo;
@@ -444,7 +444,7 @@ void CDlgLightAnimationEditor::OnSelchangeLightAnimationNameCombo()
 void CDlgLightAnimationEditor::OnChangeLightAnimationSpeed()
 {
   // store data state from dialog into animation data
-  if( IsWindow(m_LightAnimationCombo.m_hWnd))
+  if (IsWindow(m_LightAnimationCombo.m_hWnd))
   {
     UpdateData( TRUE);
   }
@@ -487,7 +487,7 @@ void CDlgLightAnimationEditor::OnLoadAnimation()
     "Load animation file",
     "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END,
     "Animation directory", "");
-  if( fnAnimation == "") return;
+  if (fnAnimation == "") return;
 
   try
   {
@@ -518,7 +518,7 @@ void CDlgLightAnimationEditor::OnLoadAnimation()
 
 void CDlgLightAnimationEditor::OnSaveAnimation()
 {
-  if( m_fnSaveName == "")
+  if (m_fnSaveName == "")
   {
     OnSaveAsAnimation();
   }
@@ -549,7 +549,7 @@ void CDlgLightAnimationEditor::OnSaveAsAnimation()
     "Save animation file",
     "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END,
     "Animation directory", "", "", NULL, FALSE);
-  if( fnAnimation == "") return;
+  if (fnAnimation == "") return;
 
   try
   {
@@ -572,19 +572,19 @@ void CDlgLightAnimationEditor::OnSaveAsAnimation()
 
 void CDlgLightAnimationEditor::OnButtonClose()
 {
-  if( m_bChanged) OnSaveAnimation();
+  if (m_bChanged) OnSaveAnimation();
   EndDialog( 0);
 }
 
 void CDlgLightAnimationEditor::OnCancel()
 {
-  if( m_bChanged) OnSaveAnimation();
+  if (m_bChanged) OnSaveAnimation();
   EndDialog( 0);
 }
 
 void CDlgLightAnimationEditor::OnClose()
 {
-  if( m_bChanged) OnSaveAnimation();
+  if (m_bChanged) OnSaveAnimation();
 	CDialog::OnClose();
 }
 

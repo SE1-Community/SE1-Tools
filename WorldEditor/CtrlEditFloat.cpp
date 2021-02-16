@@ -58,12 +58,12 @@ void CCtrlEditFloat::OnChange()
 BOOL CCtrlEditFloat::PreTranslateMessage(MSG* pMsg) 
 {
 	// if we caught key down message
-  if( pMsg->message==WM_KEYDOWN)
+  if (pMsg->message==WM_KEYDOWN)
   {
-    if((int)pMsg->wParam==VK_RETURN)
+    if ((int)pMsg->wParam==VK_RETURN)
     {
       // don't do anything if document doesn't exist
-      if( theApp.GetDocument() == NULL) return TRUE;
+      if (theApp.GetDocument() == NULL) return TRUE;
       // mark that document is changed
       theApp.GetDocument()->SetModifiedFlag( TRUE);
       theApp.GetDocument()->m_chSelections.MarkChanged();

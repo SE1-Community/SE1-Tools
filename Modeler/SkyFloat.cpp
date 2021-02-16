@@ -53,7 +53,7 @@ BOOL FloatFromString(HWND hWnd, float &fNumber)
   int iNumLen, iRetLen;
   iNumLen = strlen( szWindowText);
   iRetLen = sscanf( szWindowText, "%f", &fTmpNumber);
-  if( (iRetLen == 1)  || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0)) )
+  if ((iRetLen == 1)  || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0)) )
   {
     fNumber = fTmpNumber;
     return TRUE;

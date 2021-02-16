@@ -33,23 +33,23 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CDlgInfoSheet, CPropertySheet)
 
 #define CALLACTIVEPAGE(function, parameter)         \
-  if( pgActivPage == &m_PgInfoGlobal)               \
+  if (pgActivPage == &m_PgInfoGlobal)               \
     m_PgInfoGlobal.function( parameter);            \
-  else if( pgActivPage == &m_PgInfoMip)             \
+  else if (pgActivPage == &m_PgInfoMip)             \
     m_PgInfoMip.function( parameter);               \
-  else if( pgActivPage == &m_PgInfoNone)            \
+  else if (pgActivPage == &m_PgInfoNone)            \
     m_PgInfoNone.function( parameter);              \
-  else if( pgActivPage == &m_PgInfoPos)             \
+  else if (pgActivPage == &m_PgInfoPos)             \
     m_PgInfoPos.function( parameter);               \
-  else if( pgActivPage == &m_PgInfoRendering)       \
+  else if (pgActivPage == &m_PgInfoRendering)       \
     m_PgInfoRendering.function( parameter);         \
-  else if( pgActivPage == &m_PgInfoAnim)            \
+  else if (pgActivPage == &m_PgInfoAnim)            \
     m_PgInfoAnim.function( parameter);              \
-  else if( pgActivPage == &m_PgInfoCollision)       \
+  else if (pgActivPage == &m_PgInfoCollision)       \
     m_PgInfoCollision.function( parameter);         \
-  else if( pgActivPage == &m_PgAttachingPlacement)  \
+  else if (pgActivPage == &m_PgAttachingPlacement)  \
     m_PgAttachingPlacement.function( parameter);    \
-  else if( pgActivPage == &m_PgAttachingSound)      \
+  else if (pgActivPage == &m_PgAttachingSound)      \
     m_PgAttachingSound.function( parameter);
 
 CDlgInfoSheet::CDlgInfoSheet(CWnd* pWndParent)
@@ -120,48 +120,48 @@ BOOL CDlgInfoSheet::OnIdle(LONG lCount)
   CModelerView *pModelerMappingView = CModelerView::GetActiveMappingView();
   INDEX ctPages = GetPageCount();
   
-  if( m_InfoMode == IM_NORMAL) iLastNormalPage = GetPageIndex(GetActivePage());
-  if( m_InfoMode == IM_MAPPING) iLastMappingPage = GetPageIndex(GetActivePage());
+  if (m_InfoMode == IM_NORMAL) iLastNormalPage = GetPageIndex(GetActivePage());
+  if (m_InfoMode == IM_MAPPING) iLastMappingPage = GetPageIndex(GetActivePage());
 
   // If no view found and info mode is not IM_NONE
-  if( pAnyView == NULL)
+  if (pAnyView == NULL)
   {
-    if( m_InfoMode != IM_NONE)
+    if (m_InfoMode != IM_NONE)
     {
       HWND hwndActive = ::GetActiveWindow();
       m_InfoMode = IM_NONE;
       m_LastViewUpdated = NULL;
       
-      for( INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
+      for (INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
       AddPage(&m_PgInfoNone);
       SetActivePage( 0);
       ::SetActiveWindow( hwndActive);
     }
     return TRUE;
   }
-  else if( pModelerMappingView != NULL)
+  else if (pModelerMappingView != NULL)
   {
-    if( (m_InfoMode != IM_MAPPING) ||
+    if ((m_InfoMode != IM_MAPPING) ||
         (ctPages != 3) )
     {
       HWND hwndActive = ::GetActiveWindow();
       m_InfoMode = IM_MAPPING;
-      for( INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
+      for (INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
       AddPage(&m_PgInfoGlobal);
       AddPage(&m_PgInfoMip);
   	  AddPage(&m_PgInfoRendering);
 
       ctPages = GetPageCount();
-      if( iLastMappingPage<ctPages) SetActivePage( iLastMappingPage);
+      if (iLastMappingPage<ctPages) SetActivePage( iLastMappingPage);
       else                          SetActivePage( 0);
       ::SetActiveWindow( hwndActive);
     }
   }
-  else if( m_InfoMode != IM_NORMAL)
+  else if (m_InfoMode != IM_NORMAL)
   {
     HWND hwndActive = ::GetActiveWindow();
     m_InfoMode = IM_NORMAL;
-    for( INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
+    for (INDEX iPage=0; iPage<ctPages; iPage++) RemovePage( 0);
   	AddPage(&m_PgInfoGlobal);
   	AddPage(&m_PgInfoMip);
   	AddPage(&m_PgInfoRendering);
@@ -171,19 +171,19 @@ BOOL CDlgInfoSheet::OnIdle(LONG lCount)
     AddPage(&m_PgAttachingSound);
     AddPage(&m_PgInfoAnim);
     ctPages = GetPageCount();
-    if( iLastNormalPage<ctPages) SetActivePage( iLastNormalPage);
+    if (iLastNormalPage<ctPages) SetActivePage( iLastNormalPage);
     else                         SetActivePage( 0);
     ::SetActiveWindow( hwndActive);
   }
   
   BOOL bRefresh = FALSE;
-  if( GetActivePage() == &m_PgInfoAnim) bRefresh = TRUE;
-  if(m_LastViewUpdated != pAnyView) bRefresh = TRUE;
+  if (GetActivePage() == &m_PgInfoAnim) bRefresh = TRUE;
+  if (m_LastViewUpdated != pAnyView) bRefresh = TRUE;
   m_LastViewUpdated = pAnyView;
-  if(!theApp.m_chGlobal.IsUpToDate( m_Updateable)) bRefresh = TRUE;
-  if(!pAnyView->m_ModelObject.IsUpToDate( m_Updateable)) bRefresh = TRUE;
+  if (!theApp.m_chGlobal.IsUpToDate( m_Updateable)) bRefresh = TRUE;
+  if (!pAnyView->m_ModelObject.IsUpToDate( m_Updateable)) bRefresh = TRUE;
 
-  if( bRefresh)
+  if (bRefresh)
   {
     UpdateData( FALSE);
     m_Updateable.MarkUpdated();
@@ -198,7 +198,7 @@ BOOL CDlgInfoSheet::PreTranslateMessage(MSG* pMsg)
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   BOOL bAlt = (GetKeyState( VK_MENU)&0x8000) != 0;
-	if(pMsg->message==WM_KEYDOWN)
+	if (pMsg->message==WM_KEYDOWN)
   {
     // if any of string edit controls has input
     BOOL bEditingString = 
@@ -207,57 +207,57 @@ BOOL CDlgInfoSheet::PreTranslateMessage(MSG* pMsg)
       (::IsWindow(m_PgInfoCollision.m_hWnd)&&
       m_PgInfoCollision.GetDlgItem( IDC_COLLISION_BOX_NAME) == CWnd::GetFocus());
       
-    if( (pMsg->wParam==VK_SPACE) && !bEditingString)
+    if ((pMsg->wParam==VK_SPACE) && !bEditingString)
     {
       return TRUE;
     }
-	  else if( pMsg->wParam=='Q' && !bEditingString)
+	  else if (pMsg->wParam=='Q' && !bEditingString)
     {
       pMainFrame->ToggleInfoWindow();
       return TRUE;
     }
-	  else if( pMsg->wParam=='C' && !bEditingString)
+	  else if (pMsg->wParam=='C' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoCollision);
       return FALSE;
     }
-	  else if( pMsg->wParam=='R' && !bEditingString)
+	  else if (pMsg->wParam=='R' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoRendering);
       return TRUE;
     }
-	  else if( pMsg->wParam=='A' && !bEditingString)
+	  else if (pMsg->wParam=='A' && !bEditingString)
     {
       CustomSetActivePage( &m_PgAttachingPlacement);
       return TRUE;
     }
-	  else if( pMsg->wParam=='S' && !bEditingString)
+	  else if (pMsg->wParam=='S' && !bEditingString)
     {
       CustomSetActivePage( &m_PgAttachingSound);
       return TRUE;
     }
-	  else if( pMsg->wParam=='P' && !bEditingString)
+	  else if (pMsg->wParam=='P' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoPos);
       return TRUE;
     }
-	  else if( pMsg->wParam=='G' && !bEditingString)
+	  else if (pMsg->wParam=='G' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoGlobal);
       return TRUE;
     }
-	  else if( pMsg->wParam=='M' && !bEditingString)
+	  else if (pMsg->wParam=='M' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoMip);
       return TRUE;
     }
-	  else if( pMsg->wParam=='N' && !bEditingString)
+	  else if (pMsg->wParam=='N' && !bEditingString)
     {
       CustomSetActivePage( &m_PgInfoAnim);
       return TRUE;
     }
     
-    if( (pMsg->wParam>='A') && (pMsg->wParam<='Z') && !bEditingString)
+    if ((pMsg->wParam>='A') && (pMsg->wParam<='Z') && !bEditingString)
     {
       return TRUE;
     }
@@ -267,11 +267,11 @@ BOOL CDlgInfoSheet::PreTranslateMessage(MSG* pMsg)
 
 void CDlgInfoSheet::CustomSetActivePage( CPropertyPage *pppToActivate)
 {
-  if( GetActivePage() == pppToActivate) return;
+  if (GetActivePage() == pppToActivate) return;
   INDEX ctPages = GetPageCount();
-  for( INDEX iPage=0; iPage < ctPages; iPage++)
+  for (INDEX iPage=0; iPage < ctPages; iPage++)
   {
-    if( pppToActivate == GetPage( iPage))
+    if (pppToActivate == GetPage( iPage))
     {
       CPropertySheet::SetActivePage( iPage);
       return;

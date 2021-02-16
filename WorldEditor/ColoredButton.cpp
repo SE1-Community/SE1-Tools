@@ -84,12 +84,12 @@ void CColoredButton::SetColor(COLOR clrNew)
 {
   m_colColor = clrNew;
   m_bMixedColor = FALSE;
-  if( ::IsWindow(m_hWnd)) Invalidate( FALSE);
+  if (::IsWindow(m_hWnd)) Invalidate( FALSE);
 }
 
 void CColoredButton::ColorToComponents(void)
 {
-  if( m_colColor == m_colLastColor) return;
+  if (m_colColor == m_colLastColor) return;
   UBYTE ubR, ubG, ubB;
   UBYTE ubH, ubS, ubV;
   ColorToRGB( m_colColor, ubR, ubG, ubB);
@@ -117,7 +117,7 @@ void CColoredButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   m_dx = (m_rectButton.right-m_rectButton.left)/6;
   m_dy = (m_rectButton.top-m_rectButton.bottom)/2;
   
-  if( m_bMixedColor && IsWindowEnabled())
+  if (m_bMixedColor && IsWindowEnabled())
   {
     CBrush brush;
     brush.CreateHatchBrush(HS_BDIAGONAL, CLRF_CLR( RGBToColor(100,100,100)));
@@ -139,12 +139,12 @@ void CColoredButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   #define FILL_RECT( col, x, y, w, h) {\
       RECT rectToFill;\
       rectToFill.left = m_rectButton.left+m_dx*x;\
-      if( w<0) rectToFill.right = m_rectButton.right-2;\
+      if (w<0) rectToFill.right = m_rectButton.right-2;\
       else rectToFill.right = m_rectButton.left+rectToFill.left+m_dx*w;\
       rectToFill.top = m_rectButton.top-m_dy*y;\
       rectToFill.bottom = m_rectButton.top+rectToFill.top-m_dy*h;\
       COLORREF clrfColor = CLRF_CLR( col);\
-      if( !IsWindowEnabled()) clrfColor = CLRF_CLR( 0xBBBBBBBB);\
+      if (!IsWindowEnabled()) clrfColor = CLRF_CLR( 0xBBBBBBBB);\
       pDC->FillSolidRect( &rectToFill, clrfColor);\
       pDC->DrawEdge( &rectToFill, EDGE_SUNKEN, BF_RECT);}
 
@@ -164,11 +164,11 @@ void CColoredButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 void CColoredButton::OnClicked() 
 {
-  if( m_iColorIndex != -1) return;
+  if (m_iColorIndex != -1) return;
   // colored button can call eather custom palette window for choosing colors (where variable
   // to receive result color is pointed with _pcolColorToSet) eather trough MFC-provided
   // color picker
-  if( m_ptPickerType == PT_CUSTOM)
+  if (m_ptPickerType == PT_CUSTOM)
   {
     // instantiate new choose color palette window
     CColorPaletteWnd *pColorPalette = new CColorPaletteWnd;
@@ -188,7 +188,7 @@ void CColoredButton::OnClicked()
       NULL, L"Palette", WS_CHILD|WS_POPUP|WS_VISIBLE,
       rectWindow.left, rectWindow.top, rectWindow.Width(), rectWindow.Height(),
       m_hWnd, NULL, NULL);
-    if( !bResult)
+    if (!bResult)
     {
       AfxMessageBox( L"Error: Failed to create color palette");
       return;
@@ -203,7 +203,7 @@ void CColoredButton::OnClicked()
   else
   {
     COLORREF TmpColor = CLRF_CLR( m_colColor);
-    if( MyChooseColor( TmpColor, *GetParent()))
+    if (MyChooseColor( TmpColor, *GetParent()))
     {
       m_bMixedColor = FALSE;
       // restore alpha value
@@ -212,7 +212,7 @@ void CColoredButton::OnClicked()
     }
   }
   // invalidate parent dialog
-  if( m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
+  if (m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
 }
 
 void CColoredButton::SetOverButtonInfo( CPoint point) 
@@ -220,11 +220,11 @@ void CColoredButton::SetOverButtonInfo( CPoint point)
 #define SET_OVER_BUTTON_INFO( x, y, w, h, color_index, component_index) {\
   RECT rectToClick;\
   rectToClick.left = m_rectButton.left+m_dx*x;\
-  if( w<0) rectToClick.right = m_rectButton.right-2;\
+  if (w<0) rectToClick.right = m_rectButton.right-2;\
   else rectToClick.right = m_rectButton.left+rectToClick.left+m_dx*w;\
   rectToClick.top = m_rectButton.top-m_dy*y;\
   rectToClick.bottom = m_rectButton.top+rectToClick.top-m_dy*h;\
-  if( PtInRect( &rectToClick, point)) {\
+  if (PtInRect( &rectToClick, point)) {\
   m_iColorIndex = color_index; m_iComponentIndex = component_index;}}
 
   SET_OVER_BUTTON_INFO( 0, 0, 1, 1, 0, 0); // H
@@ -251,11 +251,11 @@ static void GetToolTipText(void *pwndColorButton, char *pToolTipText)
   ubG = pthis->m_ubComponents[1][1];
   ubB = pthis->m_ubComponents[1][2];
 
-  if( (pthis->m_iColorIndex == 0) && (pthis->m_iComponentIndex == 3) ) // Alpha
+  if ((pthis->m_iColorIndex == 0) && (pthis->m_iComponentIndex == 3) ) // Alpha
   {
     sprintf(pToolTipText, "Alpha=%d", ubA);
   }
-  else if( pthis->m_iColorIndex == 0) // HSV
+  else if (pthis->m_iColorIndex == 0) // HSV
   {
     sprintf(pToolTipText, "HSV=(%d,%d,%d)", ubH, ubS, ubV);
   }
@@ -268,9 +268,9 @@ static void GetToolTipText(void *pwndColorButton, char *pToolTipText)
 void CColoredButton::OnLButtonDown(UINT nFlags, CPoint point) 
 {
   SetOverButtonInfo( point);
-  if( m_bMixedColor)  m_iColorIndex = -1;
+  if (m_bMixedColor)  m_iColorIndex = -1;
 
-  if( m_iColorIndex != -1)
+  if (m_iColorIndex != -1)
   {
     CRect rectWindow;
     GetWindowRect( &rectWindow);
@@ -283,7 +283,7 @@ void CColoredButton::OnLButtonDown(UINT nFlags, CPoint point)
 
     _bMouseMoveEnabled = TRUE;
     _bColorChanging = TRUE;
-    if( !_bCursorHidden)
+    if (!_bCursorHidden)
     {
       // hide mouse
       while (ShowCursor(FALSE)>=0);
@@ -296,10 +296,10 @@ void CColoredButton::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CColoredButton::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-  if( m_iColorIndex != -1)
+  if (m_iColorIndex != -1)
   {
     theApp.m_cttToolTips.ManualOff();
-    if( _bCursorHidden)
+    if (_bCursorHidden)
     {
       // show mouse
       while (ShowCursor(TRUE)<0);
@@ -314,7 +314,7 @@ void CColoredButton::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CColoredButton::OnMouseMove(UINT nFlags, CPoint point) 
 {
-  if( (m_iColorIndex != -1) && (nFlags & MK_LBUTTON) && _bMouseMoveEnabled)
+  if ((m_iColorIndex != -1) && (nFlags & MK_LBUTTON) && _bMouseMoveEnabled)
   {
     SetOverButtonInfo( point);
     EnableToolTips( TRUE);
@@ -331,7 +331,7 @@ void CColoredButton::OnMouseMove(UINT nFlags, CPoint point)
     m_ubComponents[ m_iColorIndex][m_iComponentIndex] = UBYTE( slResult);
 
     COLOR colResult;
-    if( m_iColorIndex == 0) {
+    if (m_iColorIndex == 0) {
       colResult = HSVToColor( m_ubComponents[0][0], m_ubComponents[0][1], m_ubComponents[0][2]);
       ColorToRGB(colResult, m_ubComponents[1][0], m_ubComponents[1][1], m_ubComponents[1][2]);
     } else {
@@ -346,8 +346,8 @@ void CColoredButton::OnMouseMove(UINT nFlags, CPoint point)
     Invalidate( FALSE);
     SendMessage( WM_PAINT);
     // invalidate parent dialog
-    if( m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
-    if(ptCurrent != m_ptCenter)
+    if (m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
+    if (ptCurrent != m_ptCenter)
     {
       SetCursorPos( m_ptCenter.x, m_ptCenter.y);
     }
@@ -369,7 +369,7 @@ int CColoredButton::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
   ubB = m_ubComponents[1][2];
   
   CTString strColor;
-  if( m_bMixedColor)
+  if (m_bMixedColor)
   {
     strColor.PrintF( "Mixed color");
   }
@@ -394,7 +394,7 @@ int CColoredButton::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 void CColoredButton::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
   CMenu menu;
-  if( menu.LoadMenu(IDR_COLOR_BUTTON))
+  if (menu.LoadMenu(IDR_COLOR_BUTTON))
   {
     CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -411,21 +411,21 @@ void CColoredButton::OnPasteColor()
 {
   SetColor( _colColorClipboard);
   // invalidate parent dialog
-  if( m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
+  if (m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
 }
 
 void CColoredButton::OnNumericAlpha() 
 {
   CDlgNumericAlpha dlgNumericAlpha( GetColor()&0xFF);
-  if( dlgNumericAlpha.DoModal() == IDOK)
+  if (dlgNumericAlpha.DoModal() == IDOK)
   {
     m_ubComponents[0][3] = dlgNumericAlpha.m_iAlpha;
     m_colColor &= 0xFFFFFF00;
     m_colColor |= (dlgNumericAlpha.m_iAlpha & 0xFF);
     m_colLastColor = m_colColor;
-    if( ::IsWindow(m_hWnd)) Invalidate( FALSE);
+    if (::IsWindow(m_hWnd)) Invalidate( FALSE);
     // invalidate parent dialog
-    if( m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
+    if (m_pwndParentDialog != NULL) m_pwndParentDialog->UpdateData( TRUE);
   }
 }
 
@@ -437,11 +437,11 @@ void CColoredButton::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 void CColoredButton::OnKillFocus(CWnd* pNewWnd) 
 {
-  if( (m_iColorIndex != -1) && (_bColorChanging) )
+  if ((m_iColorIndex != -1) && (_bColorChanging) )
   {
     theApp.m_cttToolTips.ManualOff();
     _bColorChanging = FALSE;
-    if( _bCursorHidden)
+    if (_bCursorHidden)
     {
       // show mouse
       while (ShowCursor(TRUE)<0);

@@ -67,11 +67,11 @@ BOOL AreAllEntitiesOfTheSameClass(CDynamicContainer<class CEntity> *penContainer
   {
     // obtain this entity's class ptr
     CEntityClass *pdecCurrentClass = iten->GetClass();
-    if( pdecClass==NULL)
+    if (pdecClass==NULL)
     {
       pdecClass=pdecCurrentClass;
     }
-    if( pdecClass!=pdecCurrentClass)
+    if (pdecClass!=pdecCurrentClass)
     {
       return FALSE;
     }
@@ -84,7 +84,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
   CTString strResult="";
   iFormat=PDF_STRING;
   // see type of changing property
-  switch( pepProperty->ep_eptType)
+  switch (pepProperty->ep_eptType)
   {
   case CEntityProperty::EPT_FLAGS:
   {
@@ -98,15 +98,15 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
     INDEX iEnum = ENTITYPROPERTY( pen, pepProperty->ep_slOffset, INDEX);
     // search for selected enum
     BOOL bEnumFound=FALSE;
-    for(INDEX iEnumItem=0; iEnumItem<epEnum->epet_ctValues; iEnumItem++)
+    for (INDEX iEnumItem=0; iEnumItem<epEnum->epet_ctValues; iEnumItem++)
     {
-      if(iEnum==epEnum->epet_aepevValues[ iEnumItem].epev_iValue)
+      if (iEnum==epEnum->epet_aepevValues[ iEnumItem].epev_iValue)
       {
         strResult=epEnum->epet_aepevValues[ iEnumItem].epev_strName;
         bEnumFound=TRUE;
       }
     }
-    if( !bEnumFound)
+    if (!bEnumFound)
     {
       strResult="Invalid enum value!!!";
     }
@@ -117,7 +117,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
     iFormat=PDF_INDEX;
     INDEX iAnim = ENTITYPROPERTY( pen, pepProperty->ep_slOffset, INDEX);
     CAnimData *pAD = pen->GetAnimData( pepProperty->ep_slOffset);
-    if( pAD != NULL)
+    if (pAD != NULL)
     {
       CAnimInfo aiInfo;
       pAD->GetAnimInfo(iAnim, aiInfo);
@@ -129,7 +129,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
   case CEntityProperty::EPT_PARENT:
   {
     CEntity *penPtr = ENTITYPROPERTY( pen, pepProperty->ep_slOffset, CEntityPointer);
-    if( penPtr!=NULL)
+    if (penPtr!=NULL)
     {
       strResult="->"+penPtr->GetName();
     }
@@ -181,7 +181,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
   }
   case CEntityProperty::EPT_BOOL:
   {
-    if(ENTITYPROPERTY( pen, pepProperty->ep_slOffset, BOOL))
+    if (ENTITYPROPERTY( pen, pepProperty->ep_slOffset, BOOL))
     {
       strResult="Yes";
     }
@@ -223,7 +223,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
 CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
 {
   ASSERT(pen!=NULL);
-  if(pen==NULL) return CTString("");
+  if (pen==NULL) return CTString("");
   CEntityClass *pecEntityClass = pen->GetClass();
   CDLLEntityClass *pdllecDllEntityClass = pecEntityClass->ec_pdecDLLClass;
   FLOAT3D vOrigin = pen->GetPlacement().pl_PositionVector;
@@ -231,7 +231,7 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
   CTString strResult="";
   iFormat=PDF_STRING;
   
-  switch( iColumn)
+  switch (iColumn)
   {
   case COLUMN_INDEX:
   {
@@ -258,7 +258,7 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
   case COLUMN_SECTOR_NAME:
   {
     CBrushSector *pbsc = pen->GetFirstSectorWithName();
-    if( pbsc!=NULL)
+    if (pbsc!=NULL)
     {
       strResult=pbsc->bsc_strName;
     }
@@ -302,7 +302,7 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
   }
   case COLUMN_DISTANCE:
   {
-    if( _penForDistanceSort != NULL)
+    if (_penForDistanceSort != NULL)
     {
       FLOAT3D vSelectedOrigin = _penForDistanceSort->GetPlacement().pl_PositionVector;
       FLOAT3D fDistance = vOrigin-vSelectedOrigin;
@@ -322,15 +322,15 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
     CDLLEntityClass *pdecDLLClass = pen->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
     INDEX iPropertyOrder=0;
-    for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
-      for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+      for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-        if( pepProperty->ep_strName!=CTString(""))
+        if (pepProperty->ep_strName!=CTString(""))
         {
-          if( iPropertyOrder==iColumn-COLUMN_PROPERTY_START)
+          if (iPropertyOrder==iColumn-COLUMN_PROPERTY_START)
           {
             strResult=GetPropertyValue(pen, pepProperty, iFormat);
             return strResult;
@@ -354,11 +354,11 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
   CTString strEn1=GetItemValue(pen1, lParamSort, iFormat);
   CTString strEn2=GetItemValue(pen2, lParamSort, iFormat);
 
-  if( iFormat==PDF_STRING)
+  if (iFormat==PDF_STRING)
   {
     iResult = stricmp( strEn1, strEn2);
   }
-  else if( iFormat==PDF_COLOR)
+  else if (iFormat==PDF_COLOR)
   {
     INDEX ubR, ubG, ubB;
     INDEX ubH, ubS, ubV;
@@ -371,25 +371,25 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
   }
   else
   {
-    if( iFormat==PDF_FLOAT)
+    if (iFormat==PDF_FLOAT)
     {
       FLOAT fEn1=0;
       FLOAT fEn2=0;
       strEn1.ScanF("%g", &fEn1);
       strEn2.ScanF("%g", &fEn2);
-      if( fEn1>fEn2) iResult=1; else iResult=-1;
+      if (fEn1>fEn2) iResult=1; else iResult=-1;
     }
-    else if( iFormat==PDF_INDEX)
+    else if (iFormat==PDF_INDEX)
     {
       INDEX iEn1=0;
       INDEX iEn2=0;
       strEn1.ScanF("%d", &iEn1);
       strEn2.ScanF("%d", &iEn2);
-      if( iEn1>iEn2) iResult=1; else iResult=-1;
+      if (iEn1>iEn2) iResult=1; else iResult=-1;
     }
   }
 
-  if( theApp.m_bInvertClassSort) return -iResult; else return iResult;
+  if (theApp.m_bInvertClassSort) return -iResult; else return iResult;
 }
 
 CDlgBrowseByClass::CDlgBrowseByClass(CWnd* pParent /*=NULL*/)
@@ -416,7 +416,7 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
   CWorldEditorDoc *pDoc = theApp.GetDocument();
 
   // if dialog is recieving data
-  if( (pDX->m_bSaveAndValidate == FALSE) && (::IsWindow(m_listEntities.m_hWnd)) )
+  if ((pDX->m_bSaveAndValidate == FALSE) && (::IsWindow(m_listEntities.m_hWnd)) )
   {
     INDEX ctEntities = m_listEntities.GetItemCount();
     INDEX ctSelectedEntities = m_listEntities.GetSelectedCount();
@@ -425,7 +425,7 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
     m_strEntitiesInVolume = achrEntitiesCount;
     
     INDEX iSelectedItem = m_listEntities.GetNextItem( -1, LVNI_ALL|LVNI_SELECTED);
-    if( iSelectedItem != -1) m_listEntities.EnsureVisible( iSelectedItem, FALSE);
+    if (iSelectedItem != -1) m_listEntities.EnsureVisible( iSelectedItem, FALSE);
   }
 
 	//{{AFX_DATA_MAP(CDlgBrowseByClass)
@@ -437,7 +437,7 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // clear document selection
     pDoc->m_selEntitySelection.Clear();
@@ -446,7 +446,7 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
     FOREVER
     {
       iSelectedItem = m_listEntities.GetNextItem( iSelectedItem, LVNI_ALL|LVNI_SELECTED);
-      if( iSelectedItem == -1)
+      if (iSelectedItem == -1)
       {
         break;
       }
@@ -455,7 +455,7 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
       // add entity into normal selection
       pDoc->m_selEntitySelection.Select( *penEntity);
     }
-    if( pDoc->m_bBrowseEntitiesMode)
+    if (pDoc->m_bBrowseEntitiesMode)
     {
       // clear volume container
       pDoc->m_cenEntitiesSelectedByVolume.Clear();
@@ -515,7 +515,7 @@ void CDlgBrowseByClass::AddEntity( CEntity *pen)
   itItem.iItem = m_listEntities.InsertItem( &itItem);
   m_listEntities.SetItemData( itItem.iItem, (DWORD) pen);
 
-  for( INDEX iColumn=COLUMN_CLASS; iColumn<COLUMN_PROPERTY_START+_ctProperties; iColumn++)
+  for (INDEX iColumn=COLUMN_CLASS; iColumn<COLUMN_PROPERTY_START+_ctProperties; iColumn++)
   {
     itItem.iSubItem = iColumn;
     INDEX iFormat;
@@ -530,22 +530,22 @@ CDynamicContainer<class CEntity> *CDlgBrowseByClass::GetCurrentContainer(void)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
   // if should create and use temp container
-  if( _bTempContainer)
+  if (_bTempContainer)
   {
     _tempContainer.Clear();
     INDEX ctItems = m_listEntities.GetItemCount();
-    for( INDEX iItem=0; iItem<ctItems; iItem++)
+    for (INDEX iItem=0; iItem<ctItems; iItem++)
     {
       CEntity *pen = (CEntity *) m_listEntities.GetItemData( iItem);
       _tempContainer.Add(pen);
     }
     return &_tempContainer;
   }
-  else if( m_bShowVolume)
+  else if (m_bShowVolume)
   {
     return &pDoc->m_cenEntitiesSelectedByVolume;
   }
-  else if( pDoc->m_selEntitySelection.Count() > 1)
+  else if (pDoc->m_selEntitySelection.Count() > 1)
   {
     return &pDoc->m_selEntitySelection;
   }
@@ -572,7 +572,7 @@ void CDlgBrowseByClass::FillListWithEntities(void)
   {
     // for all non-hidden entities that are not classified into hidden sectors, filter importants if requested
     CBrushSector *pbscSector = iten->GetFirstSector();
-    if(!(iten->en_ulFlags&ENF_HIDDEN) &&
+    if (!(iten->en_ulFlags&ENF_HIDDEN) &&
         ((pbscSector == NULL) || !(pbscSector->bsc_ulFlags & BSCF_HIDDEN)) &&
         (!m_bShowImportants || iten->IsImportant()))
     {
@@ -584,17 +584,17 @@ void CDlgBrowseByClass::FillListWithEntities(void)
   m_listEntities.SortItems( SortEntities, theApp.m_iLastClassSortAplied);
 
   // select one that was selected before calling dialog
-  if( pDoc->m_selEntitySelection.Count() == 1)
+  if (pDoc->m_selEntitySelection.Count() == 1)
   {
     pDoc->m_selEntitySelection.Lock();
     CEntity *penOnly = pDoc->m_selEntitySelection.Pointer(0);
     pDoc->m_selEntitySelection.Unlock();
 
     INDEX ctItems = m_listEntities.GetItemCount();
-    for( INDEX iItem=0; iItem<ctItems; iItem++)
+    for (INDEX iItem=0; iItem<ctItems; iItem++)
     {
       CEntity *pen = (CEntity *) m_listEntities.GetItemData( iItem);
-      if( pen == penOnly)
+      if (pen == penOnly)
       {
         m_listEntities.SetItemState( iItem, LVIS_FOCUSED|LVIS_SELECTED, LVIS_FOCUSED|LVIS_SELECTED);
         m_listEntities.EnsureVisible( iItem, FALSE);
@@ -619,7 +619,7 @@ void CDlgBrowseByClass::FillListWithEntities(void)
 
 void CDlgBrowseByClass::InitializeListColumns(void)
 {
-  while( m_listEntities.DeleteColumn(0)) {};
+  while (m_listEntities.DeleteColumn(0)) {};
   // initialize list headers
   CRect rectListControl;
   m_listEntities.GetClientRect( rectListControl);
@@ -650,19 +650,19 @@ void CDlgBrowseByClass::InitializeListColumns(void)
   // add properties if of the same class and not empty selection
   CDynamicContainer<class CEntity> *penContainer=GetCurrentContainer();
   _bOfSameClass=AreAllEntitiesOfTheSameClass(penContainer);
-  if( _bOfSameClass && penContainer->Count()!=0)
+  if (_bOfSameClass && penContainer->Count()!=0)
   {
     _ctProperties=0;
     CEntity *pen = &penContainer->GetFirst();
     CDLLEntityClass *pdecDLLClass = pen->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
-      for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+      for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-        if( pepProperty->ep_strName!=CTString(""))
+        if (pepProperty->ep_strName!=CTString(""))
         {
           CSize szText=GetDC()->GetTextExtent(pepProperty->ep_strName);
           PIX pixProperty=szText.cx+8;
@@ -738,7 +738,7 @@ void CDlgBrowseByClass::OnDblclkEntityList(NMHDR* pNMHDR, LRESULT* pResult)
   LVHITTESTINFO htInfo;
   htInfo.pt = ptMouse;
   m_listEntities.SubItemHitTest( &htInfo);
-  if( htInfo.iItem != -1)
+  if (htInfo.iItem != -1)
   {
     m_listEntities.SetItemState( htInfo.iItem, LVIS_SELECTED, LVIS_SELECTED);
   }
@@ -757,18 +757,18 @@ void CDlgBrowseByClass::OnOK()
 void CDlgBrowseByClass::OnColumnclickEntityList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-  if( theApp.m_iLastClassSortAplied == pNMListView->iSubItem) theApp.m_bInvertClassSort = !theApp.m_bInvertClassSort;
+  if (theApp.m_iLastClassSortAplied == pNMListView->iSubItem) theApp.m_bInvertClassSort = !theApp.m_bInvertClassSort;
   else                                                        theApp.m_bInvertClassSort = FALSE;
 
   // if sorting by distance
-  if( pNMListView->iSubItem == COLUMN_DISTANCE)
+  if (pNMListView->iSubItem == COLUMN_DISTANCE)
   {
     INDEX iSelectedItem = m_listEntities.GetNextItem( -1, LVNI_ALL|LVNI_SELECTED);
-    if( iSelectedItem != -1)
+    if (iSelectedItem != -1)
     {
       _penForDistanceSort = (CEntity *) m_listEntities.GetItemData( iSelectedItem);
       FLOAT3D vSelectedOrigin = _penForDistanceSort->GetPlacement().pl_PositionVector;
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
         CEntity *penEntity = (CEntity *) m_listEntities.GetItemData(iItem);
         FLOAT3D vCurrentOrigin = penEntity->GetPlacement().pl_PositionVector;
@@ -806,15 +806,15 @@ void CDlgBrowseByClass::OnRclickEntityList(NMHDR* pNMHDR, LRESULT* pResult)
   LVHITTESTINFO htInfo;
   htInfo.pt = ptMouse;
   m_listEntities.SubItemHitTest( &htInfo);
-  if( htInfo.iItem != -1)
+  if (htInfo.iItem != -1)
   {
     CString strText = m_listEntities.GetItemText( htInfo.iItem, htInfo.iSubItem);
     
     m_listEntities.SetRedraw(FALSE);
     INDEX ctItems = m_listEntities.GetItemCount();
-    for( INDEX iItem = 0; iItem<ctItems; iItem++) 
+    for (INDEX iItem = 0; iItem<ctItems; iItem++) 
     {
-      if( ((m_listEntities.GetItemText( iItem, htInfo.iSubItem) != strText) && !bShift) ||
+      if (((m_listEntities.GetItemText( iItem, htInfo.iSubItem) != strText) && !bShift) ||
           ((m_listEntities.GetItemText( iItem, htInfo.iSubItem) == strText) && bShift) )
       {
         m_listEntities.DeleteItem( iItem);
@@ -842,7 +842,7 @@ void CDlgBrowseByClass::OnClickEntityList(NMHDR* pNMHDR, LRESULT* pResult)
   LVHITTESTINFO htInfo;
   htInfo.pt = ptMouse;
   m_listEntities.SubItemHitTest( &htInfo);
-  if( htInfo.iItem != -1)
+  if (htInfo.iItem != -1)
   {
     m_listEntities.SetItemState( htInfo.iItem, LVIS_SELECTED, LVIS_SELECTED);
   }
@@ -857,7 +857,7 @@ void CDlgBrowseByClass::OnRemove()
   FOREVER
   {
     iSelectedItem = m_listEntities.GetNextItem( -1, LVNI_ALL|LVNI_SELECTED);
-    if( iSelectedItem == -1)
+    if (iSelectedItem == -1)
     {
       break;
     }
@@ -877,9 +877,9 @@ void CDlgBrowseByClass::OnLeave()
   m_listEntities.SetRedraw(FALSE);
   INDEX ctItems = m_listEntities.GetItemCount();
   INDEX iItem = 0;
-  for( ; iItem<ctItems; iItem++) 
+  for (; iItem<ctItems; iItem++) 
   {
-    if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) != LVIS_SELECTED)
+    if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) != LVIS_SELECTED)
     {
       m_listEntities.DeleteItem( iItem);
       iItem--;
@@ -887,7 +887,7 @@ void CDlgBrowseByClass::OnLeave()
     }
   }
   
-  for( iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+  for (iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
   {
     m_listEntities.SetItemState( iItem, 0, LVIS_SELECTED);
   }
@@ -904,7 +904,7 @@ void CDlgBrowseByClass::OnLeave()
 
 void CDlgBrowseByClass::OnSelectAll() 
 {
-  for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+  for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
   {
     m_listEntities.SetItemState( iItem, LVIS_SELECTED, LVIS_SELECTED);
   }
@@ -915,16 +915,16 @@ void CDlgBrowseByClass::OnFeedVolume()
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
 
-  if( pDoc->m_bBrowseEntitiesMode)
+  if (pDoc->m_bBrowseEntitiesMode)
   {
     // go out of browse by volume mode
     pDoc->OnBrowseEntitiesMode();
     pDoc->m_bBrowseEntitiesMode = FALSE;
   }
   pDoc->m_cenEntitiesSelectedByVolume.Clear();
-  for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+  for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
   {
-    if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+    if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
     {
       // get selected entity
       CEntity *penEntity = (CEntity *) m_listEntities.GetItemData(iItem);
@@ -942,16 +942,16 @@ void CDlgBrowseByClass::OnRevert()
 void CDlgBrowseByClass::OnSelectSectors() 
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+  for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
   {
-    if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+    if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
     {
       // get selected entity
       CEntity *penEntity = (CEntity *) m_listEntities.GetItemData(iItem);
       CBrushSector *pbscSector = penEntity->GetFirstSectorWithName();
-      if( pbscSector != NULL)
+      if (pbscSector != NULL)
       {
-        if( !pbscSector->IsSelected( BSCF_SELECTED))
+        if (!pbscSector->IsSelected( BSCF_SELECTED))
         {
           pDoc->m_selSectorSelection.Select( *pbscSector);
         }
@@ -965,7 +965,7 @@ void CDlgBrowseByClass::OnSelectSectors()
 BOOL CDlgBrowseByClass::PreTranslateMessage(MSG* pMsg) 
 {
   BOOL bCtrl = (GetKeyState( VK_CONTROL)&0x8000) != 0;
-  if( ((pMsg->message==WM_KEYDOWN) || (pMsg->message==WM_SYSKEYDOWN)) && 
+  if (((pMsg->message==WM_KEYDOWN) || (pMsg->message==WM_SYSKEYDOWN)) && 
       ((int)pMsg->wParam=='A') && bCtrl)
   {
     OnSelectAll();
@@ -987,7 +987,7 @@ void CDlgBrowseByClass::OnDeleteBrowseByClass()
   FOREVER
   {
     iSelectedItem = m_listEntities.GetNextItem( -1, LVNI_ALL|LVNI_SELECTED);
-    if( iSelectedItem == -1)
+    if (iSelectedItem == -1)
     {
       break;
     }
@@ -1001,10 +1001,10 @@ void CDlgBrowseByClass::OnDeleteBrowseByClass()
   {
     CEntity &en=*iten;
     // if it is terrain
-    if(en.GetRenderType()==CEntity::RT_TERRAIN)
+    if (en.GetRenderType()==CEntity::RT_TERRAIN)
     {
       // if it is selected terrain
-      if(pDoc->m_ptrSelectedTerrain==en.GetTerrain())
+      if (pDoc->m_ptrSelectedTerrain==en.GetTerrain())
       {
         pDoc->m_ptrSelectedTerrain=NULL;
         theApp.m_ctTerrainPage.MarkChanged();
@@ -1059,16 +1059,16 @@ void CDlgBrowseByClass::OnSelendokPluggins()
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
   INDEX isel=m_ctrlPluggins.GetCurSel();
-  switch(isel)
+  switch (isel)
   {
     // random select
     case 1:
     {
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
-        if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) != LVIS_SELECTED)
+        if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) != LVIS_SELECTED)
         {
-          if( rand()>RAND_MAX/2)
+          if (rand()>RAND_MAX/2)
           {
             m_listEntities.SetItemState( iItem, LVIS_SELECTED, LVIS_SELECTED);
           }
@@ -1079,11 +1079,11 @@ void CDlgBrowseByClass::OnSelendokPluggins()
     // random deselect
     case 2:
     {
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
-        if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+        if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
         {
-          if( rand()>RAND_MAX/2)
+          if (rand()>RAND_MAX/2)
           {
             m_listEntities.SetItemState( iItem, 0, LVIS_SELECTED);
           }
@@ -1095,14 +1095,14 @@ void CDlgBrowseByClass::OnSelendokPluggins()
     case 3:
     {
       pDoc->RememberUndo();
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
         // if is selected
-        if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+        if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
         {
           CEntity *pen = (CEntity *) m_listEntities.GetItemData( iItem);
           // if it can be rotated
-          if( (pen->GetFlags() & ENF_ANCHORED) == 0)
+          if ((pen->GetFlags() & ENF_ANCHORED) == 0)
           {
             CPlacement3D pl=pen->GetPlacement();
             pl.pl_OrientationAngle(1)=((FLOAT)rand())/RAND_MAX*360.0f;
@@ -1116,14 +1116,14 @@ void CDlgBrowseByClass::OnSelendokPluggins()
     case 4:
     {
       pDoc->RememberUndo();
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
         // if is selected
-        if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+        if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
         {
           CEntity *pen = (CEntity *) m_listEntities.GetItemData( iItem);
           // if it can be rotated
-          if( (pen->GetFlags() & ENF_ANCHORED) == 0)
+          if ((pen->GetFlags() & ENF_ANCHORED) == 0)
           {
             CPlacement3D pl=pen->GetPlacement();
             pl.pl_OrientationAngle(2)=((FLOAT)rand())/RAND_MAX*360.0f;
@@ -1137,14 +1137,14 @@ void CDlgBrowseByClass::OnSelendokPluggins()
     case 5:
     {
       pDoc->RememberUndo();
-      for( INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
+      for (INDEX iItem = 0; iItem<m_listEntities.GetItemCount(); iItem++) 
       {
         // if is selected
-        if( m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
+        if (m_listEntities.GetItemState( iItem, LVIS_SELECTED) == LVIS_SELECTED)
         {
           CEntity *pen = (CEntity *) m_listEntities.GetItemData( iItem);
           // if it can be rotated
-          if( (pen->GetFlags() & ENF_ANCHORED) == 0)
+          if ((pen->GetFlags() & ENF_ANCHORED) == 0)
           {
             CPlacement3D pl=pen->GetPlacement();
             pl.pl_OrientationAngle(3)=((FLOAT)rand())/RAND_MAX*360.0f;

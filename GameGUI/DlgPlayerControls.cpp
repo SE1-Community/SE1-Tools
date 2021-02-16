@@ -50,13 +50,13 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
   BOOL bEnableControls;
   
   // if list control window is created
-  if( IsWindow(m_listAxisActions.m_hWnd))
+  if (IsWindow(m_listAxisActions.m_hWnd))
   {
     // if dialog is recieving data
-    if( pDX->m_bSaveAndValidate == FALSE)
+    if (pDX->m_bSaveAndValidate == FALSE)
     {
       iSelectedAxis = m_listAxisActions.GetNextItem( -1, LVNI_SELECTED);
-      if( iSelectedAxis != -1)
+      if (iSelectedAxis != -1)
       {
         // enable combo control
         m_comboControlerAxis.EnableWindow();
@@ -67,7 +67,7 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
         // and select it 
         m_comboControlerAxis.SetCurSel( iComboEntry);
         // if axis none is selected, disable sensitivity and other additional controls for axis
-        if( m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_iAxisAction == AXIS_NONE)
+        if (m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_iAxisAction == AXIS_NONE)
         {
           // disable controls for defining controler's attributes
           bEnableControls = FALSE;
@@ -83,7 +83,7 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
           // get state of invert axis check box
           m_bInvertControler = m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_bInvert;
           // get radio value (relative/absolute type of controler)
-          if( m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_bRelativeControler)
+          if (m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_bRelativeControler)
           {
             m_iRelativeAbsoluteType = 0;
           }
@@ -123,16 +123,16 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     iSelectedAxis = m_listAxisActions.GetNextItem( -1, LVNI_SELECTED);
     // if there is valid selection
-    if( iSelectedAxis != -1)
+    if (iSelectedAxis != -1)
     {
       // apply check box
       m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_bInvert = m_bInvertControler;
       // apply relative/absolute radio
-      if( m_iRelativeAbsoluteType == 0)
+      if (m_iRelativeAbsoluteType == 0)
       {
         m_ctrlControls.ctrl_aaAxisActions[ iSelectedAxis].aa_bRelativeControler = TRUE;
       }
@@ -200,7 +200,7 @@ void CDlgPlayerControls::FillActionsList(void)
 
 
   // try to select same item that was selected before refresh list
-  if( iDefaultSelected != -1)
+  if (iDefaultSelected != -1)
   {
     // select wanted item
     m_listButtonActions.SetItemState( iDefaultSelected, 
@@ -222,7 +222,7 @@ void CDlgPlayerControls::FillAxisList(void)
   // all items will be of text type
   itItem.mask = LVIF_TEXT;
   // now add all axis actions
-  for(INDEX iAxis = 0; iAxis<AXIS_ACTIONS_CT; iAxis++) {
+  for (INDEX iAxis = 0; iAxis<AXIS_ACTIONS_CT; iAxis++) {
     itItem.iItem = iAxis;
     itItem.iSubItem = 0;
     itItem.pszText = (char*)(const char*)_pGame->gm_astrAxisNames[iAxis];
@@ -234,7 +234,7 @@ void CDlgPlayerControls::FillAxisList(void)
   }
 
   // try to select same item that was selected before refresh list
-  if( iDefaultSelected != -1)
+  if (iDefaultSelected != -1)
   {
     m_listAxisActions.SetItemState( iDefaultSelected, 
       LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
@@ -284,7 +284,7 @@ BOOL CDlgPlayerControls::OnInitDialog()
   FillAxisList();
   
   // for all possible axis mounting controlers
-  for( INDEX iAxis=0; iAxis<_pInput->GetAvailableAxisCount(); iAxis++)
+  for (INDEX iAxis=0; iAxis<_pInput->GetAvailableAxisCount(); iAxis++)
   {
     m_comboControlerAxis.AddString( _pInput->GetAxisName( iAxis));
   }
@@ -296,7 +296,7 @@ void CDlgPlayerControls::SetFirstAndSecondButtonNames(void)
 {
   BOOL bEnablePressKeyControls;
   CButtonAction *pbaCurrent = GetSelectedButtonAction();
-  if( pbaCurrent != NULL)
+  if (pbaCurrent != NULL)
   {
     // type first currently mounted button's name
     m_editFirstControl.SetWindowText( (char *)(const char *)
@@ -323,7 +323,7 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
   // get selected action
   m_iSelectedAction = m_listButtonActions.GetNextItem( -1, LVNI_SELECTED);
   // if there is valid selection
-  if( m_iSelectedAction == -1)
+  if (m_iSelectedAction == -1)
   {
     // activate actions list
     m_listButtonActions.SetFocus();
@@ -331,7 +331,7 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
   }
 
   // leave left mouse button !
-  while( (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0) NOTHING;
+  while ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0) NOTHING;
   
   char achrMessage[ 256];
   // prepare message
@@ -351,13 +351,13 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
   // initial reading of all available inputs
   _pInput->GetInput(FALSE);
   // as long as direct input is enabled
-  while( _pInput->IsInputEnabled())
+  while (_pInput->IsInputEnabled())
   {
     // for all possible buttons
-    for( INDEX iButton=0; iButton<_pInput->GetAvailableButtonsCount(); iButton++)
+    for (INDEX iButton=0; iButton<_pInput->GetAvailableButtonsCount(); iButton++)
     {
       // if pressed
-      if( _pInput->GetButtonState( iButton)
+      if (_pInput->GetButtonState( iButton)
         || (iButton==KID_MOUSE1 && (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0)
         || (iButton==KID_MOUSE2 && (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0)
         || (iButton==KID_MOUSE3 && (GetAsyncKeyState(VK_MBUTTON) & 0x8000) != 0))
@@ -367,14 +367,14 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
         // if new button is mounted allready, set owner's action mounting to "key none"
         FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
         {
-          if( itButtonAction->ba_iFirstKey  == iButton) itButtonAction->ba_iFirstKey  = KID_NONE;
-          if( itButtonAction->ba_iSecondKey == iButton) itButtonAction->ba_iSecondKey = KID_NONE;
+          if (itButtonAction->ba_iFirstKey  == iButton) itButtonAction->ba_iFirstKey  = KID_NONE;
+          if (itButtonAction->ba_iSecondKey == iButton) itButtonAction->ba_iSecondKey = KID_NONE;
         }
 
         CButtonAction *pbaCurrent = GetSelectedButtonAction();
-        if( pbaCurrent != NULL)
+        if (pbaCurrent != NULL)
         {
-          if( strFirstOrSecond == CTString("first") )
+          if (strFirstOrSecond == CTString("first") )
           {
             pbaCurrent->ba_iFirstKey = iButton;
           }
@@ -398,15 +398,15 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
         // prevent reselecting edit control
         MSG message;
         // peek and remove all mouse messages from message queue
-        while( PeekMessage( &message, m_hWnd, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE)) NOTHING;
+        while (PeekMessage( &message, m_hWnd, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE)) NOTHING;
         // peek and remove all keyboard messages from message queue
-        while( PeekMessage( &message, m_hWnd, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE)) NOTHING;
+        while (PeekMessage( &message, m_hWnd, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE)) NOTHING;
       }
     }
   }
   ASSERT( !_pInput->IsInputEnabled());
   // try to select same item that was selected before key binding
-  if( m_iSelectedAction != -1)
+  if (m_iSelectedAction != -1)
   {
     m_listButtonActions.SetItemState( m_iSelectedAction, 
       LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
@@ -435,12 +435,12 @@ CButtonAction *CDlgPlayerControls::GetSelectedButtonAction()
   // get selected action
   m_iSelectedAction = m_listButtonActions.GetNextItem( -1, LVNI_SELECTED);
   // if there is valid selection
-  if( m_iSelectedAction != -1)
+  if (m_iSelectedAction != -1)
   {
     INDEX iCurrent = 0;
     FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
     {
-      if( iCurrent == m_iSelectedAction) return itButtonAction;
+      if (iCurrent == m_iSelectedAction) return itButtonAction;
       iCurrent++;
     }
   }
@@ -450,7 +450,7 @@ CButtonAction *CDlgPlayerControls::GetSelectedButtonAction()
 void CDlgPlayerControls::OnFirstControlNone() 
 {
   CButtonAction *pbaCurrent = GetSelectedButtonAction();
-  if( pbaCurrent != NULL)
+  if (pbaCurrent != NULL)
   {
     // set none action key
     pbaCurrent->ba_iFirstKey = KID_NONE;
@@ -466,7 +466,7 @@ void CDlgPlayerControls::OnFirstControlNone()
 void CDlgPlayerControls::OnSecondControlNone() 
 {
   CButtonAction *pbaCurrent = GetSelectedButtonAction();
-  if( pbaCurrent != NULL)
+  if (pbaCurrent != NULL)
   {
     // set none action key
     pbaCurrent->ba_iSecondKey = KID_NONE;
@@ -522,14 +522,14 @@ void CDlgPlayerControls::OnMoveControlUp()
 {
   // get selected item
   INDEX iSelectedButton = m_listButtonActions.GetNextItem( -1, LVNI_SELECTED);
-  if( iSelectedButton == 0) return;
+  if (iSelectedButton == 0) return;
   // find member to move up
   INDEX iCurrent = 0;
   CButtonAction *pbaButtonToMove = NULL;
 
   {FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
   {
-    if( iCurrent == iSelectedButton)
+    if (iCurrent == iSelectedButton)
     {
       // remove it from list
       itButtonAction->ba_lnNode.Remove();
@@ -544,7 +544,7 @@ void CDlgPlayerControls::OnMoveControlUp()
   iCurrent = 0;
   {FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
   {
-    if( iCurrent == (iSelectedButton-1) )
+    if (iCurrent == (iSelectedButton-1) )
     {
       itButtonAction->ba_lnNode.AddBefore( pbaButtonToMove->ba_lnNode);
       break;
@@ -556,7 +556,7 @@ void CDlgPlayerControls::OnMoveControlUp()
   // get no of items
   INDEX iButtonsCt = m_listButtonActions.GetItemCount();
   // get no of items
-  for( INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
+  for (INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
   {
     m_listButtonActions.SetItemState( iListItem, 0, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
   }
@@ -574,13 +574,13 @@ void CDlgPlayerControls::OnMoveControlDown()
   INDEX iButtonsCt = m_listButtonActions.GetItemCount();
   // get selected item
   INDEX iSelectedButton = m_listButtonActions.GetNextItem( -1, LVNI_SELECTED);
-  if( iSelectedButton >= (iButtonsCt-1) ) return;
+  if (iSelectedButton >= (iButtonsCt-1) ) return;
   // find member to move down
   INDEX iCurrent = 0;
   CButtonAction *pbaButtonToMove = NULL;
   {FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
   {
-    if( iCurrent == iSelectedButton)
+    if (iCurrent == iSelectedButton)
     {
       // remove it from list
       itButtonAction->ba_lnNode.Remove();
@@ -595,7 +595,7 @@ void CDlgPlayerControls::OnMoveControlDown()
   iCurrent = 0;
   {FOREACHINLIST( CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction)
   {
-    if( iCurrent == (iSelectedButton) )
+    if (iCurrent == (iSelectedButton) )
     {
       itButtonAction->ba_lnNode.AddAfter( pbaButtonToMove->ba_lnNode);
       break;
@@ -605,7 +605,7 @@ void CDlgPlayerControls::OnMoveControlDown()
   // refresh list control
   FillActionsList();
   // get no of items
-  for( INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
+  for (INDEX iListItem=0; iListItem<iButtonsCt; iListItem++)
   {
     m_listButtonActions.SetItemState( iListItem, 0, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
   }

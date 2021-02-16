@@ -56,7 +56,7 @@ void CDlgFilterVertexSelection::DoDataExchange(CDataExchange* pDX)
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
   }
 
@@ -71,7 +71,7 @@ void CDlgFilterVertexSelection::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     CDynamicContainer<CBrushVertex> dcVertices;
     {FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
@@ -84,11 +84,11 @@ void CDlgFilterVertexSelection::DoDataExchange(CDataExchange* pDX)
     {
       BOOL bDeselect=FALSE;
       FLOAT3D vVtx=itvtx->bvx_vAbsolute;
-      if(vVtx(1)<m_fMinX || vVtx(1)>m_fMaxX) bDeselect=TRUE;
-      if(vVtx(2)<m_fMinY || vVtx(2)>m_fMaxY) bDeselect=TRUE;
-      if(vVtx(3)<m_fMinZ || vVtx(3)>m_fMaxZ) bDeselect=TRUE;
+      if (vVtx(1)<m_fMinX || vVtx(1)>m_fMaxX) bDeselect=TRUE;
+      if (vVtx(2)<m_fMinY || vVtx(2)>m_fMaxY) bDeselect=TRUE;
+      if (vVtx(3)<m_fMinZ || vVtx(3)>m_fMaxZ) bDeselect=TRUE;
 
-      if( bDeselect)
+      if (bDeselect)
       {
         pDoc->m_selVertexSelection.Deselect( *itvtx);
       }

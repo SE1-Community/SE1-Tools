@@ -48,7 +48,7 @@ BOOL FloatFromString(HWND hWnd, float &fNumber, BOOL &bValid)
 {
 	TCHAR szWindowText[20];
 	::GetWindowText(hWnd, szWindowText, 19);
-  if( CTString( CStringA(szWindowText)) == "")
+  if (CTString( CStringA(szWindowText)) == "")
   {
     bValid = FALSE;
     return TRUE;
@@ -59,7 +59,7 @@ BOOL FloatFromString(HWND hWnd, float &fNumber, BOOL &bValid)
   int iNumLen, iRetLen;
   iNumLen = strlen( CStringA(szWindowText));
   iRetLen = sscanf( CStringA(szWindowText), "%f", &fTmpNumber);
-  if( (iRetLen == 1)  || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0)) )
+  if ((iRetLen == 1)  || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0)) )
   {
     fNumber = fTmpNumber;
     return TRUE;
@@ -72,7 +72,7 @@ BOOL FloatFromString(HWND hWnd, float &fNumber, BOOL &bValid)
 
 void StringFromFloat(HWND hWnd, float fNumber, BOOL &bValid)
 {
-	if( !bValid) 
+	if (!bValid) 
   {
     ::SetWindowText(hWnd, L"");
     return;

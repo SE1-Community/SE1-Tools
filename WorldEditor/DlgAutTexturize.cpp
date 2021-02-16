@@ -46,7 +46,7 @@ CDlgAutTexturize::CDlgAutTexturize(CWnd* pParent /*=NULL*/)
 void CDlgAutTexturize::DoDataExchange(CDataExchange* pDX)
 {
   // if dialog is receiving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   	COLOR colOld=pDoc->m_woWorld.wo_colBackground;
@@ -66,10 +66,10 @@ void CDlgAutTexturize::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog gives data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     INDEX iSelected=m_ctrPretenderTextureSize.GetCurSel();
-	  if( iSelected==CB_ERR) return;
+	  if (iSelected==CB_ERR) return;
     m_pixWidth=1<<iSelected;
     m_pixHeight=1<<iSelected;
     COLOR colResult=m_colBcg.GetColor();
@@ -97,7 +97,7 @@ BOOL CDlgAutTexturize::OnInitDialog()
 	
 	m_ctrPretenderTextureSize.ResetContent();
   // add all available frictions
-  for(INDEX iW=0; iW<10; iW++)
+  for (INDEX iW=0; iW<10; iW++)
   {
     CTString strSize;
     strSize.PrintF("%dx%d pixels", 1<<iW, 1<<iW);

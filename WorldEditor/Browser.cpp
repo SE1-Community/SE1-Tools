@@ -32,7 +32,7 @@ static char THIS_FILE[] = __FILE__;
 CBrowser::CBrowser(void)
 {
   // set default number of subdirectories (none)
-  for( INDEX i=0; i<DIRECTORY_SHORTCT_CT; i++)
+  for (INDEX i=0; i<DIRECTORY_SHORTCT_CT; i++)
   {
     m_aiSubDirectoriesCt[ i] = 0;
   }
@@ -41,7 +41,7 @@ CBrowser::CBrowser(void)
 BOOL CBrowser::Create( CWnd* pParentWnd, UINT nIDTemplate,
                                UINT nStyle, UINT nID, BOOL bChange)
 {
-  if(!CDialogBar::Create(pParentWnd,nIDTemplate,nStyle,nID))
+  if (!CDialogBar::Create(pParentWnd,nIDTemplate,nStyle,nID))
   {
     return FALSE;
   }
@@ -104,7 +104,7 @@ CSize CBrowser::CalcDynamicLayout(int nLength, DWORD nMode)
   CRect NewTreePos;
   
   ULONG ulNewTreeHeight = m_TreeHeight;
-  if( csResult.cy < (m_TreeHeight + V_BORDER*2 + 10) )
+  if (csResult.cy < (m_TreeHeight + V_BORDER*2 + 10) )
   {
     ulNewTreeHeight = csResult.cy - +V_BORDER*2 - 10;
   }
@@ -172,7 +172,7 @@ void CBrowser::AddDirectoryRecursiv(CVirtualTreeNode *pOneDirectory, HTREEITEM h
   FOREACHINLIST( CVirtualTreeNode, vtn_lnInDirectory, pOneDirectory->vtn_lhChildren, it)
   {
     CVirtualTreeNode &vtn=*it;
-    if( vtn.vtn_bIsDirectory)
+    if (vtn.vtn_bIsDirectory)
     {
       AddDirectoryRecursiv( &vtn, InsertedDir);
     }
@@ -183,12 +183,12 @@ void CBrowser::OnCreateDirectory()
 {
   CDlgCreateVirtualDirectory dlg;
 
-  if( dlg.DoModal() == IDOK)
+  if (dlg.DoModal() == IDOK)
   {
     CloseSelectedDirectory();
     CVirtualTreeNode *pvtnCurrent;
     // Is this root directory ?
-    if( m_TreeCtrl.GetCount() == 0)
+    if (m_TreeCtrl.GetCount() == 0)
     {
       // Set data in instanciated CVirtualTreeNode because it is Root
       m_VirtualTree.vtn_bIsDirectory = TRUE;
@@ -208,7 +208,7 @@ void CBrowser::OnCreateDirectory()
       pvtnNewDir->vtn_strName = CTString( CStringA(dlg.m_strDirectoryName));
       // Get ptr to parent CVirtualTreeNode
       HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-      if( pSelectedItem == NULL) return;
+      if (pSelectedItem == NULL) return;
       pvtnNewDir->vnt_pvtnParent = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
       // And add this new directory into its list
       pvtnNewDir->vnt_pvtnParent->vtn_lhChildren.AddTail( pvtnNewDir->vtn_lnInDirectory);
@@ -239,10 +239,10 @@ void CBrowser::OnUpdateVirtualTreeControl(void)
 
 void CBrowser::OnDeleteDirectory() 
 {
-  if( m_TreeCtrl.GetCount() == 0)
+  if (m_TreeCtrl.GetCount() == 0)
     return;
 
-  if( ::MessageBoxA( this->m_hWnd, "Do You really want to delete directory and all its subdirectories?",
+  if (::MessageBoxA( this->m_hWnd, "Do You really want to delete directory and all its subdirectories?",
                     "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1 | 
                     MB_TASKMODAL | MB_TOPMOST) != IDYES)
   {
@@ -256,13 +256,13 @@ void CBrowser::OnDeleteDirectory()
 
 void CBrowser::DeleteDirectory(void)
 {
-  if( m_TreeCtrl.GetCount() == 0)
+  if (m_TreeCtrl.GetCount() == 0)
     return;
 
   CVirtualTreeNode *pvtnParent = NULL;
 
   HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-  if( pSelectedItem == NULL) return;
+  if (pSelectedItem == NULL) return;
   CVirtualTreeNode *pVTN = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
 
   // Delete all subdirectories
@@ -272,7 +272,7 @@ void CBrowser::DeleteDirectory(void)
   }
 
   // If this is not root directory, remove it from list and delete it
-  if( pVTN->vnt_pvtnParent != NULL)
+  if (pVTN->vnt_pvtnParent != NULL)
   {
     pvtnParent = pVTN->vnt_pvtnParent;
     pVTN->vtn_lnInDirectory.Remove();
@@ -281,13 +281,13 @@ void CBrowser::DeleteDirectory(void)
   
   m_TreeCtrl.DeleteAllItems();
   // If it wasn't root directory, fill TreeCtrl with data
-  if( pvtnParent != NULL)
+  if (pvtnParent != NULL)
   {
     AddDirectoryRecursiv( &m_VirtualTree, TVI_ROOT);   // Fill CTreeCtrl using recursion
     m_TreeCtrl.SortChildren( NULL);
     HTREEITEM NewActiveDir = (HTREEITEM) pvtnParent->vtn_Handle;
     
-    if( m_TreeCtrl.ItemHasChildren(NewActiveDir) )
+    if (m_TreeCtrl.ItemHasChildren(NewActiveDir) )
     {
       NewActiveDir = m_TreeCtrl.GetChildItem( NewActiveDir);
     }
@@ -303,14 +303,14 @@ CVirtualTreeNode *CBrowser::FindItemDirectory(CVirtualTreeNode *pvtnCurrentDirec
   // Now search this directory recursivly
   FOREACHINLIST( CVirtualTreeNode, vtn_lnInDirectory, pvtnCurrentDirectory->vtn_lhChildren, it)
   {
-    if( it->vtn_bIsDirectory)
+    if (it->vtn_bIsDirectory)
     {
       CVirtualTreeNode *pvtnResult = FindItemDirectory( &it.Current(), fnItemFileName);
-      if( pvtnResult != NULL) return pvtnResult;
+      if (pvtnResult != NULL) return pvtnResult;
     }
     else
     {
-      if( it->vtn_fnItem == fnItemFileName)
+      if (it->vtn_fnItem == fnItemFileName)
       {
         // deselect all items in directory
         FOREACHINLIST( CVirtualTreeNode, vtn_lnInDirectory, pvtnCurrentDirectory->vtn_lhChildren, it2)
@@ -329,7 +329,7 @@ CVirtualTreeNode *CBrowser::FindItemDirectory(CVirtualTreeNode *pvtnCurrentDirec
 void CBrowser::SelectItemDirectory( CTFileName fnItemFileName)
 {
   CVirtualTreeNode *pvtnItemDirectory = FindItemDirectory( &m_VirtualTree, fnItemFileName);
-  if( pvtnItemDirectory != NULL)
+  if (pvtnItemDirectory != NULL)
   {
     CloseSelectedDirectory();
     // Now select it
@@ -345,14 +345,14 @@ INDEX CBrowser::GetSelectedDirectory( CTString strArray[])
 {
   INDEX iSubDirsCt = 0;
   HTREEITEM pItem = m_TreeCtrl.GetSelectedItem();
-  if( pItem == NULL) return -1;
+  if (pItem == NULL) return -1;
   FOREVER
   {
     CTString strItemName = CTString( CStringA(m_TreeCtrl.GetItemText(pItem)));
     strArray[ iSubDirsCt] = strItemName;
     iSubDirsCt ++;
 
-    if( m_TreeCtrl.GetParentItem(pItem) == NULL)
+    if (m_TreeCtrl.GetParentItem(pItem) == NULL)
       break;
     pItem = m_TreeCtrl.GetParentItem(pItem);
   }
@@ -366,13 +366,13 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
   HTREEITEM pRootItem = m_TreeCtrl.GetRootItem();
   HTREEITEM pItem = pRootItem;
   // loop all directories starting from root and search for selected subdirectory name 
-  for( j=iSubDirsCt-1; j>=0; j--)
+  for (j=iSubDirsCt-1; j>=0; j--)
   {
     BOOL bSucess;
     HTREEITEM pStartItem = pItem;
     FOREVER
     {
-      if( pItem == NULL)
+      if (pItem == NULL)
       {
         bSucess = FALSE;
         break;
@@ -380,15 +380,15 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
       // get current directory's (starting from root) first subdirectory 
       CTString strItemName = CTString( CStringA(m_TreeCtrl.GetItemText(pItem)));
       // is this subdirectory's name same as one in list of selected along given path
-      if( strArray[ j] == strItemName)
+      if (strArray[ j] == strItemName)
       {
         // subdirectory found, if it has children or selected subdirectories counter reached 0
-        if( m_TreeCtrl.ItemHasChildren( pItem) || (j==0) )
+        if (m_TreeCtrl.ItemHasChildren( pItem) || (j==0) )
         {
           // mark that we found current subdirectory
           bSucess = TRUE;
           // if counter didn't reached 0
-          if( j!=0)
+          if (j!=0)
           {
             // it becomes current and we will try to find his selected subdirectory
             pItem = m_TreeCtrl.GetChildItem( pItem);
@@ -410,7 +410,7 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
         pItem = m_TreeCtrl.GetNextItem( pItem, TVGN_NEXT);
         // if we have wrapped back to start of items list, we didn't find any dir with
         // selected name
-        if( pStartItem == pItem)
+        if (pStartItem == pItem)
         {
           // so we weren't successful
           bSucess = FALSE;
@@ -419,7 +419,7 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
       }
     }
     // directory search finished, if selected subdirectory wasn't found
-    if( !bSucess)
+    if (!bSucess)
     {
       // select root item
       pItem = pRootItem;
@@ -446,7 +446,7 @@ void CBrowser::SelectVirtualDirectory( CTString strArray[], INDEX iSubDirsCt)
 CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave) 
 {
   // You can't save with no directories
-  if( bSave && m_TreeCtrl.GetCount()==0)
+  if (bSave && m_TreeCtrl.GetCount()==0)
     return CTString("");
 
   CWorldEditorApp *pApp = (CWorldEditorApp *)AfxGetApp();
@@ -473,7 +473,7 @@ CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave)
   ofnSaveVirtualTree.lpstrDefExt = "vrt";
   ofnSaveVirtualTree.hwndOwner = pMainFrame->m_hWnd;
   BOOL bResult=FALSE;
-  if( bSave)
+  if (bSave)
   {
     bResult=GetSaveFileNameA( &ofnSaveVirtualTree);
   }
@@ -481,7 +481,7 @@ CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave)
   {
     bResult=GetOpenFileNameA( &ofnSaveVirtualTree);
   }
-  if( !bResult)
+  if (!bResult)
   {
     m_TreeCtrl.SetFocus();
     return CTString("");
@@ -503,7 +503,7 @@ CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave)
 void CBrowser::SaveVirtualTree(CTFileName fnSave, CVirtualTreeNode *pvtn)
 {
   ASSERT(pvtn!=NULL);
-  if(pvtn==NULL) return;
+  if (pvtn==NULL) return;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileStream File;
   try
@@ -525,13 +525,13 @@ void CBrowser::SaveVirtualTree(CTFileName fnSave, CVirtualTreeNode *pvtn)
     File << iSubDirsCt;
     // write names of all subdirectories along path into file
     INDEX i=0;
-    for( ; i<iSubDirsCt; i++)
+    for (; i<iSubDirsCt; i++)
     {
       File << strArray[ i];
     }
 
     // now save all of virtual tree buffers
-    for( i=0; i<DIRECTORY_SHORTCT_CT; i++)
+    for (i=0; i<DIRECTORY_SHORTCT_CT; i++)
     {
       // write ID of virtual tree buffer
       File.WriteID_t( CChunkID("VTBF"));
@@ -539,7 +539,7 @@ void CBrowser::SaveVirtualTree(CTFileName fnSave, CVirtualTreeNode *pvtn)
       INDEX iSubDirsCt = m_aiSubDirectoriesCt[ i];
       File << iSubDirsCt;
       // write names of all subdirectories along path into file
-      for( INDEX j=0; j<iSubDirsCt; j++)
+      for (INDEX j=0; j<iSubDirsCt; j++)
       {
         File << m_astrVTreeBuffer[i][j];
       }
@@ -571,7 +571,7 @@ void CBrowser::OnSaveAsVirtualTree()
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileName fnSave=GetIOFileName("Save virtual tree to file", TRUE);
-  if( fnSave!="")
+  if (fnSave!="")
   {
     // remember choosed file name as last used
     pMainFrame->m_fnLastVirtualTree = fnSave;
@@ -583,9 +583,9 @@ void CBrowser::OnSaveAsVirtualTree()
 void CBrowser::OnLoadVirtualTree() 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if( m_bVirtualTreeChanged)
+  if (m_bVirtualTreeChanged)
   {
-    if( ::MessageBoxA( this->m_hWnd, "Current virtual directory not saved. Do You want to continue anyway?",
+    if (::MessageBoxA( this->m_hWnd, "Current virtual directory not saved. Do You want to continue anyway?",
                     "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1 | 
                     MB_TASKMODAL | MB_TOPMOST) != IDYES)
     {
@@ -595,7 +595,7 @@ void CBrowser::OnLoadVirtualTree()
   }
 
   CTFileName fnOpen=GetIOFileName("Load virtual tree", FALSE);  
-  if( fnOpen!="")
+  if (fnOpen!="")
   {
     // remember choosed file name as last used
     pMainFrame->m_fnLastVirtualTree = fnOpen;
@@ -607,10 +607,10 @@ void CBrowser::OnLoadVirtualTree()
 void CBrowser::OnImportVirtualTree() 
 {
   CTFileName fnImport=GetIOFileName("Import virtual tree", FALSE);  
-  if( fnImport!="")
+  if (fnImport!="")
   {
     HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-    if( pSelectedItem == NULL) return;
+    if (pSelectedItem == NULL) return;
     CVirtualTreeNode *pVTN = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
     // open virtual tree branch
     OnLoadVirtualTreeInternal(fnImport, pVTN);
@@ -620,10 +620,10 @@ void CBrowser::OnImportVirtualTree()
 void CBrowser::OnExportVirtualTree() 
 {
   HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-  if( pSelectedItem == NULL) return;
+  if (pSelectedItem == NULL) return;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileName fnExport=GetIOFileName("Export virtual tree", TRUE);
-  if( fnExport!="")
+  if (fnExport!="")
   {
     CVirtualTreeNode *pVTN = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
     // save virtual tree branch
@@ -666,10 +666,10 @@ void CBrowser::OnLoadVirtualTreeInternal(CTFileName fnVirtulTree, CVirtualTreeNo
 
 void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvtnRoot)
 {
-  if( pvtnRoot==NULL)
+  if (pvtnRoot==NULL)
   {
     // If current tree is not empty, delete it
-    if( m_TreeCtrl.GetCount() != 0)
+    if (m_TreeCtrl.GetCount() != 0)
     {
       FORDELETELIST( CVirtualTreeNode, vtn_lnInDirectory, m_VirtualTree.vtn_lhChildren, litDel)
       {
@@ -682,16 +682,16 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
 
   CTFileStream File;
   File.Open_t( fnVirtulTree, CTStream::OM_READ);
-  if( !(CChunkID("VRTT") == File.GetID_t()))
+  if (!(CChunkID("VRTT") == File.GetID_t()))
   {
     throw( "This is not valid virtual tree file");
   }
-  if( !(CChunkID(VIRTUAL_TREE_VERSION) == File.GetID_t()))
+  if (!(CChunkID(VIRTUAL_TREE_VERSION) == File.GetID_t()))
   {
     throw( "Invalid version of virtual tree file.");
   }
 
-  if( pvtnRoot==NULL)
+  if (pvtnRoot==NULL)
   {
     m_VirtualTree.Read_t( &File, NULL);
   }
@@ -705,7 +705,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
   m_TreeCtrl.DeleteAllItems();
   AddDirectoryRecursiv( &m_VirtualTree, TVI_ROOT);   // Fill CTreeCtrl using recursion
 
-  if( pvtnRoot!=NULL)
+  if (pvtnRoot!=NULL)
   {
     // don't read rest of data
     File.Close();
@@ -727,7 +727,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
   CTString strArray[ 32];
   // load as many subdirectory names as count says
   INDEX i=0;
-  for( ; i<iSubDirsCt; i++)
+  for (; i<iSubDirsCt; i++)
   {
     File >> strArray[ i];
   }
@@ -735,7 +735,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
   SelectVirtualDirectory( strArray, iSubDirsCt);
 
   // now read all four virtual tree buffers
-  for( i=0; i<DIRECTORY_SHORTCT_CT; i++)
+  for (i=0; i<DIRECTORY_SHORTCT_CT; i++)
   {
     // expect ID for virtual tree buffer
     File.ExpectID_t( CChunkID("VTBF"));
@@ -747,7 +747,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
     ASSERT( iSubDirsCt <= 32);
 
     // load as many subdirectory names as count says
-    for( INDEX j=0; j<iSubDirsCt; j++)
+    for (INDEX j=0; j<iSubDirsCt; j++)
     {
       File >> m_astrVTreeBuffer[i][j];
     }
@@ -759,15 +759,15 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
 
 void CBrowser::OnRenameDirectory() 
 {
-  if( m_TreeCtrl.GetCount() != 0)
+  if (m_TreeCtrl.GetCount() != 0)
   {
     HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-    if( pSelectedItem == NULL) return;
+    if (pSelectedItem == NULL) return;
     CVirtualTreeNode *pVTN = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
       
     CDlgCreateVirtualDirectory dlg( pVTN->vtn_strName, CTString("Rename virtual directory") );
 
-    if( dlg.DoModal() == IDOK)
+    if (dlg.DoModal() == IDOK)
     {
       pVTN->vtn_itIconType = dlg.m_iSelectedIconType;
       pVTN->vtn_strName = CTString( CStringA(dlg.m_strDirectoryName));
@@ -789,11 +789,11 @@ void CBrowser::OnContextMenu(CWnd* pWnd, CPoint point)
                                point.y - rectBrowser.TopLeft().y);
   PIXaabbox2D boxPoint = PIXaabbox2D( PIX2D(ptInBrowser.x, ptInBrowser.y) );
   
-  if( (m_boxBrowseWnd & boxPoint) == boxPoint)
+  if ((m_boxBrowseWnd & boxPoint) == boxPoint)
   {
     m_BrowseWindow.OnContextMenu( point);
   }	
-  else if( (m_boxTreeWnd & boxPoint) == boxPoint)
+  else if ((m_boxTreeWnd & boxPoint) == boxPoint)
   {
     m_TreeCtrl.OnContextMenu( point);
   }	
@@ -801,10 +801,10 @@ void CBrowser::OnContextMenu(CWnd* pWnd, CPoint point)
 
 CVirtualTreeNode *CBrowser::GetSelectedDirectory(void)
 {
-  if( m_TreeCtrl.GetCount() != 0)
+  if (m_TreeCtrl.GetCount() != 0)
   {
     HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-    if( pSelectedItem!=NULL)
+    if (pSelectedItem!=NULL)
     {
       return (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
     }
@@ -815,7 +815,7 @@ CVirtualTreeNode *CBrowser::GetSelectedDirectory(void)
 void CBrowser::OpenSelectedDirectory(void)
 {
   CVirtualTreeNode *pVTN = GetSelectedDirectory();
-  if( pVTN != NULL)
+  if (pVTN != NULL)
   {
     m_BrowseWindow.OpenDirectory( pVTN);
   }
@@ -824,7 +824,7 @@ void CBrowser::OpenSelectedDirectory(void)
 void CBrowser::CloseSelectedDirectory(void)
 {
   CVirtualTreeNode *pVTN = GetSelectedDirectory();
-  if( pVTN != NULL)
+  if (pVTN != NULL)
   {
     m_BrowseWindow.CloseDirectory( pVTN);
   }
@@ -834,7 +834,7 @@ void CBrowser::OnDumpVt()
 {
   CTFileName fnName = _EngineGUI.FileRequester( "Dump virtual tree as ...",
     "Text file\0*.txt\0" FILTER_ALL FILTER_END, "Dump virtual tree directory", "VirtualTrees\\");
-  if( fnName == "") return;
+  if (fnName == "") return;
 
   CTFileStream FileDump;
   try

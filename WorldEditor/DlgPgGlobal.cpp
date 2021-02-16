@@ -47,16 +47,16 @@ CDlgPgGlobal::~CDlgPgGlobal()
 
 void CDlgPgGlobal::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   // get document ptr
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     // if there isn't any document available
-    if( pDoc == NULL)
+    if (pDoc == NULL)
     {
       // write default messages
       m_strSelectedEntitiesCt = "none";
@@ -80,7 +80,7 @@ void CDlgPgGlobal::DoDataExchange(CDataExchange* pDX)
       m_udSelectionCounts.MarkUpdated();
     }
 
-    if( theApp.m_ptdActiveTexture != NULL)
+    if (theApp.m_ptdActiveTexture != NULL)
     {
       m_strTextureInfo = 
         (CTString&)theApp.m_ptdActiveTexture->GetName()+" "+
@@ -129,7 +129,7 @@ BOOL CDlgPgGlobal::OnIdle(LONG lCount)
   // get active document 
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // if there isn't any document available
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     // update data (write default messages)
     UpdateData( FALSE);
@@ -137,7 +137,7 @@ BOOL CDlgPgGlobal::OnIdle(LONG lCount)
   else
   {
     // if selections have been changed (they are not up to date)
-    if( !pDoc->m_chSelections.IsUpToDate( m_udSelectionCounts))
+    if (!pDoc->m_chSelections.IsUpToDate( m_udSelectionCounts))
     {
       // update dialog data
       UpdateData( FALSE);
@@ -150,7 +150,7 @@ void CDlgPgGlobal::OnDropFiles(HDROP hDropInfo)
 {
   INDEX iNoOfFiles = DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0);
   
-  if( iNoOfFiles != 1)
+  if (iNoOfFiles != 1)
   {
     AfxMessageBox( L"You can drop only one file at a time.");
     return;
@@ -163,7 +163,7 @@ void CDlgPgGlobal::OnDropFiles(HDROP hDropInfo)
   // create file name from buffer
   CTFileName fnDropped = CTString(chrFile);
   // if it is not texture, report error
-  if( fnDropped.FileExt() != ".tex" )
+  if (fnDropped.FileExt() != ".tex" )
   {
     AfxMessageBox( L"You can only drop textures here.");
     return;

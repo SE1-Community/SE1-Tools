@@ -48,7 +48,7 @@ void CDlgConsole::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is reciving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     //m_strConsoleOutput = "Default output string";
 //    m_strConsoleOutput = _pConsole->GetBuffer();
@@ -91,7 +91,7 @@ BOOL CDlgConsole::OnInitDialog()
 		strDefaultFont.LoadString(IDS_DEFAULT_ARIAL);
 		lstrcpy(logFont.lfFaceName, strDefaultFont);
     // try to create font
-    if( !fntFont.CreateFontIndirect(&logFont))
+    if (!fntFont.CreateFontIndirect(&logFont))
 			TRACE0("Could Not create font for console\n");
 	}
 	else

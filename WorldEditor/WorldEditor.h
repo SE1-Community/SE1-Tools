@@ -502,7 +502,7 @@ public:
 	void MyParseCommandLine(void);
 	BOOL SubInitInstance(void);
   void OnFileNew();
-  CEntity *CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning, CPlacement3D pl=CPlacement3D(FLOAT3D(0,0,0),ANGLE3D(0,0,0)));
+  CEntity *CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning, CPlacement3D pl=CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f),ANGLE3D(0.0f, 0.0f, 0.0f)));
   BOOL Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileName fnFile, BOOL bAdd);
   INDEX Insert3DObjects(CWorldEditorDoc *pDoc);
   CDisplayMode *GetStartModePtr( CTString strStartMode);
@@ -661,9 +661,9 @@ inline CValuesForPrimitive CValuesForPrimitive::operator-(const
 inline void CValuesForPrimitive::CorrectInvalidValues(void)
 {
   // some values must be valid, so if they are not, coorect them
-  if( vfp_fXMax < vfp_fXMin) vfp_fXMax = vfp_fXMin+SNAP_FLOAT_GRID;
-  if( vfp_fYMax < vfp_fYMin) vfp_fYMax = vfp_fYMin+SNAP_FLOAT_GRID;
-  if( vfp_fZMax < vfp_fZMin) vfp_fZMax = vfp_fZMin+SNAP_FLOAT_GRID;
+  if (vfp_fXMax < vfp_fXMin) vfp_fXMax = vfp_fXMin+SNAP_FLOAT_GRID;
+  if (vfp_fYMax < vfp_fYMin) vfp_fYMax = vfp_fYMin+SNAP_FLOAT_GRID;
+  if (vfp_fZMax < vfp_fZMin) vfp_fZMax = vfp_fZMin+SNAP_FLOAT_GRID;
 }
 
 /////////////////////////////////////////////////////////////////////////////

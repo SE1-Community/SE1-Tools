@@ -128,7 +128,7 @@ static int iDialogResult;
   AfxSetResourceHandle( GetModuleHandleA(GAMEGUI_DLL_NAME) );     \
   iDialogResult = dlg_name.DoModal();                             \
   AfxSetResourceHandle( (HINSTANCE) hOldResource);                \
-  if( iDialogResult == IDOK)                                      \
+  if (iDialogResult == IDOK)                                      \
   try {                                                           \
     _pGame->Save_t();                                             \
   }                                                               \

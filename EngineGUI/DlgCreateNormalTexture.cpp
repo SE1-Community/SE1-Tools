@@ -70,7 +70,7 @@ CDlgCreateNormalTexture::CDlgCreateNormalTexture( CTFileName fnInputFile, CWnd* 
     m_pixSourceWidth  = iiImageInfo.ii_Width;
     m_pixSourceHeight = iiImageInfo.ii_Height;
     // test if dimensions are at power of 2
-    if( (((1<<((int)Log2(m_pixSourceWidth)))  != m_pixSourceWidth)) ||
+    if ((((1<<((int)Log2(m_pixSourceWidth)))  != m_pixSourceWidth)) ||
         (((1<<((int)Log2(m_pixSourceHeight))) != m_pixSourceHeight))) {
       ThrowF_t( "Picture %s has wrong dimensions (%d,%d).\n"
                 "Both width and height must be at power of 2.",
@@ -105,7 +105,7 @@ CDlgCreateNormalTexture::CDlgCreateNormalTexture( CTFileName fnInputFile, CWnd* 
   }
 
   m_wndViewCreatedTexture.m_bForce32 = FALSE;
-  if( _bWasForced32) m_wndViewCreatedTexture.m_bForce32 = TRUE;
+  if (_bWasForced32) m_wndViewCreatedTexture.m_bForce32 = TRUE;
   RefreshCreatedTexture();
   // set created texture name
   m_strCreatedTextureName = fnTexFileName;
@@ -127,7 +127,7 @@ void CDlgCreateNormalTexture::RefreshCreatedTexture(void)
 
   // prepare forced upload quality
   _iTexForcedQuality = 16;
-  if( m_wndViewCreatedTexture.m_bForce32) _iTexForcedQuality = 32;
+  if (m_wndViewCreatedTexture.m_bForce32) _iTexForcedQuality = 32;
   // create temporary texture to show how texture will look like
   try
   {
@@ -151,7 +151,7 @@ void CDlgCreateNormalTexture::RefreshCreatedTexture(void)
 void CDlgCreateNormalTexture::ReleaseCreatedTexture(void)
 {
   // if there is texture obtained, release it
-  if( m_ptdCreated != NULL)
+  if (m_ptdCreated != NULL)
   {
     // free obtained texture
     _pTextureStock->Release( m_ptdCreated);
@@ -168,7 +168,7 @@ void CDlgCreateNormalTexture::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
   }
 
@@ -182,7 +182,7 @@ void CDlgCreateNormalTexture::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
   }
 }
@@ -206,7 +206,7 @@ void CDlgCreateNormalTexture::OnPaint()
 	CPaintDC dc(this); // device context for painting
 	
   // if texture preview windows are not yet created
-  if( !m_bPreviewWindowsCreated)
+  if (!m_bPreviewWindowsCreated)
   {
     // ---------------- Create custom window that will show how created texture will look like
     CWnd *pWndCreatedTexturePreview = GetDlgItem(IDC_TEXTURE_PREVIEW_WINDOW);
@@ -241,7 +241,7 @@ BOOL CDlgCreateNormalTexture::OnInitDialog()
   {
     MEX mexPotentionWidth = m_pixSourceWidth * (1 << iPotention);
     MEX mexPotentionHeight = m_pixSourceHeight * (1 << iPotention);
-    if( (mexPotentionWidth > MAX_ALLOWED_MEX_SIZE) ||
+    if ((mexPotentionWidth > MAX_ALLOWED_MEX_SIZE) ||
         (mexPotentionHeight > MAX_ALLOWED_MEX_SIZE))
         break;
     sprintf( strSize, "%.2f x %.2f", 
@@ -250,7 +250,7 @@ BOOL CDlgCreateNormalTexture::OnInitDialog()
     // connect item and represented mex value
     m_ctrlMexSizeCombo.SetItemData( iAddedAs, mexPotentionWidth);
     // try to select consistent size
-    if( mexPotentionWidth == m_mexCreatedWidth)
+    if (mexPotentionWidth == m_mexCreatedWidth)
     {
       iInitialSelectedSize = iPotention;
     }
@@ -261,7 +261,7 @@ BOOL CDlgCreateNormalTexture::OnInitDialog()
   m_ctrlMexSizeCombo.SetCurSel( iInitialSelectedSize);
   m_ctrlCheckButton.SetCheck(1);
   // determine correct texture quality
-  if( _bWasForced32) {
+  if (_bWasForced32) {
     m_ctrlForce32.SetCheck(1);
     m_wndViewCreatedTexture.m_bForce32 = TRUE;
   } else {
@@ -277,7 +277,7 @@ void CDlgCreateNormalTexture::OnCreateTexture()
 {
   MEX mexWidth   = m_ctrlMexSizeCombo.GetItemData( m_ctrlMexSizeCombo.GetCurSel());
   INDEX iMipMaps = 16;
-  if( !m_bCreateMipmaps)
+  if (!m_bCreateMipmaps)
   {
     iMipMaps = 1;
   }

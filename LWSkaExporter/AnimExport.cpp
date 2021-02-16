@@ -176,7 +176,7 @@ void MakeRotationMatrix(Matrix12 &mRotation,float *afAngles)
   mRotation[10] = fCosP*fCosH;
   mRotation[11]  = 0;
 
-  for (int i=0;i<12;i++) if(fabs(mRotation[i]) < 0.001) mRotation[i] = 0;
+  for (int i=0;i<12;i++) if (fabs(mRotation[i]) < 0.001) mRotation[i] = 0;
 }
 
 
@@ -328,7 +328,7 @@ Create( void *priv, LWItemID item, LWError *err )
   LWItemID pParentID = _iti->parent(item);
   //strdup()
   pii->bi_strParentName = _iti->name(pParentID);
-  if(_iti->type(pParentID) != LWI_BONE) {
+  if (_iti->type(pParentID) != LWI_BONE) {
     // this is root bone
     pii->bi_strParentName = "";
   }
@@ -340,11 +340,11 @@ Create( void *priv, LWItemID item, LWError *err )
   pii->bi_abfFrames = (BoneFrame*)malloc(sizeof(BoneFrame)*_ctFrames);
   
   // if first time here
-  if(_pbiFirst==NULL)
+  if (_pbiFirst==NULL)
   {
     // allocate space for storing absolute position for root bone
     _pmRootBoneAbs = (Matrix12*)malloc(sizeof(Matrix12)*_ctFrames);
-    for(int ifr=0;ifr<_ctFrames;ifr++)
+    for (int ifr=0;ifr<_ctFrames;ifr++)
     {
       // reset matrices of root bone for all frames
       MakeIdentityMatrix(_pmRootBoneAbs[ifr]);
@@ -468,7 +468,7 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 
   int bGoalOrient	= _iti->flags(bone) & LWITEMF_GOAL_ORIENT;
 
-  if(bRecordDefaultFrame)
+  if (bRecordDefaultFrame)
   {
     // default position
     _pbi->restParam( bone, LWIP_POSITION, pos );
@@ -511,13 +511,13 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 
 
     // if this is not bone
-    if((pii->bi_lwItemType!=LWI_BONE))// && (pii->bi_pbiNext!=NULL) && (pii->bi_pbiNext->bi_lwItemType == LWI_BONE))
+    if ((pii->bi_lwItemType!=LWI_BONE))// && (pii->bi_pbiNext!=NULL) && (pii->bi_pbiNext->bi_lwItemType == LWI_BONE))
     {
       // get pivot position
       _iti->param(bone,LWIP_PIVOT,access->time,pivotpos);
       _iti->param(bone,LWIP_PIVOT_ROT,access->time,pivotrot);
       float fPivotPos[3], fPivotRot[3];
-      for(int ia=0;ia<3;ia++)
+      for (int ia=0;ia<3;ia++)
       {
         fPivotPos[ia] = (float)pivotpos[ia];
         fPivotRot[ia] = (float)pivotrot[ia];
@@ -607,7 +607,7 @@ static bool ActivateExportHandler(LWItemID itemID)
 
   // apply export handeler for all bones in scene
   while (boneid!=LWITEM_NULL) {
-    if(!ApplyExportHander(boneid)) 
+    if (!ApplyExportHander(boneid)) 
     {
       // failed
       return false;
@@ -616,14 +616,14 @@ static bool ActivateExportHandler(LWItemID itemID)
   }
 
   // add motion handler to all objects in hierarchy before skeleton if exportabspositions is turned on
-  if(bExportAbsPositions)
+  if (bExportAbsPositions)
   {
-    while(pParentID != LWITEM_NULL)
+    while (pParentID != LWITEM_NULL)
     {
       // apply it only if item isn't bone
-      if(_iti->type(pParentID) != LWI_BONE)
+      if (_iti->type(pParentID) != LWI_BONE)
       {
-        if(!ApplyExportHander(pParentID))
+        if (!ApplyExportHander(pParentID))
         {
           return false;
         }
@@ -642,7 +642,7 @@ static bool RemoveExportHander(LWItemID itemID)
   if (!ExecCmd("SelectItem %x", itemID)) {
     return false;
   }
-  for(int iServer=1;;iServer++) {
+  for (int iServer=1;;iServer++) {
     const char *strServer = _iti->server(itemID, "ItemMotionHandler", iServer);
     if (strServer==NULL) {
       break;
@@ -661,15 +661,15 @@ static void DeactivateExportHandler(LWItemID itemID)
   LWItemID boneid = _iti->first(LWI_BONE, itemID);
 
   // remove motion handler from all objects in hierarchy before skeleton if exportabspositions is turned on
-  if(bExportAbsPositions)
+  if (bExportAbsPositions)
   {
     LWItemID pParentID = _iti->parent(boneid);
-    while(pParentID != LWITEM_NULL)
+    while (pParentID != LWITEM_NULL)
     {
       // apply it only if item isn't bone
-      if(_iti->type(pParentID) != LWI_BONE)
+      if (_iti->type(pParentID) != LWI_BONE)
       {
-        if(!RemoveExportHander(pParentID))
+        if (!RemoveExportHander(pParentID))
         {
           return;
         }
@@ -683,7 +683,7 @@ static void DeactivateExportHandler(LWItemID itemID)
 
   // remove export handeler for all bones in scene
   while (boneid!=LWITEM_NULL) {
-    if(!RemoveExportHander(boneid))
+    if (!RemoveExportHander(boneid))
     {
       return;
     }
@@ -696,7 +696,7 @@ static void DeactivateExportHandler(LWItemID itemID)
 void FindMorphChannels(LWChanGroupID idParentGroup)
 {
   // for each group in the given parent
-  for(LWChanGroupID idGroup = _chi->nextGroup(idParentGroup, NULL); 
+  for (LWChanGroupID idGroup = _chi->nextGroup(idParentGroup, NULL); 
       idGroup!=NULL; 
       idGroup = _chi->nextGroup(idParentGroup, idGroup)) {
     const char *strGroupName = _chi->groupName(idGroup);
@@ -705,7 +705,7 @@ void FindMorphChannels(LWChanGroupID idParentGroup)
     }
 
     // for each channel in the group
-    for(LWChannelID idChan = _chi->nextChannel(idGroup, NULL); 
+    for (LWChannelID idChan = _chi->nextChannel(idGroup, NULL); 
         idChan!=NULL; 
         idChan = _chi->nextChannel(idGroup, idChan)) {
       // generate morhpmap name from the info about the channel and its parents
@@ -766,7 +766,7 @@ void GetAnimID(char *fnAnimFile)
   int IResultS = pchSlash - temp + 1;
   int IResultD = pchDot - temp;
 
-  if((pchDot!=NULL) && (pchSlash!=NULL))
+  if ((pchDot!=NULL) && (pchSlash!=NULL))
   {
     int len = IResultD-IResultS;
     memcpy(strAnimName,&temp[IResultS],len);
@@ -774,7 +774,7 @@ void GetAnimID(char *fnAnimFile)
     strAnimName[len+1] = 0;
     strcat(strAnimName,_sci->name);
     char *pchDot2 = strrchr(strAnimName, '.');
-    if(pchDot2!=NULL) *pchDot2 = 0;
+    if (pchDot2!=NULL) *pchDot2 = 0;
   }
   else
   {
@@ -799,7 +799,7 @@ void WriteAnimFrame(BoneInfo *pbi,int iFrame)
   MakeRotationAndPosMatrix(bi_mRot,bf.fi_vPos,bf.fi_vRot);
 
   // if doesent have parent (root bone)
-  if(strlen(pbi->bi_strParentName) == 0) {
+  if (strlen(pbi->bi_strParentName) == 0) {
     // add position and rotation of parent object to root bone
     Matrix12 mTemp;
     MatrixCopy(mTemp,bi_mRot);
@@ -814,7 +814,7 @@ void WriteAnimFrame(BoneInfo *pbi,int iFrame)
 // 
 int ExportAnim(LWXPanelID pan)
 {
-  if(!_evaluate)
+  if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -835,14 +835,14 @@ int ExportAnim(LWXPanelID pan)
   int ctSelectedMeshed = 0;
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
-    if(_iti->type(_objid) == LWI_OBJECT)
+    if (_iti->type(_objid) == LWI_OBJECT)
     {
       _pmesh = _obi->meshInfo(_objid, 0);
-      if(_pmesh != NULL)
+      if (_pmesh != NULL)
       {
-        if(_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
+        if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelectedMeshed++;
         }
@@ -861,31 +861,31 @@ int ExportAnim(LWXPanelID pan)
   }
 
   // if some objects are selected export only them
-  if(ctSelectedMeshed > 0) bExportOnlySelected = true;
+  if (ctSelectedMeshed > 0) bExportOnlySelected = true;
   // dont ask to export all meshes if only one mesh in the scene
-  if(ctSelectedMeshed == 0)
+  if (ctSelectedMeshed == 0)
   {
-    if(ctMeshes > 1)
+    if (ctMeshes > 1)
     {
-      if(_msg->yesNo("No objects selected","Export animations for all objects?",NULL) == 0)
+      if (_msg->yesNo("No objects selected","Export animations for all objects?",NULL) == 0)
         return AFUNC_OK;
       bExportOnlySelected = false;
     }
   }
 
   // loop each mesh in scene
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
     // get its mesh
     _pmesh = _obi->meshInfo(_objid, 0);
-    if(_pmesh == NULL)
+    if (_pmesh == NULL)
     {
       _objid = _iti->next(_objid);
       continue;
     }
-    if(bExportOnlySelected)
+    if (bExportOnlySelected)
     {
-      if(!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
+      if (!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
       {
         _objid = _iti->next(_objid);
         continue;
@@ -904,7 +904,7 @@ int ExportAnim(LWXPanelID pan)
       *(pchSlash++) = '_';
       strcpy(pchSlash,_sci->name);
       char *pchDot = strrchr(fnmOut, '.');
-      if(pchDot!=NULL)
+      if (pchDot!=NULL)
       {
         strcpy(pchDot, ".aa");
       }
@@ -973,18 +973,18 @@ int ExportAnim(LWXPanelID pan)
 
     // calculate bone and morph envelopes
     {
-      for(BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
+      for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
       {
         // LWBONEF_ACTIVE =
         unsigned int uiFlags = ptmpbi->bi_uiFlags;
 
         // if this is bone and it is active
-        if(ptmpbi->bi_lwItemType == LWI_BONE && ptmpbi->bi_uiFlags&LWBONEF_ACTIVE) {
+        if (ptmpbi->bi_lwItemType == LWI_BONE && ptmpbi->bi_uiFlags&LWBONEF_ACTIVE) {
           ctBoneEnvelopes++;
         }
       }
 
-      for(MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
+      for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
         ctMorphEnvelopes++;
     }
 
@@ -998,7 +998,7 @@ int ExportAnim(LWXPanelID pan)
     for (BoneInfo *pbi=_pbiFirst; pbi!=NULL; pbi = pbi->bi_pbiNext)
     {
       bool bRootBone = false;
-      if(pbi->bi_lwItemType == LWI_BONE && pbi->bi_uiFlags&LWBONEF_ACTIVE) {
+      if (pbi->bi_lwItemType == LWI_BONE && pbi->bi_uiFlags&LWBONEF_ACTIVE) {
         // write its info
         fprintf(_f, "  NAME \"%s\"\n", pbi->bi_strName);
         // write first frame - default pose
@@ -1012,17 +1012,17 @@ int ExportAnim(LWXPanelID pan)
         fprintf(_f, "  {\n");
 
         LWItemType itLast;
-        if(!pbiLast) itLast = LWI_OBJECT;
+        if (!pbiLast) itLast = LWI_OBJECT;
         else itLast = pbiLast->bi_lwItemType;
         // is this root bone
-        if(pbi->bi_lwItemType == LWI_BONE && itLast != LWI_BONE)
+        if (pbi->bi_lwItemType == LWI_BONE && itLast != LWI_BONE)
         {
           // mark as root bone
           bRootBone = true;
         }
 
         // if export anims backward
-        if(bExportAnimBackward) {
+        if (bExportAnimBackward) {
           // for each frame
           for (int iFrame=_ctFrames-1; iFrame>=0; iFrame--) {
             // write anim
@@ -1052,7 +1052,7 @@ int ExportAnim(LWXPanelID pan)
       fprintf(_f, "  NAME \"%s\"\n", pmi->mi_strName);
       fprintf(_f, "  {\n");
        // if export anims backward
-      if(bExportAnimBackward) {
+      if (bExportAnimBackward) {
         for (int iFrame=_ctFrames-1; iFrame>=0; iFrame--)
         {
           fprintf(_f, "    %g;\n", pmi->mi_afFrames[iFrame]);
@@ -1073,8 +1073,8 @@ int ExportAnim(LWXPanelID pan)
     // free all morph infos
     { MorphInfo *pmi=_pmiFirst;
       MorphInfo *pmiNext=NULL;
-      for(;;) {
-        if(pmi==NULL) {
+      for (;;) {
+        if (pmi==NULL) {
           break;
         }
         pmiNext = pmi->mi_pmiNext;
@@ -1108,7 +1108,7 @@ int ExportAnim(LWXPanelID pan)
 
 int ExportSkeleton(void)
 {
-  if(!_evaluate)
+  if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -1124,14 +1124,14 @@ int ExportSkeleton(void)
   int ctSelectedMeshed = 0;
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
-    if(_iti->type(_objid) == LWI_OBJECT)
+    if (_iti->type(_objid) == LWI_OBJECT)
     {
       _pmesh = _obi->meshInfo(_objid, 0);
-      if(_pmesh != NULL)
+      if (_pmesh != NULL)
       {
-        if(_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
+        if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelectedMeshed++;
         }
@@ -1150,31 +1150,31 @@ int ExportSkeleton(void)
   }
 
   // if some objects are selected export only them
-  if(ctSelectedMeshed > 0) bExportOnlySelected = true;
+  if (ctSelectedMeshed > 0) bExportOnlySelected = true;
   // dont ask to export all meshes if only one mesh in the scene
-  if(ctSelectedMeshed == 0)
+  if (ctSelectedMeshed == 0)
   {
-    if(ctMeshes > 1)
+    if (ctMeshes > 1)
     {
-      if(_msg->yesNo("No objects selected","Export skeletons for all objects?",NULL) == 0)
+      if (_msg->yesNo("No objects selected","Export skeletons for all objects?",NULL) == 0)
         return AFUNC_OK;
       bExportOnlySelected = false;
     }
   }
 
   // loop each mesh in scene
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
     // get its mesh
     _pmesh = _obi->meshInfo(_objid, 0);
-    if(_pmesh == NULL)
+    if (_pmesh == NULL)
     {
       _objid = _iti->next(_objid);
       continue;
     }
-    if(bExportOnlySelected)
+    if (bExportOnlySelected)
     {
-      if(!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
+      if (!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
       {
         _objid = _iti->next(_objid);
         continue;
@@ -1215,9 +1215,9 @@ int ExportSkeleton(void)
     bRecordDefaultFrame = false;
 
     {
-    for(BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
+    for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
     {
-      if(ptmpbi->bi_lwItemType == LWI_BONE) {
+      if (ptmpbi->bi_lwItemType == LWI_BONE) {
         ctSkeletonBones++;
       }
     }
@@ -1229,7 +1229,7 @@ int ExportSkeleton(void)
     Matrix12 bi_mRot;
     {for (BoneInfo *pbi=_pbiFirst; pbi!=NULL; pbi = pbi->bi_pbiNext)
     {
-      if(pbi->bi_lwItemType == LWI_BONE)
+      if (pbi->bi_lwItemType == LWI_BONE)
       {
         assert(_CrtCheckMemory());
         // write its info

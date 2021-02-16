@@ -48,7 +48,7 @@ void CDlgMultiplyMapping::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
   
   // if dialog is recieving data
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
 	  m_fMultiplyXOffset = m_f3MultiplyValues(1);
 	  m_fMultiplyYOffset = m_f3MultiplyValues(2);
@@ -62,7 +62,7 @@ void CDlgMultiplyMapping::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
 	  m_f3MultiplyValues(1) = m_fMultiplyXOffset;
 	  m_f3MultiplyValues(2) = m_fMultiplyYOffset;

@@ -52,10 +52,10 @@ BOOL CTextureComboBox::OnIdle(LONG lCount)
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
 
   // if document doesn't exist
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
   {
     // document closed but we had texture on last idle 
-    if( m_ptdSelectedTexture != NULL)
+    if (m_ptdSelectedTexture != NULL)
     {
       ResetContent();
       AddString( L"None available");
@@ -68,9 +68,9 @@ BOOL CTextureComboBox::OnIdle(LONG lCount)
   CModelerDoc *pDoc = (CModelerDoc *) pModelerView->GetDocument();
   INDEX ctTextures = pDoc->m_emEditModel.edm_WorkingSkins.Count();
   // if count of textures changed or model has different texture, reflect change
-  if( (GetCount() != ctTextures) || (pModelerView->m_ptdiTextureDataInfo->tdi_TextureData != m_ptdSelectedTexture) )
+  if ((GetCount() != ctTextures) || (pModelerView->m_ptdiTextureDataInfo->tdi_TextureData != m_ptdSelectedTexture) )
   {
-    if( ctTextures == 0)
+    if (ctTextures == 0)
     {
       ResetContent();
       AddString( L"None available");
@@ -86,7 +86,7 @@ BOOL CTextureComboBox::OnIdle(LONG lCount)
     {
       int iAddedAs = AddString( CString(it->tdi_FileName.FileName()));
       SetItemDataPtr( iAddedAs, &it.Current());
-      if( pModelerView->m_ptdiTextureDataInfo == &it.Current())
+      if (pModelerView->m_ptdiTextureDataInfo == &it.Current())
       {
         SetCurSel( iTexture);
       }
@@ -100,12 +100,12 @@ void CTextureComboBox::OnSelchange()
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
 
-  if(pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     // get curently selected combo member
     int iSelectedTexture = GetCurSel();
     // if there is valid member selected
-    if( iSelectedTexture != CB_ERR)
+    if (iSelectedTexture != CB_ERR)
     {
       // set new texture ptr for active view
       pModelerView->m_ptdiTextureDataInfo = (CTextureDataInfo *) GetItemDataPtr( iSelectedTexture);
@@ -117,7 +117,7 @@ void CTextureComboBox::OnSelchange()
 void CTextureComboBox::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);
@@ -126,7 +126,7 @@ void CTextureComboBox::OnDropdown()
   PIX pixMaxHeight = pixScreenHeight - rectCombo.top;
 
   CWnd *pwndParent = GetParent();
-  if( pwndParent == NULL) return;
+  if (pwndParent == NULL) return;
   pwndParent->ScreenToClient( &rectCombo);
   PIX pixNewHeight = GetItemHeight(0)*(ctItems+2);
   rectCombo.bottom = rectCombo.top + ClampUp( pixNewHeight, pixMaxHeight);

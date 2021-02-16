@@ -42,7 +42,7 @@ CDlgMarkLinkedSurfaces::CDlgMarkLinkedSurfaces( CWnd* pParent /*=NULL*/)
 void CDlgMarkLinkedSurfaces::DoDataExchange(CDataExchange* pDX)
 {
   CModelerDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
   CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgMarkLinkedSurfaces)
@@ -50,13 +50,13 @@ void CDlgMarkLinkedSurfaces::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // for all surfaces added to list of surfaces
-    for( INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
+    for (INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
     {
       MappingSurface *pms = (MappingSurface*)m_listSurfaces.GetItemData( iEntry);
-      if( m_listSurfaces.GetCheck(iEntry)==1) pms->ms_ulRenderingFlags |=  SRF_SELECTED;
+      if (m_listSurfaces.GetCheck(iEntry)==1) pms->ms_ulRenderingFlags |=  SRF_SELECTED;
       else                                    pms->ms_ulRenderingFlags &= ~SRF_SELECTED;
     }
     theApp.m_chGlobal.MarkChanged();
@@ -83,14 +83,14 @@ BOOL CDlgMarkLinkedSurfaces::OnInitDialog()
   INDEX ctSurfaces = pDoc->GetCountOfSelectedSurfaces();
   
   ModelMipInfo &mmi = pDoc->m_emEditModel.edm_md.md_MipInfos[ pDoc->m_iCurrentMip];
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
   {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
     CTString strListEntry;
     strListEntry.PrintF("%.02d %s (%d)", iSurface, ms.ms_Name, ms.ms_aiPolygons.Count());
     int iAddedAs = m_listSurfaces.AddString( CString(strListEntry));
     m_listSurfaces.SetItemData( iAddedAs, (ULONG) &ms);
-    if( ms.ms_ulRenderingFlags&SRF_SELECTED) m_listSurfaces.SetCheck( iAddedAs, 1);
+    if (ms.ms_ulRenderingFlags&SRF_SELECTED) m_listSurfaces.SetCheck( iAddedAs, 1);
     else m_listSurfaces.SetCheck( iAddedAs, 0);
   }
   return TRUE;
@@ -99,7 +99,7 @@ BOOL CDlgMarkLinkedSurfaces::OnInitDialog()
 void CDlgMarkLinkedSurfaces::OnClearSelection() 
 {
   // for all surfaces added to list of surfaces
-  for( INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
+  for (INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
   {
     m_listSurfaces.SetCheck( iEntry, 0);
   }
@@ -108,7 +108,7 @@ void CDlgMarkLinkedSurfaces::OnClearSelection()
 void CDlgMarkLinkedSurfaces::OnSelectAll() 
 {
   // for all surfaces added to list of surfaces
-  for( INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
+  for (INDEX iEntry=0; iEntry<m_listSurfaces.GetCount(); iEntry++)
   {
     m_listSurfaces.SetCheck( iEntry, 1);
   }

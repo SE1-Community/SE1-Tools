@@ -62,20 +62,20 @@ CDlgPgPrimitive::~CDlgPgPrimitive()
 
 void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   CPropertyPage::DoDataExchange(pDX);
 
   // get active document
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // if document doesn't yet exist, return
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     return;
   }
 
   // if dialog is recieving data
-  if( (pDX->m_bSaveAndValidate == FALSE) && (IsWindow(m_comboTopShape.m_hWnd)) )
+  if ((pDX->m_bSaveAndValidate == FALSE) && (IsWindow(m_comboTopShape.m_hWnd)) )
   {
 	  m_fWidth = theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin;
 	  m_fLenght = theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin;
@@ -90,7 +90,7 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
     GetDlgItem(IDC_DISPLACE_FILE)->ShowWindow( SW_HIDE);
     GetDlgItem(IDC_AUTO_CREATE_MIP_BRUSHES)->ShowWindow( SW_HIDE);
 
-    switch( theApp.m_vfpCurrent.vfp_ptPrimitiveType)
+    switch (theApp.m_vfpCurrent.vfp_ptPrimitiveType)
     {
     case PT_CONUS:
       {
@@ -178,7 +178,7 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
         GetDlgItem(IDC_IF_SPIRAL)->ShowWindow( SW_SHOW);
         GetDlgItem(IDC_IF_SPIRAL)->SetWindowText( L"Spiral:");
 
-	      if( theApp.m_vfpCurrent.vfp_bLinearStaircases)
+	      if (theApp.m_vfpCurrent.vfp_bLinearStaircases)
         {
           GetDlgItem(IDC_LENGHT)->EnableWindow( TRUE);
           GetDlgItem(IDC_LENGHT_T)->EnableWindow( TRUE);
@@ -275,7 +275,7 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
         m_strDisplacePicture =
           theApp.m_vfpCurrent.vfp_fnDisplacement.FileName()+
           theApp.m_vfpCurrent.vfp_fnDisplacement.FileExt();
-        if( m_strDisplacePicture == "")
+        if (m_strDisplacePicture == "")
         {
           GetDlgItem(IDC_EDIT3)->EnableWindow( FALSE);
           GetDlgItem(IDC_EDIT3_T)->EnableWindow( FALSE);
@@ -322,7 +322,7 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     CValuesForPrimitive vfpBeforeDDX = theApp.m_vfpCurrent;
     theApp.m_vfpCurrent.vfp_bDummy = FALSE;
@@ -330,23 +330,23 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
     theApp.m_vfpCurrent.vfp_colSectorsColor = m_SectorColor.GetColor();
     theApp.m_vfpCurrent.vfp_colPolygonsColor = m_PolygonColor.GetColor();
 #define PRIMITIVE_CHANGED_DELTA 0.01f
-    if( Abs(theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin-m_fWidth) > PRIMITIVE_CHANGED_DELTA)
+    if (Abs(theApp.m_vfpCurrent.vfp_fXMax-theApp.m_vfpCurrent.vfp_fXMin-m_fWidth) > PRIMITIVE_CHANGED_DELTA)
     {
       theApp.m_vfpCurrent.vfp_fXMin = -m_fWidth/2;
 	    theApp.m_vfpCurrent.vfp_fXMax =  m_fWidth/2;
     }
-    if( Abs(theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin-m_fHeight) > PRIMITIVE_CHANGED_DELTA)
+    if (Abs(theApp.m_vfpCurrent.vfp_fYMax-theApp.m_vfpCurrent.vfp_fYMin-m_fHeight) > PRIMITIVE_CHANGED_DELTA)
     {
 	    theApp.m_vfpCurrent.vfp_fYMin =  0;
 	    theApp.m_vfpCurrent.vfp_fYMax =  m_fHeight;
     }
-    if( Abs(theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin-m_fLenght) > PRIMITIVE_CHANGED_DELTA)
+    if (Abs(theApp.m_vfpCurrent.vfp_fZMax-theApp.m_vfpCurrent.vfp_fZMin-m_fLenght) > PRIMITIVE_CHANGED_DELTA)
     {
 	    theApp.m_vfpCurrent.vfp_fZMin = -m_fLenght/2;
 	    theApp.m_vfpCurrent.vfp_fZMax =  m_fLenght/2;
     }
 
-    if( ((theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS) ||
+    if (((theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_CONUS) ||
          (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TORUS)) &&
          (theApp.m_vfpCurrent.vfp_avVerticesOnBaseOfPrimitive.Count() != m_fEdit3) &&
          ((INDEX)(m_fEdit3) > 0) )
@@ -364,17 +364,17 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
     theApp.m_vfpCurrent.vfp_iParalels = (INDEX) m_fEdit2;
     theApp.m_vfpCurrent.vfp_iSlicesPerHeight = (INDEX) m_fEdit2;
 
-    if( theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TORUS)
+    if (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TORUS)
     {
       theApp.m_vfpCurrent.vfp_fRadius = m_fEdit4;
     }
-    if( theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_STAIRCASES)
+    if (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_STAIRCASES)
     {
       theApp.m_vfpCurrent.vfp_fRadius = m_fEdit3;
   	  theApp.m_vfpCurrent.vfp_bLinearStaircases = !m_bIfSpiral;
     }
 
-    if( theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TERRAIN)
+    if (theApp.m_vfpCurrent.vfp_ptPrimitiveType == PT_TERRAIN)
     {
       theApp.m_vfpCurrent.vfp_fAmplitude = m_fEdit3;
       theApp.m_vfpCurrent.vfp_fMipStart = m_fEdit4;
@@ -390,7 +390,7 @@ void CDlgPgPrimitive::DoDataExchange(CDataExchange* pDX)
     theApp.m_vfpCurrent.vfp_iTopShape = m_comboTopShape.GetCurSel();
     theApp.m_vfpCurrent.vfp_iBottomShape = m_comboBottomShape.GetCurSel();
     // if anything changed
-    if( !(theApp.m_vfpCurrent == vfpBeforeDDX) || _bForceRecreatePrimitive)
+    if (!(theApp.m_vfpCurrent == vfpBeforeDDX) || _bForceRecreatePrimitive)
     {
       _bForceRecreatePrimitive = FALSE;
       // apply CSG change
@@ -428,7 +428,7 @@ END_MESSAGE_MAP()
 BOOL CDlgPgPrimitive::OnIdle(LONG lCount)
 {
   COLOR colSectorColor = m_SectorColor.GetColor();
-  if( colSectorColor != m_colLastSectorColor)
+  if (colSectorColor != m_colLastSectorColor)
   {
     // view the color change
     UpdateData(TRUE);
@@ -438,7 +438,7 @@ BOOL CDlgPgPrimitive::OnIdle(LONG lCount)
   m_colLastSectorColor = colSectorColor;
 
   COLOR colPolygonColor = m_PolygonColor.GetColor();
-  if( colPolygonColor != m_colLastPolygonColor)
+  if (colPolygonColor != m_colLastPolygonColor)
   {
     // sector color is same as polygon color
     m_SectorColor.SetColor( m_PolygonColor.GetColor());
@@ -469,7 +469,7 @@ void CDlgPgPrimitive::ApplySCGChange()
 
 BOOL CDlgPgPrimitive::PreTranslateMessage(MSG* pMsg)
 {
-	if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     // move data from page to primitive
     UpdateData( TRUE);
@@ -490,7 +490,7 @@ BOOL CDlgPgPrimitive::OnInitDialog()
   m_colLastPolygonColor = m_PolygonColor.GetColor();
   m_colLastSectorColor = m_SectorColor.GetColor();
 
-  if( !IsWindow( m_comboPrimitiveHistory.m_hWnd)) return TRUE;
+  if (!IsWindow( m_comboPrimitiveHistory.m_hWnd)) return TRUE;
 
   INDEX iCt = 1;
   // add descriptions of primitives from history list into combo
@@ -499,7 +499,7 @@ BOOL CDlgPgPrimitive::OnInitDialog()
     CTString strNo;
     strNo.PrintF("%d) ", iCt);
     CTString strDescription;
-    switch( itPrim->pihb_vfpPrimitive.vfp_ptPrimitiveType)
+    switch (itPrim->pihb_vfpPrimitive.vfp_ptPrimitiveType)
     {
     case PT_CONUS:
       {
@@ -525,7 +525,7 @@ BOOL CDlgPgPrimitive::OnInitDialog()
       }
     case PT_STAIRCASES:
       {
-        if( itPrim->pihb_vfpPrimitive.vfp_bLinearStaircases)
+        if (itPrim->pihb_vfpPrimitive.vfp_bLinearStaircases)
         {
           strDescription.PrintF("%d stairs, Size(%g,%g,%g)",
             itPrim->pihb_vfpPrimitive.vfp_iNoOfSlices,
@@ -562,7 +562,7 @@ BOOL CDlgPgPrimitive::OnInitDialog()
           itPrim->pihb_vfpPrimitive.vfp_fYMax-itPrim->pihb_vfpPrimitive.vfp_fYMin,
           itPrim->pihb_vfpPrimitive.vfp_iSlicesPerWidth,
           itPrim->pihb_vfpPrimitive.vfp_iSlicesPerHeight);
-         if( itPrim->pihb_vfpPrimitive.vfp_fnDisplacement != "")
+         if (itPrim->pihb_vfpPrimitive.vfp_fnDisplacement != "")
          {
            strDescription.PrintF( "%s, Displ.: \"%s\", Amp. %g", strDescription,
              (CTString&)(itPrim->pihb_vfpPrimitive.vfp_fnDisplacement.FileName()+
@@ -590,7 +590,7 @@ BOOL CDlgPgPrimitive::OnInitDialog()
           DegAngle( itPrim->pihb_vfpPrimitive.vfp_plPrimitive.pl_OrientationAngle(3)));
 
     CTString strTriangularisation;
-    switch( itPrim->pihb_vfpPrimitive.vfp_ttTriangularisationType)
+    switch (itPrim->pihb_vfpPrimitive.vfp_ttTriangularisationType)
     {
     case TT_NONE: strTriangularisation = ""; break;
     case TT_CENTER_VERTEX: strTriangularisation = ", Triang:Center"; break;
@@ -672,12 +672,12 @@ void CDlgPgPrimitive::OnIfOuter()
 void CDlgPgPrimitive::OnSelchangePrimitiveHistory()
 {
   INDEX iSelected = m_comboPrimitiveHistory.GetCurSel();
-  if( iSelected == CB_ERR) return;
+  if (iSelected == CB_ERR) return;
   INDEX iCurrent = 0;
   // write history primitives list
   FOREACHINLIST( CPrimitiveInHistoryBuffer, pihb_lnNode, theApp.m_lhPrimitiveHistory, itPrim)
   {
-    if( iCurrent == iSelected)
+    if (iCurrent == iSelected)
     {
       theApp.m_vfpCurrent = itPrim->pihb_vfpPrimitive;
       break;
@@ -706,7 +706,7 @@ void CDlgPgPrimitive::OnDisplaceBrowse()
     "Displacement pictures directory", "Textures\\",
     theApp.m_vfpCurrent.vfp_fnDisplacement.FileName()+
     theApp.m_vfpCurrent.vfp_fnDisplacement.FileExt());
-  if( fnDisplace == "") return;
+  if (fnDisplace == "") return;
   theApp.m_vfpCurrent.vfp_fnDisplacement = fnDisplace;
   _bForceRecreatePrimitive = TRUE;
   // move data from page to primitive
@@ -728,7 +728,7 @@ void CDlgPgPrimitive::OnDisplaceNone()
 void CDlgPgPrimitive::OnContextMenu(CWnd* pWnd, CPoint point)
 {
   CMenu menu;
-  if( menu.LoadMenu(IDR_PRIMITIVE_SETTINGS))
+  if (menu.LoadMenu(IDR_PRIMITIVE_SETTINGS))
   {
 		CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -741,7 +741,7 @@ void CDlgPgPrimitive::OnLoadPrimitiveSettings()
   // call file requester for list containing worlds to convert
   _fnPrimitiveSettingsSavedAs = _EngineGUI.FileRequester( "Choose file to load primitive settings",
     "Primitive settings (*.prm)\0*.prm\0" FILTER_ALL FILTER_END, "Primitive settings", "", "", NULL, TRUE);
-  if( _fnPrimitiveSettingsSavedAs == "") return;
+  if (_fnPrimitiveSettingsSavedAs == "") return;
 
   // read settings to current primitive
   CTFileStream strmFile;
@@ -763,7 +763,7 @@ void CDlgPgPrimitive::OnLoadPrimitiveSettings()
 
 void CDlgPgPrimitive::OnSavePrimitiveSettings()
 {
-  if( _fnPrimitiveSettingsSavedAs == "")
+  if (_fnPrimitiveSettingsSavedAs == "")
     OnSaveAsPrimitiveSettings();
 
   // save current primitive
@@ -784,14 +784,14 @@ void CDlgPgPrimitive::OnSaveAsPrimitiveSettings()
   // call file requester for list containing worlds to convert
   _fnPrimitiveSettingsSavedAs = _EngineGUI.FileRequester( "Choose file to load primitive settings",
     "Primitive settings (*.prm)\0*.prm\0" FILTER_ALL FILTER_END, "Primitive settings", "", "", NULL, FALSE);
-  if( _fnPrimitiveSettingsSavedAs == "") return;
+  if (_fnPrimitiveSettingsSavedAs == "") return;
   OnSavePrimitiveSettings();
 }
 
 void CDlgPgPrimitive::OnResetPrimitive()
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
   pDoc->ResetPrimitive();
 }
 

@@ -34,10 +34,10 @@ static TICK _llLastTick = 0;
 
 static BOOL _bTimerEnabled = TRUE;
 
-static ANGLE3D a3dObjectRotation = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dLightRotation = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dObjectAngles = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dLightAngles = ANGLE3D( 0, 0, 0);
+static ANGLE3D a3dObjectRotation = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dLightRotation = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dObjectAngles = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dLightAngles = ANGLE3D(0, 0, 0);
 
 static CPoint ptLMBDown;
 static CPoint ptRMBDown;
@@ -46,10 +46,10 @@ static ANGLE3D GetRotForDelta(CPoint ptDelta, BOOL bInvertY)
 {
   FLOAT fdH = ptDelta.x/15.0f;
   FLOAT fdP = ptDelta.y/15.0f;
-  if( bInvertY)
-    return ANGLE3D( fdH, -fdP, 0);
+  if (bInvertY)
+    return ANGLE3D(fdH, -fdP, 0);
   else
-    return ANGLE3D( fdH, fdP, 0);
+    return ANGLE3D(fdH, fdP, 0);
 }
 
 // formulae used for ray-plane intersection ray always from (0,0,0)
@@ -130,8 +130,8 @@ CDlgCreateReflectionTexture::CDlgCreateReflectionTexture(CWnd* pParent /*=NULL*/
   
   m_bCustomWindowsCreated = FALSE;
 
-  m_plPlacement.pl_OrientationAngle = ANGLE3D( 30, 0, 0);
-  m_moModel.mo_Stretch = FLOAT3D( 1.0f, 1.0f, 1.0f);
+  m_plPlacement.pl_OrientationAngle = ANGLE3D(30, 0, 0);
+  m_moModel.mo_Stretch = FLOAT3D(1.0f, 1.0f, 1.0f);
 
   // mark that timer is not yet started
   m_iTimerID = -1;
@@ -142,7 +142,7 @@ void CDlgCreateReflectionTexture::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
   }
 
@@ -154,14 +154,14 @@ void CDlgCreateReflectionTexture::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_AUTO_ROTATE, m_bAutoRotate);
 	//}}AFX_DATA_MAP
 
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   { 
 
     _bTimerEnabled = FALSE;
     try {
       CreateReflectionTexture_t( CTString("temp\\ReflectionTemp.tex"));
       CTextureData *pTD = (CTextureData *) m_moModel.mo_toReflection.GetData();
-      if( pTD != NULL) pTD->Reload();
+      if (pTD != NULL) pTD->Reload();
     } catch( char *strError) { 
       WarningMessage( strError);
     }
@@ -232,7 +232,7 @@ void CDlgCreateReflectionTexture::CreateReflectionTexture_t( CTFileName fnTextur
     bSucesseful = FALSE;
   }
 
-  if( bSucesseful)
+  if (bSucesseful)
   {
     if (iiN.ii_Width!=256 || iiN.ii_Height!=256 || iiN.ii_BitsPerPixel!=24
       ||iiS.ii_Width!=256 || iiS.ii_Height!=256 || iiS.ii_BitsPerPixel!=24
@@ -293,7 +293,7 @@ void CDlgCreateReflectionTexture::CreateReflectionTexture_t( CTFileName fnTextur
           fBestV = fV;
           fBestL = fL;
         }
-        if (PlaneRayIntersection(fX, fY, fZ, plF, fU, fV, fL) && fL>0 && fL<fBestL){
+        if (PlaneRayIntersection(fX, fY, fZ, plF, fU, fV, fL) && fL>0 && fL<fBestL) {
           paub = paubF;
           fBestU = fU;
           fBestV = fV;
@@ -369,7 +369,7 @@ void CDlgCreateReflectionTexture::DrawPreview( CDrawPort *pdp)
 {
   BOOL bErrorOcured = FALSE;
   
-  if( (m_moModel.GetData() == NULL) || (m_moModel.mo_toTexture.GetData() == NULL) ||
+  if ((m_moModel.GetData() == NULL) || (m_moModel.mo_toTexture.GetData() == NULL) ||
       (m_moModel.mo_toReflection.GetData() == NULL) )
   // obtain components for rendering
   try
@@ -388,13 +388,13 @@ void CDlgCreateReflectionTexture::DrawPreview( CDrawPort *pdp)
     bErrorOcured = TRUE;
   }
 
-  if( !bErrorOcured)
+  if (!bErrorOcured)
   {
     ((CModelData*)m_moModel.GetData())->md_colReflections = m_colorReflection.GetColor();
     PIXaabbox2D screenBox = PIXaabbox2D( PIX2D(0,0), PIX2D(pdp->GetWidth(), pdp->GetHeight()) );
     //pdp->PutTexture( &m_moModel.mo_toReflection, screenBox);
     //return;
-    if( m_toBackground.GetData() != NULL) {
+    if (m_toBackground.GetData() != NULL) {
       pdp->PutTexture( &m_toBackground, screenBox);
     } else {
       pdp->Fill( C_BLACK|CT_OPAQUE);
@@ -416,15 +416,15 @@ void CDlgCreateReflectionTexture::DrawPreview( CDrawPort *pdp)
     prPerspectiveProjection.AspectRatioL() = 1.0f;
     prPerspectiveProjection.FrontClipDistanceL() = 0.05f;
 
-    prPerspectiveProjection.ViewerPlacementL().pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-    prPerspectiveProjection.ViewerPlacementL().pl_OrientationAngle = ANGLE3D( 0, -20, 0);
+    prPerspectiveProjection.ViewerPlacementL().pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    prPerspectiveProjection.ViewerPlacementL().pl_OrientationAngle = ANGLE3D(0, -20, 0);
     prPerspectiveProjection.Prepare();
     CAnyProjection3D apr;
     apr = prPerspectiveProjection;
     BeginModelRenderingView(apr, pdp);
     
     _mrpModelRenderPrefs.SetRenderType( RT_TEXTURE|RT_SHADING_PHONG);
-    m_plPlacement.pl_PositionVector = FLOAT3D( 0.0f, -0.19f, -0.35f);
+    m_plPlacement.pl_PositionVector = FLOAT3D(0.0f, -0.19f, -0.35f);
     rmRenderModel.SetObjectPlacement(m_plPlacement);
     rmRenderModel.rm_colLight = m_colorLight.GetColor();
     rmRenderModel.rm_colAmbient = m_colorAmbient.GetColor();
@@ -441,8 +441,8 @@ void CDlgCreateReflectionTexture::PutPicture(CWnd &wnd, CTextureObject &to, INDE
   if (pvp==NULL) {
     _pGfx->CreateWindowCanvas( wnd.m_hWnd, &pvp, &pdp);
   }
-  if( (pdp != NULL) && (pdp->Lock()) ) {
-    if( to.GetData()!= NULL) {
+  if ((pdp != NULL) && (pdp->Lock()) ) {
+    if (to.GetData()!= NULL) {
       PIXaabbox2D screenBox = PIXaabbox2D( PIX2D(0,0), PIX2D(pdp->GetWidth(), pdp->GetHeight()) );
       pdp->PutTexture( &to, screenBox);
     } else {
@@ -459,7 +459,7 @@ void CDlgCreateReflectionTexture::RenderPreview(void)
   CDrawPort *&pdp = m_apdp[0];
   CViewPort *&pvp = m_apvp[0];
   if (pvp==NULL) _pGfx->CreateWindowCanvas( m_wndPreview.m_hWnd, &pvp, &pdp);
-  if( (pdp != NULL) && (pdp->Lock()) )
+  if ((pdp != NULL) && (pdp->Lock()) )
   {
     DrawPreview( pdp);
     pdp->Unlock();
@@ -483,12 +483,12 @@ void CDlgCreateReflectionTexture::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-  if( m_iTimerID == -1)
+  if (m_iTimerID == -1)
   {
     m_iTimerID = (int) SetTimer( 1, 24, NULL);
   }
 
-  if( !m_bCustomWindowsCreated)
+  if (!m_bCustomWindowsCreated)
   {
     // ---------------- Create custom windows
 
@@ -512,7 +512,7 @@ BOOL CDlgCreateReflectionTexture::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-  if(::IsWindow( m_comboSizeInPixels.m_hWnd))
+  if (::IsWindow( m_comboSizeInPixels.m_hWnd))
   {
     m_comboSizeInPixels.SetCurSel( 6);
   }
@@ -523,7 +523,7 @@ BOOL CDlgCreateReflectionTexture::OnInitDialog()
 void CDlgCreateReflectionTexture::OnTimer(UINT nIDEvent) 
 {
 	// on our timer discard preview window
-  if( nIDEvent == 1 && _bTimerEnabled)
+  if (nIDEvent == 1 && _bTimerEnabled)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
     if (llCurrentTick > _llLastTick)
@@ -540,7 +540,7 @@ void CDlgCreateReflectionTexture::OnTimer(UINT nIDEvent)
 void CDlgCreateReflectionTexture::OnDestroy() 
 {
   for (INDEX iwin=0; iwin<7; iwin++) {
-    if( m_apvp[iwin]!=NULL) _pGfx->DestroyWindowCanvas( m_apvp[iwin]);
+    if (m_apvp[iwin]!=NULL) _pGfx->DestroyWindowCanvas( m_apvp[iwin]);
   }
 
   KillTimer( m_iTimerID);
@@ -550,17 +550,17 @@ void CDlgCreateReflectionTexture::OnDestroy()
 
 void CDlgCreateReflectionTexture::OnAutoRotate() 
 {
-  a3dObjectAngles = ANGLE3D( 0, 0, 0);
-  a3dLightAngles = ANGLE3D( 0, 0, 0);
-  if( m_bAutoRotate)
+  a3dObjectAngles = ANGLE3D(0, 0, 0);
+  a3dLightAngles = ANGLE3D(0, 0, 0);
+  if (m_bAutoRotate)
   {
-    a3dObjectRotation = ANGLE3D( 0, 0, 0);
-    a3dLightRotation = ANGLE3D( 0, 0, 0);
+    a3dObjectRotation = ANGLE3D(0, 0, 0);
+    a3dLightRotation = ANGLE3D(0, 0, 0);
   }
   else
   {
-    a3dObjectRotation = ANGLE3D( -2.5f, 0, 0);
-    a3dLightRotation = ANGLE3D( 0, 0, 0);
+    a3dObjectRotation = ANGLE3D(-2.5f, 0, 0);
+    a3dLightRotation = ANGLE3D(0, 0, 0);
   }
   m_bAutoRotate = !m_bAutoRotate;
 }
@@ -617,25 +617,25 @@ BOOL CDlgCreateReflectionTexture::PreTranslateMessage(MSG* pMsg)
   pWndPreview->ClientToScreen( &rectPreview);
 
   
-  if( rectPreview.PtInRect( pointScreen))
+  if (rectPreview.PtInRect( pointScreen))
   {
-    if( (pMsg->message == WM_MOUSEMOVE) && (bWeStartedMouseDown) )
+    if ((pMsg->message == WM_MOUSEMOVE) && (bWeStartedMouseDown) )
     {
-      if( fwKeys&MK_LBUTTON)      a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
-      else if( fwKeys&MK_RBUTTON) a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
+      if (fwKeys&MK_LBUTTON)      a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
+      else if (fwKeys&MK_RBUTTON) a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
     }
-    else if( (pMsg->message == WM_LBUTTONDOWN) || ( pMsg->message == WM_RBUTTONDOWN) )
+    else if ((pMsg->message == WM_LBUTTONDOWN) || ( pMsg->message == WM_RBUTTONDOWN) )
     {
       bWeStartedMouseDown = TRUE;
       ptLMBDown = point;
       ptRMBDown = point;
     }
-    else if( (pMsg->message == WM_LBUTTONUP) && (bWeStartedMouseDown) )
+    else if ((pMsg->message == WM_LBUTTONUP) && (bWeStartedMouseDown) )
     {
       a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
       bWeStartedMouseDown = FALSE;
     }
-    else if( (pMsg->message == WM_RBUTTONUP) && (bWeStartedMouseDown) )
+    else if ((pMsg->message == WM_RBUTTONUP) && (bWeStartedMouseDown) )
     {
       a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
       bWeStartedMouseDown = FALSE;
@@ -646,10 +646,10 @@ BOOL CDlgCreateReflectionTexture::PreTranslateMessage(MSG* pMsg)
   pWnd = GetDlgItem(ID);\
   pWnd->GetClientRect( &rectWnd);\
   pWnd->ClientToScreen( &rectWnd);\
-  if( rectWnd.PtInRect( pointScreen)) {\
+  if (rectWnd.PtInRect( pointScreen)) {\
   fnChoosedFile = _EngineGUI.FileRequester( "Select picture", \
     FILTER_TGA FILTER_PCX FILTER_ALL FILTER_END, "Reflection map picures directory", "Textures\\");\
-  if( fnChoosedFile != "") {\
+  if (fnChoosedFile != "") {\
     AutoSetTextures(fnChoosedFile);}\
   UpdateData( TRUE);};
 
@@ -657,14 +657,14 @@ BOOL CDlgCreateReflectionTexture::PreTranslateMessage(MSG* pMsg)
   pWnd = GetDlgItem(ID);\
   pWnd->GetClientRect( &rectWnd);\
   pWnd->ClientToScreen( &rectWnd);\
-  if( rectWnd.PtInRect( pointScreen)) {\
+  if (rectWnd.PtInRect( pointScreen)) {\
   try {\
-    if( to.GetName() == m_toBackground.GetName()){\
+    if (to.GetName() == m_toBackground.GetName()) {\
       m_toBackground.SetData_t( fnBCGTexture);\
     } else { m_toBackground.SetData_t( to.GetName());};\
   } catch( char *strError) { (void) strError;};};
 
-  if( pMsg->message == WM_LBUTTONUP)
+  if (pMsg->message == WM_LBUTTONUP)
   {
     CTFileName fnChoosedFile;
     CWnd *pWnd;
@@ -678,7 +678,7 @@ BOOL CDlgCreateReflectionTexture::PreTranslateMessage(MSG* pMsg)
     BROWSE_TEXTURE( IDC_FRAME_DOWN);
   }
   
-  if( pMsg->message == WM_RBUTTONUP)
+  if (pMsg->message == WM_RBUTTONUP)
   {
     CWnd *pWnd;
     CRect rectWnd;
@@ -700,7 +700,7 @@ void CDlgCreateReflectionTexture::OnOK()
                                                 FILTER_TEX FILTER_ALL FILTER_END,
                                                 "Reflection map textures directory",
                                                 "Textures\\");
-  if( fnFinal != "")
+  if (fnFinal != "")
   {
     CopyFileA( fnTemp, _fnmApplicationPath+fnFinal, FALSE);
   }

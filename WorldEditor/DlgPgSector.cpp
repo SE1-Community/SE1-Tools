@@ -39,7 +39,7 @@ CDlgPgSector::CDlgPgSector() : CPropertyPage(CDlgPgSector::IDD)
 	m_radioInclude = -1;
 	//}}AFX_DATA_INIT
   
-  if( 
+  if (
     CTString( CStringA(theApp.GetProfileString(L"World editor", L"Color browsing mode (info)"))) ==
     CTString("RGB"))
   {
@@ -66,7 +66,7 @@ CDlgPgSector::~CDlgPgSector()
 #define MIXED_NAME "Mixed name"
 void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   CPropertyPage::DoDataExchange(pDX);
 
@@ -75,31 +75,31 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
 
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   // sector mode must be on
-  if( pDoc->GetEditingMode() != SECTOR_MODE)  return;
+  if (pDoc->GetEditingMode() != SECTOR_MODE)  return;
 
   // if dialog is receiving data and control windows are valid
-  if( (pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_SectorAmbientColor.m_hWnd) )
+  if ((pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_SectorAmbientColor.m_hWnd) )
   {
     BOOL bSelectionExists = pDoc->m_selSectorSelection.Count() != 0;
     m_comboContentType.ResetContent();
-    for(INDEX iContentType=0; iContentType<MAX_UBYTE; iContentType++)
+    for (INDEX iContentType=0; iContentType<MAX_UBYTE; iContentType++)
     {
       CTString &strContent = pDoc->m_woWorld.wo_actContentTypes[iContentType].ct_strName;
-      if( strContent == "") break;
+      if (strContent == "") break;
       m_comboContentType.AddString( CString(strContent));
     }
 
     m_comboEnvironmentType.ResetContent();
-    for(INDEX iEnvironmentType=0; iEnvironmentType<MAX_UBYTE; iEnvironmentType++)
+    for (INDEX iEnvironmentType=0; iEnvironmentType<MAX_UBYTE; iEnvironmentType++)
     {
       CTString &strEnvironment = pDoc->m_woWorld.wo_aetEnvironmentTypes[iEnvironmentType].et_strName;
-      if( strEnvironment == "") break;
+      if (strEnvironment == "") break;
       m_comboEnvironmentType.AddString( CString(strEnvironment));
     }
 
-    if( bSelectionExists)
+    if (bSelectionExists)
     {
       BOOL bSameForceField = TRUE;
       BOOL bSameFog = TRUE;
@@ -115,40 +115,40 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
       // for all sectors
       FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc)
       {
-        if( iSector == 0)
+        if (iSector == 0)
         {
           iFirstForceField = itbsc->GetForceType();
           iFirstFog = itbsc->GetFogType();
           iFirstHaze = itbsc->GetHazeType();
         }
         INDEX iForceField = itbsc->GetForceType();
-        if( iForceField != iFirstForceField) bSameForceField = FALSE;
+        if (iForceField != iFirstForceField) bSameForceField = FALSE;
         INDEX iFog = itbsc->GetFogType();
-        if( iFog != iFirstFog) bSameFog = FALSE;
+        if (iFog != iFirstFog) bSameFog = FALSE;
         INDEX iHaze = itbsc->GetHazeType();
-        if( iHaze != iFirstHaze) bSameHaze = FALSE;
+        if (iHaze != iFirstHaze) bSameHaze = FALSE;
         // get sector brush
-        if( (pbrBrush == NULL) || (pbrBrush == itbsc->bsc_pbmBrushMip->bm_pbrBrush) )
+        if ((pbrBrush == NULL) || (pbrBrush == itbsc->bsc_pbmBrushMip->bm_pbrBrush) )
         {
-          if( pbrBrush == NULL)
+          if (pbrBrush == NULL)
           {
             pbrBrush = itbsc->bsc_pbmBrushMip->bm_pbrBrush;
-            for(INDEX iForceField=0; iForceField<MAX_UBYTE; iForceField++)
+            for (INDEX iForceField=0; iForceField<MAX_UBYTE; iForceField++)
             {
               CTString strForceName = pbrBrush->br_penEntity->GetForceName( iForceField);
-              if( strForceName == "") break;
+              if (strForceName == "") break;
               m_comboForceField.AddString( CString(strForceName));
             }
-            for(INDEX iFog=0; iFog<MAX_UBYTE; iFog++)
+            for (INDEX iFog=0; iFog<MAX_UBYTE; iFog++)
             {
               CTString strFogName = pbrBrush->br_penEntity->GetFogName( iFog);
-              if( strFogName == "") break;
+              if (strFogName == "") break;
               m_comboFog.AddString( CString(strFogName));
             }
-            for(INDEX iHaze=0; iHaze<MAX_UBYTE; iHaze++)
+            for (INDEX iHaze=0; iHaze<MAX_UBYTE; iHaze++)
             {
               CTString strHazeName = pbrBrush->br_penEntity->GetHazeName( iHaze);
-              if( strHazeName == "") break;
+              if (strHazeName == "") break;
               m_comboHaze.AddString( CString(strHazeName));
             }
           }
@@ -170,17 +170,17 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
         }
         iSector++;
       }
-      if( bSameForceField) m_comboForceField.SetCurSel( iFirstForceField);
-      if( bSameFog) m_comboFog.SetCurSel( iFirstFog);
-      if( bSameHaze) m_comboHaze.SetCurSel( iFirstHaze);
+      if (bSameForceField) m_comboForceField.SetCurSel( iFirstForceField);
+      if (bSameFog) m_comboFog.SetCurSel( iFirstFog);
+      if (bSameHaze) m_comboHaze.SetCurSel( iFirstHaze);
     }
 
     BOOL bDisableForce = FALSE;
     BOOL bDisableFog = FALSE;
     BOOL bDisableHaze = FALSE;
-    if( m_comboForceField.GetCount() == 0) bDisableForce = TRUE;
-    if( m_comboFog.GetCount() == 0) bDisableFog = TRUE;
-    if( m_comboHaze.GetCount() == 0) bDisableHaze = TRUE;
+    if (m_comboForceField.GetCount() == 0) bDisableForce = TRUE;
+    if (m_comboFog.GetCount() == 0) bDisableFog = TRUE;
+    if (m_comboHaze.GetCount() == 0) bDisableHaze = TRUE;
     GetDlgItem( IDC_STATIC_FORCE_FIELD_T)->EnableWindow( bSelectionExists&&!bDisableForce);
     GetDlgItem( IDC_FORCE_FIELD_COMBO)->EnableWindow( bSelectionExists&&!bDisableForce);
     GetDlgItem( IDC_STATIC_FOG_T)->EnableWindow( bSelectionExists&&!bDisableFog);
@@ -202,7 +202,7 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
     FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc)
     {
       CBrushSector &bsc=*itbsc;
-      if( iSector == 0)
+      if (iSector == 0)
       {
         iFirstContent = bsc.GetContentType();
         iFirstEnvironment = bsc.GetEnvironmentType();
@@ -214,20 +214,20 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
       }
       else
       {
-        if( bsc.GetContentType() != iFirstContent) bSameContent = FALSE;
-        if( bsc.GetEnvironmentType() != iFirstEnvironment) bSameEnvironment = FALSE;
-        if(m_SectorAmbientColor.GetColor() != bsc.bsc_colAmbient)
+        if (bsc.GetContentType() != iFirstContent) bSameContent = FALSE;
+        if (bsc.GetEnvironmentType() != iFirstEnvironment) bSameEnvironment = FALSE;
+        if (m_SectorAmbientColor.GetColor() != bsc.bsc_colAmbient)
         {
           m_SectorAmbientColor.SetMixedColor();
         }
-        if( CTString( CStringA(m_strSectorName)) != bsc.bsc_strName)
+        if (CTString( CStringA(m_strSectorName)) != bsc.bsc_strName)
         {
           m_strSectorName = MIXED_NAME;
         }
         m_ctrlVisibilityFlags.MergeFlags(bsc.bsc_ulVisFlags);
         m_ctrlClassificationFlags.MergeFlags(bsc.bsc_ulVisFlags);
         INDEX iNewInclude=(bsc.bsc_ulFlags2&BSCF2_VISIBILITYINCLUDE) ? 0 : 1;
-        if( iInclude!=-1 && iNewInclude!=iInclude)
+        if (iInclude!=-1 && iNewInclude!=iInclude)
         {
           iInclude=-1;
         }
@@ -252,9 +252,9 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
     GetDlgItem( IDC_SECTOR_INCLUDE)->EnableWindow( bSelectionExists);
     GetDlgItem( IDC_SECTOR_EXCLUDE)->EnableWindow( bSelectionExists);    
 
-    if( bSameContent) m_comboContentType.SetCurSel( iFirstContent);
+    if (bSameContent) m_comboContentType.SetCurSel( iFirstContent);
     else m_comboContentType.SetCurSel(-1);
-    if( bSameEnvironment) m_comboEnvironmentType.SetCurSel( iFirstEnvironment);
+    if (bSameEnvironment) m_comboEnvironmentType.SetCurSel( iFirstEnvironment);
     else m_comboEnvironmentType.SetCurSel(-1);
 
     m_udSectorsData.MarkUpdated();
@@ -274,41 +274,41 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data and control windows are valid
-  if( (pDX->m_bSaveAndValidate != FALSE) && IsWindow( m_SectorAmbientColor.m_hWnd) )
+  if ((pDX->m_bSaveAndValidate != FALSE) && IsWindow( m_SectorAmbientColor.m_hWnd) )
   {
     // for all sectors
     FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc)
     {
       CBrushSector &bsc=*itbsc;
       INDEX iNewContent = m_comboContentType.GetCurSel();
-      if( iNewContent!=CB_ERR)
+      if (iNewContent!=CB_ERR)
       {
         bsc.SetContentType( iNewContent);
       }
       INDEX iNewEnvironment = m_comboEnvironmentType.GetCurSel();
-      if( iNewEnvironment!=CB_ERR)
+      if (iNewEnvironment!=CB_ERR)
       {
         bsc.SetEnvironmentType( iNewEnvironment);
       }
-      if( m_strSectorName != MIXED_NAME)
+      if (m_strSectorName != MIXED_NAME)
       {
         bsc.bsc_strName = CStringA(m_strSectorName);
       }
       
       INDEX iNewForceField = m_comboForceField.GetCurSel();
-      if( iNewForceField != CB_ERR) bsc.SetForceType( iNewForceField);
+      if (iNewForceField != CB_ERR) bsc.SetForceType( iNewForceField);
 
       INDEX iNewFog = m_comboFog.GetCurSel();
-      if( iNewFog != CB_ERR) bsc.SetFogType( iNewFog);
+      if (iNewFog != CB_ERR) bsc.SetFogType( iNewFog);
 
       INDEX iNewHaze = m_comboHaze.GetCurSel();
-      if( iNewHaze != CB_ERR) bsc.SetHazeType( iNewHaze);
+      if (iNewHaze != CB_ERR) bsc.SetHazeType( iNewHaze);
 
       m_ctrlVisibilityFlags.ApplyChange(bsc.bsc_ulVisFlags);
       m_ctrlClassificationFlags.ApplyChange(bsc.bsc_ulVisFlags);
-      if( m_radioInclude!=-1)
+      if (m_radioInclude!=-1)
       {
-        if( m_radioInclude==0) bsc.bsc_ulFlags2|=BSCF2_VISIBILITYINCLUDE;
+        if (m_radioInclude==0) bsc.bsc_ulFlags2|=BSCF2_VISIBILITYINCLUDE;
         else                   bsc.bsc_ulFlags2&=~BSCF2_VISIBILITYINCLUDE;
       }
     }
@@ -318,7 +318,7 @@ void CDlgPgSector::DoDataExchange(CDataExchange* pDX)
       (colAmbient != m_colLastSectorAmbientColor) ||
       (m_bLastSectorAmbientColorMixed && m_SectorAmbientColor.IsColorValid());
       
-    if( bColorChanged)
+    if (bColorChanged)
     {
       // for all sectors
       FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc)
@@ -360,7 +360,7 @@ BOOL CDlgPgSector::OnIdle(LONG lCount)
 {
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( (pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
+  if ((pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
 
   COLOR colSectorAmbientColor = m_SectorAmbientColor.GetColor();
 
@@ -368,7 +368,7 @@ BOOL CDlgPgSector::OnIdle(LONG lCount)
     (colSectorAmbientColor != m_colLastSectorAmbientColor) ||
     (m_bLastSectorAmbientColorMixed && m_SectorAmbientColor.IsColorValid());
   // if color was changed from last idle
-  if( bColorChanged)
+  if (bColorChanged)
   {
     // view the color change
     UpdateData(TRUE);
@@ -378,7 +378,7 @@ BOOL CDlgPgSector::OnIdle(LONG lCount)
     m_bLastSectorAmbientColorMixed = FALSE;
   }
   // if selections have been changed (they are not up to date)
-  if( !pDoc->m_chSelections.IsUpToDate( m_udSectorsData))
+  if (!pDoc->m_chSelections.IsUpToDate( m_udSectorsData))
   {
     // update dialog data
     UpdateData( FALSE);
@@ -395,7 +395,7 @@ void CDlgPgSector::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
   m_bLastSectorAmbientColorMixed = FALSE;
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
   pDoc->SetModifiedFlag(TRUE);
 }
 
@@ -427,7 +427,7 @@ void CDlgPgSector::OnSelchangeHazeCombo()
 
 BOOL CDlgPgSector::PreTranslateMessage(MSG* pMsg) 
 {
-	if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     // move coordinates from page to entity and snap them
     UpdateData( TRUE);

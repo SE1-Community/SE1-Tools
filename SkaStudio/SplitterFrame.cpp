@@ -108,31 +108,31 @@ void CSplitterFrame::SetDockingSide(UINT uiDockSide)
   sp_uiDockSide = uiDockSide;
 
   // is splitter attached on left side
-  if(uiDockSide == AFX_IDW_DOCKBAR_LEFT) {
+  if (uiDockSide == AFX_IDW_DOCKBAR_LEFT) {
     SetSize(iSplitterSize,rcParent.bottom - rcParent.top);
     SetAbsPosition(CPoint(rcParent.left,rcParent.top));
     pchCursor = IDC_SIZEWE;
     ShowWindow(SW_SHOW);
   // is splitter attached on right side
-  } else if(uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
+  } else if (uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
     SetSize(iSplitterSize,rcParent.bottom - rcParent.top);
     SetAbsPosition(CPoint(rcParent.right - iSplitterSize,rcParent.top));
     pchCursor = IDC_SIZEWE;
     ShowWindow(SW_SHOW);
   // is splitter attached on top side
-  } else if(uiDockSide == AFX_IDW_DOCKBAR_TOP) {
+  } else if (uiDockSide == AFX_IDW_DOCKBAR_TOP) {
     SetSize(rcParent.right - rcParent.left,iSplitterSize);
     SetAbsPosition(CPoint(rcParent.left,rcParent.top));
     pchCursor = IDC_SIZENS;
     ShowWindow(SW_SHOW);
   // is splitter attached on bottom side
-  } else if(uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
+  } else if (uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
     SetSize(rcParent.right - rcParent.left,iSplitterSize);
     SetAbsPosition(CPoint(rcParent.left,rcParent.bottom-iSplitterSize));
     pchCursor = IDC_SIZENS;
     ShowWindow(SW_SHOW);
   // is splitter floating
-  } else if(uiDockSide == AFX_IDW_DOCKBAR_FLOAT) {
+  } else if (uiDockSide == AFX_IDW_DOCKBAR_FLOAT) {
     ShowWindow(SW_HIDE);
   } else {
     ASSERT(FALSE);
@@ -163,35 +163,35 @@ void CSplitterFrame::UpdateParent()
   INDEX iWidth = rcParent.right - rcParent.left;
   INDEX iHeight = rcParent.bottom - rcParent.top;
 
-  if(sp_bDockingEnabled) {
+  if (sp_bDockingEnabled) {
     pMainFrame->FloatControlBar(&wndParent,CPoint(rcParent.left,rcParent.top));
     // is splitter attached on left side
-    if(sp_uiDockSide == AFX_IDW_DOCKBAR_LEFT) {
+    if (sp_uiDockSide == AFX_IDW_DOCKBAR_LEFT) {
       SET_BAR_SIZE(wndParent,rcMainClientFrame.right - pt.x,iHeight);
     // is splitter attached on right side
-    } else if(sp_uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
       SET_BAR_SIZE(wndParent,pt.x,iHeight);
     // is splitter attached on top side
-    } else if(sp_uiDockSide == AFX_IDW_DOCKBAR_TOP) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_TOP) {
       SET_BAR_SIZE(wndParent,iWidth,iHeight + sp_ptStartPoint.y - pt.y);
     // is splitter attached on bottom side
-    } else if(sp_uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
       ASSERT(FALSE);
     }
 
     // Chose docking side
     INDEX iDockSide = 0;
     // is splitter attached on left side
-    if(sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT) {
+    if (sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT) {
       iDockSide = AFX_IDW_DOCKBAR_RIGHT;
     // is splitter attached on right side
-    } else if(sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
       iDockSide = AFX_IDW_DOCKBAR_LEFT;
     // is splitter attached on top side
-    } else if(sp_uiDockSide==AFX_IDW_DOCKBAR_TOP) {
+    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_TOP) {
       iDockSide = AFX_IDW_DOCKBAR_BOTTOM;
     // is splitter attached on bottom side
-    } else if(sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
       iDockSide = AFX_IDW_DOCKBAR_TOP;
     }
     pMainFrame->DockControlBar(&wndParent,iDockSide);
@@ -213,7 +213,7 @@ void CSplitterFrame::UpdateParent()
 void CSplitterFrame::OnLButtonDown(UINT nFlags, CPoint point) 
 {
   INDEX ctParentLevels = 0;
-  if(sp_bDockingEnabled) {
+  if (sp_bDockingEnabled) {
     ctParentLevels = 1;
   }
   CRect rc;
@@ -223,7 +223,7 @@ void CSplitterFrame::OnLButtonDown(UINT nFlags, CPoint point)
   pFloatingParent = pDockedParent->GetParent();
   ASSERT(pFloatingParent!=NULL);
 
-  for(INDEX ipar=0;ipar<ctParentLevels;ipar++) {
+  for (INDEX ipar=0;ipar<ctParentLevels;ipar++) {
     pFloatingParent = pFloatingParent->GetParent();
     ASSERT(pFloatingParent!=NULL);
   }
@@ -242,7 +242,7 @@ void CSplitterFrame::OnLButtonDown(UINT nFlags, CPoint point)
 // on left mouse button up
 void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-  if(GetCapture()==this) {
+  if (GetCapture()==this) {
     ReleaseCapture();
     ChangeParent(pDockedParent);
     UpdateParent();
@@ -254,13 +254,13 @@ void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point)
 // on mouse move
 void CSplitterFrame::OnMouseMove(UINT nFlags, CPoint point) 
 {
-  if(GetCapture()==this) {
+  if (GetCapture()==this) {
     CPoint ptCursor;
     GetCursorPos(&ptCursor);
     CPoint pt = GetAbsPosition();
-    if(sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT || sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+    if (sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT || sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
       pt.x = ptCursor.x;
-    } else if(sp_uiDockSide==AFX_IDW_DOCKBAR_TOP || sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_TOP || sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
       pt.y = ptCursor.y;
     }
     SetAbsPosition(pt);
@@ -272,7 +272,7 @@ void CSplitterFrame::OnMouseMove(UINT nFlags, CPoint point)
 /*
 void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-  if(!theApp.m_dlgBarTreeView.IsFloating())
+  if (!theApp.m_dlgBarTreeView.IsFloating())
   {
     SetParent(&theApp.m_dlgBarTreeView);
     ReleaseCapture();
@@ -289,20 +289,20 @@ void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point)
     INDEX iDockSide = theApp.m_dlgBarTreeView.GetDockingSide();
     pMainFrame->FloatControlBar(&theApp.m_dlgBarTreeView,pt);
     // resize 
-    if(iDockSide == AFX_IDW_DOCKBAR_LEFT)
+    if (iDockSide == AFX_IDW_DOCKBAR_LEFT)
     {
       INDEX iPosXadd = 2+rcMain.right-rcMain.left;
       INDEX iPosX = GetPosX();
-      if(iPosX<10) iPosX=10;
-      else if(iPosX>iPosXadd-10) iPosX=iPosXadd-10;
+      if (iPosX<10) iPosX=10;
+      else if (iPosX>iPosXadd-10) iPosX=iPosXadd-10;
       SET_BAR_SIZE(theApp.m_dlgBarTreeView,iPosX,rc.bottom-rc.top);
     }
-    else if(iDockSide == AFX_IDW_DOCKBAR_RIGHT)
+    else if (iDockSide == AFX_IDW_DOCKBAR_RIGHT)
     {
       INDEX iPosXadd = 2+rcMain.right-rcMain.left;
       INDEX iPosX = GetPosX();
-      if(iPosX>iPosXadd-10) iPosX=iPosXadd-10;
-      else if(iPosX<10) iPosX=10;
+      if (iPosX>iPosXadd-10) iPosX=iPosXadd-10;
+      else if (iPosX<10) iPosX=10;
 
       SET_BAR_SIZE(theApp.m_dlgBarTreeView,iPosXadd-iPosX,rc.bottom-rc.top);
     }

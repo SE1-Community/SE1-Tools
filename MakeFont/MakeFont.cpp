@@ -29,7 +29,7 @@ void SubMain( int argc, char *argv[])
   printf("\nMakeFONT - Font Tables Maker (2.51)\n");
   printf(  "           (C)1999 CROTEAM Ltd\n\n");
   // 5 to 7 parameters are allowed as input
-  if( (argc<5) || (argc>6))
+  if ((argc<5) || (argc>6))
   {
     printf( "USAGE: MakeFont <texture_file> <char_width> <char_height> ");
     printf( "<char_order_file> [-A]\n");
@@ -60,7 +60,7 @@ void SubMain( int argc, char *argv[])
 
   // alpha channel ignore check
   BOOL bUseAlpha = TRUE;
-  if( argc==6 && (argv[5][1]=='a' || argv[5][1]=='A')) bUseAlpha = FALSE;
+  if (argc==6 && (argv[5][1]=='a' || argv[5][1]=='A')) bUseAlpha = FALSE;
 
   // font generation starts
   printf( "- Generating font table.\n");

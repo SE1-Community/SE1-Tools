@@ -54,7 +54,7 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   BOOL bSelected = lpDrawItemStruct->itemState & (ODS_FOCUS|ODS_SELECTED);
   COLORREF clrfBcgColor;
   UINT ulEdgeType;
-  if( bSelected)
+  if (bSelected)
   {
     clrfBcgColor = CLRF_CLR( 0xDFDFFF00UL); 
     ulEdgeType = EDGE_SUNKEN;
@@ -66,7 +66,7 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   }
   
   CValuesForPrimitive *pVFP = (CValuesForPrimitive *) GetItemData( iItem);
-  if( (ULONG) pVFP == CB_ERR) return;
+  if ((ULONG) pVFP == CB_ERR) return;
 
   CDC *pDC = CDC::FromHandle( lpDrawItemStruct->hDC);
   RECT rectItem = lpDrawItemStruct->rcItem;
@@ -98,13 +98,13 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   PIX pixCursor = 38;
   
   UINT uiPrimitiveIconID;
-  switch( pVFP->vfp_ptPrimitiveType)
+  switch (pVFP->vfp_ptPrimitiveType)
   {
   case PT_CONUS:{       uiPrimitiveIconID = IDR_ICON_CONUS; break;}
   case PT_TORUS:{       uiPrimitiveIconID = IDR_ICON_TORUS; break;}
   case PT_STAIRCASES:
     {
-    if( pVFP->vfp_bLinearStaircases) uiPrimitiveIconID = IDR_ICON_LINEAR_STAIRCASES;
+    if (pVFP->vfp_bLinearStaircases) uiPrimitiveIconID = IDR_ICON_LINEAR_STAIRCASES;
     else                             uiPrimitiveIconID = IDR_ICON_SPIRAL_STAIRCASES; 
     break;
     }
@@ -116,7 +116,7 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   pixCursor += 22;
 
   UINT uiPrimitiveOperationID;
-  switch( pVFP->vfp_csgtCSGOperation)
+  switch (pVFP->vfp_csgtCSGOperation)
   {
   case CSG_ADD: {             uiPrimitiveOperationID = IDR_ICON_ADD; break;}
   case CSG_ADD_REVERSE: {     uiPrimitiveOperationID = IDR_ICON_ADD_REVERSE; break;}
@@ -131,12 +131,12 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   pixCursor += 22;
 
   HICON hRoomIcon;
-  if( pVFP->vfp_bClosed) hRoomIcon = theApp.LoadIcon( IDR_ICON_ROOM);
+  if (pVFP->vfp_bClosed) hRoomIcon = theApp.LoadIcon( IDR_ICON_ROOM);
   else                   hRoomIcon = theApp.LoadIcon( IDR_ICON_MATERIAL);
   pDC->DrawIcon( pixCursor, rectItem.top, hRoomIcon);
   pixCursor += 22;
 
-  if( !pVFP->vfp_bOuter &&
+  if (!pVFP->vfp_bOuter &&
       (pVFP->vfp_csgtCSGOperation != PT_SPHERE) &&
       (pVFP->vfp_csgtCSGOperation != PT_TERRAIN) )
   {
@@ -146,18 +146,18 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
     pixCursor += 22;
   }
 
-  if( pVFP->vfp_ptPrimitiveType == PT_STAIRCASES)
+  if (pVFP->vfp_ptPrimitiveType == PT_STAIRCASES)
   {
     HICON hTopStairsIcon;
-    if(      pVFP->vfp_iTopShape == 0) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_STAIRS);
-    else if( pVFP->vfp_iTopShape == 1) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_SLOPE);
+    if (     pVFP->vfp_iTopShape == 0) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_STAIRS);
+    else if (pVFP->vfp_iTopShape == 1) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_SLOPE);
     else                               hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_CEILING);
     pDC->DrawIcon( pixCursor, rectItem.top, hTopStairsIcon);
     pixCursor += 22;
 
     HICON hBottomStairsIcon;
-    if(      pVFP->vfp_iTopShape == 0) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_STAIRS);
-    else if( pVFP->vfp_iTopShape == 1) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_SLOPE);
+    if (     pVFP->vfp_iTopShape == 0) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_STAIRS);
+    else if (pVFP->vfp_iTopShape == 1) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_SLOPE);
     else                               hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_FLOOR);
     pDC->DrawIcon( pixCursor, rectItem.top, hBottomStairsIcon);
     pixCursor += 22;

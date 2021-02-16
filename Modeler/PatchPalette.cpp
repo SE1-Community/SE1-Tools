@@ -48,10 +48,10 @@ void CPatchPalette::DoDataExchange(CDataExchange* pDX)
   m_PatchName = "";
   m_strPatchFile = "";
   m_fStretch = 1.0f;
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     CModelerDoc* pDoc = (CModelerDoc *) pModelerView->GetDocument();
-    if( !pDX->m_bSaveAndValidate && 
+    if (!pDX->m_bSaveAndValidate && 
         (pDoc->m_emEditModel.CountPatches() != 0) )
     {
 	    GetDlgItem( IDC_EDIT_PATCH_NAME)->EnableWindow( TRUE);
@@ -104,10 +104,10 @@ void CPatchPalette::DoDataExchange(CDataExchange* pDX)
 	DDX_SkyFloat(pDX, IDC_EDIT_PATCH_STRETCH, m_fStretch);
 	DDX_Text(pDX, IDC_PATCH_FILE_T, m_strPatchFile);
 	//}}AFX_DATA_MAP
-  if( (pDX->m_bSaveAndValidate) && ( pModelerView != NULL) )
+  if ((pDX->m_bSaveAndValidate) && ( pModelerView != NULL) )
   {
     CModelerDoc* pDoc = (CModelerDoc *) pModelerView->GetDocument();
-    if( pDoc->m_emEditModel.CountPatches() != 0)
+    if (pDoc->m_emEditModel.CountPatches() != 0)
     {
       CModelPatch &mp = pDoc->m_emEditModel.edm_md.md_mpPatches[ pModelerView->m_iActivePatchBitIndex];
       pDoc->m_emEditModel.SetPatchStretch(pModelerView->m_iActivePatchBitIndex, m_fStretch);
@@ -146,13 +146,13 @@ BOOL CPatchPalette::OnInitDialog()
 BOOL CPatchPalette::OnIdle(LONG lCount)
 {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if( (pModelerView != m_LastViewUpdated) || theApp.m_bRefreshPatchPalette)
+  if ((pModelerView != m_LastViewUpdated) || theApp.m_bRefreshPatchPalette)
   {
     theApp.m_bRefreshPatchPalette = FALSE;
     UpdateData( FALSE);
     Invalidate( FALSE);
     m_LastViewUpdated = pModelerView;
-    if( pModelerView == NULL)
+    if (pModelerView == NULL)
     {
       m_LastViewUpdated = NULL;
 	    GetDlgItem( IDC_EDIT_PATCH_NAME)->EnableWindow( FALSE);

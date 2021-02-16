@@ -25,19 +25,19 @@ static INDEX gui_bEnableRequesterThumbnails=TRUE;
 UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARAM lParam)
 {
   _pShell->DeclareSymbol("persistent user INDEX gui_bEnableRequesterThumbnails;", &gui_bEnableRequesterThumbnails);
-  if( !gui_bEnableRequesterThumbnails)
+  if (!gui_bEnableRequesterThumbnails)
   {
     return 0;
   }
 
   CTextureData *pTextureData = NULL;
-  if( uiMsg == WM_NOTIFY)
+  if (uiMsg == WM_NOTIFY)
   {
     // obtain file open notification structure
     OFNOTIFY *pONNotify = (OFNOTIFY *) lParam;
     // obtain notification message header structure
     NMHDR *pNMHeader = &pONNotify->hdr;
-    if(pNMHeader->code == CDN_INITDONE)
+    if (pNMHeader->code == CDN_INITDONE)
     {
       HWND hwnd = GetDlgItem( hdlg, IDC_THUMBNAIL_RECT);
       RECT rect;
@@ -55,7 +55,7 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
       point.y = pointThumbnail.y-pointParent.y;
       OffsetRect(&rect, point.x, point.y);
       
-      if( !bSuccess)
+      if (!bSuccess)
       {
         ASSERT( FALSE);
         return 0;
@@ -85,23 +85,23 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
       // remove application path
       fnSelectedFileFullPath.RemoveApplicationPath_t();
       CTFileName fnThumbnail = CTString("");
-      if( (fnSelectedFileFullPath.FileExt() == ".wld") ||
+      if ((fnSelectedFileFullPath.FileExt() == ".wld") ||
           (fnSelectedFileFullPath.FileExt() == ".mdl") )
       {
         fnThumbnail = fnSelectedFileFullPath.FileDir()+fnSelectedFileFullPath.FileName()+".tbn";
       }
-      else if( (fnSelectedFileFullPath.FileExt() == ".tex") ||
+      else if ((fnSelectedFileFullPath.FileExt() == ".tex") ||
                (fnSelectedFileFullPath.FileExt() == ".tbn") )
       {
         fnThumbnail = fnSelectedFileFullPath;
       }
-      else if( (fnSelectedFileFullPath.FileExt() == ".pcx") ||
+      else if ((fnSelectedFileFullPath.FileExt() == ".pcx") ||
                (fnSelectedFileFullPath.FileExt() == ".tga") )
       {
         CImageInfo iiImageInfo;
         iiImageInfo.LoadAnyGfxFormat_t( fnSelectedFileFullPath);
         // both dimension must be potentions of 2
-        if( (iiImageInfo.ii_Width  == 1<<((int)Log2( iiImageInfo.ii_Width))) &&
+        if ((iiImageInfo.ii_Width  == 1<<((int)Log2( iiImageInfo.ii_Width))) &&
             (iiImageInfo.ii_Height == 1<<((int)Log2( iiImageInfo.ii_Height))) )
         {
           fnThumbnail = CTString( "Temp\\Temp.tex");
@@ -111,7 +111,7 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
           tdForPictureConverting.Save_t( fnThumbnail);
         }
       }
-      if( fnThumbnail != "")
+      if (fnThumbnail != "")
       {
         // obtain thumbnail
         pTextureData = _pTextureStock->Obtain_t( fnThumbnail);
@@ -124,10 +124,10 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
       pTextureData = NULL;
     }
 
-    if( IsWindow( _wndThumbnail) )
+    if (IsWindow( _wndThumbnail) )
     {
       // if there is a valid drawport, and the drawport can be locked
-      if( (_pDrawPort != NULL) && (_pDrawPort->Lock()) )
+      if ((_pDrawPort != NULL) && (_pDrawPort->Lock()) )
       {
         PIXaabbox2D rectPict;
         rectPict = PIXaabbox2D( PIX2D(0, 0),
@@ -137,7 +137,7 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
         // erase z-buffer
         _pDrawPort->FillZBuffer(ZBUF_BACK);
         // if there is valid active texture
-        if( pTextureData != NULL)
+        if (pTextureData != NULL)
         {
           CTextureObject toPreview;
           toPreview.SetData( pTextureData);
@@ -153,7 +153,7 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
           PIX pixRad = Max( _pDrawPort->GetWidth(), _pDrawPort->GetWidth()) * 3/4/2;
           PIX CX = _pDrawPort->GetWidth()/2;
           PIX CY = _pDrawPort->GetWidth()/2;
-          for( INDEX iPix=-2;iPix<2;iPix++)
+          for (INDEX iPix=-2;iPix<2;iPix++)
           {
             _pDrawPort->DrawLine( CX-pixRad+iPix, CY-pixRad, CX+pixRad+iPix, CY+pixRad, C_RED|CT_OPAQUE);
             _pDrawPort->DrawLine( CX-pixRad+iPix, CY+pixRad, CX+pixRad+iPix, CY-pixRad, C_RED|CT_OPAQUE);
@@ -204,7 +204,7 @@ CTFileName CEngineGUI::FileRequester(
   ofnRequestFiles.nMaxFile = 2048;
 
   CString strRequestInDirectory = _fnmApplicationPath+strDefaultDir;
-  if( pchrRegistry != NULL)
+  if (pchrRegistry != NULL)
   {
     strRequestInDirectory = AfxGetApp()->GetProfileString(L"Scape", CString(pchrRegistry), 
       CString(_fnmApplicationPath+strDefaultDir));
@@ -226,12 +226,12 @@ CTFileName CEngineGUI::FileRequester(
   ofnRequestFiles.hInstance = GetModuleHandleA(ENGINEGUI_DLL_NAME);
   ofnRequestFiles.lpTemplateName = MAKEINTRESOURCEA( IDD_GFX_FILE_REQUESTER);
   // allow multi select
-  if( pafnSelectedFiles != NULL) ofnRequestFiles.Flags |= OFN_ALLOWMULTISELECT;
+  if (pafnSelectedFiles != NULL) ofnRequestFiles.Flags |= OFN_ALLOWMULTISELECT;
   
   ofnRequestFiles.lpstrDefExt = "";
 
   BOOL bResult;
-  if( bIfOpen)
+  if (bIfOpen)
   {
     bResult = GetOpenFileNameA( &ofnRequestFiles);
   }
@@ -240,13 +240,13 @@ CTFileName CEngineGUI::FileRequester(
     bResult = GetSaveFileNameA( &ofnRequestFiles);
   }
 
-  if( bResult)
+  if (bResult)
   {
     // if multiple file requester is called
-    if( pafnSelectedFiles != NULL)
+    if (pafnSelectedFiles != NULL)
     {
       chrFiles[ ofnRequestFiles.nFileOffset-1] = 0;
-      if( pchrRegistry != NULL)
+      if (pchrRegistry != NULL)
       {
         AfxGetApp()->WriteProfileString(L"Scape", CString(pchrRegistry), CString(chrFiles));
       }
@@ -257,7 +257,7 @@ CTFileName CEngineGUI::FileRequester(
       {
         try
         {
-          if( CTString( chrFiles + iOffset) == "")
+          if (CTString( chrFiles + iOffset) == "")
           {
             // restore resources
             AfxSetResourceHandle( (HINSTANCE) hOldResource);
@@ -284,7 +284,7 @@ CTFileName CEngineGUI::FileRequester(
     {
       CString strChooseFilePath = chrFiles;
       strChooseFilePath.SetAt( ofnRequestFiles.nFileOffset, 0);
-      if( pchrRegistry != NULL)
+      if (pchrRegistry != NULL)
       {
         AfxGetApp()->WriteProfileString(L"Scape", CString(pchrRegistry), strChooseFilePath);
       }
@@ -306,7 +306,7 @@ CTFileName CEngineGUI::FileRequester(
       return fnResult;
     }
   }
-  if( _pViewPort != NULL)
+  if (_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( _pViewPort);
     _pViewPort = NULL;

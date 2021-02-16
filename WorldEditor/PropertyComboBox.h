@@ -35,9 +35,9 @@ public:
     pid_strName = strName;
     pid_eptType = eptType;
     pid_penpProperty = penpProperty;
-    if( eptType == CEntityProperty::EPT_ANIMATION) pid_padAnimData = padAnimData;
+    if (eptType == CEntityProperty::EPT_ANIMATION) pid_padAnimData = padAnimData;
     else                                           pid_padAnimData = NULL;
-    if( penpProperty != NULL) 
+    if (penpProperty != NULL) 
       pid_chrShortcutKey = penpProperty->ep_chShortcut;
     else
       pid_chrShortcutKey = 0;

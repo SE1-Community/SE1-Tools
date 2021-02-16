@@ -44,7 +44,7 @@ void CDlgEditTerrainBrush::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
   // if dialog is reciving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     m_fHotSpot=atebCustomEditBrushes[m_iBrush].teb_fHotSpot;
     m_fFallOff=atebCustomEditBrushes[m_iBrush].teb_fFallOff;
@@ -57,7 +57,7 @@ void CDlgEditTerrainBrush::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     atebCustomEditBrushes[m_iBrush].teb_fHotSpot=m_fHotSpot;
     atebCustomEditBrushes[m_iBrush].teb_fFallOff=m_fFallOff;
@@ -90,12 +90,12 @@ void CDlgEditTerrainBrush::OnImportTerrainBrush()
   SetFocus();
   SetActiveWindow();
 
-  if( fnBrush== "") return;
+  if (fnBrush== "") return;
 
   CImageInfo ii;
   ii.LoadAnyGfxFormat_t( fnBrush);
   // both dimension must be potentions of 2
-  if( (ii.ii_Width  == 1<<((int)Log2( (FLOAT)ii.ii_Width))) &&
+  if ((ii.ii_Width  == 1<<((int)Log2( (FLOAT)ii.ii_Width))) &&
       (ii.ii_Height == 1<<((int)Log2( (FLOAT)ii.ii_Height))) )
   {
     CTFileName fnTexture = GetBrushTextureName(m_iBrush);

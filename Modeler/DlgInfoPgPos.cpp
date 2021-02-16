@@ -54,9 +54,9 @@ CDlgInfoPgPos::~CDlgInfoPgPos()
 void CDlgInfoPgPos::DoDataExchange(CDataExchange* pDX)
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   
-  if( !pDX->m_bSaveAndValidate) {
+  if (!pDX->m_bSaveAndValidate) {
     m_fHeading = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(1));
     m_fPitch   = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(2));
     m_fBanking = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(3));
@@ -85,7 +85,7 @@ void CDlgInfoPgPos::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxFloat(pDX, m_fFOW, 1.f, 179.f);
 	//}}AFX_DATA_MAP
 
-  if( pDX->m_bSaveAndValidate) {
+  if (pDX->m_bSaveAndValidate) {
     pModelerView->m_plModelPlacement.pl_OrientationAngle(1) = AngleDeg( (FLOAT)m_fHeading);
     pModelerView->m_plModelPlacement.pl_OrientationAngle(2) = AngleDeg( (FLOAT)m_fPitch);
     pModelerView->m_plModelPlacement.pl_OrientationAngle(3) = AngleDeg( (FLOAT)m_fBanking);

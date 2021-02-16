@@ -55,7 +55,7 @@ void CModelTreeCtrl::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
   HTREEITEM hSelected = GetSelectedItem();
   // if selected item is diferent from last selected item
-  if(hLastSelected != hSelected) {
+  if (hLastSelected != hSelected) {
     theApp.m_dlgBarTreeView.SelItemChanged(hSelected);
     hLastSelected = hSelected;
   }
@@ -69,7 +69,7 @@ void CModelTreeCtrl::OnItemClick(NMHDR* pNMHDR, LRESULT* pResult)
   GetCursorPos(&pt);
   ScreenToClient(&pt);
   HTREEITEM hClicked = HitTest(pt,&uiFlags);
-  if(hClicked!=NULL) {
+  if (hClicked!=NULL) {
     RECT rcItem;
     // get item rect
     GetItemRect(hClicked,&rcItem,TRUE);
@@ -77,17 +77,17 @@ void CModelTreeCtrl::OnItemClick(NMHDR* pNMHDR, LRESULT* pResult)
     // check if clicked only inside in rect of icon
     RECT rcIcon = {rcItem.left-18,rcItem.top,rcItem.left,rcItem.bottom};
     RECT rcItemAndIcon = {rcItem.left-18,rcItem.top,rcItem.right,rcItem.bottom};
-    if(PtInRect(&rcItem/*AndIcon*/,pt)) {
+    if (PtInRect(&rcItem/*AndIcon*/,pt)) {
       // notify that item icon was clicked
       theApp.m_dlgBarTreeView.OnItemClick(hClicked,hLastSelected);
       
       // if clicked item is animation
-      if(niClicked.ni_iType == NT_ANIMATION) {
+      if (niClicked.ni_iType == NT_ANIMATION) {
         theApp.m_dlgBarTreeView.SelItemChanged(hClicked);
         hLastSelected = hClicked;
       }
     }
-    else if(PtInRect(&rcIcon,pt)) {
+    else if (PtInRect(&rcIcon,pt)) {
       theApp.m_dlgBarTreeView.OnItemIconClick(hClicked);
     }
   }
@@ -101,7 +101,7 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
   GetCursorPos(&pt);
   ScreenToClient(&pt);
   HTREEITEM hClicked = HitTest(pt,&uiFlags);
-  if(hClicked!=NULL)
+  if (hClicked!=NULL)
   {
     NodeInfo &ni = theApp.m_dlgBarTreeView.GetNodeInfo(hClicked);
     RECT rcItem;
@@ -110,9 +110,9 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
     // check if clicked only inside in rect of icon
     RECT rcIcon = {rcItem.left-18,rcItem.top,rcItem.left,rcItem.bottom};
     // if clicked in icon rect
-    if(PtInRect(&rcIcon,pt)) {
+    if (PtInRect(&rcIcon,pt)) {
       // if clicked item is mesh surface
-      if(ni.ni_iType == NT_MESHSURFACE) {
+      if (ni.ni_iType == NT_MESHSURFACE) {
         // notify that item icon was clicked
         Select(hClicked,TVGN_CARET);
         theApp.m_dlgBarTreeView.SelectAllSurfaces(hClicked);
@@ -121,8 +121,8 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
     CMenu menu;
     INDEX iMenuIndex=-1;
     
-    if(menu.LoadMenu(IDR_POPUP_MENU)) {
-      switch(ni.ni_iType) {
+    if (menu.LoadMenu(IDR_POPUP_MENU)) {
+      switch (ni.ni_iType) {
         case NT_MODELINSTANCE  : iMenuIndex = 0; break;
         case NT_MESHLODLIST    : iMenuIndex = 1; break;
         case NT_MESHLOD        : iMenuIndex = 7; break;
@@ -137,11 +137,11 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
         case NT_ALLFRAMESBBOX  : iMenuIndex = 6; break;
         case NT_MESHSURFACE    : iMenuIndex =-1; break;
       }
-      if(iMenuIndex>=0) {
+      if (iMenuIndex>=0) {
         Select(hClicked,TVGN_CARET);
         CMenu *pPopup = menu.GetSubMenu(iMenuIndex);
         CSeriousSkaStudioView *pSKAView = theApp.GetActiveView();
-        if(pPopup!=NULL && pSKAView!=NULL) {
+        if (pPopup!=NULL && pSKAView!=NULL) {
           CRect rc;
           GetWindowRect(&rc);
           pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -175,7 +175,7 @@ void CModelTreeCtrl::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
 	TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pNMHDR; 
   BOOL bControl = (GetKeyState( VK_CONTROL)&0x8000) != 0;
 
-  switch(pTVKeyDown->wVKey)
+  switch (pTVKeyDown->wVKey)
   {
     case VK_F5:
     {
@@ -185,7 +185,7 @@ void CModelTreeCtrl::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
     break;
     case 0x52://VK_R
     {
-      if(bControl)
+      if (bControl)
       {
         theApp.ReloadRootModelInstance();
         theApp.NotificationMessage("Document reloaded");

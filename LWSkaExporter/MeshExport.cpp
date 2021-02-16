@@ -128,7 +128,7 @@ int EnumPols(void *, LWPolID id)
 void FillOriginalVertexCoords(void)
 {
   // for each vertex
-  {for(int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
+  {for (int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
     // get the coords
     _pmesh->pntBasePos(_pmesh, _aidPntIDs[iPnt], _avPnts[iPnt]);
   }}
@@ -142,7 +142,7 @@ void FillRelativeMorphVertexCoords(const char *strRelMorphMapName)
   void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_MORF, strRelMorphMapName);
   _pmesh->pntVSelect(_pmesh, pMap);
   // for each vertex
-  {for(int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
+  {for (int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
     // if morphed
     float v[3];
     if (_pmesh->pntVGet(_pmesh, _aidPntIDs[iPnt], v)) {
@@ -162,7 +162,7 @@ void FillAbsoluteMorphVertexCoords(const char *strAbsMorphMapName)
   void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_SPOT, strAbsMorphMapName);
   _pmesh->pntVSelect(_pmesh, pMap);
   // for each vertex
-  {for(int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
+  {for (int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
     // if morphed
     float v[3];
     if (_pmesh->pntVGet(_pmesh, _aidPntIDs[iPnt], v)) {
@@ -178,7 +178,7 @@ void FillAbsoluteMorphVertexCoords(const char *strAbsMorphMapName)
 void MakeNormals(void)
 {
   // generate polygon normals
-  {for(int iPol=0; iPol<_ctPolIDs; iPol++) {
+  {for (int iPol=0; iPol<_ctPolIDs; iPol++) {
     LWPolID idPol = _aidPolIDs[iPol];
     int ctInThisPol = _pmesh->polSize(_pmesh, idPol);
     if (ctInThisPol<3) {
@@ -209,7 +209,7 @@ void MakeNormals(void)
   LWPntID idLastPnt = NULL;
 
   // for each point polygon
-  {for(int iPntPol=0; iPntPol<_ctPolPnts; iPntPol++) {
+  {for (int iPntPol=0; iPntPol<_ctPolPnts; iPntPol++) {
     LWPntID idThis = _appPntPols[iPntPol].pp_idPnt;
     // if new point
     if (idThis!=idLastPnt) {
@@ -261,7 +261,7 @@ void ExtractMeshData(void)
 
   // find the total number of points in all polygons
   _ctPolPnts = 0;
-  for(int iPol=0; iPol<_ctPolIDs; iPol++) {
+  for (int iPol=0; iPol<_ctPolIDs; iPol++) {
     int ct = _pmesh->polSize(_pmesh, _aidPolIDs[iPol]);
     if (ct!=3) {
       _msg->error("All objects must be triangles!", NULL);
@@ -272,7 +272,7 @@ void ExtractMeshData(void)
   _appPntPols = (PolPnt *)malloc(_ctPolPnts*sizeof(PolPnt));
   // fill in all point and polygon combinations
   {int iPolPnt = 0;
-  for(int iPol=0; iPol<_ctPolIDs; iPol++) {
+  for (int iPol=0; iPol<_ctPolIDs; iPol++) {
     LWPolID idPol = _aidPolIDs[iPol];
     int ctInThisPol = _pmesh->polSize(_pmesh, idPol);
     for (int iPnt=0; iPnt<ctInThisPol; iPnt++) {
@@ -300,12 +300,12 @@ void ExtractMeshData(void)
   _astrUVMapNames = (const char**) malloc(_ctUVMapNames*sizeof(char*));
   memset(_astrUVMapNames, 0, _ctUVMapNames*sizeof(char*));
   _ctUsedUVMapNames = 0;
-  {for(int iUVMap=0; iUVMap<_ctUVMapNames; iUVMap++) {
+  {for (int iUVMap=0; iUVMap<_ctUVMapNames; iUVMap++) {
     const char *strName = _obf->vmapName(LWVMAP_TXUV, iUVMap);
     void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_TXUV, strName);
     _pmesh->pntVSelect(_pmesh, pMap);
     bool bExists = false;
-    for(int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
+    for (int iPnt=0; iPnt<_ctPntIDs; iPnt++) {
       float v[2];
       if (_pmesh->pntVGet(_pmesh, _aidPntIDs[iPnt], v)) {
         bExists = true;
@@ -324,13 +324,13 @@ void ExtractMeshData(void)
   memset(_astrWeightMapNames, 0, _ctWeightMapNames*sizeof(char*));
   memset(_actWeightMapCounts, 0, _ctWeightMapNames*sizeof(int));
   _ctUsedWeightMapNames = 0;
-  {for(int iWeightMap=0; iWeightMap<_ctWeightMapNames; iWeightMap++) {
+  {for (int iWeightMap=0; iWeightMap<_ctWeightMapNames; iWeightMap++) {
     const char *strName = _obf->vmapName(LWVMAP_WGHT, iWeightMap);
     void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_WGHT, strName);
     _pmesh->pntVSelect(_pmesh, pMap);
     int ct = 0;
     // for each polygonvertex
-    for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+    for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the weight
       float v[1];
       if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0]!=0.0f) {
@@ -352,13 +352,13 @@ void ExtractMeshData(void)
   memset(_astrRelMorphMapNames, 0, _ctRelMorphMapNames*sizeof(char*));
   memset(_actRelMorphMapCounts, 0, _ctRelMorphMapNames*sizeof(int));
   _ctUsedRelMorphMapNames = 0;
-  {for(int iRelMorphMap=0; iRelMorphMap<_ctRelMorphMapNames; iRelMorphMap++) {
+  {for (int iRelMorphMap=0; iRelMorphMap<_ctRelMorphMapNames; iRelMorphMap++) {
     const char *strName = _obf->vmapName(LWVMAP_MORF, iRelMorphMap);
     void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_MORF, strName);
     _pmesh->pntVSelect(_pmesh, pMap);
     int ct = 0;
     // for each polygonvertex
-    for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+    for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the morphpos
       float v[3];
       if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v)) {
@@ -379,13 +379,13 @@ void ExtractMeshData(void)
   memset(_astrAbsMorphMapNames, 0, _ctAbsMorphMapNames*sizeof(char*));
   memset(_actAbsMorphMapCounts, 0, _ctAbsMorphMapNames*sizeof(int));
   _ctUsedAbsMorphMapNames = 0;
-  {for(int iAbsMorphMap=0; iAbsMorphMap<_ctAbsMorphMapNames; iAbsMorphMap++) {
+  {for (int iAbsMorphMap=0; iAbsMorphMap<_ctAbsMorphMapNames; iAbsMorphMap++) {
     const char *strName = _obf->vmapName(LWVMAP_SPOT, iAbsMorphMap);
     void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_SPOT, strName);
     _pmesh->pntVSelect(_pmesh, pMap);
     int ct = 0;
     // for each polygonvertex
-    for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+    for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the morphpos
       float v[3];
       if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v)) {
@@ -414,14 +414,14 @@ int ExportMesh(LWXPanelID pan)
   int ctSelectedMeshed = 0;
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
-    if(_iti->type(_objid) == LWI_OBJECT)
+    if (_iti->type(_objid) == LWI_OBJECT)
     {
       _pmesh = _obi->meshInfo(_objid, 0);
-      if(_pmesh != NULL)
+      if (_pmesh != NULL)
       {
-        if(_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
+        if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelectedMeshed++;
         }
@@ -440,31 +440,31 @@ int ExportMesh(LWXPanelID pan)
   }
 
   // if some objects are selected export only them
-  if(ctSelectedMeshed > 0) bExportOnlySelected = true;
+  if (ctSelectedMeshed > 0) bExportOnlySelected = true;
   // dont ask to export all meshes if only one mesh in the scene
-  if(ctSelectedMeshed == 0)
+  if (ctSelectedMeshed == 0)
   {
-    if(ctMeshes > 1)
+    if (ctMeshes > 1)
     {
-      if(_msg->yesNo("No objects selected","Export all meshes?",NULL) == 0)
+      if (_msg->yesNo("No objects selected","Export all meshes?",NULL) == 0)
         return AFUNC_OK;
       bExportOnlySelected = false;
     }
   }
 
   // loop each mesh in scene
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
     // get its mesh
     _pmesh = _obi->meshInfo(_objid, 0);
-    if(_pmesh == NULL)
+    if (_pmesh == NULL)
     {
       _objid = _iti->next(_objid);
       continue;
     }
-    if(bExportOnlySelected)
+    if (bExportOnlySelected)
     {
-      if(!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
+      if (!(_ifi->itemFlags(_objid) & LWITEMF_SELECTED))
       {
         _objid = _iti->next(_objid);
         continue;
@@ -492,9 +492,9 @@ int ExportMesh(LWXPanelID pan)
 
     // write the mesh header
     fprintf(_f, "SE_MESH %s;\n\n",SE_ANIM_VER);
-    if(iFaceForward==ML_HALF_FACE_FORWARD) {
+    if (iFaceForward==ML_HALF_FACE_FORWARD) {
       fprintf(_f, "HALF_FACE_FORWARD TRUE;\n\n");
-    } else if(iFaceForward==ML_FULL_FACE_FORWARD) {
+    } else if (iFaceForward==ML_FULL_FACE_FORWARD) {
       fprintf(_f, "FULL_FACE_FORWARD TRUE;\n\n");
     }
 
@@ -503,7 +503,7 @@ int ExportMesh(LWXPanelID pan)
     fprintf(_f, "VERTICES %d\n", _ctPolPnts);
     fprintf(_f, "{\n");
     // for each polygonvertex
-    {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+    {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the coords
       float v[3];
       _pmesh->pntBasePos(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v);
@@ -515,7 +515,7 @@ int ExportMesh(LWXPanelID pan)
     fprintf(_f, "NORMALS %d\n", _ctPolPnts);
     fprintf(_f, "{\n");
     // for each polygonvertex
-    {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+    {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the normal
       int iPnt = GetPntIndex(_appPolPnts[iPolPnt].pp_idPnt);
       fprintf(_f, "  %g, %g, %g;\n", _avPntNormals[iPnt][0], _avPntNormals[iPnt][1], -_avPntNormals[iPnt][2]);
@@ -531,7 +531,7 @@ int ExportMesh(LWXPanelID pan)
     if (_ctUsedUVMapNames == 0) {
       _msg->info("No UV maps in the scene!",NULL);
     }
-    {for(int iUVMap=0; iUVMap<_ctUsedUVMapNames; iUVMap++) {
+    {for (int iUVMap=0; iUVMap<_ctUsedUVMapNames; iUVMap++) {
       fprintf(_f, "  {\n");
       const char *strUVMap = _astrUVMapNames[iUVMap];
       fprintf(_f, "    NAME \"%s\";\n", strUVMap);
@@ -541,7 +541,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "    {\n");
 
       // for each polygonvertex
-      {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+      {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
         // get the coords
         float v[2];
         if (_pmesh->pntVPGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, _appPolPnts[iPolPnt].pp_idPol, v)) {
@@ -562,7 +562,7 @@ int ExportMesh(LWXPanelID pan)
 
     // count the surfaces
     _ctSurfs = 0;
-    while(_asurSurfaces[_ctSurfs]!=NULL) {
+    while (_asurSurfaces[_ctSurfs]!=NULL) {
       _ctSurfs++;
     }
 
@@ -570,13 +570,13 @@ int ExportMesh(LWXPanelID pan)
     fprintf(_f, "SURFACES %d\n", _ctSurfs);
     fprintf(_f, "{\n");
     // for each surface
-    {for(int iSurf=0; iSurf<_ctSurfs; iSurf++) {
+    {for (int iSurf=0; iSurf<_ctSurfs; iSurf++) {
       fprintf(_f, "  {\n");
       const char *strSurf = _srf->name(_asurSurfaces[iSurf]);
       fprintf(_f, "    NAME \"%s\";\n", strSurf);
       // count the polygons
       int iSurfPols = 0;
-      {for(int i=0; i<_ctPolIDs; i++) {
+      {for (int i=0; i<_ctPolIDs; i++) {
         if (strcmp(_pmesh->polTag(_pmesh, _aidPolIDs[i], LWPTAG_SURF), strSurf)==0) {
           iSurfPols++;
         }
@@ -585,7 +585,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "    TRIANGLE_SET %d\n", iSurfPols);
       fprintf(_f, "    {\n");
       // for each polygon
-      for(int iTri=0; iTri<_ctPolIDs; iTri++) {
+      for (int iTri=0; iTri<_ctPolIDs; iTri++) {
         LWPolID idPol = _aidPolIDs[iTri];
         // if not in this surface
         if (strcmp(_pmesh->polTag(_pmesh, idPol, LWPTAG_SURF), strSurf)!=0) {
@@ -610,7 +610,7 @@ int ExportMesh(LWXPanelID pan)
     fprintf(_f, "{\n");
 
     // for each weightmap
-    {for(int iWeightMap=0; iWeightMap<_ctUsedWeightMapNames; iWeightMap++) {
+    {for (int iWeightMap=0; iWeightMap<_ctUsedWeightMapNames; iWeightMap++) {
       fprintf(_f, "  {\n");
       const char *strWeightMap = _astrWeightMapNames[iWeightMap];
       fprintf(_f, "    NAME \"%s\";\n", strWeightMap);
@@ -620,7 +620,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "    {\n");
 
       // for each polygonvertex
-      {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+      {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
         // get the coords
         float v[1];
         if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0]!=0.0f) {
@@ -641,7 +641,7 @@ int ExportMesh(LWXPanelID pan)
     fprintf(_f, "{\n");
 
     // for each relmorphmap
-    {for(int iRelMorphMap=0; iRelMorphMap<_ctUsedRelMorphMapNames; iRelMorphMap++) {
+    {for (int iRelMorphMap=0; iRelMorphMap<_ctUsedRelMorphMapNames; iRelMorphMap++) {
       const char *strRelMorphMap = _astrRelMorphMapNames[iRelMorphMap];
       // calculate mesh normals using the given morphmap
       FillRelativeMorphVertexCoords(strRelMorphMap);
@@ -656,7 +656,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "    {\n");
 
       // for each polygonvertex
-      {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+      {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
         // if morphed here
         float vRel[3];
         if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, vRel)) {
@@ -671,7 +671,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "  }\n");
     }}
     // for each absmorphmap
-    {for(int iAbsMorphMap=0; iAbsMorphMap<_ctUsedAbsMorphMapNames; iAbsMorphMap++) {
+    {for (int iAbsMorphMap=0; iAbsMorphMap<_ctUsedAbsMorphMapNames; iAbsMorphMap++) {
       const char *strAbsMorphMap = _astrAbsMorphMapNames[iAbsMorphMap];
       // calculate mesh normals using the given morphmap
       FillAbsoluteMorphVertexCoords(strAbsMorphMap);
@@ -686,7 +686,7 @@ int ExportMesh(LWXPanelID pan)
       fprintf(_f, "    {\n");
 
       // for each polygonvertex
-      {for(int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
+      {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
         // if morphed here
         float vRel[3];
         if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, vRel)) {

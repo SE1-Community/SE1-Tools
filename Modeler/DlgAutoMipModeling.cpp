@@ -53,7 +53,7 @@ void CDlgAutoMipModeling::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog gives data
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
     theApp.WriteProfileInt( L"Modeler prefs", L"Auto mip modeling vertex removal rate", m_iVerticesToRemove);
     theApp.WriteProfileInt( L"Modeler prefs", L"Surface preserving factor", m_iSurfacePreservingFactor);

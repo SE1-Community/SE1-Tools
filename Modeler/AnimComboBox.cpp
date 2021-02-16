@@ -51,14 +51,14 @@ END_MESSAGE_MAP()
 BOOL CAnimComboBox::OnIdle(LONG lCount)
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( (pModelerView == NULL) && (m_pvLastUpdatedView != NULL) )
+  if ((pModelerView == NULL) && (m_pvLastUpdatedView != NULL) )
   {
     m_pvLastUpdatedView = NULL;
     ResetContent();
     AddString( L"None available");
     SetCurSel( 0);
   }
-  else if( (pModelerView != NULL) &&
+  else if ((pModelerView != NULL) &&
            ( (m_pvLastUpdatedView != pModelerView) ||
              ( (pModelerView->m_ModelObject.GetAnim() != GetCurSel()) &&
                (GetDroppedState() == FALSE))))
@@ -67,7 +67,7 @@ BOOL CAnimComboBox::OnIdle(LONG lCount)
     m_pvLastUpdatedView = pModelerView;
     CAnimInfo aiInfo;
     ResetContent();
-    for( INDEX i=0; i<pModelerView->m_ModelObject.GetAnimsCt(); i++)
+    for (INDEX i=0; i<pModelerView->m_ModelObject.GetAnimsCt(); i++)
     {
       pModelerView->m_ModelObject.GetAnimInfo( i, aiInfo);
       AddString( CString(aiInfo.ai_AnimName));
@@ -80,7 +80,7 @@ BOOL CAnimComboBox::OnIdle(LONG lCount)
 void CAnimComboBox::OnSelchange() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     pModelerView->m_ModelObject.SetAnim( GetCurSel());
   }	
@@ -89,7 +89,7 @@ void CAnimComboBox::OnSelchange()
 void CAnimComboBox::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);
@@ -98,7 +98,7 @@ void CAnimComboBox::OnDropdown()
   PIX pixMaxHeight = pixScreenHeight - rectCombo.top;
 
   CWnd *pwndParent = GetParent();
-  if( pwndParent == NULL) return;
+  if (pwndParent == NULL) return;
   pwndParent->ScreenToClient( &rectCombo);
   PIX pixNewHeight = GetItemHeight(0)*(ctItems+2);
   rectCombo.bottom = rectCombo.top + ClampUp( pixNewHeight, pixMaxHeight);

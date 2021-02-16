@@ -78,8 +78,8 @@ void CMDIClientWnd::OnSize(UINT nType, int cx, int cy)
   pt.y = rc.top;
   CDockState state;
 
-  if(theApp.m_dlgBarTreeView.IsWindowVisible()) {
-    if(!theApp.m_dlgBarTreeView.IsFloating()) {
+  if (theApp.m_dlgBarTreeView.IsWindowVisible()) {
+    if (!theApp.m_dlgBarTreeView.IsFloating()) {
       theApp.m_dlgBarTreeView.ShowWindow(SW_HIDE);
       INDEX iDockSide = theApp.m_dlgBarTreeView.GetDockingSide();
       pMainFrame->FloatControlBar(&theApp.m_dlgBarTreeView,pt);
@@ -89,8 +89,8 @@ void CMDIClientWnd::OnSize(UINT nType, int cx, int cy)
     }
   }
   /*
-  if(theApp.m_dlgErrorList.IsWindowVisible()) {
-    if(!theApp.m_dlgErrorList.IsFloating()) {
+  if (theApp.m_dlgErrorList.IsWindowVisible()) {
+    if (!theApp.m_dlgErrorList.IsFloating()) {
       theApp.m_dlgErrorList.ShowWindow(SW_HIDE);
       INDEX iDockSide = theApp.m_dlgErrorList.GetDockingSide();
       pMainFrame->FloatControlBar(&theApp.m_dlgErrorList,pt);
@@ -127,7 +127,7 @@ void CMDIClientWnd::OnLButtonDown(UINT nFlags, CPoint point)
   GetCursorPos( &ptNow);
   CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
   FLOAT tmDelta = (tvNow-tvLast).GetSeconds();
-  if( tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5) {
+  if (tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5) {
     theApp.OnFileOpen();
   }
   tvLast=tvNow;

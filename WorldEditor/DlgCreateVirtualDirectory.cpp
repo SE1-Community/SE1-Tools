@@ -47,7 +47,7 @@ void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX)
   CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
   }
 
@@ -58,14 +58,14 @@ void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog gives data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     m_strCreatedDirName = CTString( CStringA(m_strDirectoryName));
     m_iSelectedIconType = 0;
     // Now set selected directory icon type
-    for( i=0; i<m_DirectoryIconsList.GetItemCount(); i++)
+    for (i=0; i<m_DirectoryIconsList.GetItemCount(); i++)
     {
-      if( m_DirectoryIconsList.GetItemState( i, LVIS_SELECTED) != 0)
+      if (m_DirectoryIconsList.GetItemState( i, LVIS_SELECTED) != 0)
       {
         m_iSelectedIconType = i;
         break;
@@ -93,7 +93,7 @@ BOOL CDlgCreateVirtualDirectory::OnInitDialog()
   m_IconsImageList.Create( IDB_DIRECTORY_ICONS, 16, 1, CLR_NONE);
   m_DirectoryIconsList.SetImageList( &m_IconsImageList, LVSIL_SMALL);
 
-  for( INDEX i=0; i<NO_OF_ICONS; i++)
+  for (INDEX i=0; i<NO_OF_ICONS; i++)
   {
     m_DirectoryIconsList.InsertItem( i, L"", i);
   }
@@ -105,7 +105,7 @@ BOOL CDlgCreateVirtualDirectory::OnInitDialog()
 void CDlgCreateVirtualDirectory::OnDblclkDirectoryIconList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	UpdateData();
-  if( m_strCreatedDirName != "")
+  if (m_strCreatedDirName != "")
     EndDialog(IDOK);
 	*pResult = 0;
 }

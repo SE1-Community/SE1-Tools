@@ -29,23 +29,23 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CInfoSheet
 #define CALLACTIVEPAGE(function, parameter)         \
-  if( pgActivPage == &m_PgGlobal)                   \
+  if (pgActivPage == &m_PgGlobal)                   \
     m_PgGlobal.function( parameter);                \
-  if( pgActivPage == &m_PgTerrain)                  \
+  if (pgActivPage == &m_PgTerrain)                  \
     m_PgTerrain.function( parameter);               \
-  if( pgActivPage == &m_PgPosition)                 \
+  if (pgActivPage == &m_PgPosition)                 \
     m_PgPosition.function( parameter);              \
-  if( pgActivPage == &m_PgRenderingStatistics)      \
+  if (pgActivPage == &m_PgRenderingStatistics)      \
     m_PgRenderingStatistics.function( parameter);   \
-  if( pgActivPage == &m_PgPolygon)                  \
+  if (pgActivPage == &m_PgPolygon)                  \
     m_PgPolygon.function( parameter);               \
-  if( pgActivPage == &m_PgShadow)                   \
+  if (pgActivPage == &m_PgShadow)                   \
     m_PgShadow.function( parameter);                \
-  if( pgActivPage == &m_PgSector)                   \
+  if (pgActivPage == &m_PgSector)                   \
     m_PgSector.function( parameter);                \
-  if( pgActivPage == &m_PgTexture)                  \
+  if (pgActivPage == &m_PgTexture)                  \
     m_PgTexture.function( parameter);               \
-  if( pgActivPage == &m_PgPrimitive)                \
+  if (pgActivPage == &m_PgPrimitive)                \
     m_PgPrimitive.function( parameter);
 
 
@@ -79,7 +79,7 @@ void CInfoSheet::SoftSetActivePage( INDEX iActivePage)
   // get active view 
   CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
   SetActivePage( iActivePage);
-  if( pWorldEditorView != NULL)
+  if (pWorldEditorView != NULL)
   {
 //    pWorldEditorView->SetFocus();
   }
@@ -107,7 +107,7 @@ void CInfoSheet::DeleteAllPages()
   theApp.m_bDisableDataExchange = TRUE;
   INDEX iPagesCt, i;
   iPagesCt = GetPageCount();
-  for( i=0; i<iPagesCt; i++)
+  for (i=0; i<iPagesCt; i++)
     RemovePage( 0);
   // enable data exchange
   theApp.m_bDisableDataExchange = FALSE;
@@ -183,10 +183,10 @@ BOOL CInfoSheet::OnIdle(LONG lCount)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   
   // if we don't have view
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     // force info mode: INFO_MODE_GLOBAL
-    if( m_ModeID != INFO_MODE_GLOBAL)
+    if (m_ModeID != INFO_MODE_GLOBAL)
     {
       SetInfoModeGlobal();
       CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -196,13 +196,13 @@ BOOL CInfoSheet::OnIdle(LONG lCount)
   else
   {
     // if CSG is on
-    if( pDoc->m_iMode == CSG_MODE)
+    if (pDoc->m_iMode == CSG_MODE)
     {
       ASSERT(pDoc->m_pwoSecondLayer != NULL);
       // if CSG is done with primitive force info mode: INFO_MODE_PRIMITIVE
-      if( pDoc->m_bPrimitiveMode)
+      if (pDoc->m_bPrimitiveMode)
       {
-        if( m_ModeID != INFO_MODE_PRIMITIVE)
+        if (m_ModeID != INFO_MODE_PRIMITIVE)
         {
           // primitive mode includes position page
           SetInfoModePrimitive();
@@ -211,7 +211,7 @@ BOOL CInfoSheet::OnIdle(LONG lCount)
       // else force info mode: INFO_MODE_POSITION
       else
       {
-        if( m_ModeID != INFO_MODE_POSITION)
+        if (m_ModeID != INFO_MODE_POSITION)
         {
           // no primitive page, only position page
           SetInfoModePosition();
@@ -220,39 +220,39 @@ BOOL CInfoSheet::OnIdle(LONG lCount)
     }
     // else if we are in entity mode and only one entity is selected,
     // force info mode: INFO_MODE_POSITION
-    else if( (pDoc->m_iMode == ENTITY_MODE) && (pDoc->m_selEntitySelection.Count() == 1) )
+    else if ((pDoc->m_iMode == ENTITY_MODE) && (pDoc->m_selEntitySelection.Count() == 1) )
     {
-      if( m_ModeID != INFO_MODE_POSITION)
+      if (m_ModeID != INFO_MODE_POSITION)
       {
         SetInfoModePosition();
       }
     }
     // else if we are in polygon mode
-    else if( pDoc->m_iMode == POLYGON_MODE)
+    else if (pDoc->m_iMode == POLYGON_MODE)
     {
-      if( m_ModeID == INFO_MODE_POLYGON)
+      if (m_ModeID == INFO_MODE_POLYGON)
       {
-        if( GetActivePage() == &m_PgTexture)    _iLastActivePgInPolygonMode = 1;
-        else if( GetActivePage() == &m_PgShadow)_iLastActivePgInPolygonMode = 2;
+        if (GetActivePage() == &m_PgTexture)    _iLastActivePgInPolygonMode = 1;
+        else if (GetActivePage() == &m_PgShadow)_iLastActivePgInPolygonMode = 2;
         else                                    _iLastActivePgInPolygonMode = 3;
       }
-      if( m_ModeID != INFO_MODE_POLYGON)
+      if (m_ModeID != INFO_MODE_POLYGON)
       {
         SetInfoModePolygon();
       }
     }
     // else if we are in sector mode
-    else if( pDoc->m_iMode == SECTOR_MODE)
+    else if (pDoc->m_iMode == SECTOR_MODE)
     {
-      if( m_ModeID != INFO_MODE_SECTOR)
+      if (m_ModeID != INFO_MODE_SECTOR)
       {
         SetInfoModeSector();
       }
     }
     // else if we are in terrain mode
-    else if( pDoc->m_iMode == TERRAIN_MODE)
+    else if (pDoc->m_iMode == TERRAIN_MODE)
     {
-      if( m_ModeID != INFO_MODE_TERRAIN)
+      if (m_ModeID != INFO_MODE_TERRAIN)
       {
         SetInfoModeTerrain();
       }      
@@ -260,7 +260,7 @@ BOOL CInfoSheet::OnIdle(LONG lCount)
     // we are not in CSG mode nor in single entity mode, force info mode: INFO_MODE_GLOBAL
     else
     {
-      if( m_ModeID != INFO_MODE_GLOBAL)
+      if (m_ModeID != INFO_MODE_GLOBAL)
       {
         SetInfoModeGlobal();
       }
@@ -283,24 +283,24 @@ BOOL CInfoSheet::PreTranslateMessage(MSG* pMsg)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   BOOL bAlt = (GetKeyState( VK_MENU)&0x8000) != 0;
-	if(pMsg->message==WM_KEYDOWN)
+	if (pMsg->message==WM_KEYDOWN)
   {
     // get active document 
     BOOL bSectorNameTyping = FALSE;
     CPropertyPage *pgActivPage = GetActivePage();
-    if(pgActivPage == &m_PgSector)
+    if (pgActivPage == &m_PgSector)
     {
       bSectorNameTyping = m_PgSector.GetDlgItem( IDC_SECTOR_NAME) == CWnd::GetFocus();
     }
-    if( (pMsg->wParam==VK_SPACE) && !bSectorNameTyping)
+    if ((pMsg->wParam==VK_SPACE) && !bSectorNameTyping)
     {
       // don't translate message
       return TRUE;
     }
     // if we have valid document
-    if( (pDoc != NULL) && !bSectorNameTyping)
+    if ((pDoc != NULL) && !bSectorNameTyping)
     {
-      if( (pMsg->wParam==VK_ADD) ||
+      if ((pMsg->wParam==VK_ADD) ||
           (pMsg->wParam==VK_SUBTRACT) ||
           (pMsg->wParam=='E') ||
           (pMsg->wParam=='S') ||

@@ -47,7 +47,7 @@ void CDlgProgress::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
-  if( m_bHasCancel)
+  if (m_bHasCancel)
   {
     GetDlgItem(IDCANCEL)->ShowWindow( SW_SHOW);
     GetDlgItem(IDCANCEL)->EnableWindow( TRUE);

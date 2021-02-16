@@ -54,10 +54,10 @@ END_MESSAGE_MAP()
 void CCtrlEditBoolean::OnClicked() 
 {
   // don't do anything if document doesn't exist
-  if( theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL) return;
   // because this is three state button, we will make it working as two-state, but
   // it will still be able to be grayed
-  if( GetCheck() == 2)
+  if (GetCheck() == 2)
   {
     SetCheck( 0);
   }

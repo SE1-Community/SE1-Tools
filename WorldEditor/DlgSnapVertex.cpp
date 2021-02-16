@@ -47,7 +47,7 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
 	CDialog::DoDataExchange(pDX);
 
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     CBrushVertex *pvtx=pDoc->m_selVertexSelection.GetFirstInSelection();
     FLOAT3D vFirst=pvtx->bvx_vAbsolute;
@@ -63,7 +63,7 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     CBrushVertex *pvtx=pDoc->m_selVertexSelection.GetFirstInSelection();
     FLOAT3D vFirst=pvtx->bvx_vAbsolute;
@@ -72,17 +72,17 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX)
     // for each of the dynamic container
     {FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
     {
-      if( itvtx->bvx_vAbsolute(1)!=vFirst(1)) bValidX=FALSE;
-      if( itvtx->bvx_vAbsolute(2)!=vFirst(2)) bValidY=FALSE;
-      if( itvtx->bvx_vAbsolute(3)!=vFirst(3)) bValidZ=FALSE;
+      if (itvtx->bvx_vAbsolute(1)!=vFirst(1)) bValidX=FALSE;
+      if (itvtx->bvx_vAbsolute(2)!=vFirst(2)) bValidY=FALSE;
+      if (itvtx->bvx_vAbsolute(3)!=vFirst(3)) bValidZ=FALSE;
     }}
-    if( !bValidX) GetDlgItem(IDC_VTX_SNAP_X)->SetWindowText(L"");
-    if( !bValidY) GetDlgItem(IDC_VTX_SNAP_Y)->SetWindowText(L"");
-    if( !bValidZ) GetDlgItem(IDC_VTX_SNAP_Z)->SetWindowText(L"");
+    if (!bValidX) GetDlgItem(IDC_VTX_SNAP_X)->SetWindowText(L"");
+    if (!bValidY) GetDlgItem(IDC_VTX_SNAP_Y)->SetWindowText(L"");
+    if (!bValidZ) GetDlgItem(IDC_VTX_SNAP_Z)->SetWindowText(L"");
   }
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   { 
     CString strX, strY, strZ;
     BOOL bApplyX, bApplyY, bApplyZ;
@@ -90,11 +90,11 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX)
     GetDlgItem(IDC_VTX_SNAP_X)->GetWindowText(strX);
     GetDlgItem(IDC_VTX_SNAP_Y)->GetWindowText(strY);
     GetDlgItem(IDC_VTX_SNAP_Z)->GetWindowText(strZ);
-    if( strX!="") bApplyX=TRUE;
-    if( strY!="") bApplyY=TRUE;
-    if( strZ!="") bApplyZ=TRUE;
+    if (strX!="") bApplyX=TRUE;
+    if (strY!="") bApplyY=TRUE;
+    if (strZ!="") bApplyZ=TRUE;
 
-    if( bApplyX|bApplyY|bApplyZ)
+    if (bApplyX|bApplyY|bApplyZ)
     {
       pDoc->RememberUndo();
       pDoc->m_woWorld.TriangularizeForVertices( pDoc->m_selVertexSelection);
@@ -102,9 +102,9 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX)
       {FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
       {
         DOUBLE3D vNew=FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
-        if( bApplyX) vNew(1)=m_fX;
-        if( bApplyY) vNew(2)=m_fY;
-        if( bApplyZ) vNew(3)=m_fZ;
+        if (bApplyX) vNew(1)=m_fX;
+        if (bApplyY) vNew(2)=m_fY;
+        if (bApplyZ) vNew(3)=m_fZ;
         itvtx->SetAbsolutePosition(vNew);
       }}
       pDoc->m_woWorld.UpdateSectorsDuringVertexChange( pDoc->m_selVertexSelection);
@@ -127,9 +127,9 @@ END_MESSAGE_MAP()
 
 BOOL CDlgSnapVertex::PreTranslateMessage(MSG* pMsg) 
 {
-	if(pMsg->message==WM_KEYDOWN)
+	if (pMsg->message==WM_KEYDOWN)
   {
-    if( pMsg->wParam==VK_ESCAPE)
+    if (pMsg->wParam==VK_ESCAPE)
     {
       EndDialog( IDCANCEL);
       return TRUE;

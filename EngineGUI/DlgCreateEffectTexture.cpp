@@ -97,7 +97,7 @@ CDlgCreateEffectTexture::CDlgCreateEffectTexture(CTFileName fnInputFile/*=""*/, 
   m_pixInitialCreatedHeight = 256;
 
   BOOL bCreateNew = TRUE;
-  if( fnInputFile != "")
+  if (fnInputFile != "")
   {
     m_fnCreatedTextureName = fnInputFile;
     try
@@ -124,7 +124,7 @@ CDlgCreateEffectTexture::CDlgCreateEffectTexture(CTFileName fnInputFile/*=""*/, 
   }
   
   // if we should create a new texture
-  if( bCreateNew)
+  if (bCreateNew)
   {
     CTextureData *pBaseTexture;
     try
@@ -162,7 +162,7 @@ CDlgCreateEffectTexture::~CDlgCreateEffectTexture()
 
 void CDlgCreateEffectTexture::SetNewBaseTexture( CTFileName fnNewBase)
 {
-	if( fnNewBase != "")
+	if (fnNewBase != "")
   {
     // try to
     try
@@ -170,13 +170,13 @@ void CDlgCreateEffectTexture::SetNewBaseTexture( CTFileName fnNewBase)
       // obtain texture with the same name (if allready exists)
       CTextureData *pTD = _pTextureStock->Obtain_t( fnNewBase);
       pTD->Reload();
-      if( pTD->td_ptegEffect != NULL)
+      if (pTD->td_ptegEffect != NULL)
       {
         _pTextureStock->Release( pTD);
         ThrowF_t( "Texture '%s' is an effect texture.", (CTString&)fnNewBase);
       }
       // if there is base texture obtained, release it
-      if( m_tdCreated.td_ptdBaseTexture!= NULL) 
+      if (m_tdCreated.td_ptdBaseTexture!= NULL) 
       {
         _pTextureStock->Release( m_tdCreated.td_ptdBaseTexture);
         // reset base texture ptr
@@ -202,12 +202,12 @@ void CDlgCreateEffectTexture::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     m_strBaseTextureName = "None";
     CTFileName fnNewBase;
     // if there is base texture obtained, get name
-    if( m_tdCreated.td_ptdBaseTexture != NULL)
+    if (m_tdCreated.td_ptdBaseTexture != NULL)
     {
       PIX pixBaseTextureWidth  = m_tdCreated.td_ptdBaseTexture->GetPixWidth();
       PIX pixBaseTextureHeight = m_tdCreated.td_ptdBaseTexture->GetPixHeight();
@@ -232,7 +232,7 @@ void CDlgCreateEffectTexture::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
   }
 }
@@ -262,7 +262,7 @@ void CDlgCreateEffectTexture::OnPaint()
 	CPaintDC dc(this); // device context for painting
 
   // if texture preview windows are not yet created
-  if( !m_bPreviewWindowsCreated)
+  if (!m_bPreviewWindowsCreated)
   {
     // ---------------- Create custom window that will show how created texture will look like
     CWnd *pWndCreatedTexturePreview = GetDlgItem(IDC_TEXTURE_PREVIEW_WINDOW);
@@ -304,7 +304,7 @@ void CDlgCreateEffectTexture::InitializeSizeCombo(void)
     char strSize[ 64];
     MEX mexPotentionWidth = m_pixInitialCreatedWidth * (1 << iPotention);
     MEX mexPotentionHeight = m_pixInitialCreatedHeight * (1 << iPotention);
-    if( (mexPotentionWidth > MAX_ALLOWED_MEX_SIZE) ||
+    if ((mexPotentionWidth > MAX_ALLOWED_MEX_SIZE) ||
         (mexPotentionHeight > MAX_ALLOWED_MEX_SIZE))
         break;
     sprintf( strSize, "%.2f x %.2f", 
@@ -313,7 +313,7 @@ void CDlgCreateEffectTexture::InitializeSizeCombo(void)
     // connect item and represented mex value
     m_ctrlMexSizeCombo.SetItemData( iAddedAs, mexPotentionWidth);
     // try to select consistent size
-    if( mexPotentionWidth == m_mexInitialCreatedWidth)
+    if (mexPotentionWidth == m_mexInitialCreatedWidth)
     {
       iInitialSelectedSize = iPotention;
     }
@@ -334,7 +334,7 @@ void CDlgCreateEffectTexture::InitializeEffectTypeCombo( void)
   INDEX ctSourceEffectTypes = _ategtTextureEffectGlobalPresets[ iClass].tet_ctEffectSourceTypes;
   // initialize effect groups combo
   m_ctrlEffectTypeCombo.ResetContent();
-  for( INDEX iEffectType=0; iEffectType<ctSourceEffectTypes; iEffectType++)
+  for (INDEX iEffectType=0; iEffectType<ctSourceEffectTypes; iEffectType++)
   {
     m_ctrlEffectTypeCombo.AddString(
       CString(patestSourceEffectTypes[ iEffectType].test_strName));
@@ -346,16 +346,16 @@ void CDlgCreateEffectTexture::SelectPixSizeCombo(void)
 {
   m_ctrlPixWidthCombo.SetCurSel( 0);
   m_ctrlPixHeightCombo.SetCurSel( 0);
-  for( INDEX iWidthItem=0; iWidthItem<m_ctrlPixWidthCombo.GetCount(); iWidthItem++)
+  for (INDEX iWidthItem=0; iWidthItem<m_ctrlPixWidthCombo.GetCount(); iWidthItem++)
   {
-    if( (1<<iWidthItem) == m_pixInitialCreatedWidth)
+    if ((1<<iWidthItem) == m_pixInitialCreatedWidth)
     {
       m_ctrlPixWidthCombo.SetCurSel( iWidthItem);
     }
   }
-  for( INDEX iHeightItem=0; iHeightItem<m_ctrlPixWidthCombo.GetCount(); iHeightItem++)
+  for (INDEX iHeightItem=0; iHeightItem<m_ctrlPixWidthCombo.GetCount(); iHeightItem++)
   {
-    if( (1<<iHeightItem) == m_pixInitialCreatedHeight)
+    if ((1<<iHeightItem) == m_pixInitialCreatedHeight)
     {
       m_ctrlPixHeightCombo.SetCurSel( iHeightItem);
     }
@@ -397,7 +397,7 @@ BOOL CDlgCreateEffectTexture::OnInitDialog()
   
   // initialize effect groups combo
   m_ctrlEffectClassCombo.ResetContent();
-  for( INDEX iEffectClass=0; iEffectClass<_ctTextureEffectGlobalPresets; iEffectClass++)
+  for (INDEX iEffectClass=0; iEffectClass<_ctTextureEffectGlobalPresets; iEffectClass++)
   {
     m_ctrlEffectClassCombo.AddString(
       CString(_ategtTextureEffectGlobalPresets[ iEffectClass].tegt_strName));
@@ -418,7 +418,7 @@ void CDlgCreateEffectTexture::OnBrowseBase()
 {
   CTFileName fnNewBase;
   // if there is base texture obtained, release it
-  if( m_tdCreated.td_ptdBaseTexture != NULL)
+  if (m_tdCreated.td_ptdBaseTexture != NULL)
   {
     fnNewBase = _EngineGUI.BrowseTexture( m_tdCreated.td_ptdBaseTexture->GetName(),
                                       KEY_NAME_BASE_TEXTURE_DIR, "Browse base texture");
@@ -477,7 +477,7 @@ void CDlgCreateEffectTexture::OnCreateAs()
   CTFileName fnNewTexName = _EngineGUI.BrowseTexture( CTString(CStringA(m_strCreatedTextureName)),
     KEY_NAME_CREATE_TEXTURE_DIR, "Create texture as", FALSE);
   // if picked valid name
-  if( fnNewTexName != "")
+  if (fnNewTexName != "")
   {
     // save as final texture
     try
@@ -499,7 +499,7 @@ void CDlgCreateEffectTexture::OnCreateAs()
 
 void CDlgCreateEffectTexture::OnCreate() 
 {
-  if( m_strCreatedTextureName == "Unnamed")
+  if (m_strCreatedTextureName == "Unnamed")
   {
     OnCreateAs();
   }
@@ -517,7 +517,7 @@ void CDlgCreateEffectTexture::OnCreate()
       return;
     }
   }
-  if( m_strCreatedTextureName != "Unnamed")
+  if (m_strCreatedTextureName != "Unnamed")
   {
   	EndDialog( IDOK);
   }

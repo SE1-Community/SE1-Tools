@@ -58,7 +58,7 @@ CDlgPgTexture::~CDlgPgTexture()
 
 void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   CPropertyPage::DoDataExchange(pDX);
 
@@ -67,25 +67,25 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
 
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
 
   // polygon mode must be on
-  if( pDoc->GetEditingMode() != POLYGON_MODE)  return;
+  if (pDoc->GetEditingMode() != POLYGON_MODE)  return;
 
   // if dialog is receiving data and control windows are valid
-  if( (pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_comboScroll.m_hWnd) )
+  if ((pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_comboScroll.m_hWnd) )
   {
 	  m_comboScroll.ResetContent();
-    for(INDEX iScroll=0; iScroll<256; iScroll++)
+    for (INDEX iScroll=0; iScroll<256; iScroll++)
     {
       CTString strScrollName = pDoc->m_woWorld.wo_attTextureTransformations[iScroll].tt_strName;
-      if( strScrollName != CTString("") ) m_comboScroll.AddString( CString(strScrollName));
+      if (strScrollName != CTString("") ) m_comboScroll.AddString( CString(strScrollName));
     }
 	  m_comboBlend.ResetContent();
-    for(INDEX iBlend=0; iBlend<256; iBlend++)
+    for (INDEX iBlend=0; iBlend<256; iBlend++)
     {
       CTString strBlendName = pDoc->m_woWorld.wo_atbTextureBlendings[iBlend].tb_strName;
-      if( strBlendName != CTString("") ) m_comboBlend.AddString( CString(strBlendName));
+      if (strBlendName != CTString("") ) m_comboBlend.AddString( CString(strBlendName));
     }
 
     m_radioTexture = pDoc->m_iTexture;
@@ -122,7 +122,7 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
     GetDlgItem( IDC_TEXTURE_2)->EnableWindow( TRUE);
     GetDlgItem( IDC_TEXTURE_3)->EnableWindow( TRUE);
 
-    if( !bSelectionExists)
+    if (!bSelectionExists)
     {
       m_strTextureFile = NO_SELECTION;
       m_strTextureDim = "";
@@ -148,7 +148,7 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
         CMappingDefinitionUI mdui;
         bpo.bpo_abptTextures[pDoc->m_iTexture].bpt_mdMapping.ToUI( mdui);
         CTextureData *ptdTexture = (CTextureData *) bpo.bpo_abptTextures[pDoc->m_iTexture].bpt_toTexture.GetData();
-        if( ptdTexture == NULL)
+        if (ptdTexture == NULL)
         {
           GetDlgItem( IDC_PREVIEW_FRAME)->EnableWindow( FALSE);
           m_strTextureFile = NO_TEXTURE;
@@ -157,7 +157,7 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
         else
         {
           CTString strTexture = ptdTexture->GetName();
-          if( ctPolygons == 0)
+          if (ctPolygons == 0)
           {
         	  m_ctrlCombineColor.SetColor( bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor);
             m_strTextureFile = strTexture;
@@ -165,11 +165,11 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
           }
           else
           {
-        	  if( m_ctrlCombineColor.GetColor() != bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor)
+        	  if (m_ctrlCombineColor.GetColor() != bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor)
             {
               m_ctrlCombineColor.SetMixedColor();
             }
-            if( m_strTextureFile != CString( strTexture))
+            if (m_strTextureFile != CString( strTexture))
             {
               GetDlgItem( IDC_PREVIEW_FRAME)->EnableWindow( FALSE);
               m_strTextureFile = DIFFERENT_TEXTURE;
@@ -177,7 +177,7 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
             }
           }
         }
-        if( ctPolygons == 0)
+        if (ctPolygons == 0)
         {
           m_fOffsetU = mdui.mdui_fUOffset;    m_bOffsetU = TRUE;
           m_fOffsetV = mdui.mdui_fVOffset;    m_bOffsetV = TRUE;
@@ -191,33 +191,33 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
         }
         else
         {
-          if( m_fOffsetU != mdui.mdui_fUOffset)    m_bOffsetU = FALSE;
-          if( m_fOffsetV != mdui.mdui_fVOffset)    m_bOffsetV = FALSE;
-          if( m_fRotationU != mdui.mdui_aURotation) m_bRotationU = FALSE;
-          if( m_fRotationV != mdui.mdui_aVRotation) m_bRotationV = FALSE;
-          if( m_fStretchU != mdui.mdui_fUStretch)  m_bStretchU = FALSE;
-          if( m_fStretchV != mdui.mdui_fVStretch)  m_bStretchV = FALSE;
+          if (m_fOffsetU != mdui.mdui_fUOffset)    m_bOffsetU = FALSE;
+          if (m_fOffsetV != mdui.mdui_fVOffset)    m_bOffsetV = FALSE;
+          if (m_fRotationU != mdui.mdui_aURotation) m_bRotationU = FALSE;
+          if (m_fRotationV != mdui.mdui_aVRotation) m_bRotationV = FALSE;
+          if (m_fStretchU != mdui.mdui_fUStretch)  m_bStretchU = FALSE;
+          if (m_fStretchV != mdui.mdui_fVStretch)  m_bStretchV = FALSE;
 
-          if( bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubScroll != ubFirstScroll) bSameScroll = FALSE;
-          if( bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubBlend != ubFirstBlend) bSameBlend = FALSE;
+          if (bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubScroll != ubFirstScroll) bSameScroll = FALSE;
+          if (bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubBlend != ubFirstBlend) bSameBlend = FALSE;
         }
         ctPolygons++;
       }
 
-      if( bSameScroll) m_comboScroll.SetCurSel( ubFirstScroll); else m_comboScroll.SetCurSel(-1);
-      if( bSameBlend) m_comboBlend.SetCurSel( ubFirstBlend); else m_comboBlend.SetCurSel(-1);
+      if (bSameScroll) m_comboScroll.SetCurSel( ubFirstScroll); else m_comboScroll.SetCurSel(-1);
+      if (bSameBlend) m_comboBlend.SetCurSel( ubFirstBlend); else m_comboBlend.SetCurSel(-1);
       // set states of all flags using on and off masks
-      if((ubFlagsOn & BPTF_CLAMPU) && !(ubFlagsOff & BPTF_CLAMPU)) m_checkClampU.SetCheck( 1);
-      else if(!(ubFlagsOn & BPTF_CLAMPU) && (ubFlagsOff & BPTF_CLAMPU)) m_checkClampU.SetCheck( 0);
+      if ((ubFlagsOn & BPTF_CLAMPU) && !(ubFlagsOff & BPTF_CLAMPU)) m_checkClampU.SetCheck( 1);
+      else if (!(ubFlagsOn & BPTF_CLAMPU) && (ubFlagsOff & BPTF_CLAMPU)) m_checkClampU.SetCheck( 0);
       else m_checkClampU.SetCheck( 2);
-      if((ubFlagsOn & BPTF_CLAMPV) && !(ubFlagsOff & BPTF_CLAMPV)) m_checkClampV.SetCheck( 1);
-      else if(!(ubFlagsOn & BPTF_CLAMPV) && (ubFlagsOff & BPTF_CLAMPV)) m_checkClampV.SetCheck( 0);
+      if ((ubFlagsOn & BPTF_CLAMPV) && !(ubFlagsOff & BPTF_CLAMPV)) m_checkClampV.SetCheck( 1);
+      else if (!(ubFlagsOn & BPTF_CLAMPV) && (ubFlagsOff & BPTF_CLAMPV)) m_checkClampV.SetCheck( 0);
       else m_checkClampV.SetCheck( 2);
-      if((ubFlagsOn & BPTF_REFLECTION) && !(ubFlagsOff & BPTF_REFLECTION)) m_checkReflective.SetCheck( 1);
-      else if(!(ubFlagsOn & BPTF_REFLECTION) && (ubFlagsOff & BPTF_REFLECTION)) m_checkReflective.SetCheck( 0);
+      if ((ubFlagsOn & BPTF_REFLECTION) && !(ubFlagsOff & BPTF_REFLECTION)) m_checkReflective.SetCheck( 1);
+      else if (!(ubFlagsOn & BPTF_REFLECTION) && (ubFlagsOff & BPTF_REFLECTION)) m_checkReflective.SetCheck( 0);
       else m_checkReflective.SetCheck( 2);
-      if((ubFlagsOn & BPTF_AFTERSHADOW) && !(ubFlagsOff & BPTF_AFTERSHADOW)) m_checkAfterShadow.SetCheck( 1);
-      else if(!(ubFlagsOn & BPTF_AFTERSHADOW) && (ubFlagsOff & BPTF_AFTERSHADOW)) m_checkAfterShadow.SetCheck( 0);
+      if ((ubFlagsOn & BPTF_AFTERSHADOW) && !(ubFlagsOff & BPTF_AFTERSHADOW)) m_checkAfterShadow.SetCheck( 1);
+      else if (!(ubFlagsOn & BPTF_AFTERSHADOW) && (ubFlagsOff & BPTF_AFTERSHADOW)) m_checkAfterShadow.SetCheck( 0);
       else m_checkAfterShadow.SetCheck( 2);
     }
   }
@@ -243,14 +243,14 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
   DDX_SkyFloat(pDX, IDC_ROTATION_V, m_fRotationV, m_bRotationV);
 
   // if dialog is giving data and control windows are valid
-  if( (pDX->m_bSaveAndValidate != FALSE) && IsWindow( m_comboScroll.m_hWnd) )
+  if ((pDX->m_bSaveAndValidate != FALSE) && IsWindow( m_comboScroll.m_hWnd) )
   {
     m_udTextureData.MarkUpdated();
     // paste new active texture over polygon selection
-    if( (m_strTextureFile != DIFFERENT_TEXTURE) &&
+    if ((m_strTextureFile != DIFFERENT_TEXTURE) &&
         (m_strTextureFile != NO_SELECTION) )
     {
-      if( m_strTextureFile == NO_TEXTURE)
+      if (m_strTextureFile == NO_TEXTURE)
       {
         pDoc->PasteTextureOverSelection_t( CTString(""));
       }
@@ -262,14 +262,14 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
     // obtain masks for setting and clearing texture flags
     ULONG ulBitsToClear = MAX_ULONG;
     ULONG ulBitsToSet = 0;
-    if( m_checkClampU.GetCheck() == 0) ulBitsToClear &= ~BPTF_CLAMPU;
-    if( m_checkClampU.GetCheck() == 1) ulBitsToSet   |=  BPTF_CLAMPU;
-    if( m_checkClampV.GetCheck() == 0) ulBitsToClear &= ~BPTF_CLAMPV;
-    if( m_checkClampV.GetCheck() == 1) ulBitsToSet   |=  BPTF_CLAMPV;
-    if( m_checkReflective.GetCheck()  == 0) ulBitsToClear &= ~BPTF_REFLECTION;
-    if( m_checkReflective.GetCheck()  == 1) ulBitsToSet   |=  BPTF_REFLECTION;
-    if( m_checkAfterShadow.GetCheck() == 0) ulBitsToClear &= ~BPTF_AFTERSHADOW;
-    if( m_checkAfterShadow.GetCheck() == 1) ulBitsToSet   |=  BPTF_AFTERSHADOW;
+    if (m_checkClampU.GetCheck() == 0) ulBitsToClear &= ~BPTF_CLAMPU;
+    if (m_checkClampU.GetCheck() == 1) ulBitsToSet   |=  BPTF_CLAMPU;
+    if (m_checkClampV.GetCheck() == 0) ulBitsToClear &= ~BPTF_CLAMPV;
+    if (m_checkClampV.GetCheck() == 1) ulBitsToSet   |=  BPTF_CLAMPV;
+    if (m_checkReflective.GetCheck()  == 0) ulBitsToClear &= ~BPTF_REFLECTION;
+    if (m_checkReflective.GetCheck()  == 1) ulBitsToSet   |=  BPTF_REFLECTION;
+    if (m_checkAfterShadow.GetCheck() == 0) ulBitsToClear &= ~BPTF_AFTERSHADOW;
+    if (m_checkAfterShadow.GetCheck() == 1) ulBitsToSet   |=  BPTF_AFTERSHADOW;
     // for each of the selected polygons
     FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo)
     {
@@ -279,20 +279,20 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
 
       CMappingDefinitionUI mdui;
       bpo.bpo_abptTextures[pDoc->m_iTexture].bpt_mdMapping.ToUI( mdui);
-      if( m_bOffsetU) mdui.mdui_fUOffset = m_fOffsetU;
-      if( m_bOffsetV) mdui.mdui_fVOffset = m_fOffsetV;
-      if( m_bRotationU) mdui.mdui_aURotation = m_fRotationU;
-      if( m_bRotationV) mdui.mdui_aVRotation = m_fRotationV;
-      if( m_bStretchU) mdui.mdui_fUStretch = m_fStretchU;
-      if( m_bStretchV) mdui.mdui_fVStretch = m_fStretchV;
+      if (m_bOffsetU) mdui.mdui_fUOffset = m_fOffsetU;
+      if (m_bOffsetV) mdui.mdui_fVOffset = m_fOffsetV;
+      if (m_bRotationU) mdui.mdui_aURotation = m_fRotationU;
+      if (m_bRotationV) mdui.mdui_aVRotation = m_fRotationV;
+      if (m_bStretchU) mdui.mdui_fUStretch = m_fStretchU;
+      if (m_bStretchV) mdui.mdui_fVStretch = m_fStretchV;
       bpo.bpo_abptTextures[pDoc->m_iTexture].bpt_mdMapping.FromUI( mdui);
 
       INDEX iScroll = m_comboScroll.GetCurSel();
-      if( iScroll != -1) bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubScroll = (UBYTE)iScroll;
+      if (iScroll != -1) bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubScroll = (UBYTE)iScroll;
       INDEX iBlend = m_comboBlend.GetCurSel();
-      if( iBlend != -1)  bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubBlend = (UBYTE)iBlend;
+      if (iBlend != -1)  bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubBlend = (UBYTE)iBlend;
 
-      if( m_ctrlCombineColor.IsColorValid())
+      if (m_ctrlCombineColor.IsColorValid())
       {
         bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor = m_ctrlCombineColor.GetColor();
       }
@@ -305,7 +305,7 @@ void CDlgPgTexture::DoDataExchange(CDataExchange* pDX)
   CString strWindowText;
   GetDlgItem( IDC_TEXTURE_FILE_T)->GetWindowText( strWindowText);
   m_wndViewTexture.m_strTexture = CStringA(strWindowText);
-  if( IsWindow( m_wndViewTexture.m_hWnd))
+  if (IsWindow( m_wndViewTexture.m_hWnd))
   {
     m_wndViewTexture.Invalidate( FALSE);
   }
@@ -348,7 +348,7 @@ BOOL CDlgPgTexture::OnInitDialog()
                           CRect( pixLeft, pixTop, pixLeft+64, pixTop+64),
                           this, IDW_SHOW_TEXTURE);
   DragAcceptFiles();
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     m_radioTexture = 0;
   }
@@ -362,10 +362,10 @@ BOOL CDlgPgTexture::OnInitDialog()
 BOOL CDlgPgTexture::OnIdle(LONG lCount)
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( (pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
+  if ((pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
 
   // if polygon selection have been changed update dialog
-  if( !pDoc->m_chSelections.IsUpToDate( m_udTextureData))
+  if (!pDoc->m_chSelections.IsUpToDate( m_udTextureData))
   {
     UpdateData( FALSE);
   }
@@ -376,7 +376,7 @@ void CDlgPgTexture::OnBrowseTexture()
 {
   char achrDirectory[256], achrMessage[256];
 
-  if( &CDlgPgTexture::OnRadioTexture == 0)
+  if (&CDlgPgTexture::OnRadioTexture == 0)
   {
     strcpy( achrDirectory, "Hyper texture directory");
     strcpy( achrMessage, "Browse hyper texture");
@@ -388,7 +388,7 @@ void CDlgPgTexture::OnBrowseTexture()
   }
 
   CTFileName fnTexture = _EngineGUI.BrowseTexture( CTString(""), achrDirectory, achrMessage);
-  if( fnTexture != "")
+  if (fnTexture != "")
   {
     GetDlgItem( IDC_TEXTURE_FILE_T)->SetWindowText( CString(fnTexture));
   }
@@ -406,7 +406,7 @@ void CDlgPgTexture::OnRemoveTexture()
 void CDlgPgTexture::OnRadioTexture()
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   pDoc->m_iTexture = 0;
 	UpdateData( FALSE);
 }
@@ -414,7 +414,7 @@ void CDlgPgTexture::OnRadioTexture()
 void CDlgPgTexture::OnTexture2()
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   pDoc->m_iTexture = 1;
 	UpdateData( FALSE);
 }
@@ -422,7 +422,7 @@ void CDlgPgTexture::OnTexture2()
 void CDlgPgTexture::OnTexture3()
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   pDoc->m_iTexture = 2;
 	UpdateData( FALSE);
 }
@@ -439,14 +439,14 @@ void CDlgPgTexture::OnSelchangeBlendType()
 
 void CDlgPgTexture::OnDropFiles(HDROP hDropInfo)
 {
-  if( m_strTextureFile == NO_SELECTION)
+  if (m_strTextureFile == NO_SELECTION)
   {
     return;
   }
 
   INDEX iNoOfFiles = DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0);
 
-  if( iNoOfFiles != 1)
+  if (iNoOfFiles != 1)
   {
     AfxMessageBox( L"You can drop only one file at a time.");
     return;
@@ -459,7 +459,7 @@ void CDlgPgTexture::OnDropFiles(HDROP hDropInfo)
   // create file name from buffer
   CTFileName fnDropped = CTString(chrFile);
   // if it is not texture, report error
-  if( fnDropped.FileExt() != ".tex" )
+  if (fnDropped.FileExt() != ".tex" )
   {
     AfxMessageBox( L"You can only drop textures here.");
     return;
@@ -479,7 +479,7 @@ void CDlgPgTexture::OnDropFiles(HDROP hDropInfo)
 
 BOOL CDlgPgTexture::PreTranslateMessage(MSG* pMsg)
 {
-	if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     UpdateData( TRUE);
     UpdateData( FALSE);

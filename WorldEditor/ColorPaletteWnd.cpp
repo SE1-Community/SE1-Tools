@@ -56,7 +56,7 @@ CColorPaletteWnd::CColorPaletteWnd()
 
 CColorPaletteWnd::~CColorPaletteWnd()
 {
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;
@@ -106,7 +106,7 @@ void CColorPaletteWnd::OnPaint()
   }
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
     CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
     ASSERT( pWorldEditorView != NULL);
@@ -115,7 +115,7 @@ void CColorPaletteWnd::OnPaint()
     // erase z-buffer
     m_pDrawPort->FillZBuffer(ZBUF_BACK);
     // for all colors
-    for( INDEX i=0; i<32; i++)
+    for (INDEX i=0; i<32; i++)
     {
       // get current color's box in pixels inside window
       PIXaabbox2D boxColor = GetColorBBox( i);
@@ -124,7 +124,7 @@ void CColorPaletteWnd::OnPaint()
                          boxColor.Max()(1)-boxColor.Min()(1)-2, boxColor.Max()(2)-boxColor.Min()(2)-2,
                          acol_ColorizePallete[ i] | CT_OPAQUE);
       // if we are drawing selected color
-      if( i == m_iSelectedColor)
+      if (i == m_iSelectedColor)
       {
         m_pDrawPort->DrawLine( boxColor.Min()(1), boxColor.Min()(2),
                                boxColor.Min()(1), boxColor.Max()(2), C_WHITE|CT_OPAQUE, _POINT_);
@@ -153,16 +153,16 @@ void CColorPaletteWnd::OnLButtonDown(UINT nFlags, CPoint point)
   PIXaabbox2D boxPoint( PIX2D( point.x, point.y), PIX2D(point.x, point.y) );
 
   // for all colors
-  for( INDEX iSelectedColor=0; iSelectedColor<32; iSelectedColor++)
+  for (INDEX iSelectedColor=0; iSelectedColor<32; iSelectedColor++)
   {
-    if( (GetColorBBox( iSelectedColor) & boxPoint) == boxPoint)
+    if ((GetColorBBox( iSelectedColor) & boxPoint) == boxPoint)
     {
       // obtain document
       CWorldEditorDoc *pDoc = theApp.GetDocument();
       // must not be null
       ASSERT( pDoc != NULL);
       // if polygon mode
-      if( pDoc->m_iMode == POLYGON_MODE)
+      if (pDoc->m_iMode == POLYGON_MODE)
       {
         // polygon selection must contain selected polygons
         ASSERT(pDoc->m_selPolygonSelection.Count() != 0);
@@ -173,7 +173,7 @@ void CColorPaletteWnd::OnLButtonDown(UINT nFlags, CPoint point)
           itbpo->bpo_colColor = acol_ColorizePallete[ iSelectedColor];
         }
       }
-      else if( pDoc->m_iMode == SECTOR_MODE)
+      else if (pDoc->m_iMode == SECTOR_MODE)
       {
         // sector selection must contain selected sectors
         ASSERT(pDoc->m_selSectorSelection.Count() != 0);
@@ -184,7 +184,7 @@ void CColorPaletteWnd::OnLButtonDown(UINT nFlags, CPoint point)
           itbsc->bsc_colColor = acol_ColorizePallete[ iSelectedColor];
         }
       }
-      if( _pcolColorToSet != NULL)
+      if (_pcolColorToSet != NULL)
       {
         // fill result
         *_pcolColorToSet = acol_ColorizePallete[ iSelectedColor];
@@ -205,7 +205,7 @@ void CColorPaletteWnd::OnLButtonDown(UINT nFlags, CPoint point)
 static BOOL _bCanBeDestroyed = TRUE;
 void CColorPaletteWnd::OnKillFocus(CWnd* pNewWnd) 
 {
-  if( !_bCanBeDestroyed) return;
+  if (!_bCanBeDestroyed) return;
   // destroy color palette
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   pMainFrame->m_pColorPalette = NULL;
@@ -217,13 +217,13 @@ void CColorPaletteWnd::OnRButtonDown(UINT nFlags, CPoint point)
   PIXaabbox2D boxPoint( PIX2D( point.x, point.y), PIX2D(point.x, point.y) );
 
   // for all colors
-  for( INDEX iSelectedColor=0; iSelectedColor<32; iSelectedColor++)
+  for (INDEX iSelectedColor=0; iSelectedColor<32; iSelectedColor++)
   {
-    if( (GetColorBBox( iSelectedColor) & boxPoint) == boxPoint)
+    if ((GetColorBBox( iSelectedColor) & boxPoint) == boxPoint)
     {
       COLORREF TmpColor = CLRF_CLR( acol_ColorizePallete[ iSelectedColor]);
       _bCanBeDestroyed = FALSE;
-      if( MyChooseColor( TmpColor, *GetParent()))
+      if (MyChooseColor( TmpColor, *GetParent()))
       {
         // remember result
         acol_ColorizePallete[ iSelectedColor] = CLR_CLRF( TmpColor);

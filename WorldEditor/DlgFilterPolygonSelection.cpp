@@ -36,9 +36,9 @@ static char THIS_FILE[] = __FILE__;
   ((CButton *)GetDlgItem(ctrl))->SetCheck(2);
 
 #define ADD_TO_FLAG_MASK( varmask, varvalue, ctrl, flag)\
-  if(((CButton *)GetDlgItem(ctrl))->GetCheck()!=2) {\
+  if (((CButton *)GetDlgItem(ctrl))->GetCheck()!=2) {\
     varmask|=flag;\
-  if(((CButton *)GetDlgItem(ctrl))->GetCheck()==1) varvalue|=flag;}
+  if (((CButton *)GetDlgItem(ctrl))->GetCheck()==1) varvalue|=flag;}
 
 CDlgFilterPolygonSelection::CDlgFilterPolygonSelection(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgFilterPolygonSelection::IDD, pParent)
@@ -74,7 +74,7 @@ void CDlgFilterPolygonSelection::DoDataExchange(CDataExchange* pDX)
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     SET_GRAYED_CONTROL( IDC_IS_PORTAL2);
     SET_GRAYED_CONTROL( IDC_IS_OCCLUDER2);
@@ -122,7 +122,7 @@ void CDlgFilterPolygonSelection::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     
     ULONG ulMask = 0;
@@ -174,23 +174,23 @@ void CDlgFilterPolygonSelection::DoDataExchange(CDataExchange* pDX)
           ((iMemoryItem != CB_ERR) && ((1<<(16-iMemoryItem))*BYTES_PER_TEXEL != bpo.bpo_smShadowMap.GetShadowSize())) ||
           (m_ctrlMultiplyColor.IsColorValid() &&
           (m_ctrlMultiplyColor.GetColor()!=bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor));
-      if( !bDeselect)
+      if (!bDeselect)
       {
         FLOATplane3D &pl=bpo.bpo_pbplPlane->bpl_plAbsolute;
         ANGLE3D ang;
         DirectionVectorToAngles(pl, ang);
-        if(ang(1)<m_fMinH || ang(1)>m_fMaxH) bDeselect=TRUE;
-        if(ang(2)<m_fMinP || ang(2)>m_fMaxP) bDeselect=TRUE;
+        if (ang(1)<m_fMinH || ang(1)>m_fMaxH) bDeselect=TRUE;
+        if (ang(2)<m_fMinP || ang(2)>m_fMaxP) bDeselect=TRUE;
 
         FLOAT3D vMin = bpo.bpo_boxBoundingBox.Min();
         FLOAT3D vMax = bpo.bpo_boxBoundingBox.Max();
-        if(vMin(1)>m_fMaxX || vMax(1)<m_fMinX) bDeselect=TRUE;
-        if(vMin(2)>m_fMaxY || vMax(2)<m_fMinY) bDeselect=TRUE;
-        if(vMin(3)>m_fMaxZ || vMax(3)<m_fMinZ) bDeselect=TRUE;
+        if (vMin(1)>m_fMaxX || vMax(1)<m_fMinX) bDeselect=TRUE;
+        if (vMin(2)>m_fMaxY || vMax(2)<m_fMinY) bDeselect=TRUE;
+        if (vMin(3)>m_fMaxZ || vMax(3)<m_fMinZ) bDeselect=TRUE;
       }
       
       // deselect if is not acording to filter
-      if( bDeselect)
+      if (bDeselect)
       {
         pDoc->m_selPolygonSelection.Deselect( *itbpo);
       }
@@ -258,10 +258,10 @@ BOOL CDlgFilterPolygonSelection::OnInitDialog()
   CTString strFrictionName;
   m_ctrFilterPolygonSurface.ResetContent();
   // add all available surfaces
-  for(INDEX iSurface=0; iSurface<MAX_UBYTE; iSurface++)
+  for (INDEX iSurface=0; iSurface<MAX_UBYTE; iSurface++)
   {
     strFrictionName = pDoc->m_woWorld.wo_astSurfaceTypes[iSurface].st_strName;
-    if( strFrictionName == "") break;
+    if (strFrictionName == "") break;
     INDEX iAddedAs = m_ctrFilterPolygonSurface.AddString( CString(strFrictionName));
   }
 

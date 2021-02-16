@@ -54,7 +54,7 @@ CDlgTerrainProperties::CDlgTerrainProperties(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
   
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
   _iShadowMapShift=ptrTerrain->tr_iShadowMapSizeAspect;
   _iShadingMapShift=ptrTerrain->tr_iShadingMapSizeAspect;
@@ -67,10 +67,10 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
   CTString strTemp;
 
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE && IsWindow(m_ctrlShadowMapSlider))
+  if (pDX->m_bSaveAndValidate == FALSE && IsWindow(m_ctrlShadowMapSlider))
   {
     m_fTerrainWidth =ptrTerrain->tr_vTerrainSize(1);
     m_fTerrainHeight=ptrTerrain->tr_vTerrainSize(2);
@@ -157,7 +157,7 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     BOOL bUpdateTerrain=FALSE;
 
@@ -166,7 +166,7 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     PIX pixW=m_ctrlHeightMapWidth.GetItemData( iItemW);
     INDEX iItemH=m_ctrlHeightMapHeight.GetCurSel();
     PIX pixH=m_ctrlHeightMapHeight.GetItemData( iItemH);
-    if( ptrTerrain->tr_pixHeightMapWidth != pixW ||
+    if (ptrTerrain->tr_pixHeightMapWidth != pixW ||
         ptrTerrain->tr_pixHeightMapHeight!= pixH )
     {
       ptrTerrain->ReAllocateHeightMap(pixW, pixH);
@@ -174,7 +174,7 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     }
 
     // handle terrain size change
-    if( ptrTerrain->tr_vTerrainSize(1)!=m_fTerrainWidth ||
+    if (ptrTerrain->tr_vTerrainSize(1)!=m_fTerrainWidth ||
         ptrTerrain->tr_vTerrainSize(2)!=m_fTerrainHeight||
         ptrTerrain->tr_vTerrainSize(3)!=m_fTerrainLength)
     {
@@ -185,7 +185,7 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     // handle tile pretender texture size change
     INDEX iTlp=m_ctrlTilePretender.GetCurSel();
     PIX pixTlpW=m_ctrlTilePretender.GetItemData( iTlp);
-    if( ptrTerrain->tr_pixFirstMipTopMapWidth != pixTlpW)
+    if (ptrTerrain->tr_pixFirstMipTopMapWidth != pixTlpW)
     {
       ptrTerrain->SetTileTopMapSize(pixTlpW);
       bUpdateTerrain=TRUE;
@@ -194,14 +194,14 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     // handle quads per tile change
     INDEX iQuadItem=m_ctrlQuadsPerTile.GetCurSel();
     INDEX ctQuads=m_ctrlQuadsPerTile.GetItemData( iQuadItem);
-    if(ctQuads!=ptrTerrain->tr_ctQuadsInTileRow)
+    if (ctQuads!=ptrTerrain->tr_ctQuadsInTileRow)
     {
       ptrTerrain->SetQuadsPerTileRow(ctQuads);
       bUpdateTerrain=TRUE;
     }
     
     // handle LOD distance change
-    if( m_fLODSwitch!=ptrTerrain->tr_fDistFactor)
+    if (m_fLODSwitch!=ptrTerrain->tr_fDistFactor)
     {
       ptrTerrain->SetLodDistanceFactor(m_fLODSwitch);
     }
@@ -209,14 +209,14 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     // handle global pretender texture change
     INDEX iGlobalPretender=m_ctrlGlobalPretenderTexture.GetCurSel();
     INDEX pixSize=m_ctrlGlobalPretenderTexture.GetItemData(iGlobalPretender);
-    if(pixSize!=ptrTerrain->tr_pixTopMapWidth)
+    if (pixSize!=ptrTerrain->tr_pixTopMapWidth)
     {
       ptrTerrain->SetGlobalTopMapSize(pixSize);
       bUpdateTerrain=TRUE;
     }
 
     // handle shadow changes
-    if( (m_ctrlShadowMapSlider.GetPos()!=_iShadowMapShift) ||
+    if ((m_ctrlShadowMapSlider.GetPos()!=_iShadowMapShift) ||
         (m_ctrlShadingMapSlider.GetPos()!=10-_iShadingMapShift) )
     {
       _iShadowMapShift=m_ctrlShadowMapSlider.GetPos();
@@ -226,7 +226,7 @@ void CDlgTerrainProperties::DoDataExchange(CDataExchange* pDX)
     }
 
     // update terrain
-    if(bUpdateTerrain)
+    if (bUpdateTerrain)
     {
       ptrTerrain->tr_penEntity->TerrainChangeNotify();
       GenerateLayerDistribution(-1);
@@ -255,18 +255,18 @@ void CDlgTerrainProperties::InitComboBoxes(void)
 {
   INDEX iToSelect, iWidth;
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
   // prepare quads per tile combo box
   m_ctrlQuadsPerTile.ResetContent();
   iToSelect=3;
-  for(INDEX iQuads=4; iQuads<=2048; iQuads*=2)
+  for (INDEX iQuads=4; iQuads<=2048; iQuads*=2)
   {
     CTString strItem;
     strItem.PrintF("%d x %d", iQuads, iQuads);
 	  INDEX iAddedAs=m_ctrlQuadsPerTile.AddString(CString(strItem));
 	  m_ctrlQuadsPerTile.SetItemData(iAddedAs,iQuads);
-    if(ptrTerrain->tr_ctQuadsInTileRow==iQuads)
+    if (ptrTerrain->tr_ctQuadsInTileRow==iQuads)
     {
       iToSelect=iAddedAs;
     }
@@ -278,18 +278,18 @@ void CDlgTerrainProperties::InitComboBoxes(void)
 	m_ctrlHeightMapHeight.ResetContent();
   INDEX iToSelectW=3;
   INDEX iToSelectH=3;
-  for(iWidth=32; iWidth<=2048; iWidth*=2)
+  for (iWidth=32; iWidth<=2048; iWidth*=2)
   {
     CTString strItem;
     strItem.PrintF("%d", iWidth+1);
 	  // width
     INDEX iW=m_ctrlHeightMapWidth.AddString(CString(strItem));
     m_ctrlHeightMapWidth.SetItemData(iW,iWidth+1);
-    if(ptrTerrain->tr_pixHeightMapWidth==iWidth+1)    iToSelectW=iW;
+    if (ptrTerrain->tr_pixHeightMapWidth==iWidth+1)    iToSelectW=iW;
 	  // height
     INDEX iH=m_ctrlHeightMapHeight.AddString(CString(strItem));
     m_ctrlHeightMapHeight.SetItemData(iH,iWidth+1);
-    if(ptrTerrain->tr_pixHeightMapHeight==iWidth+1)    iToSelectH=iH;
+    if (ptrTerrain->tr_pixHeightMapHeight==iWidth+1)    iToSelectH=iH;
   }
   m_ctrlHeightMapWidth.SetCurSel( iToSelectW);
   m_ctrlHeightMapHeight.SetCurSel(iToSelectH);
@@ -302,18 +302,18 @@ void CDlgTerrainProperties::InitComboBoxes(void)
 void CDlgTerrainProperties::PrepareTilePretenderCombo(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
   m_ctrlTilePretender.ResetContent();
   INDEX iToSelect=6;
-  for(INDEX iWidth=4; iWidth<=2048; iWidth*=2)
+  for (INDEX iWidth=4; iWidth<=2048; iWidth*=2)
   {
     CTString strItem;
     strItem.PrintF("%d x %d", iWidth, iWidth);
 	  INDEX iAddedAs=m_ctrlTilePretender.AddString(CString(strItem));
     m_ctrlTilePretender.SetItemData(iAddedAs, iWidth);
 
-    if(ptrTerrain->tr_pixFirstMipTopMapWidth==iWidth)
+    if (ptrTerrain->tr_pixFirstMipTopMapWidth==iWidth)
     {
       iToSelect=iAddedAs;
     }
@@ -326,7 +326,7 @@ void CDlgTerrainProperties::PrepareTilePretenderCombo(void)
 void CDlgTerrainProperties::PrepareGlobalPretenderCombo(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
   INDEX iHeightMapWidthItem=m_ctrlHeightMapWidth.GetCurSel();
   PIX pixHeightMapWidth=m_ctrlHeightMapWidth.GetItemData(iHeightMapWidthItem);
@@ -336,13 +336,13 @@ void CDlgTerrainProperties::PrepareGlobalPretenderCombo(void)
   m_ctrlGlobalPretenderTexture.ResetContent();
   INDEX iToSelect=_pixGlobalPretenderTextureWidth;
   FLOAT fAspect=FLOAT(pixHeightMapWidth-1)/(pixHeightMapHeight-1);
-  for(INDEX iWidth=4; iWidth<=2048; iWidth*=2)
+  for (INDEX iWidth=4; iWidth<=2048; iWidth*=2)
   {
     CTString strItem;
     strItem.PrintF("%d x %d", iWidth, INDEX(iWidth/fAspect));
 	  INDEX iAddedAs=m_ctrlGlobalPretenderTexture.AddString(CString(strItem));
     m_ctrlGlobalPretenderTexture.SetItemData(iAddedAs, iWidth);
-    if(_pixGlobalPretenderTextureWidth==iWidth)
+    if (_pixGlobalPretenderTextureWidth==iWidth)
     {
       iToSelect=iAddedAs;
     }
@@ -372,7 +372,7 @@ BOOL CDlgTerrainProperties::OnInitDialog()
 BOOL _bUpdateDlg=TRUE;
 void CDlgTerrainProperties::OnSelchangeTerrainHmWidth() 
 {
-  if(_bUpdateDlg)
+  if (_bUpdateDlg)
   {
     _bUpdateDlg=FALSE;
     m_ctrlHeightMapHeight.SetCurSel(m_ctrlHeightMapWidth.GetCurSel());
@@ -384,7 +384,7 @@ void CDlgTerrainProperties::OnSelchangeTerrainHmWidth()
 
 void CDlgTerrainProperties::OnSelchangeTerrainHmHeight() 
 {
-  if(_bUpdateDlg)
+  if (_bUpdateDlg)
   {
     _bUpdateDlg=FALSE;
     m_ctrlHeightMapWidth.SetCurSel(m_ctrlHeightMapHeight.GetCurSel());

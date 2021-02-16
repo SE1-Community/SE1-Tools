@@ -45,9 +45,9 @@ CDlgEditFloat::CDlgEditFloat(CWnd* pParent /*=NULL*/)
 void CDlgEditFloat::DoDataExchange(CDataExchange* pDX)
 {
   // if dialog is receiving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
-    if( IsWindow(m_hWnd)) 
+    if (IsWindow(m_hWnd)) 
     {
       SetWindowText(CString(m_strTitle));
     }

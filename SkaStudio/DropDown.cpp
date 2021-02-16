@@ -67,7 +67,7 @@ void CDropDown::OnSelendok()
   GetWindowText(str,MAX_PATH);
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   // set ID of selected item
-  if(m_bSetID)
+  if (m_bSetID)
   {
     theApp.m_dlgBarTreeView.ChangeTextureOnSelectedSurfaces(m_strID,CTString(CStringA(str)));
     pDoc->MarkAsChanged();

@@ -55,7 +55,7 @@ CTFileName fnmPersistentSymbols = CTString("Scripts\\PersistentSymbols.ini");
 #define INI_READ( strname, default_val)                               \
   strcpy( strIni, CStringA(theApp.GetProfileString( L"World editor prefs", CString( strname ), CString(default_val))))
 #define GET_FLAG( var)                                        \
-  if( strcmp( strIni, "YES") == 0)   var = TRUE;              \
+  if (strcmp( strIni, "YES") == 0)   var = TRUE;              \
   else                          var = FALSE;
 #define GET_COLOR( var)                                       \
   sscanf( strIni, "0X%08x", &var);
@@ -67,7 +67,7 @@ CTFileName fnmPersistentSymbols = CTString("Scripts\\PersistentSymbols.ini");
   var = CTString( strIni);
 
 #define SET_FLAG( var)                                        \
-  if( var) strcpy( strIni, "YES");                            \
+  if (var) strcpy( strIni, "YES");                            \
   else     strcpy( strIni, "NO");
 #define SET_COLOR( var)                                       \
   sprintf( strIni, "0x%08x", var);                            \
@@ -153,9 +153,9 @@ void WED_ApplyChildSettings(INDEX iChildCfg)
 {
   CChildConfiguration &cc = theApp.m_ccChildConfigurations[ iChildCfg];
   // find perspective view
-  for( INDEX iView=0; iView<cc.m_iHorizontalSplitters*cc.m_iHorizontalSplitters; iView++)
+  for (INDEX iView=0; iView<cc.m_iHorizontalSplitters*cc.m_iHorizontalSplitters; iView++)
   {
-    if( cc.m_ptProjectionType[ iView] == CSlaveViewer::PT_PERSPECTIVE)
+    if (cc.m_ptProjectionType[ iView] == CSlaveViewer::PT_PERSPECTIVE)
     {
       SetRenderingPrefs( cc.m_vpViewPrefs[ iView]);
     }
@@ -212,8 +212,8 @@ CValuesForPrimitive::CValuesForPrimitive()
   vfp_fShearZ       = 0.0f;
   vfp_fStretchX     = 1.0f;
   vfp_fStretchY     = 1.0f;
-  vfp_plPrimitive.pl_PositionVector = FLOAT3D( 0.0f, 0.0f, 0.0f);
-  vfp_plPrimitive.pl_OrientationAngle = ANGLE3D(0,0,0);
+  vfp_plPrimitive.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+  vfp_plPrimitive.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   vfp_colSectorsColor  = C_BLUE;
   vfp_colPolygonsColor = C_RED;
   vfp_fRadius       = 32.0f;
@@ -258,7 +258,7 @@ CWorldEditorApp::CWorldEditorApp()
   m_ptdIconsTray = NULL;
   m_ptdActiveTexture = NULL;
   
-  m_vLastTerrainHit=FLOAT3D(0,0,0);
+  m_vLastTerrainHit=FLOAT3D(0.0f, 0.0f, 0.0f);
   m_penLastTerrainHit=NULL;
   m_fCurrentTerrainBrush=4.0f;
   m_fTerrainBrushPressure=1024.0f*3.0f/4.0f; //75%
@@ -311,8 +311,8 @@ CWorldEditorApp::CWorldEditorApp()
   m_bInvertClassSort = FALSE;
   m_iLastAutoColorizeColor = 0;
 
-  m_plClipboard1 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
-  m_plClipboard2 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
+  m_plClipboard1 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
+  m_plClipboard2 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
   m_tmStartStatusLineInfo=0;
 }
 
@@ -382,7 +382,7 @@ CWorldEditorApp::~CWorldEditorApp()
 CWorldEditorDoc* CWorldEditorApp::GetActiveDocument(void)
 {
   // if document change process is on (document view switching)
-  if( m_bDocumentChangeOn)
+  if (m_bDocumentChangeOn)
   {
     return NULL;
   }
@@ -391,7 +391,7 @@ CWorldEditorDoc* CWorldEditorApp::GetActiveDocument(void)
     // obtain active view
     CWorldEditorView *pWorldEditorView = GetActiveView();
     // if there is active view
-    if( pWorldEditorView != NULL)
+    if (pWorldEditorView != NULL)
     {
       // return document that view represents
       return GetActiveView()->GetDocument();
@@ -476,7 +476,7 @@ static CTString GetNextParam(void)
     // find first next space
     INDEX iSpace;
     INDEX ctChars = strlen(_strCmd);
-    for(iSpace=0; iSpace<ctChars; iSpace++) {
+    for (iSpace=0; iSpace<ctChars; iSpace++) {
       if (isspace(_strCmd[iSpace])) {
         break;
       }
@@ -599,7 +599,7 @@ BOOL CWorldEditorApp::SubInitInstance()
   //  create application windows font
 	LOGFONT logFont;
 	memset(&logFont, 0, sizeof(logFont));
-	if( !::GetSystemMetrics(SM_DBCSENABLED)){
+	if (!::GetSystemMetrics(SM_DBCSENABLED)) {
 		logFont.lfHeight = -11;
 		logFont.lfWeight = FW_REGULAR;
 		logFont.lfPitchAndFamily = FF_ROMAN;
@@ -607,14 +607,14 @@ BOOL CWorldEditorApp::SubInitInstance()
     logFont.lfQuality = PROOF_QUALITY;
     logFont.lfItalic = TRUE;
 		lstrcpy(logFont.lfFaceName, L"Arial");
-    if( !m_Font.CreateFontIndirect(&logFont))
+    if (!m_Font.CreateFontIndirect(&logFont))
 			TRACE0("Could Not create font for combo\n");
 	}	else {
     m_Font.Attach(::GetStockObject(SYSTEM_FONT));
 	}
 
 	memset(&logFont, 0, sizeof(logFont));
-	if( !::GetSystemMetrics(SM_DBCSENABLED)){
+	if (!::GetSystemMetrics(SM_DBCSENABLED)) {
 		logFont.lfHeight = -11;
 		logFont.lfWeight = FW_REGULAR;
 		logFont.lfPitchAndFamily = FF_MODERN;
@@ -622,7 +622,7 @@ BOOL CWorldEditorApp::SubInitInstance()
     logFont.lfQuality = PROOF_QUALITY;
     logFont.lfItalic = FALSE;
 		lstrcpy(logFont.lfFaceName, L"Courier New");
-    if( !m_FixedFont.CreateFontIndirect(&logFont))
+    if (!m_FixedFont.CreateFontIndirect(&logFont))
 			TRACE0("Could Not create fixed font\n");
 	}	else {
     m_FixedFont.Attach(::GetStockObject(SYSTEM_FONT));
@@ -630,7 +630,7 @@ BOOL CWorldEditorApp::SubInitInstance()
 
 	// create main MDI Frame window
 	CMainFrame* pMainFrame = new CMainFrame;
-	if( !pMainFrame->LoadFrame(IDR_MAINFRAME)) return FALSE;
+	if (!pMainFrame->LoadFrame(IDR_MAINFRAME)) return FALSE;
 	m_pMainWnd = pMainFrame;
 
   // set main window for engine
@@ -710,7 +710,7 @@ BOOL CWorldEditorApp::SubInitInstance()
       strmFile.Open_t(strPrimitives);
       INDEX ctHistory;
       strmFile >> ctHistory;
-      for( INDEX iPrim=0; iPrim<ctHistory; iPrim++)
+      for (INDEX iPrim=0; iPrim<ctHistory; iPrim++)
       {
         CPrimitiveInHistoryBuffer *ppihbMember = new CPrimitiveInHistoryBuffer;
         ppihbMember->pihb_vfpPrimitive.Read_t( strmFile);
@@ -852,10 +852,10 @@ BOOL CWorldEditorApp::SubInitInstance()
   }
 
   // if we should automatically call preferences dialog (because WED is first time started)
-  if( m_bFirstTimeStarted) OnFilePreferences();
+  if (m_bFirstTimeStarted) OnFilePreferences();
 
   CTString strCmdLine=CTString(CStringA(m_lpCmdLine));
-  if(strCmdLine[0]=='\"' && strCmdLine[strCmdLine.Length()-1]=='\"')
+  if (strCmdLine[0]=='\"' && strCmdLine[strCmdLine.Length()-1]=='\"')
   {
     strCmdLine.DeleteChar(0);
     strCmdLine.DeleteChar(strCmdLine.Length()-1);
@@ -930,9 +930,9 @@ BOOL CWorldEditorApp::SaveAllModified()
 {
 	CMainFrame* pMainFrame = (CMainFrame *) m_pMainWnd;
 
-	if( (pMainFrame != NULL) && (pMainFrame->m_Browser.m_bVirtualTreeChanged) )
+	if ((pMainFrame != NULL) && (pMainFrame->m_Browser.m_bVirtualTreeChanged) )
   {
-    switch(::MessageBoxA( pMainFrame->m_hWnd,
+    switch (::MessageBoxA( pMainFrame->m_hWnd,
       "Virtual tree changed but not saved. Do You want to save it?", "Warning !",
       MB_YESNOCANCEL | MB_ICONWARNING | MB_DEFBUTTON1 | MB_TASKMODAL | MB_TOPMOST) )
     {
@@ -961,7 +961,7 @@ void CWorldEditorApp::ReadFromIniFileOnInit(void)
   // obtain texture for primitive
   CString strTexture = GetProfileString( L"World editor prefs", L"Default primitive texture", L"Textures\\Editor\\Default.tex");
   // if exists in ini file
-  if( strTexture != L"")
+  if (strTexture != L"")
   {
     theApp.SetNewActiveTexture( _fnmApplicationPath + CTString(CStringA(strTexture)));
   }
@@ -1022,11 +1022,11 @@ void CWorldEditorApp::ReadFromIniFileOnInit(void)
 void CWorldEditorApp::ReadFromIniFile()
 {
   // if loading of world and model's rendering preferences file fails
-  if( !LoadRenderingPreferences())
+  if (!LoadRenderingPreferences())
   {
     CViewPrefs tempVP;
     // for all view's rendering preferences
-    for( INDEX i=0; i< VIEW_PREFERENCES_CT; i++)
+    for (INDEX i=0; i< VIEW_PREFERENCES_CT; i++)
     {
       // clear possibly wrong loaded values
       m_vpViewPrefs[ i] = tempVP;
@@ -1086,10 +1086,10 @@ void CWorldEditorApp::ReadFromIniFile()
   }
 
   // if loading of child configuration file fails
-  if( !LoadChildConfigurations())
+  if (!LoadChildConfigurations())
   {
     // for all child configurations
-    for( INDEX i=0; i<CHILD_CONFIGURATIONS_CT; i++)
+    for (INDEX i=0; i<CHILD_CONFIGURATIONS_CT; i++)
     {
       // set default values
       m_ccChildConfigurations[ i].SetDefaultValues();
@@ -1449,8 +1449,8 @@ void CValuesForPrimitive::CalculatePrimitiveBase(void)
   DOUBLE fWidth = (vfp_fXMax-vfp_fXMin)/2.0f;
   DOUBLE fLenght = (vfp_fZMax-vfp_fZMin)/2.0f;
   // some values must be valid, if they are not, coorect them
-  if( fWidth < SNAP_FLOAT_12) fWidth = SNAP_FLOAT_12;
-  if( fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
+  if (fWidth < SNAP_FLOAT_12) fWidth = SNAP_FLOAT_12;
+  if (fLenght < SNAP_FLOAT_12) fLenght = SNAP_FLOAT_12;
 
   // We calculate vertices as this is box-type primitive
   // Step, ammount of angle ct increasement
@@ -1461,14 +1461,14 @@ void CValuesForPrimitive::CalculatePrimitiveBase(void)
   DOUBLE dB = dA*fLenght/fWidth;
 
   // if base is created inside circle
-  if( !vfp_bOuter)
+  if (!vfp_bOuter)
   {
     angleCt = 0.0;
     dA = fWidth;
     dB = fLenght;
   }
   // for all of the base vertices
-  for(INDEX iVtx=0; iVtx<vtxCt; iVtx++)
+  for (INDEX iVtx=0; iVtx<vtxCt; iVtx++)
   {
     DOUBLE x = Cos( angleCt) * dA + (vfp_fXMin+vfp_fXMax)/2.0f;
     DOUBLE z = Sin( angleCt) * dB + (vfp_fZMin+vfp_fZMax)/2.0f;
@@ -1489,7 +1489,7 @@ void CValuesForPrimitive::Write_t(CTStream &strmFile)
   strmFile << (INDEX) vfp_ptPrimitiveType;
   INDEX ctBaseVtx = vfp_avVerticesOnBaseOfPrimitive.Count();
   strmFile << ctBaseVtx;
-  for( INDEX iBaseVtx=0; iBaseVtx<ctBaseVtx; iBaseVtx++)
+  for (INDEX iBaseVtx=0; iBaseVtx<ctBaseVtx; iBaseVtx++)
   {
     strmFile << vfp_avVerticesOnBaseOfPrimitive[iBaseVtx];
   }
@@ -1536,7 +1536,7 @@ void CValuesForPrimitive::Read_t(CTStream &strmFile)
 {
 
   CChunkID cidVersion = strmFile.GetID_t();
-  if( !((cidVersion == CChunkID(VALUES_FOR_PRIMITIVE_VERSION2)) ||
+  if (!((cidVersion == CChunkID(VALUES_FOR_PRIMITIVE_VERSION2)) ||
         (cidVersion == CChunkID(VALUES_FOR_PRIMITIVE_VERSION3))) )
   {
     throw( "Only versions 2 and 3 of primitive value files is supported!");
@@ -1550,7 +1550,7 @@ void CValuesForPrimitive::Read_t(CTStream &strmFile)
   strmFile >> ctBaseVtx;
   vfp_avVerticesOnBaseOfPrimitive.Clear();
   vfp_avVerticesOnBaseOfPrimitive.New( ctBaseVtx);
-  for( INDEX iBaseVtx=0; iBaseVtx<ctBaseVtx; iBaseVtx++)
+  for (INDEX iBaseVtx=0; iBaseVtx<ctBaseVtx; iBaseVtx++)
   {
     strmFile >> vfp_avVerticesOnBaseOfPrimitive[iBaseVtx];
   }
@@ -1592,7 +1592,7 @@ void CValuesForPrimitive::Read_t(CTStream &strmFile)
 
   strmFile >> vfp_fAmplitude;
   strmFile >> vfp_fnDisplacement;
-  if( cidVersion == CChunkID(VALUES_FOR_PRIMITIVE_VERSION3))
+  if (cidVersion == CChunkID(VALUES_FOR_PRIMITIVE_VERSION3))
   {
     strmFile >> vfp_fMipStart;
     strmFile >> vfp_fMipStep;
@@ -1606,7 +1606,7 @@ void CWorldEditorApp::WriteToIniFileOnEnd(void)
   // write data that can be saved multiple times to ini file
   WriteToIniFile();
 
-  if( theApp.m_ptdActiveTexture != NULL)
+  if (theApp.m_ptdActiveTexture != NULL)
   {
     CTFileName fnTextureForPrimitive( theApp.m_ptdActiveTexture->GetName());
     fnTextureForPrimitive.SetAbsolutePath();
@@ -1770,13 +1770,13 @@ BOOL CWorldEditorApp::LoadRenderingPreferences()
     // read file ID
     strmFile.ExpectID_t( CChunkID( "RPRF"));  // rendering preferences
     // check version number
-    if( !(CChunkID( VIEW_PREFERENCES_VER) == strmFile.GetID_t()) )
+    if (!(CChunkID( VIEW_PREFERENCES_VER) == strmFile.GetID_t()) )
     {
       throw( "Invalid version of rendering preferences, switching to defaults.");
     }
     // read view rendering preferences
     strmFile.Read_t( &m_vpViewPrefs, sizeof( m_vpViewPrefs));
-    for(INDEX i=0; i<ARRAYCOUNT(m_vpViewPrefs); i++) {
+    for (INDEX i=0; i<ARRAYCOUNT(m_vpViewPrefs); i++) {
       m_vpViewPrefs[i].ClearInvalidConfigPointers();
     }
     // read ID for end of rendering prefs
@@ -1863,7 +1863,7 @@ BOOL CWorldEditorApp::LoadChildConfigurations(void)
     // read file ID
     strmFile.ExpectID_t( CChunkID( "CCFG"));  // child configurations
     // check version number
-    if( !( CChunkID(CHILD_CONFIGURATION_VER) == strmFile.GetID_t()) )
+    if (!( CChunkID(CHILD_CONFIGURATION_VER) == strmFile.GetID_t()) )
     {
       throw( "Invalid version of child configurations file, switching to defaults.");
     }
@@ -1914,7 +1914,7 @@ void CWorldEditorApp::SaveChildConfigurations(void)
 // clear possibly invalid pointers in view configurations
 void CWorldEditorApp::ClearInvalidConfigPointers(void)
 {
-  for(INDEX i=0; i<ARRAYCOUNT(m_ccChildConfigurations); i++) {
+  for (INDEX i=0; i<ARRAYCOUNT(m_ccChildConfigurations); i++) {
     m_ccChildConfigurations[i].ClearInvalidConfigPointers();
   }
 }
@@ -1931,13 +1931,13 @@ int CWorldEditorApp::ExitInstance()
   WriteDefaultPolygonValues();
 
   // release entity marker texture
-  if( m_ptdEntityMarkerTexture != NULL)
+  if (m_ptdEntityMarkerTexture != NULL)
   {
     _pTextureStock->Release( m_ptdEntityMarkerTexture);
     m_ptdEntityMarkerTexture = NULL;
   }
   // and entity marker model data
-  if( m_pEntityMarkerModelData != NULL)
+  if (m_pEntityMarkerModelData != NULL)
   {
     _pModelStock->Release( m_pEntityMarkerModelData);
     delete m_pEntityMarkerModelObject;
@@ -1945,13 +1945,13 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release portal marker texture
-  if( m_ptdPortalMarkerTexture != NULL)
+  if (m_ptdPortalMarkerTexture != NULL)
   {
     _pTextureStock->Release( m_ptdPortalMarkerTexture);
     m_ptdPortalMarkerTexture = NULL;
   }
   // and portal marker model data
-  if( m_pPortalMarkerModelData != NULL)
+  if (m_pPortalMarkerModelData != NULL)
   {
     _pModelStock->Release( m_pPortalMarkerModelData);
     delete m_pPortalMarkerModelObject;
@@ -1959,13 +1959,13 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release empty brush texture
-  if( m_ptdEmptyBrushTexture != NULL)
+  if (m_ptdEmptyBrushTexture != NULL)
   {
     _pTextureStock->Release( m_ptdEmptyBrushTexture);
     m_ptdEmptyBrushTexture = NULL;
   }
   // and empty brush model data
-  if( m_pEmptyBrushModelData != NULL)
+  if (m_pEmptyBrushModelData != NULL)
   {
     _pModelStock->Release( m_pEmptyBrushModelData);
     delete m_pEmptyBrushModelObject;
@@ -1973,13 +1973,13 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release range sphere texture
-  if( m_ptdRangeSphereTexture != NULL)
+  if (m_ptdRangeSphereTexture != NULL)
   {
     _pTextureStock->Release( m_ptdRangeSphereTexture);
     m_ptdRangeSphereTexture = NULL;
   }
   // and range sphere model data
-  if( m_pRangeSphereModelData != NULL)
+  if (m_pRangeSphereModelData != NULL)
   {
     _pModelStock->Release( m_pRangeSphereModelData);
     delete m_pRangeSphereModelObject;
@@ -1987,13 +1987,13 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release angle3d texture
-  if( m_ptdAngle3DTexture != NULL)
+  if (m_ptdAngle3DTexture != NULL)
   {
     _pTextureStock->Release( m_ptdAngle3DTexture);
     m_ptdAngle3DTexture = NULL;
   }
   // and angle3d model data
-  if( m_pAngle3DModelData != NULL)
+  if (m_pAngle3DModelData != NULL)
   {
     _pModelStock->Release( m_pAngle3DModelData);
     delete m_pAngle3DModelObject;
@@ -2001,13 +2001,13 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release bounding box texture
-  if( m_ptdBoundingBoxTexture != NULL)
+  if (m_ptdBoundingBoxTexture != NULL)
   {
     _pTextureStock->Release( m_ptdBoundingBoxTexture);
     m_ptdBoundingBoxTexture = NULL;
   }
   // and range bounding box model data
-  if( m_pBoundingBoxModelData != NULL)
+  if (m_pBoundingBoxModelData != NULL)
   {
     _pModelStock->Release( m_pBoundingBoxModelData);
     delete m_pBoundingBoxModelObject;
@@ -2015,29 +2015,29 @@ int CWorldEditorApp::ExitInstance()
   }
 
   // release error texture object
-  if( m_ptoError != NULL)
+  if (m_ptoError != NULL)
   {
     delete m_ptoError;
   }
   // release error texture
-  if( m_ptdError != NULL)
+  if (m_ptdError != NULL)
   {
     _pTextureStock->Release( m_ptdError);
   }
   // release icons tray texture
-  if( m_ptdIconsTray != NULL)
+  if (m_ptdIconsTray != NULL)
   {
     _pTextureStock->Release( m_ptdIconsTray);
   }
 
   // release orientation icons
-  if( m_pViewIconsTD != NULL)
+  if (m_pViewIconsTD != NULL)
   {
     _pTextureStock->Release( m_pViewIconsTD);
   }
 
   // release default primitive texture
-  if( m_ptdActiveTexture != NULL)
+  if (m_ptdActiveTexture != NULL)
   {
     _pTextureStock->Release( m_ptdActiveTexture);
   }
@@ -2070,7 +2070,7 @@ void CWorldEditorApp::OnFilePreferences()
 
   dlg.m_dmFullScreen  = m_dmFullScreen;
   dlg.m_gatFullScreen = m_gatFullScreen;
-  if( dlg.DoModal() == IDOK)
+  if (dlg.DoModal() == IDOK)
   { // remember new full screen mode
     m_dmFullScreen  = dlg.m_dmFullScreen;
     m_gatFullScreen = dlg.m_gatFullScreen;
@@ -2080,13 +2080,13 @@ void CWorldEditorApp::OnFilePreferences()
 BOOL CWorldEditorApp::OnIdle(LONG lCount)
 {
   // if game is on
-  if( _pInput->IsInputEnabled())
+  if (_pInput->IsInputEnabled())
   {
     ASSERT(FALSE); //!!!!!
     return FALSE;
   }
   // if game is on, everithing else is off (don't execute this)
-  else if( !(lCount&0xF))
+  else if (!(lCount&0xF))
   {
     POSITION pos = m_pDocTemplate->GetFirstDocPosition();
     while (pos!=NULL) {
@@ -2157,13 +2157,13 @@ void CWorldEditorApp::SetNewActiveTexture( CTFileName fnFullTexName)
   // remember the new texture
   m_ptdActiveTexture = pdtNewTexture;
   // if info frame exists, update it
-  if( pMainFrame->m_pInfoFrame != NULL)
+  if (pMainFrame->m_pInfoFrame != NULL)
   {
     CInfoSheet *pSheet = pMainFrame->m_pInfoFrame->m_pInfoSheet;
     // redraw info frame
     pMainFrame->m_pInfoFrame->Invalidate(FALSE);
     // info's page is pg global
-    if( (pSheet->GetActivePage() == &pSheet->m_PgGlobal) )
+    if ((pSheet->GetActivePage() == &pSheet->m_PgGlobal) )
     {
       // update texture description
       pMainFrame->m_pInfoFrame->m_pInfoSheet->m_PgGlobal.UpdateData( FALSE);
@@ -2174,7 +2174,7 @@ void CWorldEditorApp::SetNewActiveTexture( CTFileName fnFullTexName)
     // get active document
     CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
     // if view and second layer exist (CSG is on), and primitive mode is on
-    if( (pWorldEditorView != NULL) &&
+    if ((pWorldEditorView != NULL) &&
         (pDoc->m_pwoSecondLayer != NULL) &&
         (pDoc->m_bPrimitiveMode) )
     {
@@ -2197,13 +2197,13 @@ void CWorldEditorApp::TexturizeSelection(void)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
 
   // if it exists
-  if( pDoc != NULL)
+  if (pDoc != NULL)
   {
     // try to apply new texture to current selection
     try
     {
       // if polygon mode
-      if( (pDoc->m_iMode == POLYGON_MODE) && (m_ptdActiveTexture != NULL) )
+      if ((pDoc->m_iMode == POLYGON_MODE) && (m_ptdActiveTexture != NULL) )
       {
         // get name from serial object
         CTFileName fnTextureName = m_ptdActiveTexture->GetName();
@@ -2240,7 +2240,7 @@ void CWorldEditorApp::OnConvertWorlds()
   // call file requester for list containing worlds to convert
   CTFileName fnFileList = _EngineGUI.FileRequester( "Choose list file for conversion",
                           FILTER_LST FILTER_TXT FILTER_ALL FILTER_END, "List files directory", "");
-  if( fnFileList == "") return;
+  if (fnFileList == "") return;
 
   INDEX ctLines = 0;
   char achrLine[256];
@@ -2249,10 +2249,10 @@ void CWorldEditorApp::OnConvertWorlds()
   // count lines in list file
   try {
     fsFileList.Open_t( fnFileList);
-    while( !fsFileList.AtEOF()) {
+    while (!fsFileList.AtEOF()) {
       fsFileList.GetLine_t( achrLine, 256);
       // increase counter only for lines that are not blank
-      if( achrLine != "") ctLines++;
+      if (achrLine != "") ctLines++;
     }
     fsFileList.Close();
   }
@@ -2283,15 +2283,15 @@ void CWorldEditorApp::OnConvertWorlds()
   CTString strReport;
   CTFileName fnmFile, fnmExt, fnmFileFull;
   // loop thru lines
-  while( !fsFileList.AtEOF())
+  while (!fsFileList.AtEOF())
   {
     try {
-      if( dlgProgressDialog.m_bCancelPressed) break;
+      if (dlgProgressDialog.m_bCancelPressed) break;
 
       // read one line from list file
       fsFileList.GetLine_t( achrLine, 256);
       // ignore blank lines
-      if( achrLine == "") continue;
+      if (achrLine == "") continue;
 
       // set message and progress position
       char achrProgressMessage[256];
@@ -2306,7 +2306,7 @@ void CWorldEditorApp::OnConvertWorlds()
       struct _utimbuf FileTime;
 
       // convert world?
-      if( fnmExt == ".wld")
+      if (fnmExt == ".wld")
       {
         // load the world
         CWorld woWorld;
@@ -2323,7 +2323,7 @@ void CWorldEditorApp::OnConvertWorlds()
         woWorld.CalculateDirectionalShadows();
         woWorld.CalculateNonDirectionalShadows();
         // get original file date
-        if( _stat( fnmFileFull, &FileStat)) throw "Error getting file date.";
+        if (_stat( fnmFileFull, &FileStat)) throw "Error getting file date.";
         // save world in new format
         woWorld.Save_t(fnmFile);
         _pShell->Execute( CTString( "bReinitializeShadowLayers=0;"));
@@ -2331,30 +2331,30 @@ void CWorldEditorApp::OnConvertWorlds()
         // revert to original file date
         FileTime.actime  = FileStat.st_atime;
         FileTime.modtime = FileStat.st_mtime;
-        if( _utime( fnmFileFull, &FileTime)) throw "Error setting file date.";
+        if (_utime( fnmFileFull, &FileTime)) throw "Error setting file date.";
       }
       // convert texture?
-      else if( fnmExt == ".tex" || fnmExt == ".tbn")
+      else if (fnmExt == ".tex" || fnmExt == ".tbn")
       {
         // convert textures (but keep the file date)
         CTextureData tdTex;
         tdTex.Load_t( fnmFile);
         // if old texture has been loaded
-        if( tdTex.td_ulFlags & TEX_WASOLD) {
+        if (tdTex.td_ulFlags & TEX_WASOLD) {
           // cannost convert mangled textures
-          if( tdTex.td_ptegEffect==NULL && tdTex.IsModified()) throw( TRANS("Cannot write texture that has modified frames."));
+          if (tdTex.td_ptegEffect==NULL && tdTex.IsModified()) throw( TRANS("Cannot write texture that has modified frames."));
           // get original file date
-          if( _stat( fnmFileFull, &FileStat)) throw "Error getting file date.";
+          if (_stat( fnmFileFull, &FileStat)) throw "Error getting file date.";
           // save texture in new format
           tdTex.Save_t( fnmFile);
           // revert to original file date
           FileTime.actime  = FileStat.st_atime;
           FileTime.modtime = FileStat.st_mtime;
-          if( _utime( fnmFileFull, &FileTime)) throw "Error setting file date.";
+          if (_utime( fnmFileFull, &FileTime)) throw "Error setting file date.";
         }
       }
       // convert WHAT?
-      else if( fnmFile=="")
+      else if (fnmFile=="")
       {
         continue;
       }
@@ -2368,7 +2368,7 @@ void CWorldEditorApp::OnConvertWorlds()
     catch( char *strError) {
       try {
         // on first error
-        if( !bConvertError) {
+        if (!bConvertError) {
           // (re)create error file
           fsErrorFile.Create_t( fnErrorFile);
           bConvertError = TRUE;
@@ -2397,7 +2397,7 @@ void CWorldEditorApp::OnConvertWorlds()
   _pShell->Execute( CTString("con_bNoWarnings=0;"));
 
   // report error situation (if any)
-  if( bConvertError) {
+  if (bConvertError) {
     fsErrorFile.PutLine_t( "DONE.");
     fsErrorFile.Close();
     WarningMessage( "There were some errors in conversion. They are listed in file:\n %s", fnErrorFile);
@@ -2405,7 +2405,7 @@ void CWorldEditorApp::OnConvertWorlds()
 }
 
 CEntity *CWorldEditorApp::CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning,
-                                                CPlacement3D plWorld/*=CPlacement3D(FLOAT3D(0,0,0),ANGLE3D(0,0,0))*/)
+                                                CPlacement3D plWorld/*=CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f),ANGLE3D(0.0f, 0.0f, 0.0f))*/)
 {
   CEntity *penwb;
   // try to
@@ -2424,7 +2424,7 @@ CEntity *CWorldEditorApp::CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning,
   // prepare the entity
   penwb->Initialize();
   
-  if( bZoning)
+  if (bZoning)
   {
     EFirstWorldBase eFirstWorldBase;
     penwb->SendEvent( eFirstWorldBase);
@@ -2439,7 +2439,7 @@ BOOL CWorldEditorApp::Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileN
   // temporary world
   CWorld woWorld;
   CEntity *penwb2=CreateWorldBaseEntity(woWorld, FALSE);
-  if( penwb2==NULL)
+  if (penwb2==NULL)
   {
     return FALSE;
   }
@@ -2460,7 +2460,7 @@ BOOL CWorldEditorApp::Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileN
       // for each material in object3D
       FOREACHINDYNAMICARRAY(itosc->osc_aomtMaterials, CObjectMaterial, itom)
       {
-        if( !FileExists(itom->omt_Name))
+        if (!FileExists(itom->omt_Name))
         {
           itom->omt_Name = "Textures\\Editor\\Default.tex";
         }
@@ -2472,10 +2472,10 @@ BOOL CWorldEditorApp::Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileN
     pbr->CalculateBoundingBoxes();
 
     CPlacement3D plDummy;
-    plDummy.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-    plDummy.pl_OrientationAngle = ANGLE3D(0,0,0);
+    plDummy.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    plDummy.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
     // if should apply CSG add
-    if(bAdd)
+    if (bAdd)
     {
       penwb->en_pwoWorld->CSGAdd(*penwb, woWorld, *penwb2, plDummy);
     }
@@ -2506,7 +2506,7 @@ void CWorldEditorApp::OnImport3DObject()
 
   // create the World entity
   CEntity *pwb=CreateWorldBaseEntity(pDoc->m_woWorld, TRUE);
-  if( pwb==NULL)
+  if (pwb==NULL)
   {
     delete pDoc;
     return;
@@ -2514,7 +2514,7 @@ void CWorldEditorApp::OnImport3DObject()
 
   // create 3d objects
   INDEX ctImported=Insert3DObjects(pDoc);
-  if( ctImported==0)
+  if (ctImported==0)
   {
     delete pDoc;
     return;
@@ -2557,7 +2557,7 @@ INDEX CWorldEditorApp::Insert3DObjects(CWorldEditorDoc *pDoc)
     FILTER_3DOBJ FILTER_LWO FILTER_OBJ FILTER_3DS FILTER_ALL FILTER_END,
     "Import 3D object directory", "", "", &afnFiles);
 
-  if( afnFiles.Count() == 0) return 0;
+  if (afnFiles.Count() == 0) return 0;
 
   // get first file (when strings are sorted)
   CTString strMin="a";
@@ -2566,23 +2566,23 @@ INDEX CWorldEditorApp::Insert3DObjects(CWorldEditorDoc *pDoc)
   {FOREACHINDYNAMICARRAY(afnFiles, CTFileName, itfn)
   {
     CTString str=itfn->FileName();
-    if( strcmp(str, strMin)<0)
+    if (strcmp(str, strMin)<0)
     {
       strMin=str;
       pfn=&*itfn;
     }
   }}
   ASSERT(pfn!=NULL);
-  if(pfn==NULL) return ctInserted;
+  if (pfn==NULL) return ctInserted;
   
   // create main World entity
   CEntity *pwb=CreateWorldBaseEntity(pDoc->m_woWorld, TRUE);
-  if( pwb==NULL)
+  if (pwb==NULL)
   {
     return 0;
   }
   // add first 3D file as zoning base
-  if( !Add3DObject(pDoc, pwb, *pfn, TRUE))
+  if (!Add3DObject(pDoc, pwb, *pfn, TRUE))
   {
     return 0;
   }
@@ -2595,7 +2595,7 @@ INDEX CWorldEditorApp::Insert3DObjects(CWorldEditorDoc *pDoc)
   {
     CTString &str=*itfn;
     CTString strName=itfn->FileName();
-    if( ((char *)(const char *)strName)[strlen(strName)-1] == 'E')
+    if (((char *)(const char *)strName)[strlen(strName)-1] == 'E')
     {
       // join layers
       Add3DObject(pDoc, pwb, *itfn, FALSE);
@@ -2626,7 +2626,7 @@ CWorldEditorDoc *CWorldEditorApp::GetDocument()
   // obtain current view ptr
   CWorldEditorView *pWorldEditorView = GetActiveView();
   // if view does not exist, return
-  if( pWorldEditorView == NULL)
+  if (pWorldEditorView == NULL)
   {
     return NULL;
   }
@@ -2704,13 +2704,13 @@ CTString CWorldEditorApp::GetNameForVirtualTreeNode( CVirtualTreeNode *pvtnNode)
   // reset curently opened virtual directory name
   CTString strResult = "";
   // compile full path name
-  while( pvtnCurrentDir->vnt_pvtnParent != NULL)
+  while (pvtnCurrentDir->vnt_pvtnParent != NULL)
   {
     strResult = pvtnCurrentDir->vtn_strName+"\\"+ strResult;
     pvtnCurrentDir = pvtnCurrentDir->vnt_pvtnParent;
   }
   // if given is root directory
-  if( strResult == "")
+  if (strResult == "")
   {
     strResult = "<ROOT>";
   }
@@ -2735,7 +2735,7 @@ void CCustomToolTip::ManualOn( PIX pixManualX, PIX pixManualY, TTCFunction_type 
   cct_pCallback = pCallBack;
   cct_pThis = pThis;
 
-  if( pMainFrame->m_pwndToolTip != NULL)
+  if (pMainFrame->m_pwndToolTip != NULL)
   {
     ManualOff();
   }
@@ -2840,7 +2840,7 @@ void FindEmptyBrushes( void)
           // for each mip in its brush
           FOREACHINLIST(CBrushMip, bm_lnInBrush, iten->en_pbrBrush->br_lhBrushMips, itbm)
           {
-            if( itbm->bm_abscSectors.Count() == 0)
+            if (itbm->bm_abscSectors.Count() == 0)
             {
               CPrintF("Found brush named %s, without sectors in mip %d at coordinates: (%g, %g, %g)\n",
                 iten->GetName(), iMip, vPos(1), vPos(2), vPos(3));
@@ -2888,9 +2888,9 @@ void CWorldEditorApp::DisplayHelp(const CTFileName &fnHlk, UINT uCommand, DWORD 
   strHelpPath.DeleteChar(0);
   strHelpPath.OnlyFirstLine();
 
-  if( bHlkFound)
+  if (bHlkFound)
   {
-    if( strHelpFormatID=="HTM" || strHelpFormatID=="HTML" || strHelpFormatID=="TXT")
+    if (strHelpFormatID=="HTM" || strHelpFormatID=="HTML" || strHelpFormatID=="TXT")
     {
       // obtain iexplore path
       CTString strKey = "HKEY_CLASSES_ROOT\\.htm\\";
@@ -2912,7 +2912,7 @@ void CWorldEditorApp::DisplayHelp(const CTFileName &fnHlk, UINT uCommand, DWORD 
       _spawnvp(_P_NOWAIT, aExePath, argv);
       return;
     }
-    else if( strHelpFormatID=="CHM")
+    else if (strHelpFormatID=="CHM")
     {
       HtmlHelp(dwData);
       //HtmlHelp(NULL, 
@@ -2932,7 +2932,7 @@ void CWorldEditorApp::DisplayHelp(const CTFileName &fnHlk, UINT uCommand, DWORD 
 CEntity *GetTerrainEntity(void)
 {
   CTerrain *ptTerrain=GetTerrain();
-  if(ptTerrain!=NULL)
+  if (ptTerrain!=NULL)
   {
     return ptTerrain->tr_penEntity;
   }
@@ -2942,24 +2942,24 @@ CEntity *GetTerrainEntity(void)
 CTerrain *GetTerrain(void)
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if(pDoc==NULL) return NULL;
+  if (pDoc==NULL) return NULL;
   return pDoc->m_ptrSelectedTerrain;
 }
 
 CTerrainLayer *GetLayer(INDEX iLayer)
 {
   CTerrain *ptTerrain=GetTerrain();
-  if(ptTerrain==NULL) return NULL;
-  if(!(ptTerrain->tr_atlLayers.Count()>0) || iLayer>=ptTerrain->tr_atlLayers.Count()) return NULL;
+  if (ptTerrain==NULL) return NULL;
+  if (!(ptTerrain->tr_atlLayers.Count()>0) || iLayer>=ptTerrain->tr_atlLayers.Count()) return NULL;
   return &ptTerrain->tr_atlLayers[iLayer];
 }
 
 CTerrainLayer *GetLayer(void)
 {
   CTerrain *ptTerrain=GetTerrain();
-  if(ptTerrain==NULL) return NULL;
-  if(!(ptTerrain->tr_atlLayers.Count()>0)) return NULL;
-  if(ptTerrain->tr_iSelectedLayer>=ptTerrain->tr_atlLayers.Count())
+  if (ptTerrain==NULL) return NULL;
+  if (!(ptTerrain->tr_atlLayers.Count()>0)) return NULL;
+  if (ptTerrain->tr_iSelectedLayer>=ptTerrain->tr_atlLayers.Count())
   {
     ptTerrain->tr_iSelectedLayer=0;
   }
@@ -2969,8 +2969,8 @@ CTerrainLayer *GetLayer(void)
 INDEX GetLayerIndex(void)
 {
   CTerrain *ptTerrain=GetTerrain();
-  if(ptTerrain==NULL) return 0;
-  if(ptTerrain->tr_atlLayers.Count()<=0 || 
+  if (ptTerrain==NULL) return 0;
+  if (ptTerrain->tr_atlLayers.Count()<=0 || 
      ptTerrain->tr_iSelectedLayer>=ptTerrain->tr_atlLayers.Count())
   {
     ptTerrain->tr_iSelectedLayer=0;
@@ -2981,9 +2981,9 @@ INDEX GetLayerIndex(void)
 void SelectLayer(INDEX iLayer)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if(ptrTerrain==NULL) return;
+  if (ptrTerrain==NULL) return;
 
-  if(ptrTerrain->tr_atlLayers.Count()<=iLayer || iLayer<0)
+  if (ptrTerrain->tr_atlLayers.Count()<=iLayer || iLayer<0)
   {
     ptrTerrain->tr_iSelectedLayer=0;
   }

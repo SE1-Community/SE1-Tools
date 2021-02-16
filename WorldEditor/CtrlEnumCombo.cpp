@@ -66,7 +66,7 @@ void CCtrlEnumCombo::OnSelchange()
 void CCtrlEnumCombo::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);

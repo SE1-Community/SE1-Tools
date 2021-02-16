@@ -52,8 +52,8 @@ public:
 // Operations
 public:
   void SetColor(COLOR clrNew);
-  inline void SetDialogPtr(CWnd *pwndParentDialog){ m_pwndParentDialog = pwndParentDialog;};
-  inline void SetMixedColor(void){ m_bMixedColor = TRUE;};
+  inline void SetDialogPtr(CWnd *pwndParentDialog) { m_pwndParentDialog = pwndParentDialog;};
+  inline void SetMixedColor(void) { m_bMixedColor = TRUE;};
   inline void SetPickerType( enum PickerType ptPickerType) { m_ptPickerType = ptPickerType;};
   inline COLOR GetColor(void) { return m_colColor;};
   inline BOOL IsColorValid(void) { return !m_bMixedColor;};

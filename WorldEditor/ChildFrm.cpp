@@ -106,7 +106,7 @@ CChildFrame::CChildFrame()
   m_bRenderViewPictures = FALSE;
   // don't allow moving of anchored entities
   m_bAncoredMovingAllowed = FALSE;
-  if( theApp.m_Preferences.ap_bHideShadowsOnOpen)
+  if (theApp.m_Preferences.ap_bHideShadowsOnOpen)
   {
     m_stShadowType = CWorldRenderPrefs::SHT_NONE;
     m_bShadowsVisible = FALSE;
@@ -124,10 +124,10 @@ CChildFrame::CChildFrame()
   m_bSelectionVisible = TRUE;
   m_bViewFromEntity = FALSE;
 
-  wo_plStored01 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
-  wo_plStored02 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
-  wo_plStored03 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
-  wo_plStored04 = CPlacement3D( FLOAT3D(0.0f,0.0f,0.0f), ANGLE3D(0,0,0));
+  wo_plStored01 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
+  wo_plStored02 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
+  wo_plStored03 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
+  wo_plStored04 = CPlacement3D( FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
   wo_fStored01 = 10.0f;
   wo_fStored02 = 10.0f;
   wo_fStored03 = 10.0f;
@@ -154,7 +154,7 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 
   BOOL bMaximized = FALSE;
   CMDIFrameWnd *pFrame = (CMDIFrameWnd *)AfxGetApp()->m_pMainWnd;
-  if( ((pFrame->MDIGetActive( &bMaximized) == NULL) || (bMaximized)) && 
+  if (((pFrame->MDIGetActive( &bMaximized) == NULL) || (bMaximized)) && 
       (theApp.m_Preferences.ap_AutoMaximizeWindow) )
   {
     cs.style |= WS_VISIBLE | WS_MAXIMIZE;
@@ -212,13 +212,13 @@ void CChildFrame::RememberChildConfiguration( INDEX iViewConfiguration)
   iCurWidth = rectLU.Width();
   iCurHeight = rectLU.Height();
   // if window is splitted vericaly
-  if( CC.m_iVerticalSplitters != 1)
+  if (CC.m_iVerticalSplitters != 1)
   {
     // calculate percentages of left window
     CC.m_fPercentageLeft = ((FLOAT)iCurWidth)/pixClientWidth;
   }
   // if window is splitted horizontaly
-  if( CC.m_iHorizontalSplitters != 1)
+  if (CC.m_iHorizontalSplitters != 1)
   {
     // calculate percentages of top window
     CC.m_fPercentageTop = ((FLOAT)iCurHeight)/pixClientHeight;
@@ -227,9 +227,9 @@ void CChildFrame::RememberChildConfiguration( INDEX iViewConfiguration)
   CC.m_bGridOn = m_bGridOn;
 
   // remember rendering preferences of all views
-  for( j=0; j<CC.m_iVerticalSplitters; j++)
+  for (j=0; j<CC.m_iVerticalSplitters; j++)
   {
-    for( i=0; i<CC.m_iHorizontalSplitters; i++)
+    for (i=0; i<CC.m_iHorizontalSplitters; i++)
     {
       CWorldEditorView *pWEDView = (CWorldEditorView *) m_wndSplitter.GetPane( j, i);
       ASSERT( pWEDView != NULL);
@@ -243,9 +243,9 @@ void CChildFrame::ApplySettingsFromPerspectiveView( CWorldEditorView *pwedView, 
 {
   CChildConfiguration &cc = theApp.m_ccChildConfigurations[ iViewConfiguration];
   // type of projection
-  for( INDEX iView=0; iView<cc.m_iHorizontalSplitters*cc.m_iHorizontalSplitters; iView++)
+  for (INDEX iView=0; iView<cc.m_iHorizontalSplitters*cc.m_iHorizontalSplitters; iView++)
   {
-    if( cc.m_ptProjectionType[ iView] == CSlaveViewer::PT_PERSPECTIVE)
+    if (cc.m_ptProjectionType[ iView] == CSlaveViewer::PT_PERSPECTIVE)
     {
       pwedView->m_vpViewPrefs = cc.m_vpViewPrefs[ iView];
     }
@@ -269,12 +269,12 @@ void CChildFrame::SetChildConfiguration( INDEX iViewConfiguration)
   m_iSelectedConfiguration = iViewConfiguration;
 
   // delete all possible columns
-  for( i=1; i<m_wndSplitter.GetColumnCount(); i++)
+  for (i=1; i<m_wndSplitter.GetColumnCount(); i++)
   {
     m_wndSplitter.DeleteColumn( 0);
   }
   // delete all possible rows
-  for( i=1; i<m_wndSplitter.GetRowCount(); i++)
+  for (i=1; i<m_wndSplitter.GetRowCount(); i++)
   {
     m_wndSplitter.DeleteRow( 0);
   }
@@ -285,23 +285,23 @@ void CChildFrame::SetChildConfiguration( INDEX iViewConfiguration)
   // here we will prepare splitter's size
   int iCurWidth, iCurHeight;
   // if window is splitted vericaly
-  if( CC.m_iVerticalSplitters != 1)
+  if (CC.m_iVerticalSplitters != 1)
   {
     // add new splitter with position calculated using remembered percentage
     iCurWidth = (int) (pixClientWidth * CC.m_fPercentageLeft) + 2;
     m_wndSplitter.SplitColumn( iCurWidth);
   }
   // if window is splitted horizontaly
-  if( CC.m_iHorizontalSplitters != 1)
+  if (CC.m_iHorizontalSplitters != 1)
   {
     // add new splitter with position calculated using remembered percentage
     iCurHeight = (int) (pixClientHeight * CC.m_fPercentageTop) + 3;
     m_wndSplitter.SplitRow( iCurHeight);
   }
   // restore rendering preferences of all views
-  for( j=0; j<CC.m_iVerticalSplitters; j++)
+  for (j=0; j<CC.m_iVerticalSplitters; j++)
   {
-    for( i=0; i<CC.m_iHorizontalSplitters; i++)
+    for (i=0; i<CC.m_iHorizontalSplitters; i++)
     {
       CWorldEditorView *pWEDView = (CWorldEditorView *) m_wndSplitter.GetPane( j, i);
       ASSERT( pWEDView != NULL);
@@ -326,20 +326,20 @@ void CChildFrame::KeyPressed(UINT nChar, UINT nRepCnt, UINT nFlags)
   // if control pressed
   BOOL bCtrl = (GetKeyState( VK_CONTROL) & 128) != 0;
   // look for wanted keys on numeric part of keyboard and extract buffer number
-  if( nFlags == 0x52)  iViewConfiguration = 0;
-  if( nFlags == 0x4f)  iViewConfiguration = 1;
-  if( nFlags == 0x50)  iViewConfiguration = 2;
-  if( nFlags == 0x51)  iViewConfiguration = 3;
-  if( nFlags == 0x4b)  iViewConfiguration = 4;
-  if( nFlags == 0x4c)  iViewConfiguration = 5;
-  if( nFlags == 0x4d)  iViewConfiguration = 6;
-  if( nFlags == 0x47)  iViewConfiguration = 7;
-  if( nFlags == 0x48)  iViewConfiguration = 8;
-  if( nFlags == 0x49)  iViewConfiguration = 9;
+  if (nFlags == 0x52)  iViewConfiguration = 0;
+  if (nFlags == 0x4f)  iViewConfiguration = 1;
+  if (nFlags == 0x50)  iViewConfiguration = 2;
+  if (nFlags == 0x51)  iViewConfiguration = 3;
+  if (nFlags == 0x4b)  iViewConfiguration = 4;
+  if (nFlags == 0x4c)  iViewConfiguration = 5;
+  if (nFlags == 0x4d)  iViewConfiguration = 6;
+  if (nFlags == 0x47)  iViewConfiguration = 7;
+  if (nFlags == 0x48)  iViewConfiguration = 8;
+  if (nFlags == 0x49)  iViewConfiguration = 9;
   // if any of view configuration buffers requested
-  if( iViewConfiguration != -1)
+  if (iViewConfiguration != -1)
   {
-    if( bCtrl)
+    if (bCtrl)
     {
       // edit child's configuration
       RememberChildConfiguration( iViewConfiguration);
@@ -378,14 +378,14 @@ CWorldEditorView *CChildFrame::GetPerspectiveView(void)
   // create reference to choosed view configuration
   CChildConfiguration &CC = theApp.m_ccChildConfigurations[ m_iSelectedConfiguration];
   // find perspective view
-  for( INDEX iVerticalSpliter=0; iVerticalSpliter<GetVSplitters(); iVerticalSpliter++)
+  for (INDEX iVerticalSpliter=0; iVerticalSpliter<GetVSplitters(); iVerticalSpliter++)
   {
-    for( INDEX iHorizontalSpliter=0; iHorizontalSpliter<GetHSplitters(); iHorizontalSpliter++)
+    for (INDEX iHorizontalSpliter=0; iHorizontalSpliter<GetHSplitters(); iHorizontalSpliter++)
     {
       CWorldEditorView *pWEDView = (CWorldEditorView *) 
         m_wndSplitter.GetPane( iVerticalSpliter, iHorizontalSpliter);
       ASSERT( pWEDView != NULL);
-      if( pWEDView->m_ptProjectionType == CSlaveViewer::PT_PERSPECTIVE)
+      if (pWEDView->m_ptProjectionType == CSlaveViewer::PT_PERSPECTIVE)
       {
         pPerspectiveView = pWEDView;
         break;
@@ -417,7 +417,7 @@ void CChildFrame::TestGame( BOOL bFullScreen)
   CTFileName fnmTempWorld = CTString("Temp\\TestGame.wld");
 
   // if the world was never saved or if it is modified
-  if( (!pDoc->m_bWasEverSaved && wed_bSaveTestGameFirstTime) || pDoc->IsModified())
+  if ((!pDoc->m_bWasEverSaved && wed_bSaveTestGameFirstTime) || pDoc->IsModified())
   { // save world under temporary name
     ASSERT_VALID(pDoc);
     try {  
@@ -467,7 +467,7 @@ void CChildFrame::TestGame( BOOL bFullScreen)
   HINSTANCE hInstanceFullScreen;
   WNDCLASSEX wcFullScreen;
   char achWindowTitle[256]; // current window title
-  if( bFullScreen) 
+  if (bFullScreen) 
   {
     // get full screen display mode info
     const PIX pixSizeI = theApp.m_dmFullScreen.dm_pixSizeI;
@@ -475,9 +475,9 @@ void CChildFrame::TestGame( BOOL bFullScreen)
     const DisplayDepth dd = theApp.m_dmFullScreen.dm_ddDepth;
     const GfxAPIType gat  = theApp.m_gatFullScreen;
     // set OpenGL fullscreen (before window)
-    if( gat==GAT_OGL) {
+    if (gat==GAT_OGL) {
       const BOOL bRes = _pGfx->SetDisplayMode( gat, 0, pixSizeI, pixSizeJ, dd);
-      if( !bRes) {
+      if (!bRes) {
         WarningMessage( "Unable to setup full screen display.");
         return;
       }
@@ -512,8 +512,8 @@ void CChildFrame::TestGame( BOOL bFullScreen)
       NULL);
     // didn't make it?
     ASSERT( hWndFullScreen!=NULL);
-    if( hWndFullScreen==NULL) {
-      if( gat==GAT_OGL) _pGfx->ResetDisplayMode( (enum GfxAPIType)theApp.m_iApi);
+    if (hWndFullScreen==NULL) {
+      if (gat==GAT_OGL) _pGfx->ResetDisplayMode( (enum GfxAPIType)theApp.m_iApi);
       WarningMessage( "Unable to setup window for full screen display.");
       return;
     }
@@ -528,9 +528,9 @@ void CChildFrame::TestGame( BOOL bFullScreen)
 
     // set Direct3D full screen (after window)
 #ifdef SE1_D3D
-    if( gat==GAT_D3D) {
+    if (gat==GAT_D3D) {
       const BOOL bRes = _pGfx->SetDisplayMode( gat, 0, pixSizeI, pixSizeJ, dd);
-      if( !bRes) {
+      if (!bRes) {
         WarningMessage( "Unable to setup full screen display.");
         ::DestroyWindow( hWndFullScreen);
         SE_UpdateWindowHandle( pMainFrame->m_hWnd);
@@ -542,7 +542,7 @@ void CChildFrame::TestGame( BOOL bFullScreen)
     _pGfx->CreateWindowCanvas( hWndFullScreen, &pvp, &pdp);
     // initial screen fill and swap, just to get context running
     BOOL bSuccess = FALSE;
-    if( pdp!=NULL && pdp->Lock()) {
+    if (pdp!=NULL && pdp->Lock()) {
       pdp->Fill(C_dGREEN|CT_OPAQUE);
       pdp->Unlock();
       pvp->SwapBuffers();
@@ -550,7 +550,7 @@ void CChildFrame::TestGame( BOOL bFullScreen)
     }
     // must succeed!
     ASSERT( bSuccess);
-    if( !bSuccess) {
+    if (!bSuccess) {
       _pGfx->ResetDisplayMode( (enum GfxAPIType)theApp.m_iApi);
       WarningMessage( "Unable to setup canvas for full screen display.");
       return;
@@ -571,7 +571,7 @@ void CChildFrame::TestGame( BOOL bFullScreen)
   _pSound->SetFormat( CSoundLibrary::SF_NONE);
 
   // restore default display mode and close test full screen window
-  if( hWndFullScreen!=NULL) {
+  if (hWndFullScreen!=NULL) {
     _pGfx->ResetDisplayMode( (enum GfxAPIType)theApp.m_iApi);
     ::DestroyWindow( hWndFullScreen);
     SE_UpdateWindowHandle( pMainFrame->m_hWnd);
@@ -633,19 +633,19 @@ void CChildFrame::DeleteViewsExcept( CWnd *pwndViewToLeave)
 {
   // delete all rows
   INDEX iRowToDelete = 0;
-  while( iRowToDelete<GetVSplitters())
+  while (iRowToDelete<GetVSplitters())
   {
     BOOL bCanDeleteRow = TRUE;
     // for all collumns
-    for( INDEX iColumn=0; iColumn<GetHSplitters(); iColumn++)
+    for (INDEX iColumn=0; iColumn<GetHSplitters(); iColumn++)
     {
-      if( m_wndSplitter.GetPane( iRowToDelete, iColumn) == pwndViewToLeave)
+      if (m_wndSplitter.GetPane( iRowToDelete, iColumn) == pwndViewToLeave)
       {
         bCanDeleteRow = FALSE;
         break;
       }
     }
-    if( bCanDeleteRow)
+    if (bCanDeleteRow)
     {
       m_wndSplitter.DeleteRow( iRowToDelete);
     }
@@ -657,19 +657,19 @@ void CChildFrame::DeleteViewsExcept( CWnd *pwndViewToLeave)
 
   // delete all columns
   INDEX iColumnToDelete = 0;
-  while( iColumnToDelete<GetHSplitters())
+  while (iColumnToDelete<GetHSplitters())
   {
     BOOL bCanDeleteColumn = TRUE;
     // for all collumns
-    for( INDEX iRow=0; iRow<GetVSplitters(); iRow++)
+    for (INDEX iRow=0; iRow<GetVSplitters(); iRow++)
     {
-      if( m_wndSplitter.GetPane( iRow, iColumnToDelete) == pwndViewToLeave)
+      if (m_wndSplitter.GetPane( iRow, iColumnToDelete) == pwndViewToLeave)
       {
         bCanDeleteColumn = FALSE;
         break;
       }
     }
-    if( bCanDeleteColumn)
+    if (bCanDeleteColumn)
     {
       m_wndSplitter.DeleteColumn( iColumnToDelete);
     }
@@ -709,7 +709,7 @@ void CChildFrame::OnUpdateMoveAnchored(CCmdUI* pCmdUI)
 void CChildFrame::OnTimer(UINT nIDEvent) 
 {
   // if anchored reset happend
-  if( nIDEvent == m_iAnchoredResetTimerID)
+  if (nIDEvent == m_iAnchoredResetTimerID)
   {
     m_bAncoredMovingAllowed = FALSE;
     // refresh "enable anchored moving" tool button
@@ -736,7 +736,7 @@ void CChildFrame::OnAutoMipLeveling()
 
 void CChildFrame::OnUpdateAutoMipLeveling(CCmdUI* pCmdUI) 
 {
-  if( theApp.GetDocument()->GetEditingMode() == CSG_MODE)
+  if (theApp.GetDocument()->GetEditingMode() == CSG_MODE)
   {
     pCmdUI->Enable( FALSE);
   }
@@ -785,7 +785,7 @@ void CChildFrame::OnUpdateToggleVisibilityTweaks(CCmdUI* pCmdUI)
 void CChildFrame::OnMaximizeView() 
 {
   // look for numbers of horizontal splitter windows
-  if( (m_wndSplitter.GetRowCount()+m_wndSplitter.GetColumnCount() ) == 4)
+  if ((m_wndSplitter.GetRowCount()+m_wndSplitter.GetColumnCount() ) == 4)
   {
     // remember child configuration into temporary buffer
     RememberChildConfiguration( CHILD_CONFIGURATIONS_CT+1);
@@ -844,10 +844,10 @@ void CChildFrame::OnViewShadowsOnoff()
   CWorldRenderPrefs::ShadowsType stNew;
   m_bShadowsVisible = !m_bShadowsVisible;
   // if shadows are now visible
-  if( m_bShadowsVisible)
+  if (m_bShadowsVisible)
   {
     // if shadows are calculating
-    if( m_bShadowsCalculate)
+    if (m_bShadowsCalculate)
     {
       stNew = CWorldRenderPrefs::SHT_FULL;
     }
@@ -872,7 +872,7 @@ void CChildFrame::OnUpdateViewShadowsOnoff(CCmdUI* pCmdUI)
   int iViewImage;
   pMainFrame->m_wndShadowsAndTexture.GetButtonInfo( 3, nIDView, nStyleView, iViewImage);
   // if shadows are visible
-  if( m_bShadowsVisible)
+  if (m_bShadowsVisible)
   {
     pMainFrame->m_wndShadowsAndTexture.SetButtonInfo( 3, nIDView, nStyleView, 3);
     pCmdUI->SetCheck( TRUE);
@@ -890,10 +890,10 @@ void CChildFrame::OnCalculateShadowsOnoff()
   CWorldRenderPrefs::ShadowsType stNew;
   m_bShadowsCalculate = !m_bShadowsCalculate;
   // if shadows should now calculate
-  if( m_bShadowsCalculate)
+  if (m_bShadowsCalculate)
   {
     // if shadows are visible
-    if( m_bShadowsVisible)
+    if (m_bShadowsVisible)
     {
       stNew = CWorldRenderPrefs::SHT_FULL;
     }
@@ -907,7 +907,7 @@ void CChildFrame::OnCalculateShadowsOnoff()
   else
   {
     // if shadows are visible
-    if( m_bShadowsVisible)
+    if (m_bShadowsVisible)
     {
       stNew = CWorldRenderPrefs::SHT_NOAUTOCALCULATE;
     }
@@ -927,10 +927,10 @@ void CChildFrame::OnUpdateCalculateShadowsOnoff(CCmdUI* pCmdUI)
   int iCalculateImage;
   pMainFrame->m_wndShadowsAndTexture.GetButtonInfo( 4, nIDCalculate, nStyleCalculate, iCalculateImage);
   // if shadows are calculating
-  if( m_bShadowsCalculate)
+  if (m_bShadowsCalculate)
   {
     // if shadows are visible
-    if( m_bShadowsVisible)
+    if (m_bShadowsVisible)
     {
       pMainFrame->m_wndShadowsAndTexture.SetButtonInfo( 4, nIDCalculate, nStyleCalculate, 4);
     }
@@ -945,7 +945,7 @@ void CChildFrame::OnUpdateCalculateShadowsOnoff(CCmdUI* pCmdUI)
   else
   {
     // if shadows are visible
-    if( m_bShadowsVisible)
+    if (m_bShadowsVisible)
     {
       pMainFrame->m_wndShadowsAndTexture.SetButtonInfo( 4, nIDCalculate, nStyleCalculate, 5);
     }
@@ -1032,7 +1032,7 @@ void CChildFrame::OnRestorePosition04()
 
 void CChildFrame::OnKeyCtrlG() 
 {
-  if( theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
+  if (theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
   {
     GenerateLayerDistribution(-1);
   }
@@ -1044,7 +1044,7 @@ void CChildFrame::OnKeyCtrlG()
 
 void CChildFrame::OnUpdateKeyCtrlG(CCmdUI* pCmdUI) 
 {
-  if( theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
+  if (theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
   {
     pCmdUI->SetCheck(TRUE);
   }
@@ -1084,7 +1084,7 @@ void CChildFrame::OnUpdateEnableVisibilityTweaks(CCmdUI* pCmdUI)
 
 void CChildFrame::OnKeyB() 
 {
-  if( theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
+  if (theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
   {
     INDEX iNewMode=(INDEX(theApp.m_iTerrainBrushMode)+1)%CT_BRUSH_MODES;
     theApp.m_iTerrainBrushMode=iNewMode;
@@ -1099,7 +1099,7 @@ void CChildFrame::OnKeyB()
 
 void CChildFrame::OnUpdateKeyB(CCmdUI* pCmdUI) 
 {
-  if( theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
+  if (theApp.GetDocument()->GetEditingMode() == TERRAIN_MODE)
   {
     pCmdUI->SetCheck(TRUE);
   }
@@ -1112,7 +1112,7 @@ void CChildFrame::OnUpdateKeyB(CCmdUI* pCmdUI)
 void CChildFrame::OnKeyY() 
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if( pDoc->GetEditingMode() == TERRAIN_MODE)
+  if (pDoc->GetEditingMode() == TERRAIN_MODE)
   {
     theApp.m_iTerrainBrushMode=TBM_CONTINOUS_NOISE;
     theApp.m_ctTerrainPageCanvas.MarkChanged();
@@ -1128,7 +1128,7 @@ void CChildFrame::OnKeyY()
 void CChildFrame::OnUpdateKeyY(CCmdUI* pCmdUI) 
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if( pDoc->GetEditingMode() == TERRAIN_MODE)
+  if (pDoc->GetEditingMode() == TERRAIN_MODE)
   {
     pCmdUI->SetCheck(TRUE);
   }

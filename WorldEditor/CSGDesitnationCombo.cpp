@@ -58,13 +58,13 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
   // if document ptr has changed
   // or if document was closed (pDoc == NULL and pLastDoc != NULL)
   // or if document was changed from last OnIdle, refresh CSG destination combo box
-  if( (m_pLastDoc != pDoc) ||
+  if ((m_pLastDoc != pDoc) ||
       ((pDoc == NULL) && (m_pLastDoc != NULL)) ||
       ((pDoc != NULL) && !pDoc->m_chDocument.IsUpToDate( m_udComboEntries)) )
   {
     CEntity *penPreviouslySelectedEntity = NULL;
     INDEX iCurrentSelection = GetCurSel();
-    if( iCurrentSelection != CB_ERR)
+    if (iCurrentSelection != CB_ERR)
     {
       penPreviouslySelectedEntity = (CEntity *) GetItemData( iCurrentSelection);
     }
@@ -74,7 +74,7 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
     INDEX iSelectedEntryByName = -1;
     INDEX iSelectedEntryByPtr = -1;
     // if document doesn't exist
-    if( pDoc == NULL)
+    if (pDoc == NULL)
     {
       AddString( L"None Available");
     }
@@ -90,18 +90,18 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
         {
           CTString strEntityName = iten->GetName();
           // and it has name property defined
-          if( strEntityName != "")
+          if (strEntityName != "")
           {
             // add it to CSG destination combo
             INDEX iComboEntry = AddString( CString(strEntityName));
             // set item's data as ptr to current entity
             SetItemData( iComboEntry, (ULONG)(&*iten));
             // try to select previously selected combo entry
-            if( strEntityName == m_strLastSelectedName)
+            if (strEntityName == m_strLastSelectedName)
             {
               iSelectedEntryByName = iComboEntry;
             }
-            if( &iten.Current() == penPreviouslySelectedEntity)
+            if (&iten.Current() == penPreviouslySelectedEntity)
             {
               iSelectedEntryByPtr = iComboEntry;
             }
@@ -110,8 +110,8 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
       }
       ASSERT( (GetCount() != CB_ERR) && (GetCount() != 0) );
     }
-    if( iSelectedEntryByPtr != -1) SetCurSel( iSelectedEntryByPtr);
-    else if( iSelectedEntryByName != -1) SetCurSel( iSelectedEntryByName);
+    if (iSelectedEntryByPtr != -1) SetCurSel( iSelectedEntryByPtr);
+    else if (iSelectedEntryByName != -1) SetCurSel( iSelectedEntryByName);
     else SetCurSel( 0);
     m_udComboEntries.MarkUpdated();
     m_pLastDoc = pDoc;
@@ -122,10 +122,10 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
 void CCSGDesitnationCombo::SelectBrushEntity( CEntity *penBrush)
 {
   // loop all entries in combo box
-  for( INDEX i=0; i<GetCount(); i++)
+  for (INDEX i=0; i<GetCount(); i++)
   {
     // if this is searched brush entity
-    if( ((CEntity *) GetItemData( i)) == penBrush)
+    if (((CEntity *) GetItemData( i)) == penBrush)
     {
       // select it
       SetCurSel( i);
@@ -141,7 +141,7 @@ CEntity *CCSGDesitnationCombo::GetSelectedBrushEntity(void)
   OnIdle( 0);
 
   INDEX iCurrentSelection = GetCurSel();
-  if( iCurrentSelection == CB_ERR)
+  if (iCurrentSelection == CB_ERR)
   {
     return NULL;
   }
@@ -151,7 +151,7 @@ CEntity *CCSGDesitnationCombo::GetSelectedBrushEntity(void)
 void CCSGDesitnationCombo::OnSelchange() 
 {
   CEntity *penSelected = GetSelectedBrushEntity();
-  if( penSelected != NULL)
+  if (penSelected != NULL)
   {
     m_strLastSelectedName = penSelected->GetName();
   }
@@ -160,7 +160,7 @@ void CCSGDesitnationCombo::OnSelchange()
 void CCSGDesitnationCombo::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);
@@ -169,7 +169,7 @@ void CCSGDesitnationCombo::OnDropdown()
   PIX pixMaxHeight = pixScreenHeight - rectCombo.top;
 
   CWnd *pwndParent = GetParent();
-  if( pwndParent == NULL) return;
+  if (pwndParent == NULL) return;
   pwndParent->ScreenToClient( &rectCombo);
   PIX pixNewHeight = GetItemHeight(0)*(ctItems+2);
   rectCombo.bottom = rectCombo.top + ClampUp( pixNewHeight, pixMaxHeight);

@@ -100,7 +100,7 @@ void CDlgLinkTree::InitializeTree(void)
   
   _penAdded.Clear();
   m_ctrTree.DeleteAllItems();
-  if( m_pen==NULL || m_pen->IsSelected( ENF_SELECTED))
+  if (m_pen==NULL || m_pen->IsSelected( ENF_SELECTED))
   {
     FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
     {
@@ -141,12 +141,12 @@ void CDlgLinkTree::InitializeTree(void)
 
   // now move resulting window so LU-corner would be where mouse was clicked
   CRect rectPopup=CRect(m_pt.x, m_pt.y, m_pt.x+pixTreeW+dW, m_pt.y+pixTreeH+dH+PIX_FLAG_LINE);
-  if( rectPopup.right>iScrW)
+  if (rectPopup.right>iScrW)
   {
     rectPopup.left=ClampDn(iScrW-rectPopup.Width(), 0);
     rectPopup.right=iScrW;
   }
-  if( rectPopup.bottom>iScrH)
+  if (rectPopup.bottom>iScrH)
   {
     rectPopup.top=ClampDn( iScrH-rectPopup.Height(), 0);
     rectPopup.bottom=iScrH;
@@ -177,44 +177,44 @@ void CDlgLinkTree::InitializeTree(void)
 void CDlgLinkTree::AddEntityPtrsRecursiv(CEntity *pen, HTREEITEM hParent, CTString strPropertyName)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( _penAdded.IsMember( pen)) return;
+  if (_penAdded.IsMember( pen)) return;
   // Insert entity's ptrs into directory tree
   HTREEITEM InsertedEntity;
   InsertedEntity = m_ctrTree.InsertItem( 0, L"", 0, 0,
     TVIS_SELECTED, TVIF_STATE, 0, hParent, 0);
   m_ctrTree.SetItemData( InsertedEntity, (ULONG)(pen));
   CTString strText="";
-  if( m_bClass)
+  if (m_bClass)
   {
     CTString strPrev="{";
     CTString strPost="}";
-    if( !m_bName && !m_bProperty)
+    if (!m_bName && !m_bProperty)
     {
       strPrev="";
       strPost="";
     }
     strText=strPrev+pen->GetClass()->GetName().FileName()+strPost+"    ";
   }
-  if( m_bProperty && strPropertyName!="")
+  if (m_bProperty && strPropertyName!="")
   {
     CTString strPrev="<";
     CTString strPost=">";
-    if( !m_bName && !m_bClass)
+    if (!m_bName && !m_bClass)
     {
       strPrev="";
       strPost="";
     }
     strText=strText+strPrev+strPropertyName+strPost+"    ";
   }
-  if( m_bName)
+  if (m_bName)
   {
     strText=strText+pen->GetName();
   }
   m_ctrTree.SetItemText( InsertedEntity, CString(strText));
   _penAdded.Add(pen);
-  if(_penAdded.Count()>16) return;
+  if (_penAdded.Count()>16) return;
 
-  if( m_bWho)
+  if (m_bWho)
   {
     FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten)
     {
@@ -222,17 +222,17 @@ void CDlgLinkTree::AddEntityPtrsRecursiv(CEntity *pen, HTREEITEM hParent, CTStri
       // obtain entity class ptr
       CDLLEntityClass *pdecDLLClass = iten->GetClass()->ec_pdecDLLClass;
       // for all classes in hierarchy of this entity
-      for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+      for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
       {
         // for all properties
-        for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+        for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
         {
           CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-          if( pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR)
+          if (pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR)
           {
             // obtain property ptr
             CEntity *penPtr = ENTITYPROPERTY( &*iten, pepProperty->ep_slOffset, CEntityPointer);
-            if( penPtr == pen)
+            if (penPtr == pen)
             {
               AddEntityPtrsRecursiv( &*iten, InsertedEntity, pepProperty->ep_strName);
             }
@@ -247,17 +247,17 @@ void CDlgLinkTree::AddEntityPtrsRecursiv(CEntity *pen, HTREEITEM hParent, CTStri
     // obtain entity class ptr
     CDLLEntityClass *pdecDLLClass = pen->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
-      for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+      for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-        if( pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR)
+        if (pepProperty->ep_eptType == CEntityProperty::EPT_ENTITYPTR)
         {
           // obtain property ptr
           CEntity *penPtr = ENTITYPROPERTY( pen, pepProperty->ep_slOffset, CEntityPointer);
-          if( penPtr != NULL)
+          if (penPtr != NULL)
           {
             AddEntityPtrsRecursiv( penPtr, InsertedEntity, pepProperty->ep_strName);
           }
@@ -272,7 +272,7 @@ void CDlgLinkTree::CalculateOccupiedSpace(HTREEITEM hItem, CRect &rect)
   m_ctrTree.GetItemRect( hItem, &rectThis, TRUE);
   rect|=rectThis;
   HTREEITEM pNext=m_ctrTree.GetNextItem( hItem, TVGN_NEXTVISIBLE);
-  if( pNext!=NULL)
+  if (pNext!=NULL)
   {
     CalculateOccupiedSpace(pNext, rect);
   }
@@ -289,15 +289,15 @@ void CDlgLinkTree::ExpandRecursivly(HTREEITEM pItem, BOOL bExpand, BOOL bNoNextS
 {
   BOOL bForceContract=FALSE;
   
-  if(_iMaxLevel!=-1 && GetItemLevel(pItem)>=_iMaxLevel) bForceContract=TRUE;
+  if (_iMaxLevel!=-1 && GetItemLevel(pItem)>=_iMaxLevel) bForceContract=TRUE;
   
   // obtain next child item in branch
   HTREEITEM pCurrent=pItem;
   do
   {
-    if( m_ctrTree.ItemHasChildren( pCurrent))
+    if (m_ctrTree.ItemHasChildren( pCurrent))
     {
-      if( bExpand&&!bForceContract)
+      if (bExpand&&!bForceContract)
       {
         m_ctrTree.Expand( pCurrent, TVE_EXPAND);
       }
@@ -310,16 +310,16 @@ void CDlgLinkTree::ExpandRecursivly(HTREEITEM pItem, BOOL bExpand, BOOL bNoNextS
       ExpandRecursivly(pChild, bExpand, FALSE);
     }
     // get next in dir
-    if( bNoNextSibling) break;
+    if (bNoNextSibling) break;
     pCurrent=m_ctrTree.GetNextItem( pCurrent, TVGN_NEXT);
   }
-  while( pCurrent!=NULL);
+  while (pCurrent!=NULL);
 }
 
 void CDlgLinkTree::OnDblclkLinkTree(NMHDR* pNMHDR, LRESULT* pResult) 
 {
   HTREEITEM item = m_ctrTree.GetSelectedItem();
-  if( item!=NULL)
+  if (item!=NULL)
   {
     CWorldEditorDoc *pDoc = theApp.GetDocument();
     pDoc->m_selEntitySelection.Clear();
@@ -333,12 +333,12 @@ void CDlgLinkTree::OnDblclkLinkTree(NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CDlgLinkTree::PreTranslateMessage(MSG* pMsg) 
 {
-  if( (pMsg->message==WM_KEYDOWN) && ((int)pMsg->wParam==192))
+  if ((pMsg->message==WM_KEYDOWN) && ((int)pMsg->wParam==192))
   {
     EndDialog( IDOK);
   }
   /*
-  if( pMsg->message==WM_MOUSEMOVE)
+  if (pMsg->message==WM_MOUSEMOVE)
   {
     UINT nKeys = pMsg->wParam;
     PIX xPos = LOWORD(pMsg->lParam);  // horizontal position of cursor 
@@ -348,7 +348,7 @@ BOOL CDlgLinkTree::PreTranslateMessage(MSG* pMsg)
     return TRUE;
   }
   */
-  if( pMsg->message==WM_LBUTTONDOWN)
+  if (pMsg->message==WM_LBUTTONDOWN)
   {
     PIX xPos = LOWORD(pMsg->lParam);  // horizontal position of cursor 
     PIX yPos = HIWORD(pMsg->lParam);  // vertical position of cursor 
@@ -360,13 +360,13 @@ BOOL CDlgLinkTree::PreTranslateMessage(MSG* pMsg)
     UINT nFlags=(int)pMsg->wParam;
     BOOL bShift = nFlags & MK_SHIFT;
     BOOL bCtrl = nFlags & MK_CONTROL;
-    if( bShift||bCtrl)
+    if (bShift||bCtrl)
     {
       OnLButtonDown((int)pMsg->wParam, pt);
       return TRUE;
     }
   }
-  if( pMsg->message==WM_RBUTTONDOWN)
+  if (pMsg->message==WM_RBUTTONDOWN)
   {
     PIX xPos = LOWORD(pMsg->lParam);  // horizontal position of cursor 
     PIX yPos = HIWORD(pMsg->lParam);  // vertical position of cursor 
@@ -387,23 +387,23 @@ void CDlgLinkTree::OnLButtonDown(UINT nFlags, CPoint point)
   testinfo.pt=point;
   HTREEITEM item=m_ctrTree.HitTest( &testinfo);
   // allow only string clicks
-  if( !(testinfo.flags&TVHT_ONITEMLABEL))
+  if (!(testinfo.flags&TVHT_ONITEMLABEL))
   {
     item=NULL;
   }
   m_HitItem=item;
 
-  if(bCtrl&&bShift)
+  if (bCtrl&&bShift)
   {
     OnLtContractAll();
   }
-  if( m_HitItem!=NULL)
+  if (m_HitItem!=NULL)
   {
-    if(bCtrl)
+    if (bCtrl)
     {
       OnLtContractBranch();
     }
-    else if(bShift)
+    else if (bShift)
     {
       OnLtLeaveBranch();
     }
@@ -421,35 +421,35 @@ void CDlgLinkTree::OnRButtonDown(UINT nFlags, CPoint point)
   testinfo.pt=point;
   HTREEITEM item=m_ctrTree.HitTest( &testinfo);
   // allow only string clicks
-  if( !(testinfo.flags&TVHT_ONITEMLABEL))
+  if (!(testinfo.flags&TVHT_ONITEMLABEL))
   {
     item=NULL;
   }
   m_HitItem=item;
 
-  if(bCtrl&&bShift)
+  if (bCtrl&&bShift)
   {
     OnLtExpandAll();
   }
   
-  if( m_HitItem!=NULL)
+  if (m_HitItem!=NULL)
   {
-    if(bCtrl&&!bShift)
+    if (bCtrl&&!bShift)
     {
       OnLtExpandBranch();
     }
-    else if(bShift&&!bCtrl)
+    else if (bShift&&!bCtrl)
     {
       OnLtLastLevel();
     }
   }
-  if(!bShift&&!bCtrl)
+  if (!bShift&&!bCtrl)
   {
     CMenu menu;
-    if( menu.LoadMenu(IDR_LINK_TREE_POPUP))
+    if (menu.LoadMenu(IDR_LINK_TREE_POPUP))
     {
       CMenu* pPopup = menu.GetSubMenu(0);
-      if( item==NULL)
+      if (item==NULL)
       {
         pPopup->EnableMenuItem(ID_LT_CONTRACT_BRANCH, MF_DISABLED|MF_GRAYED);
         pPopup->EnableMenuItem(ID_LT_EXPAND_BRANCH, MF_DISABLED|MF_GRAYED);
@@ -503,10 +503,10 @@ void CDlgLinkTree::OnLtLeaveBranch()
   
   INDEX iLevel=-1;
   HTREEITEM item = m_HitItem;
-  while( item!=NULL)
+  while (item!=NULL)
   {
     item=m_ctrTree.GetParentItem( item);
-    if( item!=NULL)
+    if (item!=NULL)
     {
       m_ctrTree.Expand( item, TVE_EXPAND);
     }
@@ -516,7 +516,7 @@ void CDlgLinkTree::OnLtLeaveBranch()
 INDEX CDlgLinkTree::GetItemLevel(HTREEITEM item)
 {
   INDEX iLevel=-1;
-  while( item!=NULL)
+  while (item!=NULL)
   {
     item=m_ctrTree.GetParentItem( item);
     iLevel++;
@@ -574,7 +574,7 @@ void CDlgLinkTree::OnMouseMove(UINT nFlags, CPoint point)
   PIX dx=point.x-m_ptMouseDown.x;
   PIX dy=point.y-m_ptMouseDown.y;
 
-  if( bSpace && bLMB)
+  if (bSpace && bLMB)
   {
     CRect rectWnd=m_rectWndOnMouseDown;
     rectWnd.left+=dx;

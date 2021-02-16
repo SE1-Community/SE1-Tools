@@ -58,13 +58,13 @@ CDlgWorldSettings::CDlgWorldSettings(CWnd* pParent /*=NULL*/)
 
 
 #define DDX_SPAWN_FLAG_GET(mask, ctrl) \
-  if( ulSpawnFlags & (mask)) {\
+  if (ulSpawnFlags & (mask)) {\
   ((CButton *)GetDlgItem( ctrl))->SetCheck( TRUE);\
   } else {\
   ((CButton *)GetDlgItem( ctrl))->SetCheck( FALSE);}
 
 #define DDX_SPAWN_FLAG_SET(mask, ctrl) \
-  if( ((CButton *)GetDlgItem( ctrl) )->GetCheck() == 1) {\
+  if (((CButton *)GetDlgItem( ctrl) )->GetCheck() == 1) {\
   ulSpawnFlags |= (mask);\
   } else {\
   ulSpawnFlags &= ~(mask);\
@@ -74,9 +74,9 @@ CDlgWorldSettings::CDlgWorldSettings(CWnd* pParent /*=NULL*/)
 void CDlgWorldSettings::DoDataExchange(CDataExchange* pDX)
 {
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
-    if( m_fnBackgroundPicture == "")
+    if (m_fnBackgroundPicture == "")
     {
       // disable ok button
       //GetDlgItem( IDOK)->EnableWindow( FALSE);
@@ -152,7 +152,7 @@ void CDlgWorldSettings::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     CWorldEditorDoc *pDoc = theApp.GetDocument();
     pDoc->m_woWorld.wo_strBackdropUp = CStringA(m_strTopViewPicture);
@@ -175,7 +175,7 @@ void CDlgWorldSettings::DoDataExchange(CDataExchange* pDX)
 
     pDoc->m_woWorld.wo_strBackdropObject = CStringA(m_strBackdropObject);
     // try to load object for backdrops
-    if( pDoc->m_woWorld.wo_strBackdropObject != "")
+    if (pDoc->m_woWorld.wo_strBackdropObject != "")
     {
       // try to
       try
@@ -195,7 +195,7 @@ void CDlgWorldSettings::DoDataExchange(CDataExchange* pDX)
       }
     }
 
-    if( m_fnBackgroundPicture != "")
+    if (m_fnBackgroundPicture != "")
     {
       theApp.WriteProfileString( L"World editor prefs", L"Default background picture",
         m_fnBackgroundPicture);
@@ -251,13 +251,13 @@ void CDlgWorldSettings::OnBrowseBackgroundPicture()
 {
   CTFileName fnChoosedFile = _EngineGUI.FileRequester( "Select background texture",
     FILTER_TEX FILTER_ALL FILTER_END, KEY_NAME_BACKGROUND_TEXTURE_DIR, "Textures\\Background");
-  if( fnChoosedFile == "") return;
+  if (fnChoosedFile == "") return;
 
   // substract last two letters of background's file name
   char achrShortenedBcgName[ PATH_MAX];
   strcpy( achrShortenedBcgName, fnChoosedFile.FileDir()+fnChoosedFile.FileName());
   // there must be at least two letters in selected texture name
-  if( strlen( achrShortenedBcgName) > 2)
+  if (strlen( achrShortenedBcgName) > 2)
   {
     // shorten file name for two letters
     achrShortenedBcgName[ strlen( achrShortenedBcgName)-2] = 0;
@@ -276,7 +276,7 @@ void CDlgWorldSettings::SetupBcgSettings( BOOL bOnNewDocument)
   COLOR colBackground;
 
   // if change bcg settings dialog was called on new document
-  if( bOnNewDocument)
+  if (bOnNewDocument)
   {
     // obtain background color form INI file
     strcpy( chrColor, CStringA(theApp.GetProfileString( L"World editor prefs",
@@ -315,7 +315,7 @@ void CDlgWorldSettings::OnBrowseTopViewPicture()
 {
   CTFileName fnPicture = _EngineGUI.FileRequester( "Picture for top view",
     FILTER_PICTURES FILTER_ALL FILTER_END, "Picture for view directory", "");
-  if( fnPicture == "") return;
+  if (fnPicture == "") return;
   GetDlgItem( IDC_TOP_VIEW_PICTURE_T)->SetWindowText( CString(fnPicture));
 	m_strTopViewPicture = fnPicture;
   CWorldEditorDoc *pDoc = theApp.GetDocument();
@@ -326,7 +326,7 @@ void CDlgWorldSettings::OnBrowseFrontViewPicture()
 {
   CTFileName fnPicture = _EngineGUI.FileRequester( "Picture for front view",
     FILTER_PICTURES FILTER_ALL FILTER_END, "Picture for view directory", "");
-  if( fnPicture == "") return;
+  if (fnPicture == "") return;
   GetDlgItem( IDC_FRONT_VIEW_PICTURE_T)->SetWindowText( CString(fnPicture));
 	m_strFrontViewPicture = fnPicture;
   CWorldEditorDoc *pDoc = theApp.GetDocument();
@@ -337,7 +337,7 @@ void CDlgWorldSettings::OnBrowseRightViewPicture()
 {
   CTFileName fnPicture = _EngineGUI.FileRequester( "Picture for right view",
     FILTER_PICTURES FILTER_ALL FILTER_END, "Picture for view directory", "");
-  if( fnPicture == "") return;
+  if (fnPicture == "") return;
   GetDlgItem( IDC_RIGHT_VIEW_PICTURE_T)->SetWindowText( CString(fnPicture));
 	m_strRightViewPicture = fnPicture;
   CWorldEditorDoc *pDoc = theApp.GetDocument();
@@ -349,7 +349,7 @@ void CDlgWorldSettings::OnBrowseBackdropObject()
 {
   CTFileName fnObject = _EngineGUI.FileRequester( "Select background object",
     FILTER_3DOBJ FILTER_LWO FILTER_OBJ FILTER_3DS FILTER_ALL FILTER_END, "Backdrop object directory", "");
-  if( fnObject == "") return;
+  if (fnObject == "") return;
   GetDlgItem( IDC_BACKDROP_OBJECT_T)->SetWindowText( CString(fnObject));
 	m_strBackdropObject = fnObject;
 }

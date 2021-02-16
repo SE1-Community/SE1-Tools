@@ -34,7 +34,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 extern INDEX TestKeyBuffers(void);
 
 // macro used for writing text into status line
-#define STATUS_LINE_MESASGE( message) if(theApp.m_bShowStatusInfo){\
+#define STATUS_LINE_MESASGE( message) if (theApp.m_bShowStatusInfo) {\
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd()); \
   ASSERT( pMainFrame != NULL); \
   pMainFrame->m_wndStatusBar.SetPaneText( STATUS_LINE_PANE, message, TRUE);};

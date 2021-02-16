@@ -83,10 +83,10 @@ void CSeriousSkaStudioDoc::OnIdle(void)
   {
     CSeriousSkaStudioView *pmvCurrent = (CSeriousSkaStudioView *) GetNextView(pos);
     // if children are maximize
-    if(theApp.bChildrenMaximized)
+    if (theApp.bChildrenMaximized)
     {
       // draw only front window
-      if(pmvCurrent->m_iViewSize == SIZE_MAXIMIZED) pmvCurrent->OnIdle();
+      if (pmvCurrent->m_iViewSize == SIZE_MAXIMIZED) pmvCurrent->OnIdle();
     }
     else
     {
@@ -98,14 +98,14 @@ void CSeriousSkaStudioDoc::OnIdle(void)
 // Set timer for this document
 void CSeriousSkaStudioDoc::SetTimerForDocument()
 {
-  if( _pTimer != NULL)
+  if (_pTimer != NULL)
   {
     CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
     if (m_tvStart.tv_llValue==-1I64) {
       m_tvStart = tvNow;
     }
     // if paused
-    if(m_bViewPaused) {
+    if (m_bViewPaused) {
       // set current time as time when paused
       tvNow = m_tvPauseStart - m_tvPauseTime;
     } else {
@@ -134,7 +134,7 @@ BOOL CSeriousSkaStudioDoc::OnOpenDocument(LPCTSTR lpszPathName)
   }
 
   CModelInstance *pmi = theApp.OnOpenExistingInstance(fnModelFile);
-  if(pmi == NULL) {
+  if (pmi == NULL) {
     // if failed to open smc
     theApp.ErrorMessage("Failed to open model instance '%s'",(const char*)fnModelFile);
     return FALSE;
@@ -184,21 +184,21 @@ void CSeriousSkaStudioDoc::Dump(CDumpContext& dc) const
 INDEX CSeriousSkaStudioDoc::BeforeDocumentClose()
 {
   // if model instance was changed
-  if(m_ModelInstance != NULL && m_bModelInstanceChanged) {
+  if (m_ModelInstance != NULL && m_bModelInstanceChanged) {
     CTString strText = CTString(0,"Save changes for '%s'",(const char*)m_ModelInstance->mi_fnSourceFile);
     // ask to save changes
     int iRet = AfxMessageBox(CString(strText),MB_YESNOCANCEL);
     // do not close doc
-    if(iRet == IDCANCEL) {
+    if (iRet == IDCANCEL) {
       return FALSE;
     // save model instance
-    } else if(iRet == IDYES) {
+    } else if (iRet == IDYES) {
       // get current error count
       INDEX ctErrors = theApp.GetErrorList()->GetItemCount();
       // save root model instance
       theApp.SaveRootModel();
       // if new errors exists
-      if(theApp.GetErrorList()->GetItemCount() != ctErrors) {
+      if (theApp.GetErrorList()->GetItemCount() != ctErrors) {
         // do not close document
         // return FALSE;
       }
@@ -216,13 +216,13 @@ INDEX CSeriousSkaStudioDoc::BeforeDocumentClose()
 // save current model instnce and clear tree view
 void CSeriousSkaStudioDoc::OnCloseDocument() 
 {
-  if(!BeforeDocumentClose()) {
+  if (!BeforeDocumentClose()) {
     return;
   }
 
   theApp.m_dlgBarTreeView.UpdateModelInstInfo(NULL);
   theApp.m_dlgBarTreeView.ResetControls();
-  if(m_ModelInstance!=NULL) m_ModelInstance->Clear();
+  if (m_ModelInstance!=NULL) m_ModelInstance->Clear();
   m_ModelInstance = NULL;
   // flush stale caches
   _pShell->Execute("FreeUnusedStock();");

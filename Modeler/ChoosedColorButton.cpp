@@ -51,7 +51,7 @@ void CChoosedColorButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   CDC *pDC = GetDC();
   
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
   {
     CBrush *MyBrush = &CBrush();
     ASSERT( MyBrush->CreateHatchBrush(HS_DIAGCROSS, 0x00777777) != FALSE);
@@ -73,7 +73,7 @@ void CChoosedColorButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 void CChoosedColorButton::OnLButtonDown(UINT nFlags, CPoint point) 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     pModelerView->m_bOnColorMode = !pModelerView->m_bOnColorMode;
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());

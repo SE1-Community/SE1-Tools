@@ -61,17 +61,17 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
   CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     GetDlgItem(IDC_STATIC_SOURCE_SAFE_BORDER)->EnableWindow( FALSE);
     GetDlgItem(IDC_STATIC_SOURCE_SAFE_PROJECT)->EnableWindow( FALSE);
     GetDlgItem(IDC_EDIT_SS_PROJECT)->EnableWindow( FALSE);
     // select current api
-    if( IsWindow(m_ctrGfxApi.m_hWnd))
+    if (IsWindow(m_ctrGfxApi.m_hWnd))
     {
-      for(INDEX iItem=0; iItem<m_ctrGfxApi.GetCount(); iItem++)
+      for (INDEX iItem=0; iItem<m_ctrGfxApi.GetCount(); iItem++)
       {
-        if(theApp.m_iApi==m_ctrGfxApi.GetItemData(iItem))
+        if (theApp.m_iApi==m_ctrGfxApi.GetItemData(iItem))
         {
           m_ctrGfxApi.SetCurSel(theApp.m_iApi);
           break;
@@ -92,7 +92,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     m_bAutoUpdateDisplaceMap = theApp.m_Preferences.ap_bAutoUpdateDisplaceMap;
     m_fFlyModeSpeed=theApp.m_Preferences.ap_fDefaultFlyModeSpeed;
     
-    if( IsWindow(m_ctrlCSGPrecission.m_hWnd))
+    if (IsWindow(m_ctrlCSGPrecission.m_hWnd))
     {
       m_ctrlTerrainSelectionVisible.SetCurSel(theApp.m_Preferences.ap_iTerrainSelectionVisible);
       m_ctrlTerrainSelectionHidden.SetCurSel(theApp.m_Preferences.ap_iTerrainSelectionHidden);
@@ -100,11 +100,11 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
       m_bAutoUpdateTerrainDistribution=theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution;
 
       INDEX iCSGPrecission=0;
-      for(INDEX iExp=-5; iExp<=5; iExp+=1)
+      for (INDEX iExp=-5; iExp<=5; iExp+=1)
       {
         FLOAT fPow=pow(2.0f ,iExp*2);
         FLOAT fEpsilon=_pShell->GetFLOAT("mth_fCSGEpsilon");
-        if( fEpsilon==fPow)
+        if (fEpsilon==fPow)
         {
           iCSGPrecission=iExp;
           break;
@@ -112,7 +112,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
       }
       m_ctrlCSGPrecission.SetPos( iCSGPrecission+5);
       CTString strCSGPrecission;
-      if( _pShell->GetFLOAT("mth_fCSGEpsilon")==1.0f)
+      if (_pShell->GetFLOAT("mth_fCSGEpsilon")==1.0f)
       {
         strCSGPrecission.PrintF("CSG Precission: 1 (default)");
       }
@@ -122,7 +122,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
       }
       m_strCSGPrecission=strCSGPrecission;
     }
-    if( IsWindow(m_UndoLevels.m_hWnd))
+    if (IsWindow(m_UndoLevels.m_hWnd))
     {
       m_UndoLevels.SetPos( theApp.m_Preferences.ap_iUndoLevels);
     }
@@ -158,7 +158,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     theApp.m_Preferences.ap_iTerrainSelectionVisible=m_ctrlTerrainSelectionVisible.GetCurSel();
     theApp.m_Preferences.ap_iTerrainSelectionHidden=m_ctrlTerrainSelectionHidden.GetCurSel();
@@ -185,10 +185,10 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     theApp.WriteToIniFile();
     INDEX iCurSel=m_ctrGfxApi.GetCurSel();
     INDEX iOldGfxApi=theApp.m_iApi;
-    if( iCurSel!=CB_ERR)
+    if (iCurSel!=CB_ERR)
     {
       theApp.m_iApi=m_ctrGfxApi.GetItemData(iCurSel);
-      if( iOldGfxApi!=theApp.m_iApi)
+      if (iOldGfxApi!=theApp.m_iApi)
       {
         _pGfx->ResetDisplayMode((enum GfxAPIType) theApp.m_iApi);
       }
@@ -219,13 +219,13 @@ BOOL CDlgPreferences::OnInitDialog()
 
   m_ctrGfxApi.ResetContent();
   
-  if( _pGfx->HasAPI( GAT_OGL))
+  if (_pGfx->HasAPI( GAT_OGL))
   {
     INDEX iAddedAs=m_ctrGfxApi.AddString(L"OpenGL");
     m_ctrGfxApi.SetItemData(iAddedAs, GAT_OGL);
   }
 #ifdef SE1_D3D
-  if( _pGfx->HasAPI( GAT_D3D))
+  if (_pGfx->HasAPI( GAT_D3D))
   {
     INDEX iAddedAs=m_ctrGfxApi.AddString(L"Direct3D");
     m_ctrGfxApi.SetItemData(iAddedAs, GAT_D3D);

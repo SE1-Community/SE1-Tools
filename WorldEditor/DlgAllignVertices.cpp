@@ -130,11 +130,11 @@ void CDlgAllignVertices::OnAllignZ()
 
 BOOL CDlgAllignVertices::PreTranslateMessage(MSG* pMsg) 
 {
-	if(pMsg->message==WM_KEYDOWN)
+	if (pMsg->message==WM_KEYDOWN)
   {
-    if( pMsg->wParam=='X') OnAllignX();
-    if( pMsg->wParam=='Y') OnAllignY();
-    if( pMsg->wParam=='Z') OnAllignZ();
+    if (pMsg->wParam=='X') OnAllignX();
+    if (pMsg->wParam=='Y') OnAllignY();
+    if (pMsg->wParam=='Z') OnAllignZ();
   }
 	return CDialog::PreTranslateMessage(pMsg);
 }

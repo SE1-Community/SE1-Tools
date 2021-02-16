@@ -83,7 +83,7 @@ void CAxisListCtrl::OnSetFocus(CWnd* pOldWnd)
   // get selected action
   INDEX iSelectedAction = GetNextItem( -1, LVNI_DROPHILITED);
   // if none is selected (initial state)
-  if( iSelectedAction == -1)
+  if (iSelectedAction == -1)
   {
     iSelectedAction = 0;
     SetItemState( iSelectedAction, LVIS_FOCUSED|LVIS_SELECTED, LVIS_FOCUSED|LVIS_SELECTED);
@@ -110,7 +110,7 @@ void CAxisListCtrl::OnKillFocus(CWnd* pNewWnd)
 BOOL CAxisListCtrl::PreTranslateMessage(MSG* pMsg) 
 {
 	// if return pressed
-  if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     ((CDlgPlayerControls *)GetParent())->m_comboControlerAxis.SetFocus();
     // don't translate messages

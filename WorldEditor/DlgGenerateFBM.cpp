@@ -68,7 +68,7 @@ CDlgGenerateFBM::CDlgGenerateFBM(CWnd* pParent /*=NULL*/)
 void CDlgGenerateFBM::DoDataExchange(CDataExchange* pDX)
 {
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     m_ctOctaves=_iFBMOctaves;
     m_fHighFrequencyStep=_fFBMHighFrequencyStep;
@@ -78,7 +78,7 @@ void CDlgGenerateFBM::DoDataExchange(CDataExchange* pDX)
     m_bAddNegativeValues=_bFBMAddNegativeValues;
     m_bRandomOffset=_bFBMRandomOffset;
   }
-  else if( !::IsWindow(m_ctrlCtOctavesSpin.m_hWnd)) return;
+  else if (!::IsWindow(m_ctrlCtOctavesSpin.m_hWnd)) return;
 
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgGenerateFBM)
@@ -98,7 +98,7 @@ void CDlgGenerateFBM::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     _iFBMOctaves=m_ctOctaves;
     _fFBMHighFrequencyStep=m_fHighFrequencyStep;
@@ -144,9 +144,9 @@ BOOL CreateFBMTexture(PIX pixW, PIX pixH, CTFileName fnFBMFile)
   // convert buffer to equalized color map
   FLOAT fConvertFactor=MAX_UBYTE/(fMax-fMin);
   // pixelate preview area
-  for(INDEX y=0; y<pixH; y++)
+  for (INDEX y=0; y<pixH; y++)
   {
-    for(INDEX x=0; x<pixW; x++)
+    for (INDEX x=0; x<pixW; x++)
     {
       INDEX iOffset=y*pixW+x;
       FLOAT fValue=pafFBM[iOffset];
@@ -179,7 +179,7 @@ void CDlgGenerateFBM::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-  if( !m_bCustomWindowCreated)
+  if (!m_bCustomWindowCreated)
   {
     // obtain window position
     CWnd *pwndTexture = GetDlgItem(IDC_FBM_PREVIEW_FRAME);
@@ -197,13 +197,13 @@ void CDlgGenerateFBM::OnPaint()
   {
     _pGfx->CreateWindowCanvas( m_wndTexture.m_hWnd, &m_pvp, &m_pdp);
   }
-  if( (m_pdp!=NULL) && (m_pdp->Lock()) )
+  if ((m_pdp!=NULL) && (m_pdp->Lock()) )
   {
     PIX pixW=256;
     PIX pixH=256;
     
     CTFileName fnFBMFile=CTString("Textures\\Editor\\FMPPreview.tex");
-    if(CreateFBMTexture(pixW, pixH, fnFBMFile))
+    if (CreateFBMTexture(pixW, pixH, fnFBMFile))
     {
       try
       {
@@ -306,17 +306,17 @@ void CDlgGenerateFBM::OnFbmExport()
   CTFileName fnFBM=_EngineGUI.FileRequester(
     "Export FBM texture", FILTER_TEX FILTER_PCX FILTER_ALL FILTER_END,
     "Layer mask directory", "Textures\\");
-  if( fnFBM=="") return;
+  if (fnFBM=="") return;
 
 	CDlgEditFloat dlg;
   dlg.m_fEditFloat=256.0f;
 	dlg.m_strVarName = "Width (pixels)";
   dlg.m_strTitle = "Texture size";
-  if(dlg.DoModal()!=IDOK) return;
+  if (dlg.DoModal()!=IDOK) return;
 
   PIX pixW=dlg.m_fEditFloat;
   
-  if(pixW!=1<<((INDEX)Log2( (FLOAT)pixW)))
+  if (pixW!=1<<((INDEX)Log2( (FLOAT)pixW)))
   {
     WarningMessage("Size must be power of 2!");
   }

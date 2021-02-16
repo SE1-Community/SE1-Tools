@@ -46,11 +46,11 @@ void CDlgTreeShortcuts::DoDataExchange(CDataExchange* pDX)
   CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     CTString astrShortcutNames[ DIRECTORY_SHORTCT_CT];
     // obtain tree shortcut names
-    for( INDEX iShortcut=0;iShortcut<DIRECTORY_SHORTCT_CT; iShortcut++)
+    for (INDEX iShortcut=0;iShortcut<DIRECTORY_SHORTCT_CT; iShortcut++)
     {
       // obtain tree item
       INDEX iSubDirsCt;
@@ -67,7 +67,7 @@ void CDlgTreeShortcuts::DoDataExchange(CDataExchange* pDX)
       // obtain full path name
       astrShortcutNames[ iShortcut] = achrShortcutIndex+theApp.GetNameForVirtualTreeNode( pvtnNode);
     }
-    for(INDEX iCtrl=0; iCtrl<10; iCtrl++)
+    for (INDEX iCtrl=0; iCtrl<10; iCtrl++)
     {
       // set names to buttons
       GetDlgItem( IDC_SHORTCUT01+iCtrl)->SetWindowText( CString(astrShortcutNames[ iCtrl]));
@@ -91,30 +91,30 @@ END_MESSAGE_MAP()
 
 BOOL CDlgTreeShortcuts::PreTranslateMessage(MSG* pMsg) 
 {
-  if( pMsg->message==WM_KEYDOWN)
+  if (pMsg->message==WM_KEYDOWN)
   {
-    if(pMsg->wParam == VK_RETURN)
+    if (pMsg->wParam == VK_RETURN)
     {
       pMsg->wParam = VK_SPACE;
     }
 	  // if we caught key down message
-    if( (pMsg->wParam!=VK_CONTROL) &&
+    if ((pMsg->wParam!=VK_CONTROL) &&
         (pMsg->wParam!=VK_ESCAPE) &&
         (pMsg->wParam!=VK_TAB) &&
         (pMsg->wParam!=VK_UP) &&
         (pMsg->wParam!=VK_DOWN) &&
         (pMsg->wParam!='W') )
     {
-      if( (pMsg->wParam>='0') && (pMsg->wParam<='9') )
+      if ((pMsg->wParam>='0') && (pMsg->wParam<='9') )
       {
         // remap key ID to number 0-9
-        if( pMsg->wParam == '0') m_iPressedShortcut = 9;
+        if (pMsg->wParam == '0') m_iPressedShortcut = 9;
         else                     m_iPressedShortcut = pMsg->wParam-'1';
       }
       EndDialog( 0);
       return TRUE;
     }
-    if( pMsg->wParam == 'W')
+    if (pMsg->wParam == 'W')
     {
       EndDialog( 0);
     }

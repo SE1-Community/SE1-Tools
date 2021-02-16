@@ -61,24 +61,24 @@ void CWndTestAnimation::OnPaint()
   CPaintDC dc(this); // device context for painting
   }
 
-  if( m_iTimerID == -1)
+  if (m_iTimerID == -1)
   {
     m_iTimerID = (int) SetTimer( 1, 50, NULL);
   }
 
-  if( (m_pViewPort == NULL) && (m_pDrawPort == NULL) )
+  if ((m_pViewPort == NULL) && (m_pDrawPort == NULL) )
   {
     // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
     // get curently selected light animation combo member
     INDEX iLightAnimation = m_pParentDlg->GetSelectedLightAnimation();
     // if animation has changed
-    if( iLightAnimation != m_aoAnimObject.GetAnim() )
+    if (iLightAnimation != m_aoAnimObject.GetAnim() )
     {
       // start new animation
       m_aoAnimObject.StartAnim( iLightAnimation);
@@ -106,7 +106,7 @@ static TICK _llLastTick = 0;
 void CWndTestAnimation::OnTimer(UINT nIDEvent) 
 {
 	// on our timer discard test animation window
-  if( nIDEvent == 1)
+  if (nIDEvent == 1)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
     if (llCurrentTick > _llLastTick)
@@ -126,7 +126,7 @@ void CWndTestAnimation::OnDestroy()
   _pTimer->SetGameTick(0);
 	CWnd::OnDestroy();
 
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;

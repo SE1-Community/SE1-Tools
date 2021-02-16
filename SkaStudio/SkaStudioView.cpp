@@ -132,7 +132,7 @@ CSeriousSkaStudioView::CSeriousSkaStudioView()
   m_pdpDrawPort = NULL;
   m_pvpViewPort = NULL;
   m_angModelAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
-  m_plLightPlacement.pl_PositionVector = FLOAT3D( 0.0f, 0.0f, 0.0f); // center
+  m_plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f); // center
   m_plLightPlacement.pl_OrientationAngle(1) = AngleDeg( 45.0f);      // heading
   m_plLightPlacement.pl_OrientationAngle(2) = AngleDeg( -45.0f);     // pitch
   m_plLightPlacement.pl_OrientationAngle(3) = AngleDeg( 0.0f);       // banking
@@ -155,7 +155,7 @@ void CSeriousSkaStudioView::SetProjectionData( CPerspectiveProjection3D &prProje
   prProjection.ViewerPlacementL().pl_PositionVector = m_vTarget;
   prProjection.ViewerPlacementL().pl_OrientationAngle = m_angViewerOrientation;
   prProjection.Prepare();
-  prProjection.ViewerPlacementL().Translate_OwnSystem(FLOAT3D( 0.0f, 0.0f, m_fTargetDistance));
+  prProjection.ViewerPlacementL().Translate_OwnSystem(FLOAT3D(0.0f, 0.0f, m_fTargetDistance));
 }
 
 void CSeriousSkaStudioView::OnIdle(void)
@@ -182,7 +182,7 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
 
   // return if no animsets
   INDEX ctas = pmi->mi_aAnimSet.Count();
-  if(ctas == 0) {
+  if (ctas == 0) {
     strText.PrintF(MAKESPACE(ctChildLevel));
     strText += CTString(0,"[%s]\n",(const char*)pmi->GetName());
     strAnimations += strText;
@@ -195,11 +195,11 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
   INDEX iFirstAnimList = 0;
   // loop from newer to older
   INDEX ial=ctal-1;
-  for(;ial>=0;ial--) {
+  for (;ial>=0;ial--) {
     AnimList &alList = pmi->mi_aqAnims.aq_Lists[ial];
     // calculate fade factor
     FLOAT fFadeFactor = CalculateFadeFactor(alList);
-    if(fFadeFactor >= 1.0f) {
+    if (fFadeFactor >= 1.0f) {
       iFirstAnimList = ial;
       break;
     }
@@ -210,10 +210,10 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
   strAnimations += strText;
 
   // for each anim list after iFirstAnimList
-  for(ial=iFirstAnimList;ial<ctal;ial++) {
+  for (ial=iFirstAnimList;ial<ctal;ial++) {
     AnimList &alList = pmi->mi_aqAnims.aq_Lists[ial];
     AnimList *palListNext=NULL;
-    if(ial+1<ctal) palListNext = &pmi->mi_aqAnims.aq_Lists[ial+1];
+    if (ial+1<ctal) palListNext = &pmi->mi_aqAnims.aq_Lists[ial+1];
     
     INDEX ctpa = alList.al_PlayedAnims.Count();
     // for each played anim in played anim list
@@ -229,7 +229,7 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
       INDEX iAnimSetIndex;
       INDEX iAnimIndex;
       // find anim by ID in all anim sets within this model
-      if(pmi->FindAnimationByID(pa.pa_iAnimID,&iAnimSetIndex,&iAnimIndex)) {
+      if (pmi->FindAnimationByID(pa.pa_iAnimID,&iAnimSetIndex,&iAnimIndex)) {
         // if found, animate bones
         Animation &an = pmi->mi_aAnimSet[iAnimSetIndex].as_Anims[iAnimIndex];
         
@@ -252,13 +252,13 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
         INDEX iCurentFrame;
         INDEX iAnimFrame,iNextAnimFrame;
         
-        if(bAnimLooping) {
+        if (bAnimLooping) {
           f = fmod(f,an.an_iFrames);
           iCurentFrame = INDEX(f);
           iAnimFrame = iCurentFrame % an.an_iFrames;
           iNextAnimFrame = (iCurentFrame+1) % an.an_iFrames;
         } else {
-          if(f>an.an_iFrames) f = an.an_iFrames-1;
+          if (f>an.an_iFrames) f = an.an_iFrames-1;
           iCurentFrame = INDEX(f);
           iAnimFrame = ClampUp(iCurentFrame,an.an_iFrames-1L);
           iNextAnimFrame = ClampUp(iCurentFrame+1L,an.an_iFrames-1L);
@@ -268,7 +268,7 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
         FLOAT fFadeFactor = CalculateFadeFactor(alList);
         strText.PrintF("%s %g - %g",ska_GetStringFromTable(pa.pa_iAnimID),f,fFadeFactor);
         INDEX iLength = strText.Length();
-        if(iLength<30) {
+        if (iLength<30) {
           strTemp.PrintF(MAKESPACE(30-iLength));
           strText+=strTemp;
         }
@@ -283,7 +283,7 @@ void CreateCurrentAnimationList(CModelInstance *pmi,CTString &strAnimations)
   INDEX ctcmi = pmi->mi_cmiChildren.Count();
   ctChildLevel+=2;
   // for each child model instance
-  for(INDEX icmi=0;icmi<ctcmi;icmi++)   {
+  for (INDEX icmi=0;icmi<ctcmi;icmi++)   {
     CModelInstance *pcmi = &pmi->mi_cmiChildren[icmi];
     // create list of animations for child
     CreateCurrentAnimationList(pcmi,strAnimations);
@@ -296,10 +296,10 @@ INDEX CSeriousSkaStudioView::TestRayCastHit(CPoint &pt)
   INDEX iHitBone = -1;
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   ASSERT(pDoc!=NULL);
-  if(pDoc!=NULL) {
+  if (pDoc!=NULL) {
     CModelInstance *pmi = pDoc->m_ModelInstance;
     ASSERT(pmi!=NULL);
-    if(pmi!=NULL) {
+    if (pmi!=NULL) {
     
       INDEX iBoneID = -1;
       FLOATmatrix3D mat;
@@ -325,8 +325,8 @@ INDEX CSeriousSkaStudioView::TestRayCastHit(CPoint &pt)
       FLOAT3D vResult;
       vResult = plRay.pl_PositionVector + vDirection;
 
-      RM_TestRayCastHit(*pmi,mat,FLOAT3D(0,0,0),plRay.pl_PositionVector,vResult,300000,&iBoneID);
-      if(iBoneID>=0) {
+      RM_TestRayCastHit(*pmi,mat,FLOAT3D(0.0f, 0.0f, 0.0f),plRay.pl_PositionVector,vResult,300000,&iBoneID);
+      if (iBoneID>=0) {
         iHitBone = iBoneID;
       }
     }
@@ -339,13 +339,13 @@ void CSeriousSkaStudioView::RenderLightModels(CDrawPort *pdp,CPlacement3D &pl)
 
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   // show light objects
-  if(pDoc!=NULL && pDoc->bShowLights && theApp.pmiLight!=NULL)
+  if (pDoc!=NULL && pDoc->bShowLights && theApp.pmiLight!=NULL)
   {
     CPlacement3D plLightPlacement;
     plLightPlacement.pl_OrientationAngle = m_plLightPlacement.pl_OrientationAngle;
-    plLightPlacement.pl_PositionVector = FLOAT3D(0,0,0);
-    plLightPlacement.Translate_OwnSystem( FLOAT3D( 0.0f, 0.0f, m_fLightDistance));
-    if(pDoc->m_ModelInstance != NULL) {
+    plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    plLightPlacement.Translate_OwnSystem( FLOAT3D(0.0f, 0.0f, m_fLightDistance));
+    if (pDoc->m_ModelInstance != NULL) {
       plLightPlacement.Translate_AbsoluteSystem( pDoc->m_ModelInstance->GetOffsetPos());
     }
 
@@ -371,7 +371,7 @@ void AdjustBonesCallback(void *pData)
 
 void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
 {
-  if(theApp.GetDisableRenderRequests()>0) return;
+  if (theApp.GetDisableRenderRequests()>0) return;
 
   CSeriousSkaStudioDoc* pDoc = GetDocument();
 
@@ -397,7 +397,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
   pl.pl_OrientationAngle = m_angModelAngle;
   pl.pl_PositionVector   = FLOAT3D(0.0f, 0.0f, 0.0f);
 
-  if(pmiSelected!=NULL) {
+  if (pmiSelected!=NULL) {
     // Adjust custom model instance stretch
     CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
     CString strStretch;
@@ -407,7 +407,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
   }
 
 
-  if(pDoc->m_ModelInstance != NULL)
+  if (pDoc->m_ModelInstance != NULL)
   {
     // set projection data
     SetProjectionData( prPerspectiveProjection, pdp);
@@ -432,9 +432,9 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
 
     CPlacement3D plLightPlacement;
     plLightPlacement.pl_OrientationAngle = m_plLightPlacement.pl_OrientationAngle;
-    plLightPlacement.pl_PositionVector = FLOAT3D(0,0,0);
-    plLightPlacement.Translate_OwnSystem( FLOAT3D( 0.0f, 0.0f, m_fLightDistance));
-    if(pDoc->m_ModelInstance != NULL) {
+    plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    plLightPlacement.Translate_OwnSystem( FLOAT3D(0.0f, 0.0f, m_fLightDistance));
+    if (pDoc->m_ModelInstance != NULL) {
       plLightPlacement.Translate_AbsoluteSystem( pDoc->m_ModelInstance->GetOffsetPos());
     }
 
@@ -442,12 +442,12 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     //
 
     // if ground is visible
-    if(pDoc->bShowGround) {
+    if (pDoc->bShowGround) {
       RM_RenderGround(theApp.toGroundTexture);
     }
 
     // Fix this
-    if(pDoc->bAutoMiping) {
+    if (pDoc->bAutoMiping) {
       // auto mipping
       RM_SetCustomMeshLodDistance(-1);
       RM_SetCustomSkeletonLodDistance(-1);
@@ -459,7 +459,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     
     /*
     // Render shadow
-    FLOATplane3D plShadowPlane = FLOATplane3D(FLOAT3D(0,1,0),0);
+    FLOATplane3D plShadowPlane = FLOATplane3D(FLOAT3D(0.0f, 1.0f, 0.0f),0);
     pDoc->m_ModelInstance->AddSimpleShadow(1.0f,plShadowPlane);
     */
 
@@ -468,7 +468,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     // render model
     RM_RenderSKA(*pDoc->m_ModelInstance);
     // render selected bone
-    if(theApp.iSelectedBoneID >= 0) {
+    if (theApp.iSelectedBoneID >= 0) {
       RM_RenderBone(*pDoc->m_ModelInstance,theApp.iSelectedBoneID);
     }
 
@@ -476,27 +476,27 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
     HTREEITEM hSelectedItem = m_TreeCtrl.GetSelectedItem();
     NodeInfo *pni = NULL;
-    if(hSelectedItem!=NULL) {
+    if (hSelectedItem!=NULL) {
       pni = &theApp.m_dlgBarTreeView.GetNodeInfo(hSelectedItem);
     }
     
     BOOL bShowColisionBoxes = pDoc->bShowColisionBox;
-    if(pni!=NULL && pni->ni_iType == NT_COLISIONBOX) {
+    if (pni!=NULL && pni->ni_iType == NT_COLISIONBOX) {
       bShowColisionBoxes = TRUE;
     }
     BOOL bShowAllFramesBBox = pDoc->bShowAllFramesBBox;
-    if(pni!=NULL && pni->ni_iType == NT_ALLFRAMESBBOX) {
+    if (pni!=NULL && pni->ni_iType == NT_ALLFRAMESBBOX) {
       bShowAllFramesBBox = TRUE;
     }
 
     // show colision box
-    if(pmiSelected->mi_cbAABox.Count()>0 &&pmiSelected->mi_iCurentBBox>=0) {
-      if(bShowColisionBoxes) {
+    if (pmiSelected->mi_cbAABox.Count()>0 &&pmiSelected->mi_iCurentBBox>=0) {
+      if (bShowColisionBoxes) {
         ColisionBox &cb = pmiSelected->GetColisionBox(pmiSelected->mi_iCurentBBox);
         RM_RenderColisionBox(*pmiSelected,cb,C_mlGREEN);
       }
     }
-    if(bShowAllFramesBBox) {
+    if (bShowAllFramesBBox) {
       ColisionBox &cbAllFrames = pmiSelected->mi_cbAllFramesBBox;
       RM_RenderColisionBox(*pmiSelected,cbAllFrames,C_ORANGE);
     }
@@ -505,7 +505,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
 
     RM_EndRenderingView();
     // show paused indicator
-    if(pDoc->m_bViewPaused) {
+    if (pDoc->m_bViewPaused) {
       TIME tmNow = _pTimer->GetHighPrecisionTimer().GetSeconds();
       ULONG ulAlpha = sin(tmNow*16)*96 +128;
       pdp->SetFont( _pfdConsoleFont);
@@ -513,7 +513,7 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     }
 
     // Show anim queue
-    if(theApp.bShowAnimQueue) {
+    if (theApp.bShowAnimQueue) {
       pdp->Fill(0,0,200,m_pdpDrawPort->dp_Height,0x0000007f,0x00000000,0x0000007f,0x00000000);
       // show curent played animations
       pdp->SetFont( _pfdConsoleFont);
@@ -526,12 +526,12 @@ void CSeriousSkaStudioView::RenderView(CDrawPort *pdp)
     }
 
     /*
-    if(theApp.iSelectedBoneID>=0) {
+    if (theApp.iSelectedBoneID>=0) {
       FLOAT3D vStartPoint;
       FLOAT3D vEndPoint;
-      if(RM_GetBoneAbsPosition(*pDoc->m_ModelInstance,theApp.iSelectedBoneID,vStartPoint,vEndPoint)) {
+      if (RM_GetBoneAbsPosition(*pDoc->m_ModelInstance,theApp.iSelectedBoneID,vStartPoint,vEndPoint)) {
         CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-        if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgBone) {
+        if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgBone) {
           FLOAT3D vDirection = vEndPoint - vStartPoint;
           ANGLE3D angAngle;
           DirectionVectorToAngles(vDirection,angAngle);
@@ -557,7 +557,7 @@ void CSeriousSkaStudioView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	
   // if there is a valid drawport, and the drawport can be locked
-  if( m_pdpDrawPort!=NULL && m_pdpDrawPort->Lock())
+  if (m_pdpDrawPort!=NULL && m_pdpDrawPort->Lock())
   {
     // render view
     RenderView( m_pdpDrawPort);
@@ -566,7 +566,7 @@ void CSeriousSkaStudioView::OnDraw(CDC* pDC)
     m_pdpDrawPort->Unlock();
 
     // swap if there is a valid viewport
-    if( m_pvpViewPort!=NULL)
+    if (m_pvpViewPort!=NULL)
     {
       m_pvpViewPort->SwapBuffers();
     }
@@ -586,7 +586,7 @@ void CSeriousSkaStudioView::OnSize(UINT nType, int cx, int cy)
   INDEX iWidth = rc.right - rc.left - 4;
   INDEX iHeight = rc.bottom - rc.top - 4;
   // check if view is maximized
-  if((iWidth == cx) && (iHeight == cy))
+  if ((iWidth == cx) && (iHeight == cy))
   {
   	m_iViewSize = SIZE_MAXIMIZED;
     theApp.bChildrenMaximized = TRUE;
@@ -599,7 +599,7 @@ void CSeriousSkaStudioView::OnSize(UINT nType, int cx, int cy)
 
 
   // if we are not in game mode and changing of display mode is not on
-  if( m_pvpViewPort!=NULL)
+  if (m_pvpViewPort!=NULL)
   { // resize it
     m_pvpViewPort->Resize();
   }
@@ -690,7 +690,7 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       plTarget.AbsoluteToRelative( plViewer);
       // translate it
-      plTarget.Translate_AbsoluteSystem( FLOAT3D( dx, -dy, 0.0f));
+      plTarget.Translate_AbsoluteSystem( FLOAT3D(dx, -dy, 0.0f));
       // project the placement back from viewer's system
       plTarget.RelativeToAbsolute( plViewer);
       m_vTarget = plTarget.pl_PositionVector;
@@ -707,7 +707,7 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       plTarget.AbsoluteToRelative( plViewer);
       // translate it
-      plTarget.Translate_AbsoluteSystem( FLOAT3D( dx, 0.0f, 0.0f));
+      plTarget.Translate_AbsoluteSystem( FLOAT3D(dx, 0.0f, 0.0f));
       // project the placement back from viewer's system
       plTarget.RelativeToAbsolute( plViewer);
       m_vTarget = plTarget.pl_PositionVector;
@@ -722,13 +722,13 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
     CSeriousSkaStudioDoc* pDoc = GetDocument();
     CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
     HTREEITEM hSelectedItem = m_TreeCtrl.GetSelectedItem();
-    if(hSelectedItem==NULL) {
+    if (hSelectedItem==NULL) {
       return;
     }
     NodeInfo &niSelected = theApp.m_dlgBarTreeView.GetNodeInfo(hSelectedItem);
     CModelInstance *pmi = NULL;
     // is selected item model instance
-    if(niSelected.ni_iType == NT_MODELINSTANCE){
+    if (niSelected.ni_iType == NT_MODELINSTANCE) {
       // get pointer to model instance
       pmi = (CModelInstance*)niSelected.ni_pPtr;
 
@@ -738,7 +738,7 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
       qvBonePlacement.qRot.q_w = 1;
       // find parent bone of selected model instance
       RenBone rb;
-      if(RM_GetRenBoneAbs(*pDoc->m_ModelInstance,pmi->mi_iParentBoneID,rb)) {
+      if (RM_GetRenBoneAbs(*pDoc->m_ModelInstance,pmi->mi_iParentBoneID,rb)) {
         // get bone qvect
         Matrix12ToQVect(qvBonePlacement,rb.rb_mBonePlacement);
       }
@@ -757,12 +757,12 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
 
       plOffset.RelativeToRelative(plBone,plViewer);
 
-      if(bLMB && bRMB) {
-        plOffset.Rotate_TrackBall( ANGLE3D( -dAngleX/2, -dAngleY/2, 0));
-      } else if(bLMB) {
-        plOffset.pl_PositionVector +=  FLOAT3D( -dx, dy, 0.0f);
-      } else if(bRMB) {
-        plOffset.pl_PositionVector +=  FLOAT3D( 0.0f, 0.0f, -dy);
+      if (bLMB && bRMB) {
+        plOffset.Rotate_TrackBall( ANGLE3D(-dAngleX/2, -dAngleY/2, 0));
+      } else if (bLMB) {
+        plOffset.pl_PositionVector +=  FLOAT3D(-dx, dy, 0.0f);
+      } else if (bRMB) {
+        plOffset.pl_PositionVector +=  FLOAT3D(0.0f, 0.0f, -dy);
       }
       plOffset.RelativeToRelative(plViewer,plBone);
 
@@ -784,26 +784,26 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
 
       // set min and max of colision box
       plCBMin.pl_PositionVector = cb.Min();
-      plCBMin.pl_OrientationAngle = ANGLE3D(0,0,0);
+      plCBMin.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
       plCBMin.AbsoluteToRelative(plViewer);
 
       plCBMax.pl_PositionVector = cb.Max();
-      plCBMax.pl_OrientationAngle = ANGLE3D(0,0,0);
+      plCBMax.pl_OrientationAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
       plCBMax.AbsoluteToRelative(plViewer);
       // if shift is pressed
-      if(bShift) {
-        if(bLMB) {
-          plCBMin.pl_PositionVector +=  FLOAT3D( -dx, dy, 0.0f);
-        } else if(bRMB) {
-          plCBMax.pl_PositionVector +=  FLOAT3D( -dx, dy, 0.0f);
+      if (bShift) {
+        if (bLMB) {
+          plCBMin.pl_PositionVector +=  FLOAT3D(-dx, dy, 0.0f);
+        } else if (bRMB) {
+          plCBMax.pl_PositionVector +=  FLOAT3D(-dx, dy, 0.0f);
         }
       // if not
       } else {
-        if(bLMB) {
-          plCBMin.pl_PositionVector +=  FLOAT3D( -dx, dy, 0.0f);
-          plCBMax.pl_PositionVector +=  FLOAT3D( -dx, dy, 0.0f);
-        } else if(bRMB) {
-          plCBMin.pl_PositionVector +=  FLOAT3D( 0.0f, 0.0f, -dy);
+        if (bLMB) {
+          plCBMin.pl_PositionVector +=  FLOAT3D(-dx, dy, 0.0f);
+          plCBMax.pl_PositionVector +=  FLOAT3D(-dx, dy, 0.0f);
+        } else if (bRMB) {
+          plCBMin.pl_PositionVector +=  FLOAT3D(0.0f, 0.0f, -dy);
         }
       }
 
@@ -816,17 +816,17 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
       pDoc->MarkAsChanged();
     }
   // if only shift is presed
-  } else if(bShift) {
-    if(bLMB) {
+  } else if (bShift) {
+    if (bLMB) {
       // project the placement to the viewer's system
       m_plLightPlacement.AbsoluteToRelative( plViewer);
       // rotate it
-      m_plLightPlacement.Rotate_TrackBall( ANGLE3D( -dAngleX/2, -dAngleY/2, 0));
+      m_plLightPlacement.Rotate_TrackBall( ANGLE3D(-dAngleX/2, -dAngleY/2, 0));
       // project the placement back from viewer's system
       m_plLightPlacement.RelativeToAbsolute( plViewer);
-    } else if(bRMB) {
+    } else if (bRMB) {
       FLOAT fNewDistance = m_fLightDistance - dz;
-      if( fNewDistance > 0.2f) {
+      if (fNewDistance > 0.2f) {
         m_fLightDistance = fNewDistance;
       }
     }
@@ -843,10 +843,10 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point)
 /*
   HWND hwndUnderMouse = ::WindowFromPoint( point);
   HWND hwndInfo = NULL;
-  if( pMainFrame->m_pInfoFrame != NULL)
+  if (pMainFrame->m_pInfoFrame != NULL)
     hwndInfo = pMainFrame->m_pInfoFrame->m_hWnd;
 
-  if( (m_hWnd != ::GetActiveWindow()) && ( hwndInfo != hwndUnderMouse) )
+  if ((m_hWnd != ::GetActiveWindow()) && ( hwndInfo != hwndUnderMouse) )
   {
     SetActiveWindow();
     SetFocus();
@@ -860,14 +860,14 @@ CView::OnMouseMove(nFlags, point);
 
 void CSeriousSkaStudioView::FastZoomIn()
 {
-  if( m_fTargetDistance > 1.0f) {
+  if (m_fTargetDistance > 1.0f) {
     m_fTargetDistance /= 2.0f;
   }
 }
 
 void CSeriousSkaStudioView::FastZoomOut()
 {
-  if( m_fTargetDistance < 65535.0f) {
+  if (m_fTargetDistance < 65535.0f) {
     m_fTargetDistance *= 2.0f;
   }
 }
@@ -878,15 +878,15 @@ void CSeriousSkaStudioView::OnLButtonDown(UINT nFlags, CPoint point)
   BOOL bCtrl = nFlags & MK_CONTROL;
   BOOL bShift = nFlags & MK_SHIFT;
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomIn();
     return;
   }
 
-  if(bCtrl||bSpace||bShift) {}
+  if (bCtrl||bSpace||bShift) {}
   else {
     INDEX iHitBone = TestRayCastHit(point);
-    if(iHitBone!=(-1) && iHitBone!=theApp.iSelectedBoneID) {
+    if (iHitBone!=(-1) && iHitBone!=theApp.iSelectedBoneID) {
 
     }
     theApp.iSelectedBoneID = iHitBone;
@@ -901,7 +901,7 @@ void CSeriousSkaStudioView::OnLButtonDblClk(UINT nFlags, CPoint point)
   BOOL bSpace = (GetKeyState( ' ') & 128) != 0;  
   BOOL bCtrl = nFlags & MK_CONTROL;
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomIn();
   }
 	CView::OnLButtonDblClk(nFlags, point);
@@ -911,7 +911,7 @@ void CSeriousSkaStudioView::OnRButtonDown(UINT nFlags, CPoint point) {
   BOOL bSpace = (GetKeyState( ' ') & 128) != 0;  
   BOOL bCtrl = nFlags & MK_CONTROL;
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomOut();
     return;
   }
@@ -922,7 +922,7 @@ void CSeriousSkaStudioView::OnRButtonDblClk(UINT nFlags, CPoint point)
   BOOL bSpace = (GetKeyState( ' ') & 128) != 0;  
   BOOL bCtrl = nFlags & MK_CONTROL;
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomOut();
   }
 	CView::OnRButtonDblClk(nFlags, point);
@@ -933,7 +933,7 @@ void CSeriousSkaStudioView::OnLButtonUp(UINT nFlags, CPoint point)
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelectedItem = m_TreeCtrl.GetSelectedItem();
-  if(hSelectedItem!=NULL && _bSelectedItemChanged) {
+  if (hSelectedItem!=NULL && _bSelectedItemChanged) {
     theApp.m_dlgBarTreeView.SelItemChanged(hSelectedItem);
     _bSelectedItemChanged = FALSE;
   }
@@ -943,7 +943,7 @@ void CSeriousSkaStudioView::OnRButtonUp(UINT nFlags, CPoint point)
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelectedItem = m_TreeCtrl.GetSelectedItem();
-  if(hSelectedItem!=NULL && _bSelectedItemChanged) {
+  if (hSelectedItem!=NULL && _bSelectedItemChanged) {
     theApp.m_dlgBarTreeView.SelItemChanged(hSelectedItem);
     _bSelectedItemChanged = FALSE;
   }
@@ -963,7 +963,7 @@ BOOL CSeriousSkaStudioView::OnAddMeshlist()
   CSeriousSkaStudioDoc *pDoc = GetDocument();
   CTFileName fnSim;
 
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return FALSE;
@@ -978,14 +978,14 @@ BOOL CSeriousSkaStudioView::OnAddMeshlist()
     "Open directory", "Models\\",fnSelected);
   if (fnSim=="") return FALSE;
   // check if file allready exist
-  if(FileExists(fnSim))
+  if (FileExists(fnSim))
   {
     CTString strText = CTString(0,"File '%s' exist\n\nPress OK to load it, Cancel to overwrite it",fnSim);
     int iRet = AfxMessageBox(CString(strText),MB_OKCANCEL);
-    if(iRet == IDOK)
+    if (iRet == IDOK)
     {
       // convert and load animset
-      if(theApp.ConvertMesh(fnSim))
+      if (theApp.ConvertMesh(fnSim))
       {
         fnSim = fnSim.NoExt() + ".bm";
         try
@@ -1016,7 +1016,7 @@ BOOL CSeriousSkaStudioView::OnAddMeshlist()
     // close file
     ostrFile.Close();
     // convert it to binary (just to exist)
-    if(theApp.ConvertMesh(fnSim))
+    if (theApp.ConvertMesh(fnSim))
     {
       fnSim = fnSim.NoExt() + ".bm";
       // add it to selected model instance
@@ -1047,14 +1047,14 @@ void CSeriousSkaStudioView::OnAddSkeletonlist()
   CSeriousSkaStudioDoc *pDoc = GetDocument();
   CTFileName fnSim;
 
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
   }
 
   CSkeleton *skl = pmiSelected->mi_psklSkeleton;
-  if(skl != NULL)
+  if (skl != NULL)
   {
     theApp.ErrorMessage("Skeleton for this object exists. Only one skeleton per model is allowed!");
     return;
@@ -1069,14 +1069,14 @@ void CSeriousSkaStudioView::OnAddSkeletonlist()
     "Open directory", "Models\\", fnSelected);
   if (fnSim=="") return;
   // check if file allready exist
-  if(FileExists(fnSim))
+  if (FileExists(fnSim))
   {
     CTString strText = CTString(0,"File '%s' exist\n\nPress OK to load it, Cancel to overwrite it",fnSim);
     int iRet = AfxMessageBox(CString(strText),MB_OKCANCEL);
-    if(iRet == IDOK)
+    if (iRet == IDOK)
     {
       // convert and load animset
-      if(theApp.ConvertSkeleton(fnSim))
+      if (theApp.ConvertSkeleton(fnSim))
       {
         fnSim = fnSim.NoExt() + ".bs";
         try
@@ -1106,7 +1106,7 @@ void CSeriousSkaStudioView::OnAddSkeletonlist()
     // close file
     ostrFile.Close();
     // convert it to binary (just to exist)
-    if(theApp.ConvertSkeleton(fnSim))
+    if (theApp.ConvertSkeleton(fnSim))
     {
       fnSim = fnSim.NoExt() + ".bs";
       // add it to selected model instance
@@ -1129,7 +1129,7 @@ void CSeriousSkaStudioView::OnAddAnimset()
   CSeriousSkaStudioDoc *pDoc = GetDocument();
   CTFileName fnSim;
 
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
@@ -1144,14 +1144,14 @@ void CSeriousSkaStudioView::OnAddAnimset()
     "Open directory", "Models\\", fnSelected);
   if (fnSim=="") return;
   // check if file allready exist
-  if(FileExists(fnSim))
+  if (FileExists(fnSim))
   {
     CTString strText = CTString(0,"File '%s' exist\n\nPress OK to load it, Cancel to overwrite it",fnSim);
     int iRet = AfxMessageBox(CString(strText),MB_OKCANCEL);
-    if(iRet == IDOK)
+    if (iRet == IDOK)
     {
       // convert and load animset
-      if(theApp.ConvertAnimSet(fnSim))
+      if (theApp.ConvertAnimSet(fnSim))
       {
         fnSim = fnSim.NoExt() + ".ba";
         try
@@ -1181,7 +1181,7 @@ void CSeriousSkaStudioView::OnAddAnimset()
     // close file
     ostrFile.Close();
     // convert it to binary (just to exist)
-    if(theApp.ConvertAnimSet(fnSim))
+    if (theApp.ConvertAnimSet(fnSim))
     {
       fnSim = fnSim.NoExt() + ".ba";
       // add it to selected model instance
@@ -1201,14 +1201,14 @@ void CSeriousSkaStudioView::OnAddAnimset()
 // add new child model instance to selected model instance
 void CSeriousSkaStudioView::OnAddChildModelInstance() 
 {
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
   }
   CModelInstance::EnableSrcRememberFN(TRUE);
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
-  if(pDoc->m_ModelInstance == NULL)
+  if (pDoc->m_ModelInstance == NULL)
   {
     theApp.ErrorMessage("There is no root model instance");
     return;
@@ -1218,16 +1218,16 @@ void CSeriousSkaStudioView::OnAddChildModelInstance()
   SkeletonLOD *psklodParent = NULL;
   INDEX iParentBoneID = 0;
   // if parent has skeleton
-  if(psklParent != NULL)
+  if (psklParent != NULL)
   {
     // if parent has skeleton lods
     INDEX ctslod = psklParent->skl_aSkeletonLODs.Count();
-    if(ctslod > 0)
+    if (ctslod > 0)
     {
       psklodParent = &psklParent->skl_aSkeletonLODs[0];
       INDEX ctsb = psklodParent->slod_aBones.Count();
       // if parent has any bones
-      if(ctsb > 0)
+      if (ctsb > 0)
       {
         SkeletonBone &sb = psklodParent->slod_aBones[0];
         iParentBoneID = sb.sb_iID;
@@ -1253,13 +1253,13 @@ void CSeriousSkaStudioView::OnAddChildModelInstance()
   {
     // error in parsing occured
     theApp.ErrorMessage("%s",strError);
-    if(pcmi != NULL) pcmi->Clear();
+    if (pcmi != NULL) pcmi->Clear();
     return;
   }
 
   CTString strText = CTString(0,"Add this model as reference or use own copy");
   int iRet = AfxMessageBox(CString(strText),MB_YESNO);
-  if(iRet == IDNO)
+  if (iRet == IDNO)
   {
     // assign same source file name as parent model instance so it will be saved in same file
     pcmi->mi_fnSourceFile = pmiSelected->mi_fnSourceFile;
@@ -1279,7 +1279,7 @@ void CSeriousSkaStudioView::OnAddMeshlod()
 {
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
 
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
@@ -1287,7 +1287,7 @@ void CSeriousSkaStudioView::OnAddMeshlod()
 
   // if mesh list does not exist
   INDEX ctmshi = pmiSelected->mi_aMeshInst.Count();
-  if(ctmshi < 1)
+  if (ctmshi < 1)
   {
     theApp.ErrorMessage("Model instance must have mesh lod list to add mesh lod to it");
     return;
@@ -1300,12 +1300,12 @@ void CSeriousSkaStudioView::OnAddMeshlod()
   MeshInstance *pmshi;
 
   // get selected mesh instance
-  if(niSelected.ni_iType == NT_MESHLODLIST)
+  if (niSelected.ni_iType == NT_MESHLODLIST)
   {
     // selected item is mesh instance so use its pointer as current mesh instance
     pmshi=(MeshInstance*)niSelected.ni_pPtr;
   }
-  else if(niSelected.ni_iType == NT_MESHLOD)
+  else if (niSelected.ni_iType == NT_MESHLOD)
   {
     // selected item is mesh lod, so get his parent and use his pointer as current mesh instance
     HTREEITEM hParent = m_TreeCtrl.GetParentItem(hSelected);
@@ -1327,15 +1327,15 @@ void CSeriousSkaStudioView::OnAddMeshlod()
     "Open directory", "Models\\", "", &afnMesh);
 
   // return if no files selected
-  if(afnMesh.Count()<=0) return;
+  if (afnMesh.Count()<=0) return;
   FLOAT fMaxDistance = 10;
   INDEX ctmlod = pMesh->msh_aMeshLODs.Count();
   // for each lod in skeleton
   INDEX imlod=0;
-  for(;imlod<ctmlod;imlod++)
+  for (;imlod<ctmlod;imlod++)
   {
     // find current max distance in skeleton
-    if((fMaxDistance-5)<pMesh->msh_aMeshLODs[imlod].mlod_fMaxDistance) 
+    if ((fMaxDistance-5)<pMesh->msh_aMeshLODs[imlod].mlod_fMaxDistance) 
       fMaxDistance = pMesh->msh_aMeshLODs[imlod].mlod_fMaxDistance;
   }
   // create new skeleton list that holds only new skeleton lods
@@ -1361,7 +1361,7 @@ void CSeriousSkaStudioView::OnAddMeshlod()
     // save list file
     strMeshList.Save_t(fnMeshList);
     // convert animset list file
-    if(!theApp.ConvertMesh(fnMeshList))
+    if (!theApp.ConvertMesh(fnMeshList))
     {
       RemoveFile(fnMeshList);
       return;
@@ -1382,7 +1382,7 @@ void CSeriousSkaStudioView::OnAddMeshlod()
   // count new skleton lods in temp skeleton list
   INDEX ctNewMlods = mshTemp.msh_aMeshLODs.Count();
   // for each new skeleton in temp skeleton lod list
-  for(imlod=0;imlod<ctNewMlods;imlod++)
+  for (imlod=0;imlod<ctNewMlods;imlod++)
   {
     // add skeleton lod to selected skeleton
     pMesh->AddMeshLod(mshTemp.msh_aMeshLODs[imlod]);
@@ -1398,14 +1398,14 @@ void CSeriousSkaStudioView::OnAddSkeletonlod()
 {
   CSeriousSkaStudioDoc *pDoc = GetDocument();
 
-  if(pmiSelected == NULL)
+  if (pmiSelected == NULL)
   {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
   }
 
   CSkeleton *pSkeleton = pmiSelected->mi_psklSkeleton;
-  if(pSkeleton == NULL)
+  if (pSkeleton == NULL)
   {
     theApp.ErrorMessage("Model instance must have Skeleton list to add skeleton lod to it");
     return;
@@ -1417,15 +1417,15 @@ void CSeriousSkaStudioView::OnAddSkeletonlod()
     "Open directory", "Models\\", "", &afnSkeleton);
 
   // return if no files selected
-  if(afnSkeleton.Count()<=0) return;
+  if (afnSkeleton.Count()<=0) return;
 
   FLOAT fMaxDistance=10;
   INDEX ctslod = pSkeleton->skl_aSkeletonLODs.Count();
   // for each lod in skeleton
-  for(INDEX ilod=0;ilod<ctslod;ilod++)
+  for (INDEX ilod=0;ilod<ctslod;ilod++)
   {
     // find current max distance in skeleton
-    if((fMaxDistance-5)<pSkeleton->skl_aSkeletonLODs[ilod].slod_fMaxDistance) fMaxDistance = pSkeleton->skl_aSkeletonLODs[ilod].slod_fMaxDistance;
+    if ((fMaxDistance-5)<pSkeleton->skl_aSkeletonLODs[ilod].slod_fMaxDistance) fMaxDistance = pSkeleton->skl_aSkeletonLODs[ilod].slod_fMaxDistance;
   }
 
   // create new skeleton list that holds only new skeleton lods
@@ -1451,7 +1451,7 @@ void CSeriousSkaStudioView::OnAddSkeletonlod()
     // save list file
     strSkeletonList.Save_t(fnSklList);
     // convert animset list file
-    if(!theApp.ConvertSkeleton(fnSklList))
+    if (!theApp.ConvertSkeleton(fnSklList))
     {
       slTemp.Clear();
       RemoveFile(fnSklList);
@@ -1473,7 +1473,7 @@ void CSeriousSkaStudioView::OnAddSkeletonlod()
   // count new skleton lods in temp skeleton list
   INDEX ctNewSlods = slTemp.skl_aSkeletonLODs.Count();
   // for each new skeleton in temp skeleton lod list
-  for(INDEX isl=0;isl<ctNewSlods;isl++)
+  for (INDEX isl=0;isl<ctNewSlods;isl++)
   {
     // add skeleton lod to selected skeleton
     pSkeleton->AddSkletonLod(slTemp.skl_aSkeletonLODs[isl]);
@@ -1488,13 +1488,13 @@ void CSeriousSkaStudioView::OnAddSkeletonlod()
 void CSeriousSkaStudioView::OnAddAnimation() 
 {
   // check for selected model instance
-  if(pmiSelected == NULL) {
+  if (pmiSelected == NULL) {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
   }
   // get animset count
   INDEX ctas = pmiSelected->mi_aAnimSet.Count();
-  if(ctas < 1) {
+  if (ctas < 1) {
     theApp.ErrorMessage("Model instance must have Anim set to add animations to it");
     return;
   }
@@ -1506,7 +1506,7 @@ void CSeriousSkaStudioView::OnAddAnimation()
     "Open directory", "Models\\", "", &afnAnimation);
 
   // return if no files selected
-  if(afnAnimation.Count()<=0) return;
+  if (afnAnimation.Count()<=0) return;
 
   // get pointer to seleceted animset
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
@@ -1514,10 +1514,10 @@ void CSeriousSkaStudioView::OnAddAnimation()
   INDEX iSelected = m_TreeCtrl.GetItemData(hSelected);
   NodeInfo &niSelected = theApp.aNodeInfo[iSelected];
   CAnimSet *pas=NULL;
-  if(niSelected.ni_iType == NT_ANIMSET) {
+  if (niSelected.ni_iType == NT_ANIMSET) {
     // selected item is animset
     pas = (CAnimSet*)niSelected.ni_pPtr;
-  } else if(niSelected.ni_iType == NT_ANIMATION) {
+  } else if (niSelected.ni_iType == NT_ANIMATION) {
     // selected item is animation, get its animset
     HTREEITEM hParent = m_TreeCtrl.GetParentItem(hSelected);
     INDEX iParent = m_TreeCtrl.GetItemData(hParent);
@@ -1550,7 +1550,7 @@ void CSeriousSkaStudioView::OnAddAnimation()
     // save list file
     strAnimSet.Save_t(fnAnimSetList);
     // convert animset list file
-    if(!theApp.ConvertAnimSet(fnAnimSetList))
+    if (!theApp.ConvertAnimSet(fnAnimSetList))
     {
       RemoveFile(fnAnimSetList);
       return;
@@ -1571,7 +1571,7 @@ void CSeriousSkaStudioView::OnAddAnimation()
   // count new animations in temp animset
   INDEX ctan = asTemp.as_Anims.Count();
   // for each new animation in temp animset
-  for(INDEX ian=0;ian<ctan;ian++)
+  for (INDEX ian=0;ian<ctan;ian++)
   {
     Animation &anTemp = asTemp.as_Anims[ian];
     // add animation to selected animset
@@ -1587,13 +1587,13 @@ void CSeriousSkaStudioView::OnAddAnimation()
 // add texture to existing mesh instance
 void CSeriousSkaStudioView::AddTexture(CTFileName &fnFull)
 {
-  if(pmiSelected == NULL) {
+  if (pmiSelected == NULL) {
     theApp.ErrorMessage("Model instance is not selected!");
     return;
   }
 
   INDEX ctmshi = pmiSelected->mi_aMeshInst.Count();
-  if(ctmshi < 1) {
+  if (ctmshi < 1) {
     theApp.ErrorMessage("Model instance must have mesh lod list to add texture to it");
     return;
   }
@@ -1605,10 +1605,10 @@ void CSeriousSkaStudioView::AddTexture(CTFileName &fnFull)
   NodeInfo &niSelected = theApp.aNodeInfo[iSelected];
   MeshInstance *pmshi;
   // get selected mesh instance
-  if(niSelected.ni_iType == NT_MESHLODLIST) {
+  if (niSelected.ni_iType == NT_MESHLODLIST) {
     // selected item is mesh instance so use its pointer as current mesh instance
     pmshi=(MeshInstance*)niSelected.ni_pPtr;
-  } else if(niSelected.ni_iType == NT_MESHLOD) {
+  } else if (niSelected.ni_iType == NT_MESHLOD) {
     // selected item is mesh lod, so get his parent and use his pointer as current mesh instance
     HTREEITEM hParent = m_TreeCtrl.GetParentItem(hSelected);
     INDEX iParent = m_TreeCtrl.GetItemData(hParent);
@@ -1620,7 +1620,7 @@ void CSeriousSkaStudioView::AddTexture(CTFileName &fnFull)
   }
   /*
   // check if file exists
-  if(!FileExists(fnFull)) {
+  if (!FileExists(fnFull)) {
     theApp.ErrorMessage("Texture file '%s' does not exists",fnFull);
     continue;
   }
@@ -1637,7 +1637,7 @@ void CSeriousSkaStudioView::AddTexture(CTFileName &fnFull)
 void CSeriousSkaStudioView::BrowseTexture(CTString strTextureDir)
 {
   CString strRegKeyName = "";
-  if(strTextureDir=="Models\\") {
+  if (strTextureDir=="Models\\") {
     strTextureDir = "Open directory";
   }
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
@@ -1647,7 +1647,7 @@ void CSeriousSkaStudioView::BrowseTexture(CTString strTextureDir)
     (char*)(const char*)strTextureDir, strTextureDir, "", &afnTexture);
 
   // return if no files selected
-  if(afnTexture.Count()<=0) return;
+  if (afnTexture.Count()<=0) return;
   // for each selected filename
   FOREACHINDYNAMICARRAY( afnTexture, CTFileName, itTexture) {
     CTFileName fnFull;
@@ -1683,7 +1683,7 @@ void CSeriousSkaStudioView::OnCreateAddTexture()
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileName fn = (CTString)pMainFrame->CreateTexture();
-  if(fn!="") {
+  if (fn!="") {
     AddTexture(fn);
     pDoc->MarkAsChanged();
     theApp.UpdateRootModelInstance();
@@ -1692,7 +1692,7 @@ void CSeriousSkaStudioView::OnCreateAddTexture()
 
 void CSeriousSkaStudioView::OnAddColisionbox() 
 {
-  if(pmiSelected == NULL) return; 
+  if (pmiSelected == NULL) return; 
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
 
   INDEX ctcb = pmiSelected->mi_cbAABox.Count();
@@ -1713,25 +1713,25 @@ void CSeriousSkaStudioView::OnDeleteselected()
 	CSeriousSkaStudioDoc *pDoc = GetDocument();
   // get selected item and its parent
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected == NULL) return;
+  if (hSelected == NULL) return;
   INDEX iSelIndex = m_TreeCtrl.GetItemData(hSelected);
   INDEX iParentIndex = -1;
   NodeInfo *pniParent = NULL;
   NodeInfo *pni = &theApp.aNodeInfo[iSelIndex];
   HTREEITEM hParent = m_TreeCtrl.GetParentItem(hSelected);
-  if(hParent != NULL)
+  if (hParent != NULL)
   {
      iParentIndex = m_TreeCtrl.GetItemData(hParent);
      pniParent = &theApp.aNodeInfo[iParentIndex];
   }
   // switch type of selected item
-  switch(pni->ni_iType)
+  switch (pni->ni_iType)
   {
     case NT_MODELINSTANCE:
     {
       // find parent of selected model instance
       CModelInstance *pmiParent = pmiSelected->GetParent(pDoc->m_ModelInstance);
-      if(pmiParent != NULL) {
+      if (pmiParent != NULL) {
         // remove selected model instance form parent 
         pmiParent->RemoveChild(pmiSelected);
         // update root model instance
@@ -1754,7 +1754,7 @@ void CSeriousSkaStudioView::OnDeleteselected()
       // count textures
       INDEX ctti=pmshi->mi_tiTextures.Count();
       // for each texture in selected mesh instance
-      for(INDEX iti=0;iti<ctti;iti++) {
+      for (INDEX iti=0;iti<ctti;iti++) {
         // release texture from stock
         TextureInstance &ti = pmshi->mi_tiTextures[iti];
         ti.ti_toTexture.SetData(NULL);
@@ -1768,10 +1768,10 @@ void CSeriousSkaStudioView::OnDeleteselected()
       // create array for mesh instances 
       atmpMeshInst.New(ctmshi-1);
       // for each mesh instance in selected model instance 
-      for(INDEX imshi=0;imshi<ctmshi;imshi++) {
+      for (INDEX imshi=0;imshi<ctmshi;imshi++) {
         MeshInstance *ptmpmshi = &pmiSelected->mi_aMeshInst[imshi];
         // if mesh instance is diferent then selected mesh instance
-        if(ptmpmshi != pmshi) {
+        if (ptmpmshi != pmshi) {
           // copy it to temp array
           atmpMeshInst[itmpmshi] = *ptmpmshi;
           itmpmshi++;
@@ -1868,16 +1868,16 @@ void CSeriousSkaStudioView::OnDeleteselected()
       // count colision boxes
       INDEX ctcb = pmiSelected->mi_cbAABox.Count();
       // for each colision box in model instance
-      for(INDEX icb=0;icb<ctcb;icb++) {
+      for (INDEX icb=0;icb<ctcb;icb++) {
         ColisionBox *pcb2 = &pmiSelected->mi_cbAABox[icb];
-        if(pcbSelected == pcb2) {
+        if (pcbSelected == pcb2) {
           // remember index of selected colision box
           iIndex = icb;
           break;
         }
       }
       // return if no index
-      if(iIndex<0) return;
+      if (iIndex<0) return;
       // remove bounding box from mi
       pmiSelected->RemoveColisionBox(iIndex);
       // update root model instance
@@ -1891,18 +1891,18 @@ void CSeriousSkaStudioView::OnDeleteselected()
 // fill tree view with new selected document
 void CSeriousSkaStudioView::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView) 
 {
-  if(bActivate) {
+  if (bActivate) {
     // refresh tree view for curent view
     CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
     CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
     HTREEITEM hRoot = m_TreeCtrl.GetRootItem();
 
-    if(pDoc == NULL) {
+    if (pDoc == NULL) {
       theApp.m_dlgBarTreeView.UpdateModelInstInfo(NULL);
     	CView::OnActivateView(bActivate, pActivateView, pDeactiveView);
       return;
     }
-    if(hRoot == NULL) {
+    if (hRoot == NULL) {
       theApp.UpdateRootModelInstance();
     	CView::OnActivateView(bActivate, pActivateView, pDeactiveView);
       return;
@@ -1911,7 +1911,7 @@ void CSeriousSkaStudioView::OnActivateView(BOOL bActivate, CView* pActivateView,
     INDEX iRoot = m_TreeCtrl.GetItemData(hRoot);
     NodeInfo &ni = theApp.aNodeInfo[iRoot];
     // update only ih root model changed
-    if(ni.ni_pPtr != pDoc->m_ModelInstance) {
+    if (ni.ni_pPtr != pDoc->m_ModelInstance) {
       theApp.UpdateRootModelInstance();
     }
   }
@@ -1924,19 +1924,19 @@ void SyncModelInstance(CModelInstance *pmi, TICK llTime) {
   AnimQueue &anq = pmi->mi_aqAnims;
   INDEX ctal = anq.aq_Lists.Count();
   // for each anim list
-  for(INDEX ial=0;ial<ctal;ial++)
+  for (INDEX ial=0;ial<ctal;ial++)
   {
     AnimList &al = anq.aq_Lists[ial];
     al.al_llStartTime = llTime;
     
     // for each played anim
     INDEX ctpa=al.al_PlayedAnims.Count();
-    for(INDEX ipa=0;ipa<ctpa;ipa++)
+    for (INDEX ipa=0;ipa<ctpa;ipa++)
     {
       PlayedAnim &pa = al.al_PlayedAnims[ipa];
       pa.pa_llStartTime = llTime;
 
-      if(pDoc->bAnimLoop) {
+      if (pDoc->bAnimLoop) {
         pa.pa_ulFlags |= AN_LOOPING;
       } else {
         pa.pa_ulFlags &= ~AN_LOOPING;
@@ -1946,7 +1946,7 @@ void SyncModelInstance(CModelInstance *pmi, TICK llTime) {
 
   INDEX ctmi = pmi->mi_cmiChildren.Count();
   // for each child
-  for(INDEX imi=0;imi<ctmi;imi++)
+  for (INDEX imi=0;imi<ctmi;imi++)
   {
     CModelInstance &cmi = pmi->mi_cmiChildren[imi];
     SyncModelInstance(&cmi, llTime);
@@ -1966,7 +1966,7 @@ void CSeriousSkaStudioView::OnAnimLoop() {
 void CSeriousSkaStudioView::OnUpdateAnimLoop(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bAnimLoop);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bAnimLoop);
 }
 
 void CSeriousSkaStudioView::OnAnimPause() 
@@ -1974,7 +1974,7 @@ void CSeriousSkaStudioView::OnAnimPause()
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   pDoc->m_bViewPaused = !pDoc->m_bViewPaused;
   // if now unpaused
-  if(!pDoc->m_bViewPaused) {
+  if (!pDoc->m_bViewPaused) {
     // calculate time in pause
     pDoc->m_tvPauseTime += _pTimer->GetHighPrecisionTimer() - pDoc->m_tvPauseStart;
   }
@@ -1990,7 +1990,7 @@ void CSeriousSkaStudioView::OnUpdateAnimPause(CCmdUI* pCmdUI)
 void CSeriousSkaStudioView::OnVkEscape() 
 {
   // if error list is visible
-  if(theApp.IsErrorDlgVisible()) {
+  if (theApp.IsErrorDlgVisible()) {
     // hide it
     theApp.ShowErrorDlg(FALSE);
   // else
@@ -2014,7 +2014,7 @@ void CSeriousSkaStudioView::OnAutoMiping()
 void CSeriousSkaStudioView::OnUpdateAutoMiping(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bAutoMiping);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bAutoMiping);
 }
 
 void CSeriousSkaStudioView::OnShowGround() 
@@ -2025,12 +2025,12 @@ void CSeriousSkaStudioView::OnShowGround()
 void CSeriousSkaStudioView::OnUpdateShowGround(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowGround);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowGround);
 }
 
 void CSeriousSkaStudioView::OnShowSkeleton() 
 {
-  if(RM_GetFlags() & RMF_SHOWSKELETON) RM_RemoveFlag(RMF_SHOWSKELETON);
+  if (RM_GetFlags() & RMF_SHOWSKELETON) RM_RemoveFlag(RMF_SHOWSKELETON);
   else RM_AddFlag(RMF_SHOWSKELETON);
 }
 void CSeriousSkaStudioView::OnUpdateShowSkeleton(CCmdUI* pCmdUI) 
@@ -2040,7 +2040,7 @@ void CSeriousSkaStudioView::OnUpdateShowSkeleton(CCmdUI* pCmdUI)
 
 void CSeriousSkaStudioView::OnShowActiveSkeleton() 
 {
-  if(RM_GetFlags() & RMF_SHOWACTIVEBONES) RM_RemoveFlag(RMF_SHOWACTIVEBONES);
+  if (RM_GetFlags() & RMF_SHOWACTIVEBONES) RM_RemoveFlag(RMF_SHOWACTIVEBONES);
   else RM_AddFlag(RMF_SHOWACTIVEBONES);
 }
 
@@ -2051,13 +2051,13 @@ void CSeriousSkaStudioView::OnUpdateShowActiveSkeleton(CCmdUI* pCmdUI)
 
 void CSeriousSkaStudioView::OnShowTexture() 
 {
-  if(RM_GetFlags() & RMF_SHOWTEXTURE) RM_RemoveFlag(RMF_SHOWTEXTURE);
+  if (RM_GetFlags() & RMF_SHOWTEXTURE) RM_RemoveFlag(RMF_SHOWTEXTURE);
   else RM_AddFlag(RMF_SHOWTEXTURE);
 }
 
 void CSeriousSkaStudioView::OnShowNormals() 
 {
-  if(RM_GetFlags() & RMF_SHOWNORMALS) RM_RemoveFlag(RMF_SHOWNORMALS);
+  if (RM_GetFlags() & RMF_SHOWNORMALS) RM_RemoveFlag(RMF_SHOWNORMALS);
   else RM_AddFlag(RMF_SHOWNORMALS);
 }
 
@@ -2073,7 +2073,7 @@ void CSeriousSkaStudioView::OnUpdateShowTexture(CCmdUI* pCmdUI)
 
 void CSeriousSkaStudioView::OnShowWireframe() 
 {
-  if(RM_GetFlags() & RMF_WIREFRAME) RM_RemoveFlag(RMF_WIREFRAME);
+  if (RM_GetFlags() & RMF_WIREFRAME) RM_RemoveFlag(RMF_WIREFRAME);
   else RM_AddFlag(RMF_WIREFRAME);
 }
 
@@ -2086,27 +2086,27 @@ void CSeriousSkaStudioView::OnUpdateShowWireframe(CCmdUI* pCmdUI)
 void CSeriousSkaStudioView::OnShowColision() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) {
+  if (pDoc!=NULL) {
     pDoc->bShowColisionBox = !pDoc->bShowColisionBox;
   }
 }
 void CSeriousSkaStudioView::OnUpdateShowColision(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowColisionBox);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowColisionBox);
 }
 
 void CSeriousSkaStudioView::OnShowAllFramesBbox() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) {
+  if (pDoc!=NULL) {
     pDoc->bShowAllFramesBBox = !pDoc->bShowAllFramesBBox;
   }
 }
 void CSeriousSkaStudioView::OnUpdateShowAllFramesBbox(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowAllFramesBBox);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowAllFramesBBox);
 }
 
 void CSeriousSkaStudioView::OnShowAnimQueue() 
@@ -2137,7 +2137,7 @@ void CSeriousSkaStudioView::OnShowLights()
 void CSeriousSkaStudioView::OnUpdateShowLights(CCmdUI* pCmdUI) 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowLights);
+  if (pDoc!=NULL) pCmdUI->SetCheck(pDoc->bShowLights);
 }
 
 void CSeriousSkaStudioView::OnChangeAmbientcolor() 
@@ -2171,7 +2171,7 @@ void CSeriousSkaStudioView::OnChangeAmbientcolor()
   cc.rgbResult = ByteSwap(pDoc->m_colAmbient);
   cc.hwndOwner = GetSafeHwnd();
   cc.lpCustColors = (LPDWORD) acrCustClr;
-  if(ChooseColor(&cc))
+  if (ChooseColor(&cc))
   {
     COLOR colAmbient = ByteSwap(cc.rgbResult);
     colAmbient |= 0xFF;
@@ -2209,7 +2209,7 @@ void CSeriousSkaStudioView::OnChangeLightcolor()
   cc.rgbResult = ByteSwap(pDoc->m_colLight);
   cc.hwndOwner = GetSafeHwnd();
   cc.lpCustColors = (LPDWORD) acrCustClr;
-  if(ChooseColor(&cc))
+  if (ChooseColor(&cc))
   {
     COLOR colDiffuse = ByteSwap(cc.rgbResult);
     colDiffuse |= 0xFF;
@@ -2221,16 +2221,16 @@ void CSeriousSkaStudioView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 /*
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-    if(nChar==VK_LEFT) {
-      if(!pDoc->m_bViewPaused) {
+    if (nChar==VK_LEFT) {
+      if (!pDoc->m_bViewPaused) {
         OnAnimPause();
       } else {
         pDoc->m_tvPauseStart.tv_llValue -= 10000000;
       }
       return;
     }
-    if(nChar==VK_RIGHT) {
-      if(!pDoc->m_bViewPaused) {
+    if (nChar==VK_RIGHT) {
+      if (!pDoc->m_bViewPaused) {
         OnAnimPause();
       } else {
         pDoc->m_tvPauseStart.tv_llValue += 10000000;
@@ -2248,10 +2248,10 @@ void CSeriousSkaStudioView::OnFileRecreatetexture()
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
   // if selected item exists
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     NodeInfo &niSelected = theApp.m_dlgBarTreeView.GetNodeInfo(hSelected);
     // is selected item texture instance
-    if(niSelected.ni_iType == NT_TEXINSTANCE) {
+    if (niSelected.ni_iType == NT_TEXINSTANCE) {
       // recreate texture
       theApp.m_dlgBarTreeView.m_dlgTexture.OnBtRecreateTexture();
     }
@@ -2263,10 +2263,10 @@ void CSeriousSkaStudioView::OnUpdateFileRecreatetexture(CCmdUI* pCmdUI)
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
   // if selected item exists
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     NodeInfo &niSelected = theApp.m_dlgBarTreeView.GetNodeInfo(hSelected);
     // is selected item texture instance
-    if(niSelected.ni_iType == NT_TEXINSTANCE) {
+    if (niSelected.ni_iType == NT_TEXINSTANCE) {
       // enable recreate texture menu item
       pCmdUI->Enable(TRUE);
     } else {
@@ -2280,9 +2280,9 @@ void CSeriousSkaStudioView::OnVkDown()
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     HTREEITEM hNext = m_TreeCtrl.GetNextItem(hSelected,TVGN_NEXTVISIBLE);
-    if(hNext!=NULL) {
+    if (hNext!=NULL) {
       m_TreeCtrl.SelectItem(hNext);
     }
   }
@@ -2292,9 +2292,9 @@ void CSeriousSkaStudioView::OnVkUp()
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     HTREEITEM hNext = m_TreeCtrl.GetNextItem(hSelected,TVGN_PREVIOUSVISIBLE);
-    if(hNext!=NULL) {
+    if (hNext!=NULL) {
       m_TreeCtrl.SelectItem(hNext);
     }
   }
@@ -2304,14 +2304,14 @@ static void SelectLeftItemInTree()
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     UINT uiMask = TVIF_STATE;
     UINT uiState = m_TreeCtrl.GetItemState(hSelected,uiMask);
-    if(uiState&TVIS_EXPANDED) {
+    if (uiState&TVIS_EXPANDED) {
       m_TreeCtrl.Expand(hSelected,TVE_COLLAPSE);
     } else {
       HTREEITEM hParent = m_TreeCtrl.GetNextItem(hSelected,TVGN_PARENT);
-      if(hParent!=NULL) {
+      if (hParent!=NULL) {
         m_TreeCtrl.SelectItem(hParent);
       }
     }
@@ -2321,12 +2321,12 @@ static void SelectRightItemInTree()
 {
   CModelTreeCtrl &m_TreeCtrl = theApp.m_dlgBarTreeView.m_TreeCtrl;
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  if(hSelected!=NULL) {
+  if (hSelected!=NULL) {
     UINT uiMask = TVIF_STATE;
     UINT uiState = m_TreeCtrl.GetItemState(hSelected,uiMask);
-    if(uiState&TVIS_EXPANDED) {
+    if (uiState&TVIS_EXPANDED) {
       HTREEITEM hClild = m_TreeCtrl.GetNextItem(hSelected,TVGN_CHILD);
-      if(hClild!=NULL) {
+      if (hClild!=NULL) {
         m_TreeCtrl.SelectItem(hClild);
       }
     } else {
@@ -2349,7 +2349,7 @@ static void PrevFrame()
 void CSeriousSkaStudioView::OnVkLeft() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc->m_bViewPaused) {
+  if (pDoc->m_bViewPaused) {
     PrevFrame();
   } else {
     SelectLeftItemInTree();
@@ -2359,7 +2359,7 @@ void CSeriousSkaStudioView::OnVkLeft()
 void CSeriousSkaStudioView::OnVkRight() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc->m_bViewPaused) {
+  if (pDoc->m_bViewPaused) {
     NextFrame();
   } else {
     SelectRightItemInTree();
@@ -2369,7 +2369,7 @@ void CSeriousSkaStudioView::OnVkRight()
 void CSeriousSkaStudioView::OnVkLeftWithCtrl() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc->m_bViewPaused) {
+  if (pDoc->m_bViewPaused) {
     SelectLeftItemInTree();
   } else {
     OnAnimPause();
@@ -2380,7 +2380,7 @@ void CSeriousSkaStudioView::OnVkLeftWithCtrl()
 void CSeriousSkaStudioView::OnVkRightWithCtrl() 
 {
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if(pDoc->m_bViewPaused) {
+  if (pDoc->m_bViewPaused) {
     SelectRightItemInTree();
   } else {
     OnAnimPause();
@@ -2395,13 +2395,13 @@ void CSeriousSkaStudioView::OnVkRightWithCtrl()
 void CSeriousSkaStudioView::OnModelinstanceSavewithoffset() 
 {
   NodeInfo &ni = theApp.m_dlgBarTreeView.GetSelectedNodeInfo();
-  if(ni.ni_iType == NT_MODELINSTANCE) {
+  if (ni.ni_iType == NT_MODELINSTANCE) {
     CModelInstance *pmi = (CModelInstance*)ni.ni_pPtr;
     CModelInstance *pmiParent = pmi->GetParent(theApp.GetDocument()->m_ModelInstance);
   
     CString fnOldSmcFile;
     // if parent of model instance exists
-    if(pmiParent!=NULL) {
+    if (pmiParent!=NULL) {
       // remmeber current fn of model instance
       fnOldSmcFile = pmi->mi_fnSourceFile;
       // temporary remove it to save offset of model instance in same file
@@ -2412,7 +2412,7 @@ void CSeriousSkaStudioView::OnModelinstanceSavewithoffset()
     theApp.SaveModelAs(pmi);
 
     // if there was a parent for model instance
-    if(pmiParent!=NULL) {
+    if (pmiParent!=NULL) {
       // return model instance to his parent
       pmiParent->AddChild(pmi);
       // restore old filename
@@ -2426,7 +2426,7 @@ void CSeriousSkaStudioView::OnModelinstanceSavewithoffset()
 void CSeriousSkaStudioView::OnConvertSelected() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgListOpt) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgListOpt) {
     pDlgCurrent->OnBtConvert();
   } else {
     ASSERT(FALSE); // Current client dialog must be listopt dialog
@@ -2436,7 +2436,7 @@ void CSeriousSkaStudioView::OnConvertSelected()
 void CSeriousSkaStudioView::OnResetColisionbox() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgColision) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgColision) {
     pDlgCurrent->OnBtResetColision();
   } else {
     ASSERT(FALSE); // Current client dialog must be colision dialog
@@ -2446,7 +2446,7 @@ void CSeriousSkaStudioView::OnResetColisionbox()
 void CSeriousSkaStudioView::OnAllFramesRecalc() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgAllFrames) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgAllFrames) {
     pDlgCurrent->OnBtCalcAllframesBbox();
   } else {
     ASSERT(FALSE); // Current client dialog must be allframes dialog
@@ -2456,7 +2456,7 @@ void CSeriousSkaStudioView::OnAllFramesRecalc()
 void CSeriousSkaStudioView::OnReloadTexture() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
     pDlgCurrent->OnBtReloadTexture();
   } else {
     ASSERT(FALSE); // Current client dialog must be texture dialog
@@ -2466,7 +2466,7 @@ void CSeriousSkaStudioView::OnReloadTexture()
 void CSeriousSkaStudioView::OnRecreateTexture() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
     pDlgCurrent->OnBtRecreateTexture();
   } else {
     ASSERT(FALSE); // Current client dialog must be texture dialog
@@ -2476,7 +2476,7 @@ void CSeriousSkaStudioView::OnRecreateTexture()
 void CSeriousSkaStudioView::OnBrowseTexture() 
 {
   CDlgClient *pDlgCurrent = (CDlgClient*)theApp.m_dlgBarTreeView.pdlgCurrent;
-  if(pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
+  if (pDlgCurrent == &theApp.m_dlgBarTreeView.m_dlgTexture) {
     pDlgCurrent->OnBtBrowseTexture();
   } else {
     ASSERT(FALSE); // Current client dialog must be texture dialog

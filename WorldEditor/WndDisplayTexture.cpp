@@ -39,7 +39,7 @@ CWndDisplayTexture::CWndDisplayTexture()
 
 CWndDisplayTexture::~CWndDisplayTexture()
 {
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;
@@ -69,7 +69,7 @@ void CWndDisplayTexture::OnPaint()
   ScreenToClient( &ptMouse);
 
   // if there is a valid drawport, and the drawport can be locked
-  if( (m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
     CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
     ASSERT( pWorldEditorView != NULL);
@@ -116,29 +116,29 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
   PIX pixScreenWidth  = ::GetSystemMetrics(SM_CXSCREEN);
   PIX pixScreenHeight = ::GetSystemMetrics(SM_CYSCREEN);
 
-  if( pixX+pixWidth>pixScreenWidth)
+  if (pixX+pixWidth>pixScreenWidth)
   {
     pixX=pixScreenWidth-pixWidth;
   }
-  if( pixY+pixHeight>pixScreenHeight)
+  if (pixY+pixHeight>pixScreenHeight)
   {
     pixY=pixScreenHeight-pixHeight;
   }
 
   m_boxTexture=PIXaabbox2D( PIX2D(0,0), PIX2D(pixWidth,pixHeight));
-  if( strText1!="")
+  if (strText1!="")
   {
     pixHeight+=_pfdConsoleFont->fd_pixCharHeight+4;
   }
   m_boxText1=PIXaabbox2D( PIX2D(0,m_boxTexture.Max()(2)), PIX2D(pixWidth,pixHeight));
-  if( strText2!="")
+  if (strText2!="")
   {
     pixHeight+=_pfdConsoleFont->fd_pixCharHeight+4;
   }
   m_boxText2=PIXaabbox2D( PIX2D(0,m_boxText1.Max()(2)), PIX2D(pixWidth,pixHeight));
 
   rectWindow.right = rectWindow.left + pixWidth;
-  if( bDown)
+  if (bDown)
   {
     rectWindow.top = rectWindow.bottom;
     rectWindow.bottom+=pixHeight;
@@ -148,7 +148,7 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
     rectWindow.top = rectWindow.bottom - pixHeight;
   }
 
-  if( IsWindow(m_hWnd))
+  if (IsWindow(m_hWnd))
   {
     SetWindowPos( NULL, rectWindow.left, rectWindow.top,
       rectWindow.right-rectWindow.left, rectWindow.top-rectWindow.bottom,
@@ -163,7 +163,7 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
       NULL, L"Display texture", WS_CHILD|WS_POPUP|WS_VISIBLE,
       rectWindow.left, rectWindow.top, rectWindow.Width(), rectWindow.Height(),
       pMainFrame->m_hWnd, NULL, NULL);
-    if( !bResult)
+    if (!bResult)
     {
       AfxMessageBox( L"Error: Failed to create display texture window!");
       return FALSE;
@@ -176,7 +176,7 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
 void CWndDisplayTexture::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if(pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
   {
     DestroyWindow();
     DeleteTempMap();
@@ -185,7 +185,7 @@ void CWndDisplayTexture::OnKillFocus(CWnd* pNewWnd)
 
 BOOL CWndDisplayTexture::PreTranslateMessage(MSG* pMsg) 
 {
-  if( pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();

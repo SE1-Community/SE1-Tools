@@ -35,11 +35,11 @@ CVirtualTreeNode::~CVirtualTreeNode()
 INDEX _iTabs=0;
 void CVirtualTreeNode::Dump(CTStream *pFile)
 {
-  for( INDEX iTab=0; iTab<_iTabs; iTab++)
+  for (INDEX iTab=0; iTab<_iTabs; iTab++)
   {
     pFile->PutString_t("  ");
   }
-  if( vtn_bIsDirectory)
+  if (vtn_bIsDirectory)
   {
     CTString strDirectory;
     strDirectory.PrintF("Directory: %s", vtn_strName);
@@ -62,21 +62,21 @@ void CVirtualTreeNode::Dump(CTStream *pFile)
 
 void CVirtualTreeNode::Read_t( CTStream *pFile, CVirtualTreeNode* pParent)
 {
-  if( pParent != NULL)
+  if (pParent != NULL)
   {
     pParent->vtn_lhChildren.AddTail( vtn_lnInDirectory);
   }
   vnt_pvtnParent = pParent;
   pFile->Read_t( &vtn_bIsDirectory, sizeof(BOOL));
   
-  if( vtn_bIsDirectory)
+  if (vtn_bIsDirectory)
   {
     pFile->Read_t( &vtn_itIconType, sizeof(INDEX));     // Symbolic icons for directories
     pFile->Read_t( &vtn_bmBrowsingMode, sizeof(INDEX)); // Icons (and size) or descriptions
     *pFile >> vtn_strName;
     INDEX iDirEntries;
     pFile->Read_t( &iDirEntries, sizeof(INDEX));
-    for( INDEX i=0; i<iDirEntries; i++)
+    for (INDEX i=0; i<iDirEntries; i++)
     {
       CVirtualTreeNode *pVTN = new CVirtualTreeNode;
       pVTN->Read_t( pFile, this);
@@ -93,7 +93,7 @@ void CVirtualTreeNode::Read_t( CTStream *pFile, CVirtualTreeNode* pParent)
 void CVirtualTreeNode::Write_t( CTStream *pFile)
 {
   *pFile << (INDEX) vtn_bIsDirectory;
-  if( vtn_bIsDirectory)
+  if (vtn_bIsDirectory)
   {
     pFile->Write_t( &vtn_itIconType, sizeof(INDEX));
     pFile->Write_t( &vtn_bmBrowsingMode, sizeof(INDEX));
@@ -134,7 +134,7 @@ void CVirtualTreeNode::MakeRoot(void)
 void CVirtualTreeNode::MoveToDirectory(CVirtualTreeNode *pVTNDst)
 {
   ASSERT( vnt_pvtnParent!=NULL);
-  if( vnt_pvtnParent==NULL) return;
+  if (vnt_pvtnParent==NULL) return;
 
   vnt_pvtnParent=pVTNDst;
   vtn_lnInDirectory.Remove();

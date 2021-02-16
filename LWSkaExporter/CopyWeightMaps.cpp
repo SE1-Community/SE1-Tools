@@ -53,7 +53,7 @@ void ListWeightMaps() {
   memset(_astrWeightMapNames, 0, _ctWeightMapNames*sizeof(char*));
   _ctUsedWeightMapNames = 0;
 
-  for(int iWeightMap=0; iWeightMap<_ctWeightMapNames; iWeightMap++) {
+  for (int iWeightMap=0; iWeightMap<_ctWeightMapNames; iWeightMap++) {
     const char *strName = _objfunc->vmapName(LWVMAP_WGHT, iWeightMap);
       _astrWeightMapNames[iWeightMap] = strName;
    }

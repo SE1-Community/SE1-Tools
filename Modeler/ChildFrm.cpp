@@ -52,7 +52,7 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
   BOOL bMaximized = FALSE;
   CMDIFrameWnd *pFrame = (CMDIFrameWnd *)AfxGetApp()->m_pMainWnd;
-  if( ((pFrame->MDIGetActive( &bMaximized) == NULL) || (bMaximized)) && 
+  if (((pFrame->MDIGetActive( &bMaximized) == NULL) || (bMaximized)) && 
       (theApp.m_Preferences.ap_AutoMaximizeWindow) )
   {
     cs.style |= WS_VISIBLE | WS_MAXIMIZE;

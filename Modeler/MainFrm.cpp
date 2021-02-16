@@ -133,9 +133,9 @@ CMainFrame::CMainFrame()
 CMainFrame::~CMainFrame()
 {
   // if exists, destroy palette dialog
-  if( m_dlgPaletteDialog != NULL)
+  if (m_dlgPaletteDialog != NULL)
     delete( m_dlgPaletteDialog);
-	if(	m_dlgPatchesPalette != NULL)
+	if (	m_dlgPatchesPalette != NULL)
     delete m_dlgPatchesPalette;
 }
 
@@ -151,63 +151,63 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
-  if( (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MAIN)) ||
+  if ((!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MAIN)) ||
 		  (!m_wndToolBar.LoadToolBar(IDR_MAINFRAME)) )
 	{
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create main tool bar
 	}
 
-	if( (!m_wndStatusBar.Create(this, WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, IDW_STATUS_BAR)) ||
+	if ((!m_wndStatusBar.Create(this, WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, IDW_STATUS_BAR)) ||
   		!m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT)) )
 	{
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
 
-  if( (!m_AnimToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_ANIMATION)) ||
+  if ((!m_AnimToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_ANIMATION)) ||
 		  (!m_AnimToolBar.LoadToolBar(IDR_ANIMCONTROL)) )
 	{
 		TRACE0("Failed to create animation toolbar\n");
 		return -1;      // fail to create animation tool bar
 	}
 	
-  if( (!m_TextureToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_TEXTURE)) ||
+  if ((!m_TextureToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_TEXTURE)) ||
 		  (!m_TextureToolBar.LoadToolBar(IDR_TEXTURECONTROL)) )
 	{
 		TRACE0("Failed to create texture toolbar\n");
 		return -1;      // fail to create texture tool bar
 	}
 
-  if( (!m_FXToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_FX)) ||
+  if ((!m_FXToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_FX)) ||
 		  (!m_FXToolBar.LoadToolBar(IDR_FX_CONTROL)) )
 	{
 		TRACE0("Failed to create FX toolbar\n");
 		return -1;      // fail to create fx tool bar
 	}
 
-  if( (!m_StainsToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_STAINS)) ||
+  if ((!m_StainsToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_STAINS)) ||
 		  (!m_StainsToolBar.LoadToolBar(IDR_STAINSCONTROL)) )
 	{
 		TRACE0("Failed to create stains toolbar\n");
 		return -1;      // fail to create stains tool bar
 	}
 
-  if( (!m_ScriptToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_SCRIPT)) ||
+  if ((!m_ScriptToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_SCRIPT)) ||
 		  (!m_ScriptToolBar.LoadToolBar(IDR_SCRIPTCONTROL)) )
 	{
 		TRACE0("Failed to create script toolbar\n");
 		return -1;      // fail to create script tool bar
 	}
 
-  if( (!m_MipAndLightToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MIP_AND_LIGHT)) ||
+  if ((!m_MipAndLightToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MIP_AND_LIGHT)) ||
 		  (!m_MipAndLightToolBar.LoadToolBar(IDR_MIPANDLIGHT)) )
 	{
 		TRACE0("Failed to create mip and light toolbar\n");
 		return -1;      // fail to create mip and light tool bar
 	}
 
-  if( (!m_RenderControlBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_RENDER)) ||
+  if ((!m_RenderControlBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_RENDER)) ||
 		  (!m_RenderControlBar.LoadToolBar(IDR_RENDERCONTROL)) )
 	{
 		TRACE0("Failed to create render control toolbar\n");
@@ -233,14 +233,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
   };
   m_RenderControlBar.SetButtons( aidRenderControlBar, 15);
 
-  if( (!m_RotateToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_ROTATION)) ||
+  if ((!m_RotateToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_ROTATION)) ||
 		  (!m_RotateToolBar.LoadToolBar(IDR_ROTATE)) )
 	{
 		TRACE0("Failed to create rotate surface control toolbar\n");
 		return -1;      // fail to create rotate control tool bar
 	}
   
-  if( (!m_MappingToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MAPPING)) ||
+  if ((!m_MappingToolBar.CreateEx(this, TBSTYLE_FLAT, dwToolBarStyles, rectDummy, IDW_TOOLBAR_MAPPING)) ||
 		  (!m_MappingToolBar.LoadToolBar(IDR_MAPPING)) )
 	{
 		TRACE0("Failed to create mapping control toolbar\n");
@@ -340,7 +340,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		strDefaultFont.LoadString(IDS_DEFAULT_ARIAL);
 		lstrcpy(logFont.lfFaceName, strDefaultFont);
     
-    if( !m_Font.CreateFontIndirect(&logFont))
+    if (!m_Font.CreateFontIndirect(&logFont))
 			TRACE0("Could Not create font for combo\n");
 		else
     {
@@ -485,10 +485,10 @@ void CMainFrame::OnWindowTogglemax()
 {
 	BOOL bIfMaximized;
   CChildFrame *pActiveWnd = (CChildFrame *) MDIGetActive( &bIfMaximized);
-  if( bIfMaximized)
+  if (bIfMaximized)
   {
     MDIRestore( pActiveWnd);
-    if( !pActiveWnd->m_bAllreadyUnmaximized)
+    if (!pActiveWnd->m_bAllreadyUnmaximized)
     {
       pActiveWnd->MoveWindow( 0, 0, 256, 256);
       RECT rectClient;
@@ -525,11 +525,11 @@ void CMainFrame::OnViewInfo()
 
 void CMainFrame::OnViewColorPalette() 
 {
-  if( m_dlgPaletteDialog == NULL) // if doesn't exist, call create
+  if (m_dlgPaletteDialog == NULL) // if doesn't exist, call create
   {
     m_dlgPaletteDialog = new CPaletteDialog();
     ASSERT( m_dlgPaletteDialog != NULL);
-    if( !m_dlgPaletteDialog->Create(IDD_COLORS_PALETTE)) return;
+    if (!m_dlgPaletteDialog->Create(IDD_COLORS_PALETTE)) return;
     
     CRect rectMainFrame, rectPalPos, rectNewPos;
     
@@ -537,7 +537,7 @@ void CMainFrame::OnViewColorPalette()
     GetClientRect( rectMainFrame);
     rectNewPos.left = rectMainFrame.right - rectPalPos.Width() - 3;
     rectNewPos.right = rectNewPos.left + rectPalPos.Width();
-    if( m_pInfoFrame == NULL)
+    if (m_pInfoFrame == NULL)
     {
       rectNewPos.top = TOOLS_INIT_TOP;
     }
@@ -552,7 +552,7 @@ void CMainFrame::OnViewColorPalette()
   }
   
  	BOOL bVisible = ((m_dlgPaletteDialog->GetStyle() & WS_VISIBLE) != 0);
-  if( !bVisible)          // if dialog isn't visible, show it
+  if (!bVisible)          // if dialog isn't visible, show it
   {
     m_dlgPaletteDialog->ShowWindow(SW_SHOW);
   }
@@ -566,7 +566,7 @@ void CMainFrame::OnUpdateViewColorPalette(CCmdUI* pCmdUI)
 {
  	BOOL bVisible;
   
-  if( m_dlgPaletteDialog == NULL)
+  if (m_dlgPaletteDialog == NULL)
   {
     bVisible = FALSE;
   }
@@ -585,19 +585,19 @@ BOOL CMainFrame::OnIdle(LONG lCount)
   m_SkinComboBox.OnIdle( lCount);
 
   // Call OnIdle for color palette dialog
-  if( m_dlgPaletteDialog != NULL)
+  if (m_dlgPaletteDialog != NULL)
   {
     m_dlgPaletteDialog->OnIdle( lCount);
   }
   
   // Call OnIdle for info property sheet
-  if( m_pInfoFrame != NULL)
+  if (m_pInfoFrame != NULL)
   {
     m_pInfoFrame->m_pInfoSheet->OnIdle( lCount);
   }
   
   // Call OnIdle for patches dialog
-  if( m_dlgPatchesPalette != NULL)
+  if (m_dlgPatchesPalette != NULL)
   {
     m_dlgPatchesPalette->OnIdle( lCount);
   }
@@ -610,7 +610,7 @@ void CMainFrame::OnFileCreateTexture()
 {
   CModelerView *pView = (CModelerView *) CModelerView::GetActiveView();
   CModelerDoc *pDoc = NULL;
-  if( pView != NULL)
+  if (pView != NULL)
   {
     pDoc = pView->GetDocument();
     // setup create texture directory
@@ -619,7 +619,7 @@ void CMainFrame::OnFileCreateTexture()
   }
   // call create texture dialog
   CTFileName fnCreated = _EngineGUI.CreateTexture();
-  if( (fnCreated != "") && pDoc != NULL)
+  if ((fnCreated != "") && pDoc != NULL)
   {
     CTextureDataInfo *pNewTDI;
     try
@@ -633,7 +633,7 @@ void CMainFrame::OnFileCreateTexture()
       AfxMessageBox( CString(err_str));
       pNewTDI = NULL;
     }
-    if( pNewTDI != NULL)
+    if (pNewTDI != NULL)
     {
       pDoc->SetModifiedFlag();
       pView->m_ptdiTextureDataInfo = pNewTDI;
@@ -756,7 +756,7 @@ void CMainFrame::OnUpdateViewRendercontrol(CCmdUI* pCmdUI)
 static BOOL _bSoundEnabled = FALSE;
 void CMainFrame::EnableSound(void) 
 {
-  if( _bSoundEnabled || !theApp.m_Preferences.ap_bAllowSoundLock) return;
+  if (_bSoundEnabled || !theApp.m_Preferences.ap_bAllowSoundLock) return;
   _bSoundEnabled = TRUE;
   snd_iFormat = Clamp( snd_iFormat, (INDEX)CSoundLibrary::SF_NONE, (INDEX)CSoundLibrary::SF_44100_16);  
   _pSound->SetFormat( (enum CSoundLibrary::SoundFormat)snd_iFormat);
@@ -764,7 +764,7 @@ void CMainFrame::EnableSound(void)
 
 void CMainFrame::DisableSound(void) 
 {
-  //if( !_bSoundEnabled) return;
+  //if (!_bSoundEnabled) return;
   _bSoundEnabled = FALSE;
   _pSound->SetFormat( CSoundLibrary::SF_NONE);
 }
@@ -800,12 +800,12 @@ void CMainFrame::OnStainsRemove()
   CWorkingPatch *pWP = NULL;
   int iSelected = m_StainsComboBox.GetCurSel();
 
-  if( iSelected != CB_ERR)
+  if (iSelected != CB_ERR)
   {
     INDEX iCt = 0;
     FOREACHINLIST( CWorkingPatch, wp_ListNode, theApp.m_WorkingPatches, it)
     {
-      if( iCt == iSelected)
+      if (iCt == iSelected)
       {
         pWP = &it.Current();
       }
@@ -827,11 +827,11 @@ void CMainFrame::OnUpdateStainsRemove(CCmdUI* pCmdUI)
 
 void CMainFrame::OnViewPatchesPalette() 
 {
-  if( m_dlgPatchesPalette == NULL) // if doesn't exist, call create
+  if (m_dlgPatchesPalette == NULL) // if doesn't exist, call create
   {
     m_dlgPatchesPalette = new CPatchPalette();
     ASSERT( m_dlgPatchesPalette != NULL);
-    if( !m_dlgPatchesPalette->Create(IDD_PATCH_PALETTE)) return;
+    if (!m_dlgPatchesPalette->Create(IDD_PATCH_PALETTE)) return;
     
     CRect rectMainFrame, rectPalPos, rectNewPos;
     
@@ -840,13 +840,13 @@ void CMainFrame::OnViewPatchesPalette()
     rectNewPos.left = rectMainFrame.right - rectPalPos.Width() - 3;
     rectNewPos.right = rectNewPos.left + rectPalPos.Width();
     rectNewPos.top = TOOLS_INIT_TOP;
-    if( m_pInfoFrame != NULL)
+    if (m_pInfoFrame != NULL)
     {
       CRect rectInfo;
       m_pInfoFrame->GetWindowRect( rectInfo);
       rectNewPos.top += rectInfo.Height() + 1;
     }
-    if( m_dlgPaletteDialog != NULL)
+    if (m_dlgPaletteDialog != NULL)
     {
       CRect rectInfo;
       m_dlgPaletteDialog->GetWindowRect( rectInfo);
@@ -858,7 +858,7 @@ void CMainFrame::OnViewPatchesPalette()
   }
   
  	BOOL bVisible = ((m_dlgPatchesPalette->GetStyle() & WS_VISIBLE) != 0);
-  if( !bVisible)          // if dialog isn't visible, show it
+  if (!bVisible)          // if dialog isn't visible, show it
   {
     m_dlgPatchesPalette->ShowWindow(SW_SHOW);
   }
@@ -928,7 +928,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
   // alt is pressed
   BOOL bAlt = FALSE;
   
-  if( pMsg->message==WM_LBUTTONDOWN)
+  if (pMsg->message==WM_LBUTTONDOWN)
   {
     BOOL bHasDocument = FALSE;
     // check for models
@@ -937,7 +937,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
       CModelerDoc *pdocCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(posMdl);
       bHasDocument = pdocCurrent!=NULL;
     }
-    if( !bHasDocument)
+    if (!bHasDocument)
     {
       // check for scripts
       POSITION posScr = theApp.m_pdtScriptTemplate->GetFirstDocPosition();
@@ -948,7 +948,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     }
 
     BOOL bMainFrameHasFocus = (this == CWnd::GetForegroundWindow());
-    if( !bHasDocument && bMainFrameHasFocus)
+    if (!bHasDocument && bMainFrameHasFocus)
     {
       static CTimerValue tvLast;
       static CPoint ptLast;
@@ -956,7 +956,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
       GetCursorPos( &ptNow);
       CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
       FLOAT tmDelta = (tvNow-tvLast).GetSeconds();
-      if( tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5)
+      if (tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5)
       {
         theApp.OnFileOpen();
       }
@@ -966,26 +966,26 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
   }
 
   // if we caught alt key message
-  if( pMsg->message==WM_SYSKEYDOWN)
+  if (pMsg->message==WM_SYSKEYDOWN)
   {
     // get key data
     int lKeyData = pMsg->lParam;
     // test if it is ghost Alt-F4 situation
-    if( lKeyData & (1L<<29))
+    if (lKeyData & (1L<<29))
     {
       // Alt key was really pressed
       bAlt = TRUE;
     }
   }
 
-  if( (pMsg->message==WM_KEYDOWN) || bAlt)
+  if ((pMsg->message==WM_KEYDOWN) || bAlt)
   {
     int iVirtKey = (int) pMsg->wParam;
     int lKeyData = pMsg->lParam;
     
-    if( DYNAMIC_DOWNCAST(CScriptView, GetActiveFrame()->GetActiveView())==NULL)
+    if (DYNAMIC_DOWNCAST(CScriptView, GetActiveFrame()->GetActiveView())==NULL)
     {
-      if( (iVirtKey == 'Q') && !bAltPressed)
+      if ((iVirtKey == 'Q') && !bAltPressed)
       {
         ToggleInfoWindow();
       }
@@ -996,13 +996,13 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 
 void CMainFrame::ToggleInfoWindow(void)
 {
-  if( m_pInfoFrame == NULL)
+  if (m_pInfoFrame == NULL)
   {
 	  // create frame for holding info sheet
 	  m_pInfoFrame = new CDlgInfoFrame;
     // set initial size of rect window
     CRect rectInfoWindow(0, 0, 0, 0);
-    if( !m_pInfoFrame->Create( NULL, L"Tools info",
+    if (!m_pInfoFrame->Create( NULL, L"Tools info",
         MFS_SYNCACTIVE|WS_POPUP|WS_CAPTION|WS_SYSMENU, rectInfoWindow, this))
 	  {
 		  TRACE0("Failed to create Tools info window!\n");
@@ -1017,7 +1017,7 @@ void CMainFrame::ToggleInfoWindow(void)
       m_pInfoFrame->ShowWindow(SW_SHOW);
       m_pInfoFrame->m_pInfoSheet->SetFocus();
       CModelerView *pModelerView = CModelerView::GetActiveView();
-      if( (pModelerView != NULL) && (pModelerView->m_bCollisionMode) )
+      if ((pModelerView != NULL) && (pModelerView->m_bCollisionMode) )
       {
         m_pInfoFrame->m_pInfoSheet->CustomSetActivePage( 
           &m_pInfoFrame->m_pInfoSheet->m_PgInfoCollision);
@@ -1045,9 +1045,9 @@ void CMainFrame::OnCreateReflectionTexture()
 
 LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-  if( message==WM_SYSCOMMAND)
+  if (message==WM_SYSCOMMAND)
   {
-    switch( wParam & ~0x0F)
+    switch (wParam & ~0x0F)
     {
     case SC_SCREENSAVE:
     case SC_MONITORPOWER:

@@ -30,10 +30,10 @@ static char THIS_FILE[] = __FILE__;
 
 static TICK _llLastTick = 0;
 
-static ANGLE3D a3dObjectRotation = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dLightRotation = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dObjectAngles = ANGLE3D( 0, 0, 0);
-static ANGLE3D a3dLightAngles = ANGLE3D( 0, 0, 0);
+static ANGLE3D a3dObjectRotation = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dLightRotation = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dObjectAngles = ANGLE3D(0, 0, 0);
+static ANGLE3D a3dLightAngles = ANGLE3D(0, 0, 0);
 
 static CPoint ptLMBDown;
 static CPoint ptRMBDown;
@@ -42,10 +42,10 @@ static ANGLE3D GetRotForDelta(CPoint ptDelta, BOOL bInvertY)
 {
   FLOAT fdH = ptDelta.x/15.0f;
   FLOAT fdP = ptDelta.y/15.0f;
-  if( bInvertY)
-    return ANGLE3D( fdH, -fdP, 0);
+  if (bInvertY)
+    return ANGLE3D(fdH, -fdP, 0);
   else
-    return ANGLE3D( fdH, fdP, 0);
+    return ANGLE3D(fdH, fdP, 0);
 }
 
 #define DEFAULT_EXPONENT_POS 50
@@ -71,8 +71,8 @@ CDlgCreateSpecularTexture::CDlgCreateSpecularTexture(CWnd* pParent /*=NULL*/)
   
   m_bCustomWindowsCreated = FALSE;
 
-  m_plPlacement.pl_OrientationAngle = ANGLE3D( 30, 0, 0);
-  m_moModel.mo_Stretch = FLOAT3D( 1.0f, 1.0f, 1.0f);
+  m_plPlacement.pl_OrientationAngle = ANGLE3D(30, 0, 0);
+  m_moModel.mo_Stretch = FLOAT3D(1.0f, 1.0f, 1.0f);
 
   // mark that timer is not yet started
   m_iTimerID = -1;
@@ -83,10 +83,10 @@ void CDlgCreateSpecularTexture::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
     INDEX iExponent = DEFAULT_EXPONENT_POS;
-    if( IsWindow( m_sliderSpecularExponent.m_hWnd))
+    if (IsWindow( m_sliderSpecularExponent.m_hWnd))
     {
       iExponent = m_sliderSpecularExponent.GetPos();
     }
@@ -105,12 +105,12 @@ void CDlgCreateSpecularTexture::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_AUTO_ROTATE, m_bAutoRotate);
 	//}}AFX_DATA_MAP
   
-  if( (pDX->m_bSaveAndValidate) && IsWindow( m_sliderSpecularExponent.m_hWnd) )
+  if ((pDX->m_bSaveAndValidate) && IsWindow( m_sliderSpecularExponent.m_hWnd) )
   {                    
     INDEX iSlider = m_sliderSpecularExponent.GetPos();
     CreateTexture( CTString("temp\\SpecularTemp.tex"), GetFactorForPercentage( iSlider));
     CTextureData *pTD = (CTextureData *) m_moModel.mo_toSpecular.GetData();
-    if( pTD != NULL) pTD->Reload();
+    if (pTD != NULL) pTD->Reload();
     Invalidate( FALSE);
   }
 }
@@ -195,7 +195,7 @@ void CDlgCreateSpecularTexture::DrawPreview( CDrawPort *pdp, FLOAT fExp)
 {
   BOOL bErrorOcured = FALSE;
   
-  if( (m_moModel.GetData() == NULL) || (m_moModel.mo_toTexture.GetData() == NULL) ||
+  if ((m_moModel.GetData() == NULL) || (m_moModel.mo_toTexture.GetData() == NULL) ||
       (m_moModel.mo_toSpecular.GetData() == NULL) )
   // obtain components for rendering
   try
@@ -215,7 +215,7 @@ void CDlgCreateSpecularTexture::DrawPreview( CDrawPort *pdp, FLOAT fExp)
     bErrorOcured = TRUE;
   }
 
-  if( !bErrorOcured)
+  if (!bErrorOcured)
   {
 
     ((CModelData*)m_moModel.GetData())->md_colSpecular = m_colorSpecular.GetColor();
@@ -240,15 +240,15 @@ void CDlgCreateSpecularTexture::DrawPreview( CDrawPort *pdp, FLOAT fExp)
     prPerspectiveProjection.AspectRatioL() = 1.0f;
     prPerspectiveProjection.FrontClipDistanceL() = 0.05f;
 
-    prPerspectiveProjection.ViewerPlacementL().pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
-    prPerspectiveProjection.ViewerPlacementL().pl_OrientationAngle = ANGLE3D( 0, -20, 0);
+    prPerspectiveProjection.ViewerPlacementL().pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
+    prPerspectiveProjection.ViewerPlacementL().pl_OrientationAngle = ANGLE3D(0, -20, 0);
     prPerspectiveProjection.Prepare();
     CAnyProjection3D apr;
     apr = prPerspectiveProjection;
     BeginModelRenderingView(apr, pdp);
 
     _mrpModelRenderPrefs.SetRenderType( RT_TEXTURE|RT_SHADING_PHONG);
-    m_plPlacement.pl_PositionVector = FLOAT3D( 0.0f, -0.19f, -0.35f);
+    m_plPlacement.pl_PositionVector = FLOAT3D(0.0f, -0.19f, -0.35f);
     rmRenderModel.SetObjectPlacement(m_plPlacement);
     rmRenderModel.rm_colLight = m_colorLight.GetColor();
     rmRenderModel.rm_colAmbient = m_colorAmbient.GetColor();
@@ -306,14 +306,14 @@ void CDlgCreateSpecularTexture::RenderGraph(void)
   if (m_pGraphViewPort==NULL) {
     _pGfx->CreateWindowCanvas( m_wndGraph.m_hWnd, &m_pGraphViewPort, &m_pGraphDrawPort);
   }
-  if( (m_pGraphDrawPort != NULL) && (m_pGraphDrawPort->Lock()) )
+  if ((m_pGraphDrawPort != NULL) && (m_pGraphDrawPort->Lock()) )
   {
     INDEX iSlider = m_sliderSpecularExponent.GetPos();
     DrawGraph( m_pGraphDrawPort, GetFactorForPercentage( iSlider));
     m_pGraphDrawPort->Unlock();
   }
   if (m_pGraphViewPort!=NULL)    m_pGraphViewPort->SwapBuffers();
-  if( m_pGraphViewPort != NULL)
+  if (m_pGraphViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pGraphViewPort);
     m_pGraphViewPort = NULL;
@@ -326,7 +326,7 @@ void CDlgCreateSpecularTexture::RenderPreview(void)
   if (m_pPreviewDrawPort==NULL) {
     _pGfx->CreateWindowCanvas( m_wndPreview.m_hWnd, &m_pPreviewViewPort, &m_pPreviewDrawPort);
   }
-  if( (m_pPreviewDrawPort != NULL) && (m_pPreviewDrawPort->Lock()) )
+  if ((m_pPreviewDrawPort != NULL) && (m_pPreviewDrawPort->Lock()) )
   {
     INDEX iSlider = m_sliderSpecularExponent.GetPos();
     DrawPreview( m_pPreviewDrawPort, GetFactorForPercentage( iSlider));
@@ -339,12 +339,12 @@ void CDlgCreateSpecularTexture::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-  if( m_iTimerID == -1)
+  if (m_iTimerID == -1)
   {
     m_iTimerID = (int) SetTimer( 1, 24, NULL);
   }
 
-  if( !m_bCustomWindowsCreated)
+  if (!m_bCustomWindowsCreated)
   {
     // ---------------- Create window for graph
     // obtain frames area window
@@ -376,12 +376,12 @@ BOOL CDlgCreateSpecularTexture::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-  if(::IsWindow( m_comboSizeInPixels.m_hWnd))
+  if (::IsWindow( m_comboSizeInPixels.m_hWnd))
   {
     m_comboSizeInPixels.SetCurSel( 6);
   }
 
-  if( IsWindow( m_sliderSpecularExponent.m_hWnd))
+  if (IsWindow( m_sliderSpecularExponent.m_hWnd))
   {
     m_sliderSpecularExponent.SetRange(0, 100, TRUE);
     m_sliderSpecularExponent.SetPos(DEFAULT_EXPONENT_POS);
@@ -395,7 +395,7 @@ BOOL CDlgCreateSpecularTexture::OnInitDialog()
 void CDlgCreateSpecularTexture::OnTimer(UINT nIDEvent) 
 {
 	// on our timer discard preview window
-  if( nIDEvent == 1)
+  if (nIDEvent == 1)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
     if (llCurrentTick > _llLastTick)
@@ -411,7 +411,7 @@ void CDlgCreateSpecularTexture::OnTimer(UINT nIDEvent)
 
 void CDlgCreateSpecularTexture::OnDestroy() 
 {
-  if( m_pPreviewViewPort != NULL)
+  if (m_pPreviewViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pPreviewViewPort);
     m_pPreviewViewPort = NULL;
@@ -424,17 +424,17 @@ void CDlgCreateSpecularTexture::OnDestroy()
 
 void CDlgCreateSpecularTexture::OnAutoRotate() 
 {
-  a3dObjectAngles = ANGLE3D( 0, 0, 0);
-  a3dLightAngles = ANGLE3D( 0, 0, 0);
-  if( m_bAutoRotate)
+  a3dObjectAngles = ANGLE3D(0, 0, 0);
+  a3dLightAngles = ANGLE3D(0, 0, 0);
+  if (m_bAutoRotate)
   {
-    a3dObjectRotation = ANGLE3D( 0, 0, 0);
-    a3dLightRotation = ANGLE3D( 0, 0, 0);
+    a3dObjectRotation = ANGLE3D(0, 0, 0);
+    a3dLightRotation = ANGLE3D(0, 0, 0);
   }
   else
   {
-    a3dObjectRotation = ANGLE3D( -2.5f, 0, 0);
-    a3dLightRotation = ANGLE3D( 0, 0, 0);
+    a3dObjectRotation = ANGLE3D(-2.5f, 0, 0);
+    a3dLightRotation = ANGLE3D(0, 0, 0);
   }
   m_bAutoRotate = !m_bAutoRotate;
 }
@@ -461,25 +461,25 @@ BOOL CDlgCreateSpecularTexture::PreTranslateMessage(MSG* pMsg)
   pWndPreview->ClientToScreen( &rectPreview);
 
   
-  if( rectPreview.PtInRect( pointScreen))
+  if (rectPreview.PtInRect( pointScreen))
   {
-    if( (pMsg->message == WM_MOUSEMOVE) && (bWeStartedMouseDown) )
+    if ((pMsg->message == WM_MOUSEMOVE) && (bWeStartedMouseDown) )
     {
-      if( fwKeys&MK_LBUTTON)      a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
-      else if( fwKeys&MK_RBUTTON) a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
+      if (fwKeys&MK_LBUTTON)      a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
+      else if (fwKeys&MK_RBUTTON) a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
     }
-    else if( (pMsg->message == WM_LBUTTONDOWN) || ( pMsg->message == WM_RBUTTONDOWN) )
+    else if ((pMsg->message == WM_LBUTTONDOWN) || ( pMsg->message == WM_RBUTTONDOWN) )
     {
       ptLMBDown = point;
       ptRMBDown = point;
       bWeStartedMouseDown = TRUE;
     }
-    else if( (pMsg->message == WM_LBUTTONUP) && (bWeStartedMouseDown) )
+    else if ((pMsg->message == WM_LBUTTONUP) && (bWeStartedMouseDown) )
     {
       a3dObjectRotation = GetRotForDelta( point-ptLMBDown, FALSE);
       bWeStartedMouseDown = FALSE;
     }
-    else if( (pMsg->message == WM_RBUTTONUP) && (bWeStartedMouseDown) )
+    else if ((pMsg->message == WM_RBUTTONUP) && (bWeStartedMouseDown) )
     {
       a3dLightRotation = GetRotForDelta( point-ptRMBDown, FALSE);
       bWeStartedMouseDown = FALSE;
@@ -496,7 +496,7 @@ void CDlgCreateSpecularTexture::OnOK()
                                                 FILTER_TEX FILTER_ALL FILTER_END,
                                                 "Specular map textures directory",
                                                 "Textures\\");
-  if( fnFinal != "")
+  if (fnFinal != "")
   {
     CopyFileA( fnTemp, _fnmApplicationPath+fnFinal, FALSE);
   }

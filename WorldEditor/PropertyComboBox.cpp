@@ -67,23 +67,23 @@ void CPropertyComboBox::OnContextMenu(CWnd* pWnd, CPoint point)
 void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
 {
   // if we should add all of this entity's properties (if this is first entity)
-  if( !bIntersect)
+  if (!bIntersect)
   {
     // obtain entity class ptr
     CDLLEntityClass *pdecDLLClass = penEntity->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for(;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
-      for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+      for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
         // don't add properties with no name
-        if( epProperty.ep_strName != CTString("") )
+        if (epProperty.ep_strName != CTString("") )
         {
           CAnimData *pAD = NULL;
           // remember anim data
-          if( epProperty.ep_eptType == CEntityProperty::EPT_ANIMATION)
+          if (epProperty.ep_eptType == CEntityProperty::EPT_ANIMATION)
           {
             pAD = penEntity->GetAnimData( epProperty.ep_slOffset);
           }
@@ -112,15 +112,15 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
       // obtain entity class ptr
       CDLLEntityClass *pdecDLLClass = penEntity->GetClass()->ec_pdecDLLClass;
       // for all classes in hierarchy of this entity
-      for(; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+      for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
       {
         // for all properties
-        for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++) 
+        for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++) 
         {
           CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
           CAnimData *pAD = NULL;
           // remember anim data
-          if( epProperty.ep_eptType == CEntityProperty::EPT_ANIMATION)
+          if (epProperty.ep_eptType == CEntityProperty::EPT_ANIMATION)
           {
             pAD = penEntity->GetAnimData( epProperty.ep_slOffset);
           }
@@ -130,14 +130,14 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
             &epProperty, pAD);
 
           // is this property same as one we are investigating
-          if( (strCurrentName == PropertyID.pid_strName) &&
+          if ((strCurrentName == PropertyID.pid_strName) &&
               (eptCurrentType == PropertyID.pid_eptType) )
           {
             // if propperty is enum, enum ptr must also be the same
-            if( itProp->pid_eptType == CEntityProperty::EPT_ENUM)
+            if (itProp->pid_eptType == CEntityProperty::EPT_ENUM)
             {
               // only then,
-              if( itProp->pid_penpProperty->ep_pepetEnumType == 
+              if (itProp->pid_penpProperty->ep_pepetEnumType == 
                   PropertyID.pid_penpProperty->ep_pepetEnumType)
               {
                 // same property is found
@@ -150,9 +150,9 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
               goto pcb_OutLoop_JoinProperties;
             }
             // if propperty is animation, anim data ptr must be the same
-            else if( itProp->pid_eptType == CEntityProperty::EPT_ANIMATION)
+            else if (itProp->pid_eptType == CEntityProperty::EPT_ANIMATION)
             {
-              if(itProp->pid_padAnimData == PropertyID.pid_padAnimData)
+              if (itProp->pid_padAnimData == PropertyID.pid_padAnimData)
               {
                 // same property is found
                 bSameFound = TRUE;
@@ -174,7 +174,7 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
       }
 pcb_OutLoop_JoinProperties:;
       // if property with same name is not found
-      if( !bSameFound)
+      if (!bSameFound)
       {
         // remove our investigating property from list
         itProp->pid_lnNode.Remove();
@@ -194,13 +194,13 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
   // or if document was closed (pDoc == NULL and pLastDoc != NULL)
   // or if mode was changed
   // or if selection was changed from last OnIdle, refresh properties
-  if( (m_pLastDoc != pDoc) ||
+  if ((m_pLastDoc != pDoc) ||
       ((pDoc == NULL) && (m_pLastDoc != NULL)) ||
       ((pDoc != NULL) && (m_iLastMode != pDoc->m_iMode)) ||
       ((pDoc != NULL) && !pDoc->m_chSelections.IsUpToDate( m_udComboEntries)) )
   {
     // refresh selected members message
-    if( (pDoc != NULL))
+    if ((pDoc != NULL))
     {
       pDoc->SetStatusLineModeInfoMessage();
     }
@@ -208,7 +208,7 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
     // remove all combo entries
     ResetContent();
     // if document exists and mode is entities
-    if( (pDoc != NULL) && (pDoc->m_iMode == ENTITY_MODE) )
+    if ((pDoc != NULL) && (pDoc->m_iMode == ENTITY_MODE) )
     {
       // delete current property list
       FORDELETELIST(CPropertyID, pid_lnNode, m_lhProperties, itDel)
@@ -223,7 +223,7 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
       FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
       {
         // if this is first entity in dynamic container
-        if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+        if (pDoc->m_selEntitySelection.Pointer(0) == iten)
         {
           // add all of its properties into joint list but don't intersect with existing ones
           JoinProperties( iten, FALSE);
@@ -237,7 +237,7 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
       // unlock selection's dynamic container
       pDoc->m_selEntitySelection.Unlock();
 
-      if( pDoc->m_selEntitySelection.Count() != 0)
+      if (pDoc->m_selEntitySelection.Count() != 0)
       {
         // -----------------  Add spawn flags property 
         CPropertyID *ppidSpawnFlags = new CPropertyID( "Spawn flags (Alt+Shift+S)",
@@ -250,13 +250,13 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
       }
 
       // if there are some intersecting properties
-      if( !m_lhProperties.IsEmpty())
+      if (!m_lhProperties.IsEmpty())
       {
         // add intersecting properties of selected entities into combo box
         FOREACHINLIST(CPropertyID, pid_lnNode, m_lhProperties, itProp)
         {
           char achrShortcutKey[ 64] = "";
-          if( itProp->pid_chrShortcutKey != 0)
+          if (itProp->pid_chrShortcutKey != 0)
           {
             sprintf( achrShortcutKey, " (%c)", itProp->pid_chrShortcutKey);
           }
@@ -283,14 +283,14 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
     // index of property that is selected (trying to keep the same property active)
     INDEX iSelectedProperty = 0;
     // for all members in combo box
-    for( INDEX iMembers = 0; iMembers<GetCount(); iMembers++)
+    for (INDEX iMembers = 0; iMembers<GetCount(); iMembers++)
     {
       CPropertyID *ppidPropertyID = (CPropertyID *) GetItemData( iMembers);
       // if this is valid property
-      if( ppidPropertyID != NULL)
+      if (ppidPropertyID != NULL)
       {
         // if name of this property is same as last selected property name
-        if( ppidPropertyID->pid_strName == m_strLastPropertyName)
+        if (ppidPropertyID->pid_strName == m_strLastPropertyName)
         {
           // mark this property as selected by default
           iSelectedProperty = iMembers;
@@ -304,13 +304,13 @@ BOOL CPropertyComboBox::OnIdle(LONG lCount)
     // mark possible document change
     m_pLastDoc = pDoc;
     // set new mode
-    if( pDoc != NULL)
+    if (pDoc != NULL)
     {
       m_iLastMode = pDoc->m_iMode;
     }
     m_pDialog->ArrangeControls();
     // if edit color property is active
-    if( m_pDialog->m_EditColorCtrl.IsWindowVisible())
+    if (m_pDialog->m_EditColorCtrl.IsWindowVisible())
     {
       // invalidate it so it will be refreshed properly
       m_pDialog->m_EditColorCtrl.Invalidate( FALSE);
@@ -352,7 +352,7 @@ void CPropertyComboBox::DisableCombo()
 void CPropertyComboBox::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);

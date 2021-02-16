@@ -32,7 +32,7 @@ static char THIS_FILE[] = __FILE__;
 BOOL CPropertyComboBar::Create( CWnd* pParentWnd, UINT nIDTemplate,
                                 UINT nStyle, UINT nID, BOOL bChange)
 {
-  if(!CDialogBar::Create(pParentWnd,nIDTemplate,nStyle,nID))
+  if (!CDialogBar::Create(pParentWnd,nIDTemplate,nStyle,nID))
   {
     return FALSE;
   }
@@ -163,21 +163,21 @@ void CPropertyComboBar::SelectAxisRadio(CWnd *pwndToSelect)
   m_YCtrlAxisRadio.SetCheck( 0);
   m_ZCtrlAxisRadio.SetCheck( 0);
   // select right one
-  if( pwndToSelect == &m_XCtrlAxisRadio) {m_XCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=1;};
-  if( pwndToSelect == &m_YCtrlAxisRadio) {m_YCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=2;};
-  if( pwndToSelect == &m_ZCtrlAxisRadio) {m_ZCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=3;};
+  if (pwndToSelect == &m_XCtrlAxisRadio) {m_XCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=1;};
+  if (pwndToSelect == &m_YCtrlAxisRadio) {m_YCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=2;};
+  if (pwndToSelect == &m_ZCtrlAxisRadio) {m_ZCtrlAxisRadio.SetCheck( 1); m_iXYZAxis=3;};
 }
 
 void CPropertyComboBar::DoDataExchange(CDataExchange* pDX) 
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     return;
   }
   
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     SetIntersectingEntityClassName();
     SetIntersectingFileName();
@@ -185,7 +185,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
     // obtain selected property ID ptr
     CPropertyID *ppidProperty = GetSelectedProperty();
     // if there is valid property selected
-    if( ppidProperty != NULL)
+    if (ppidProperty != NULL)
     {
       // reset selection entities spawn on and off masks
       ULONG ulSpawnOn = MAX_ULONG;
@@ -199,8 +199,8 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
       }
 
 #define SET_SPAWN_FLAG( flag, ctrl) \
-      if((ulSpawnOn & (flag)) && !(ulSpawnOff & (flag))) ctrl.SetCheck( 1); \
-      else if(!(ulSpawnOn & (flag)) && (ulSpawnOff & (flag))) ctrl.SetCheck( 0); \
+      if ((ulSpawnOn & (flag)) && !(ulSpawnOff & (flag))) ctrl.SetCheck( 1); \
+      else if (!(ulSpawnOn & (flag)) && (ulSpawnOff & (flag))) ctrl.SetCheck( 0); \
       else ctrl.SetCheck( 2);
 
       // set states of all spawn flags using calculated selected entities masks
@@ -234,46 +234,46 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_ENTITY_NAME, m_strEntityName);
   DDX_Text(pDX, IDC_ENTITY_DESCRIPTION, m_strEntityDescription);
 	
-  if( m_EditBBoxMinCtrl.IsWindowVisible())
+  if (m_EditBBoxMinCtrl.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_BBOX_MIN, m_fEditingBBoxMin);
     DDX_SkyFloat(pDX, IDC_EDIT_BBOX_MAX, m_fEditingBBoxMax);
   }
-  if( m_EditStringCtrl.IsWindowVisible())
+  if (m_EditStringCtrl.IsWindowVisible())
   {
     DDX_Text(pDX, IDC_EDIT_STRING, m_strEditingString);
   }
-  if( m_EditFloatCtrl.IsWindowVisible())
+  if (m_EditFloatCtrl.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_FLOAT, m_fEditingFloat);
   }
-  if( m_EditHeading.IsWindowVisible())
+  if (m_EditHeading.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_HEADING, m_fEditingHeading);
   }
-  if( m_EditPitch.IsWindowVisible())
+  if (m_EditPitch.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_PITCH, m_fEditingPitch);
   }
-  if( m_EditBanking.IsWindowVisible())
+  if (m_EditBanking.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_BANKING, m_fEditingBanking);
   }
-  if( m_EditIndexCtrl.IsWindowVisible())
+  if (m_EditIndexCtrl.IsWindowVisible())
   {
     DDX_Text(pDX, IDC_EDIT_INDEX, m_iEditingIndex);
   }
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // obtain selected property ID ptr
     CPropertyID *ppidProperty = GetSelectedProperty();
     // if there is valid property selected
-    if( ppidProperty != NULL)
+    if (ppidProperty != NULL)
     {
       // see type of changing property
-      switch( ppidProperty->pid_eptType)
+      switch (ppidProperty->pid_eptType)
       {
       // if we are changing flag field
       case CEntityProperty::EPT_FLAGS:
@@ -298,7 +298,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           // get currently selected combo member
           INDEX iSelectedComboMember = m_EditEnumComboBox.GetCurSel();
           // it must exist
-          if( iSelectedComboMember == CB_ERR) return;
+          if (iSelectedComboMember == CB_ERR) return;
           // get enum ID to be set for all entities
           INDEX iSelectedEnumID = m_EditEnumComboBox.GetItemData(iSelectedComboMember);
 
@@ -321,7 +321,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           // get currently selected combo member
           INDEX iSelectedComboMember = m_EditEnumComboBox.GetCurSel();
           // it must exist
-          if( iSelectedComboMember == CB_ERR) return;
+          if (iSelectedComboMember == CB_ERR) return;
           // get animation to be set for all entities
           INDEX iSelectedAnimation = m_EditEnumComboBox.GetItemData(iSelectedComboMember);
 
@@ -345,7 +345,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           // get currently selected combo member
           INDEX iSelectedComboMember = m_EditEnumComboBox.GetCurSel();
           // it must exist
-          if( iSelectedComboMember == CB_ERR) return;
+          if (iSelectedComboMember == CB_ERR) return;
           // get illumination type to be set for all entities
           INDEX iIlluminationType = m_EditEnumComboBox.GetItemData(iSelectedComboMember);
 
@@ -398,14 +398,14 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if we are editing angle property
-            if( ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE3D)
+            if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE3D)
             {
               // set new angle 3d
               ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, ANGLE3D) = 
                 ANGLE3D(AngleDeg(m_fEditingHeading), AngleDeg(m_fEditingPitch),
                         AngleDeg(m_fEditingBanking));
             }
-            else if(ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
+            else if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
             {
               // set new angle
               ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, FLOAT) = AngleDeg(m_fEditingFloat);
@@ -479,7 +479,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           // get state of check box
           INDEX iCheckBox = m_EditBoolCtrl.GetCheck();
           // must be 0 or 1
-          if( iCheckBox != 2)
+          if (iCheckBox != 2)
           {
             // for each of the selected entities
             FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -503,14 +503,14 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           // get currently selected combo member
           INDEX iSelectedComboMember = m_EditEnumComboBox.GetCurSel();
           // it must exist
-          if( iSelectedComboMember == CB_ERR) return;
+          if (iSelectedComboMember == CB_ERR) return;
           // get entity ptr to be set for all entities
           CEntity *penEntity = (CEntity *)m_EditEnumComboBox.GetItemData(iSelectedComboMember);
 
           // for each of the selected entities
           FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
           {
-            if( ppidProperty->pid_eptType == CEntityProperty::EPT_PARENT)
+            if (ppidProperty->pid_eptType == CEntityProperty::EPT_PARENT)
             {
               iten->SetParent( penEntity);
             }
@@ -536,8 +536,8 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           ULONG ulBitsToSet = 0;
 
 #define GET_SPAWN_MASKS( flag, ctrl) \
-          if( ctrl.GetCheck() == 0) ulBitsToClear &= ~(flag); \
-          if( ctrl.GetCheck() == 1) ulBitsToSet |= (flag);
+          if (ctrl.GetCheck() == 0) ulBitsToClear &= ~(flag); \
+          if (ctrl.GetCheck() == 1) ulBitsToSet |= (flag);
 
           // look at spawn checks and create masks of bits to set and to clear
           GET_SPAWN_MASKS( SPF_EASY, m_EditEasySpawn);
@@ -694,7 +694,7 @@ CSize CPropertyComboBar::CalcDynamicLayout(int nLength, DWORD nMode)
 CPropertyID *CPropertyComboBar::GetSelectedProperty()
 {
   INDEX iSelectedProperty = m_PropertyComboBox.GetCurSel();
-  if( (iSelectedProperty == CB_ERR) || ( iSelectedProperty < 0) )
+  if ((iSelectedProperty == CB_ERR) || ( iSelectedProperty < 0) )
   {
     //ASSERTALWAYS( "GetSelectedProperty() must not be called if there are no joined properties");
     return NULL;
@@ -708,13 +708,13 @@ CPropertyID *CPropertyComboBar::GetSelectedProperty()
 void CPropertyComboBar::SetFirstValidEmptyTargetProperty(CEntity *penTarget)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
-  for( INDEX iItem=0; iItem<m_PropertyComboBox.GetCount(); iItem++)
+  for (INDEX iItem=0; iItem<m_PropertyComboBox.GetCount(); iItem++)
   {
     CPropertyID *ppidProperty = (CPropertyID *) m_PropertyComboBox.GetItemData( iItem);
     ASSERT( ppidProperty != (CPropertyID *) -1);
-    if( ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR)
+    if (ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR)
     {
       // for each of the selected entities
       {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -725,13 +725,13 @@ void CPropertyComboBar::SetFirstValidEmptyTargetProperty(CEntity *penTarget)
         CEntity *penOldTarget = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CEntityPointer);
         BOOL bValidTarget = iten->IsTargetValid( penpProperty->ep_slOffset, penTarget);
         // if this ptr is already set
-        if( penOldTarget==penTarget)
+        if (penOldTarget==penTarget)
         {
           // don't do anything
           return;
         }
         // stop checking if ptr isn't NULL or if not valid target
-        if( penOldTarget!=NULL || !bValidTarget)
+        if (penOldTarget!=NULL || !bValidTarget)
         {
           continue;
         }
@@ -779,42 +779,42 @@ void CPropertyComboBar::SelectNextProperty(void)
 void CPropertyComboBar::CircleTargetProperties(INDEX iDirection, BOOL bOnlyEmptyTargets)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL)
+  if (pDoc == NULL)
   {
     return;
   }
   INDEX ctProperties = m_PropertyComboBox.GetCount();
   // if no properties
-  if( ctProperties == 0) return;
+  if (ctProperties == 0) return;
   // if selected is invalid
   INDEX iSelectedProperty = m_PropertyComboBox.GetCurSel();
-  if( (iSelectedProperty == CB_ERR) || ( iSelectedProperty < 0) ) return;
+  if ((iSelectedProperty == CB_ERR) || ( iSelectedProperty < 0) ) return;
   // set invalid result
   INDEX iToSelect = -1;
   // browse trough entities
-  for( INDEX iItem=1; iItem<ctProperties; iItem++)
+  for (INDEX iItem=1; iItem<ctProperties; iItem++)
   {
     // we will use next/previos item for selecting
     INDEX iToTest = (iSelectedProperty+ctProperties+iDirection*iItem)%ctProperties;
     // if there is valid property selected
     CPropertyID *ppidProperty = (CPropertyID *) m_PropertyComboBox.GetItemData( iToTest);
-    if( ppidProperty == NULL)
+    if (ppidProperty == NULL)
     {
       ASSERTALWAYS("Null property found!");
       return;
     }
       // if null-ptr target is requested
-    if( bOnlyEmptyTargets)
+    if (bOnlyEmptyTargets)
     {
       // if this is entity pointer property
-      if( ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR)
+      if (ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR)
       {
         // obtain property ptr
         CEntity *pen = pDoc->m_selEntitySelection.GetFirstInSelection();
         CEntityProperty *penpProperty = ppidProperty->pid_penpProperty;
         CEntity *penTarget = ENTITYPROPERTY( pen, penpProperty->ep_slOffset, CEntityPointer);
         // if it is NULL
-        if( penTarget == NULL)
+        if (penTarget == NULL)
         {
           // set this property as one to select
           iToSelect = iToTest;
@@ -831,7 +831,7 @@ void CPropertyComboBar::CircleTargetProperties(INDEX iDirection, BOOL bOnlyEmpty
   }
 
   // if we have valid result
-  if( iToSelect != -1)
+  if (iToSelect != -1)
   {
     // select it
     m_PropertyComboBox.SetCurSel( iToSelect);
@@ -841,11 +841,11 @@ void CPropertyComboBar::CircleTargetProperties(INDEX iDirection, BOOL bOnlyEmpty
 
 void CPropertyComboBar::SetIntersectingFileName()
 {
-  if( m_BrowseFileCtrl.IsWindowVisible())
+  if (m_BrowseFileCtrl.IsWindowVisible())
   {
     // get entity selection's intesecting file name
     CTFileName fnIntersectingFile = m_BrowseFileCtrl.GetIntersectingFile();
-    if( fnIntersectingFile != "")
+    if (fnIntersectingFile != "")
     {
       m_strFileName = "...\\" + fnIntersectingFile.FileName() + fnIntersectingFile.FileExt();
     }
@@ -861,7 +861,7 @@ void CPropertyComboBar::SetColorPropertyToEntities( COLOR colNewColor)
   CWorldEditorDoc *pDoc = theApp.GetDocument();
   // obtain curently selected property ID
   CPropertyID *ppidProperty = GetSelectedProperty();
-  if( ppidProperty == NULL) return;
+  if (ppidProperty == NULL) return;
   // change curently selected color property in the selected entities
   // for each of the selected entities
   FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -885,10 +885,10 @@ BOOL CPropertyComboBar::OnIdle(LONG lCount)
   m_PropertyComboBox.OnIdle( lCount);
   
   // if we are curently changing color
-  if( m_EditColorCtrl.IsWindowVisible())
+  if (m_EditColorCtrl.IsWindowVisible())
   {
     COLOR colCurrentColor = m_EditColorCtrl.GetColor();
-    if( colCurrentColor != m_colLastColor)
+    if (colCurrentColor != m_colLastColor)
     {
       SetColorPropertyToEntities( colCurrentColor);
       m_colLastColor = colCurrentColor;
@@ -933,7 +933,7 @@ void CPropertyComboBar::ArrangeControls()
   // get active document 
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // if view does not exist, return
-  if( pDoc != NULL)
+  if (pDoc != NULL)
   {
     m_strFloatRange = "";
     m_strChooseColor = "";
@@ -943,10 +943,10 @@ void CPropertyComboBar::ArrangeControls()
     INDEX iSelectedProperty = m_PropertyComboBox.GetCurSel();
     CPropertyID *ppidProperty = (CPropertyID *) m_PropertyComboBox.GetItemData( iSelectedProperty);
     // if there is valid property selected
-    if( ppidProperty != NULL)
+    if (ppidProperty != NULL)
     {
       // show controls acording to property type
-      switch( ppidProperty->pid_eptType)
+      switch (ppidProperty->pid_eptType)
       {
       case CEntityProperty::EPT_FLAGS:
         {
@@ -960,9 +960,9 @@ void CPropertyComboBar::ArrangeControls()
           // create mask of editable bits
           ULONG ulEditable=0;
           // for all enumerated members
-          for( INDEX iEnum = 0; iEnum<epEnum->epet_ctValues; iEnum++)
+          for (INDEX iEnum = 0; iEnum<epEnum->epet_ctValues; iEnum++)
           {
-            if( epEnum->epet_aepevValues[ iEnum].epev_strName!="")
+            if (epEnum->epet_aepevValues[ iEnum].epev_strName!="")
             {
               ulEditable|=(1UL)<<epEnum->epet_aepevValues[ iEnum].epev_iValue;
               CTString strBitName=epEnum->epet_aepevValues[ iEnum].epev_strName;
@@ -994,7 +994,7 @@ void CPropertyComboBar::ArrangeControls()
           // combo control is to be shown
           iEnum = SW_SHOW;
           // for enum type of property
-          if( ppidProperty->pid_eptType == CEntityProperty::EPT_ENUM)
+          if (ppidProperty->pid_eptType == CEntityProperty::EPT_ENUM)
           {
             // obtain enum property description object
             CEntityPropertyEnumType *epEnum = penpProperty->ep_pepetEnumType;
@@ -1009,7 +1009,7 @@ void CPropertyComboBar::ArrangeControls()
             FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) 
             {
               // if this is first entity in dynamic container
-              if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+              if (pDoc->m_selEntitySelection.Pointer(0) == iten)
               {
                 // it is, set its value as one that others will compare with
                 iCurrentEnumID = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX);
@@ -1017,7 +1017,7 @@ void CPropertyComboBar::ArrangeControls()
               else
               {
                 // if value of entity enum variable is different from first one
-                if( iCurrentEnumID != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+                if (iCurrentEnumID != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
                 {
                   // mark that all entities do not have same enum
                   bAllEntitiesHaveSameEnum = FALSE;
@@ -1031,7 +1031,7 @@ void CPropertyComboBar::ArrangeControls()
             // invalid choosed enum ID
             INDEX iSelectedEnumID = -1;
             // for all enumerated members
-            for( INDEX iEnum = 0; iEnum< epEnum->epet_ctValues; iEnum++)
+            for (INDEX iEnum = 0; iEnum< epEnum->epet_ctValues; iEnum++)
             {
               // add enum member into combo box
               // add descriptive string
@@ -1043,30 +1043,30 @@ void CPropertyComboBar::ArrangeControls()
               m_EditEnumComboBox.SetItemData( iAddedAs, iLoopingEnumID);
             
               // if all entities have same enum and this is joint enumerated value
-              if( bAllEntitiesHaveSameEnum && (iCurrentEnumID == iLoopingEnumID) )
+              if (bAllEntitiesHaveSameEnum && (iCurrentEnumID == iLoopingEnumID) )
               {
                 // remember its index to set as selected combo value
                 iSelectedEnumID = iCurrentEnumID;
               }
             }
             // if entities have same enum there must be valid selected enum ID
-            if( bAllEntitiesHaveSameEnum)
+            if (bAllEntitiesHaveSameEnum)
             {
               ASSERT(iSelectedEnumID != -1);
             }
 
             // if all entities have same enum
-            if( bAllEntitiesHaveSameEnum)
+            if (bAllEntitiesHaveSameEnum)
             {
               // after inserting combo members, they can be sorted so adding order does not work
               // any more, combo member indices are not same any more
               // mark invalid combo entry as selected
               INDEX iSelectedCombo = -1;
               // for all combo members
-              for( INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
+              for (INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
               {
                 // if this entry has same enum ID as selected one
-                if( m_EditEnumComboBox.GetItemData( iCombo) == (DWORD) iSelectedEnumID)
+                if (m_EditEnumComboBox.GetItemData( iCombo) == (DWORD) iSelectedEnumID)
                 {
                   // set its index as one to be selected
                   iSelectedCombo = iCombo;
@@ -1080,7 +1080,7 @@ void CPropertyComboBar::ArrangeControls()
             }
           }
           // else if this is entity ptr property
-          else if( (ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR) ||
+          else if ((ppidProperty->pid_eptType == CEntityProperty::EPT_ENTITYPTR) ||
                    (ppidProperty->pid_eptType == CEntityProperty::EPT_PARENT) )
           {
             BOOL bParentProperty = ppidProperty->pid_eptType == CEntityProperty::EPT_PARENT;
@@ -1097,10 +1097,10 @@ void CPropertyComboBar::ArrangeControls()
               {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, itenSel)
               {
                 CEntityProperty *penpProperty = ppidProperty->pid_penpProperty;
-                if(penpProperty != NULL)
+                if (penpProperty != NULL)
                 {
                   // see if target is valid
-                  if( !itenSel->IsTargetValid( penpProperty->ep_slOffset, iten))
+                  if (!itenSel->IsTargetValid( penpProperty->ep_slOffset, iten))
                   {
                     bValidTarget = FALSE;
                     break;
@@ -1109,14 +1109,14 @@ void CPropertyComboBar::ArrangeControls()
               }}
 
               // if entity is targetable, not hidden, and is not selected
-              if( (iten->IsTargetable() || bParentProperty) &&
+              if ((iten->IsTargetable() || bParentProperty) &&
                   (bSectorVisible) &&
                   bValidTarget &&
                   //(!iten->IsSelected(ENF_SELECTED)) &&
                   !(iten->en_ulFlags&ENF_HIDDEN))
               {
                 INDEX iAddedAs;
-                if( strEntityName != "")
+                if (strEntityName != "")
                 {
                   // add it to combo
                   iAddedAs = m_EditEnumComboBox.AddString( CString(strEntityName));
@@ -1145,10 +1145,10 @@ void CPropertyComboBar::ArrangeControls()
             FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
             {
               // if this is first entity in dynamic container
-              if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+              if (pDoc->m_selEntitySelection.Pointer(0) == iten)
               {
                 // it is, set its value as one that others will compare with
-                if( bParentProperty)
+                if (bParentProperty)
                   penEntity = iten->GetParent();
                 else
                   penEntity = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CEntityPointer);
@@ -1158,11 +1158,11 @@ void CPropertyComboBar::ArrangeControls()
               {
                 // get current entity ptr
                 CEntity *penCurrent;
-                if( bParentProperty) penCurrent = iten->GetParent();
+                if (bParentProperty) penCurrent = iten->GetParent();
                 else penCurrent = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CEntityPointer);
 
                 // if value of entity ptr is different from first one
-                if( penEntity != penCurrent)
+                if (penEntity != penCurrent)
                 {
                   // mark that all entities do not have same entity ptr
                   penEntity = (CEntity *) -1;
@@ -1173,14 +1173,14 @@ void CPropertyComboBar::ArrangeControls()
             // unlock selection's dynamic container
             pDoc->m_selEntitySelection.Unlock();
           
-            if( penEntity != (CEntity *)-1)
+            if (penEntity != (CEntity *)-1)
             {
               INDEX iSelectedCombo = 0;
               // for all combo members
-              for( INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
+              for (INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
               {
                 // if this entry has same entity ptr as selected one
-                if( penEntity == (CEntity *) m_EditEnumComboBox.GetItemData( iCombo) )
+                if (penEntity == (CEntity *) m_EditEnumComboBox.GetItemData( iCombo) )
                 {
                   // set its index as one to be selected
                   iSelectedCombo = iCombo;
@@ -1195,17 +1195,17 @@ void CPropertyComboBar::ArrangeControls()
             iNoTarget = SW_SHOW;
           }
           // else if we should initialize animation property
-          else if( ppidProperty->pid_eptType == CEntityProperty::EPT_ANIMATION)
+          else if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANIMATION)
           {
             // get first selected entity
             pDoc->m_selEntitySelection.Lock();
             CEntity *penFirst = pDoc->m_selEntitySelection.Pointer(0);
             pDoc->m_selEntitySelection.Unlock();
             CAnimData *pAD = penFirst->GetAnimData( penpProperty->ep_slOffset);
-            if( pAD != NULL)
+            if (pAD != NULL)
             {
               // add all animations into combo box
-              for( INDEX iAnimation=0;iAnimation<pAD->GetAnimsCt();iAnimation++)
+              for (INDEX iAnimation=0;iAnimation<pAD->GetAnimsCt();iAnimation++)
               {
                 // obtain information about animation
                 CAnimInfo aiInfo;
@@ -1226,14 +1226,14 @@ void CPropertyComboBar::ArrangeControls()
               // obtain property ptr
               CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
               // if this is first entity in dynamic container
-              if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+              if (pDoc->m_selEntitySelection.Pointer(0) == iten)
               {
                 // it is, get light animation as one that others will compare with
                 iJointAnimation = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX);
               }
               else
               {
-                if( iJointAnimation!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+                if (iJointAnimation!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
                 {
                   iJointAnimation = -1;
                 }
@@ -1242,14 +1242,14 @@ void CPropertyComboBar::ArrangeControls()
             // unlock selection's dynamic container
             pDoc->m_selEntitySelection.Unlock();
           
-            if( iJointAnimation != -1)
+            if (iJointAnimation != -1)
             {
               INDEX iSelectedCombo = -1;
               // for all combo members
-              for( INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
+              for (INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
               {
                 // if this entry has same entity ptr as selected one
-                if( iJointAnimation == (INDEX) m_EditEnumComboBox.GetItemData( iCombo) )
+                if (iJointAnimation == (INDEX) m_EditEnumComboBox.GetItemData( iCombo) )
                 {
                   // set its index as one to be selected
                   iSelectedCombo = iCombo;
@@ -1257,7 +1257,7 @@ void CPropertyComboBar::ArrangeControls()
                 }
               }
               // if there is joint animation but is not found in combo
-              if( iSelectedCombo == -1)
+              if (iSelectedCombo == -1)
               {
                 iSelectedCombo = 0;
               }
@@ -1266,16 +1266,16 @@ void CPropertyComboBar::ArrangeControls()
             }
           }
           // else if we should initialize illumination type property
-          else if( ppidProperty->pid_eptType == CEntityProperty::EPT_ILLUMINATIONTYPE)
+          else if (ppidProperty->pid_eptType == CEntityProperty::EPT_ILLUMINATIONTYPE)
           {
             // add all illumination types into combo box
-            for( INDEX iIllumination=0;iIllumination<255; iIllumination++)
+            for (INDEX iIllumination=0;iIllumination<255; iIllumination++)
             {
               // get illumination name
               CTString strIlluminationName = 
                 pDoc->m_woWorld.wo_aitIlluminationTypes[iIllumination].it_strName;
               // name must not be <none> except for first illumination
-              if(strIlluminationName == "")
+              if (strIlluminationName == "")
               {
                 break;
               }
@@ -1295,14 +1295,14 @@ void CPropertyComboBar::ArrangeControls()
               // obtain property ptr
               CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
               // if this is first entity in dynamic container
-              if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+              if (pDoc->m_selEntitySelection.Pointer(0) == iten)
               {
                 // it is, get illumination as one that others will compare with
                 iJointIllumination = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX);
               }
               else
               {
-                if( iJointIllumination!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+                if (iJointIllumination!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
                 {
                   iJointIllumination = -1;
                 }
@@ -1311,14 +1311,14 @@ void CPropertyComboBar::ArrangeControls()
             // unlock selection's dynamic container
             pDoc->m_selEntitySelection.Unlock();
           
-            if( iJointIllumination != -1)
+            if (iJointIllumination != -1)
             {
               INDEX iSelectedCombo = -1;
               // for all combo members
-              for( INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
+              for (INDEX iCombo = 0; iCombo<m_EditEnumComboBox.GetCount(); iCombo++)
               {
                 // if this entry has same entity ptr as selected one
-                if( iJointIllumination == (INDEX) m_EditEnumComboBox.GetItemData( iCombo) )
+                if (iJointIllumination == (INDEX) m_EditEnumComboBox.GetItemData( iCombo) )
                 {
                   // set its index as one to be selected
                   iSelectedCombo = iCombo;
@@ -1326,7 +1326,7 @@ void CPropertyComboBar::ArrangeControls()
                 }
               }
               // if there is joint illumination but is not found in combo
-              if( iSelectedCombo == -1)
+              if (iSelectedCombo == -1)
               {
                 iSelectedCombo = 0;
               }
@@ -1353,7 +1353,7 @@ void CPropertyComboBar::ArrangeControls()
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if this is first entity in dynamic container
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               // it is, get string as one that others will compare with
               m_strEditingString = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CTString);
@@ -1362,7 +1362,7 @@ void CPropertyComboBar::ArrangeControls()
             {
               CTString strString = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CTString);
               // if string is different from first one
-              if( CTString( CStringA(m_strEditingString)) != strString)
+              if (CTString( CStringA(m_strEditingString)) != strString)
               {
                 // all selected entities do not share same string
                 m_strEditingString = "";
@@ -1384,9 +1384,9 @@ void CPropertyComboBar::ArrangeControls()
           FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
           {
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
-              if( ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
+              if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
               {
                 m_fEditingFloat = DegAngle( ENTITYPROPERTY( 
                                             &*iten, penpProperty->ep_slOffset, ANGLE));
@@ -1399,7 +1399,7 @@ void CPropertyComboBar::ArrangeControls()
             else
             {
               FLOAT fCurrentFloat;
-              if( ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
+              if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE)
               {
                 fCurrentFloat = DegAngle( ENTITYPROPERTY( 
                                           &*iten, penpProperty->ep_slOffset, ANGLE));
@@ -1408,7 +1408,7 @@ void CPropertyComboBar::ArrangeControls()
               {
                 fCurrentFloat = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, FLOAT);
               }
-              if( m_fEditingFloat != fCurrentFloat )
+              if (m_fEditingFloat != fCurrentFloat )
               {
                 m_fEditingFloat = 0.0f;
                 break;
@@ -1419,7 +1419,7 @@ void CPropertyComboBar::ArrangeControls()
 
           sprintf( strMessage, "Float");
           m_strFloatRange = strMessage;
-          if( ppidProperty->pid_eptType == CEntityProperty::EPT_RANGE)
+          if (ppidProperty->pid_eptType == CEntityProperty::EPT_RANGE)
           {
             pDoc->UpdateAllViews( NULL);
           }
@@ -1432,7 +1432,7 @@ void CPropertyComboBar::ArrangeControls()
           FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
           {
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               ANGLE3D aAngle = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, ANGLE3D);
               m_fEditingHeading = DegAngle( aAngle(1));
@@ -1442,9 +1442,9 @@ void CPropertyComboBar::ArrangeControls()
             else
             {
               ANGLE3D aCurrent = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, ANGLE3D);
-              if( m_fEditingHeading != DegAngle( aCurrent(1))) m_fEditingHeading = 0.0f;
-              if( m_fEditingPitch != DegAngle( aCurrent(2))) m_fEditingPitch = 0.0f;
-              if( m_fEditingBanking != DegAngle( aCurrent(3))) m_fEditingBanking = 0.0f;
+              if (m_fEditingHeading != DegAngle( aCurrent(1))) m_fEditingHeading = 0.0f;
+              if (m_fEditingPitch != DegAngle( aCurrent(2))) m_fEditingPitch = 0.0f;
+              if (m_fEditingBanking != DegAngle( aCurrent(3))) m_fEditingBanking = 0.0f;
             }
           }
           pDoc->m_selEntitySelection.Unlock();
@@ -1464,7 +1464,7 @@ void CPropertyComboBar::ArrangeControls()
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if this is first entity in dynamic container
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               // get first entity's bbox min and max values for selected axis
               FLOATaabbox3D bboxCurrent = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset,
@@ -1486,7 +1486,7 @@ void CPropertyComboBar::ArrangeControls()
               FLOAT3D vMin = bboxCurrent.Min();
               FLOAT3D vMax = bboxCurrent.Max();
               // compare min and max ranges for current axis with those from first entity
-              if( (m_fEditingBBoxMin != vMin( m_iXYZAxis)) ||
+              if ((m_fEditingBBoxMin != vMin( m_iXYZAxis)) ||
                   (m_fEditingBBoxMax != vMax( m_iXYZAxis)) )
               {
                 // all selected entities do not share same number so mark it
@@ -1519,7 +1519,7 @@ void CPropertyComboBar::ArrangeControls()
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if this is first entity in dynamic container
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               // it is, get this number as one that others will compare with
               m_iEditingIndex = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX);
@@ -1527,7 +1527,7 @@ void CPropertyComboBar::ArrangeControls()
             else
             {
               // if number is different from first one
-              if( m_iEditingIndex != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+              if (m_iEditingIndex != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
               {
                 // all selected entities do not share same number so mark it
                 bAllHaveSameIndex = FALSE;
@@ -1554,7 +1554,7 @@ void CPropertyComboBar::ArrangeControls()
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if this is first entity in dynamic container
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               // it is, get boolean as one that others will compare with
               iCheckBox = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, BOOL);
@@ -1562,7 +1562,7 @@ void CPropertyComboBar::ArrangeControls()
             else
             {
               // if this boolean is different from first one
-              if( iCheckBox != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, BOOL) )
+              if (iCheckBox != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, BOOL) )
               {
                 // selected entities do not share same boolean, set undefined state
                 iCheckBox = 2;
@@ -1586,7 +1586,7 @@ void CPropertyComboBar::ArrangeControls()
             // obtain property ptr
             CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
             // if this is first entity in dynamic container
-            if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+            if (pDoc->m_selEntitySelection.Pointer(0) == iten)
             {
               // it is, get this color as one that others will compare with
               colIntersected = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, COLOR);
@@ -1598,7 +1598,7 @@ void CPropertyComboBar::ArrangeControls()
             else
             {
               // if color is different from first one
-              if( colIntersected != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, COLOR) )
+              if (colIntersected != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, COLOR) )
               {
                 // all selected entities do not share same color
                 m_EditColorCtrl.SetMixedColor();
@@ -1794,7 +1794,7 @@ void CPropertyComboBar::SetIntersectingEntityClassName(void)
     // get description
     CTString strEntityDescription = iten->GetDescription();
     // if this is first entity in dynamic container
-    if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+    if (pDoc->m_selEntitySelection.Pointer(0) == iten)
     {
       // it is, get file name as one that others will compare with
       strIntersectingClass = fnClassFileName;
@@ -1806,18 +1806,18 @@ void CPropertyComboBar::SetIntersectingEntityClassName(void)
     else
     {
       // if any of the selected entities has different class
-      if( strIntersectingClass != fnClassFileName)
+      if (strIntersectingClass != fnClassFileName)
       {
         // set multi class message
         strIntersectingClass = "Multi class";
       }
-      if( strIntersectingName != iten->GetName())
+      if (strIntersectingName != iten->GetName())
       {
         // set multi class message
         strIntersectingName = "Multi name";
       }
       // if any of the selected entities has different class description
-      if( strIntersectingDescription != iten->GetDescription())
+      if (strIntersectingDescription != iten->GetDescription())
       {
         // set multi class description message
         strIntersectingDescription = "Multi description";
@@ -1850,7 +1850,7 @@ CEntity *CPropertyComboBar::GetSelectedEntityPtr(void)
   // obtain selected property ID ptr
   CPropertyID *ppidProperty = GetSelectedProperty();
   // if there is valid property selected
-  if( (ppidProperty == NULL) || 
+  if ((ppidProperty == NULL) || 
 	 ((ppidProperty->pid_eptType != CEntityProperty::EPT_ENTITYPTR) &&
 	  (ppidProperty->pid_eptType != CEntityProperty::EPT_PARENT)) )
   {
@@ -1878,11 +1878,11 @@ void CPropertyComboBar::OnUpdateNoTarget(CCmdUI* pCmdUI)
 void CPropertyComboBar::OnNoFile(void)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
   // obtain curently selected property ID
   CPropertyID *ppidProperty = GetSelectedProperty();
-  if( ppidProperty == NULL) return;
+  if (ppidProperty == NULL) return;
   // for each of the selected entities
   FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
   {
@@ -1890,7 +1890,7 @@ void CPropertyComboBar::OnNoFile(void)
     CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
     // discard old entity settings
     iten->End();
-    switch( ppidProperty->pid_eptType)
+    switch (ppidProperty->pid_eptType)
     {
     case CEntityProperty::EPT_FILENAMENODEP:
       ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CTFileNameNoDep) = CTFileNameNoDep("");
@@ -1913,11 +1913,11 @@ void CPropertyComboBar::OnNoFile(void)
 void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
-  if( penClicked == NULL) return;
+  if (pDoc == NULL) return;
+  if (penClicked == NULL) return;
   
   // if it is selected
-  if( penClicked->IsSelected( ENF_SELECTED))
+  if (penClicked->IsSelected( ENF_SELECTED))
   {
     // for each of the selected entities
     FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -1927,13 +1927,13 @@ void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
       // obtain entity class ptr
       CDLLEntityClass *pdecDLLClass = iten->GetClass()->ec_pdecDLLClass;
       // for all classes in hierarchy of this entity
-      for(; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+      for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
       {
         // for all properties
-        for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+        for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
         {
           CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
-          if( epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR)
+          if (epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR)
           {
             // clear entity ptr
             ENTITYPROPERTY( &*iten, epProperty.ep_slOffset, CEntityPointer) = NULL;
@@ -1952,13 +1952,13 @@ void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
     // obtain entity class ptr
     CDLLEntityClass *pdecDLLClass = penClicked->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for(; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
-      for(INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
+      for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
-        if( epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR)
+        if (epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR)
         {
           // clear entity ptr
           ENTITYPROPERTY( &*penClicked, epProperty.ep_slOffset, CEntityPointer) = NULL;
@@ -1975,21 +1975,21 @@ void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
 void CPropertyComboBar::SelectProperty(CEntityProperty *penpToMatch)
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
-  if( pDoc->m_selEntitySelection.Count() != 1)return;
+  if (pDoc->m_selEntitySelection.Count() != 1)return;
 
   CEntity *pen = pDoc->m_selEntitySelection.GetFirstInSelection();
-  if( pen == NULL) return;
+  if (pen == NULL) return;
 
   // note selection change
   m_PropertyComboBox.OnIdle( 0);
 
-  for( INDEX iItem=0; iItem<m_PropertyComboBox.GetCount(); iItem++)
+  for (INDEX iItem=0; iItem<m_PropertyComboBox.GetCount(); iItem++)
   {
     CPropertyID *ppid = (CPropertyID *) m_PropertyComboBox.GetItemData( iItem);
     CEntityProperty *penpProperty = pen->PropertyForName( ppid->pid_strName);
-    if( penpProperty == penpToMatch)
+    if (penpProperty == penpToMatch)
     {
       m_PropertyComboBox.SetCurSel(iItem);
       m_PropertyComboBox.SelectProperty();
@@ -2001,11 +2001,11 @@ void CPropertyComboBar::SelectProperty(CEntityProperty *penpToMatch)
 void CPropertyComboBar::OnNoTarget() 
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
   // obtain curently selected property ID
   CPropertyID *ppidProperty = GetSelectedProperty();
-  if( ppidProperty == NULL) return;
+  if (ppidProperty == NULL) return;
   // for each of the selected entities
   FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
   {
@@ -2013,7 +2013,7 @@ void CPropertyComboBar::OnNoTarget()
     CEntityProperty *penpProperty = iten->PropertyForName( ppidProperty->pid_strName);
     // discard old entity settings
     iten->End();
-    switch( ppidProperty->pid_eptType)
+    switch (ppidProperty->pid_eptType)
     {
     case CEntityProperty::EPT_ENTITYPTR:
       ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CEntityPointer) = NULL;

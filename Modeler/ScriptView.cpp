@@ -97,7 +97,7 @@ void CScriptView::OnScriptMakeModel()
   while (pos!=NULL)
   {
     CModelerDoc *pmdCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(pos);
-    if( CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
+    if (CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
     {
       pmdCurrent->OnCloseDocument();
       break;
@@ -130,7 +130,7 @@ void CScriptView::OnScriptMakeModel()
   pDocument->SetTitle( CString(fnModelName.FileName() + fnModelName.FileExt()));
   
   char strError[ 256];
-  if( !((CModelerDoc *)pDocument)->CreateModelFromScriptFile( fnScriptName, strError))
+  if (!((CModelerDoc *)pDocument)->CreateModelFromScriptFile( fnScriptName, strError))
   {
     pDocument->OnCloseDocument();
     AfxMessageBox( CString(strError));
@@ -165,17 +165,17 @@ void CScriptView::OnScriptUpdateAnimations()
   while (pos!=NULL)
   {
     CModelerDoc *pmdCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(pos);
-    if( CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
+    if (CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
     {
       POSITION pos = pmdCurrent->GetFirstViewPosition();
       CView *pView = pmdCurrent->GetNextView( pos);
-      if( DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
+      if (DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
       {
         CModelerView* pModelerView = (CModelerView *) pView;
-        if(pModelerView != NULL)
+        if (pModelerView != NULL)
         {
           // if updating was successful
-          if( pModelerView->UpdateAnimations())
+          if (pModelerView->UpdateAnimations())
           {
             pModelerView->SetActiveWindow();
             pModelerView->SetFocus();
@@ -200,14 +200,14 @@ void CScriptView::OnScriptUpdateMipmodels()
   while (pos!=NULL)
   {
     CModelerDoc *pmdCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(pos);
-    if( CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
+    if (CTFileName( CTString(CStringA(pmdCurrent->GetPathName()))) == fnModelName)
     {
       POSITION pos = pmdCurrent->GetFirstViewPosition();
       CView *pView = pmdCurrent->GetNextView( pos);
-      if( DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
+      if (DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
       {
         CModelerView* pModelerView = (CModelerView *) pView;
-        if(pModelerView != NULL)
+        if (pModelerView != NULL)
         {
           pModelerView->OnScriptUpdateMipmodels();
           pModelerView->SetActiveWindow();

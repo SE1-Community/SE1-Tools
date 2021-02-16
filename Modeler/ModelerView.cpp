@@ -217,7 +217,7 @@ END_MESSAGE_MAP()
 CModelerView::CModelerView()
 {
   m_bViewMeasureVertex = FALSE;
-  m_vViewMeasureVertex = FLOAT3D(0,0,0);
+  m_vViewMeasureVertex = FLOAT3D(0.0f, 0.0f, 0.0f);
   m_atAxisType = AT_NONE;
   m_pmtvClosestVertex = NULL;
   m_bTileMappingBCG = FALSE;
@@ -232,7 +232,7 @@ CModelerView::CModelerView()
   CModelerView *pModelerView = DYNAMIC_DOWNCAST(CModelerView, 
              pMainFrame->GetActiveFrame()->GetActiveView());
   // If view allready exists, copy preferences
-  if( (pModelerView != NULL) && (theApp.m_Preferences.ap_CopyExistingWindowPrefs) )
+  if ((pModelerView != NULL) && (theApp.m_Preferences.ap_CopyExistingWindowPrefs) )
   {
     m_bPrintSurfaceNumbers = pModelerView->m_bPrintSurfaceNumbers;
     m_bRenderMappingInSurfaceColors = pModelerView->m_bRenderMappingInSurfaceColors;
@@ -297,7 +297,7 @@ CModelerView::CModelerView()
     m_fCurrentMipFactor = 0.0f;
     m_iCurrentFrame = 0;
     m_LightColor = 0xBFBFBF00;
-    m_plLightPlacement.pl_PositionVector = FLOAT3D( 0.0f, 0.0f, 0.0f); // center
+    m_plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f); // center
     m_plLightPlacement.pl_OrientationAngle(1) = AngleDeg( 45.0f);      // heading
     m_plLightPlacement.pl_OrientationAngle(2) = AngleDeg( -45.0f);     // pitch
     m_plLightPlacement.pl_OrientationAngle(3) = AngleDeg( 0.0f);       // banking
@@ -314,13 +314,13 @@ CModelerView::CModelerView()
     FLOAT fBanking = theApp.m_Preferences.ap_fDefaultBanking;
     m_fFOW = theApp.m_Preferences.ap_fDefaultFOW;
 
-    m_plModelPlacement.pl_PositionVector = FLOAT3D(0.0f,0.0f,0.0f);
+    m_plModelPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
     m_plModelPlacement.pl_OrientationAngle = 
       ANGLE3D(AngleDeg(fHeading), AngleDeg(fPitch),AngleDeg(fBanking));
     m_ShowAllSurfaces = TRUE;
   }
 
-  if( theApp.m_Preferences.ap_SetDefaultColors)
+  if (theApp.m_Preferences.ap_SetDefaultColors)
   {
     m_PaperColor = CLRF_CLR( theApp.m_Preferences.ap_DefaultPaperColor);
     m_InkColor = CLRF_CLR( theApp.m_Preferences.ap_DefaultInkColor);
@@ -358,27 +358,27 @@ void CModelerView::ResetViewerPosition(void)
 // Routine tries to find 
 BOOL CModelerView::AssureValidTDI()
 {
-  if(m_ptdiTextureDataInfo == NULL)
+  if (m_ptdiTextureDataInfo == NULL)
     return FALSE;
   
   CModelerDoc* pDoc = GetDocument();
   BOOL bValidTex = FALSE;
   FOREACHINLIST( CTextureDataInfo, tdi_ListNode, pDoc->m_emEditModel.edm_WorkingSkins, it)
   {
-    if( &it.Current() == m_ptdiTextureDataInfo)
+    if (&it.Current() == m_ptdiTextureDataInfo)
     {
       bValidTex = TRUE;
       break;
     }
   }
-  if( (bValidTex == FALSE) && (!pDoc->m_emEditModel.edm_WorkingSkins.IsEmpty()) )
+  if ((bValidTex == FALSE) && (!pDoc->m_emEditModel.edm_WorkingSkins.IsEmpty()) )
   {
   	m_ptdiTextureDataInfo = LIST_HEAD( pDoc->m_emEditModel.edm_WorkingSkins,
                                     CTextureDataInfo, tdi_ListNode);
     bValidTex = TRUE;
   }
   
-  if( !bValidTex)
+  if (!bValidTex)
   {
     m_ptdiTextureDataInfo = NULL;
   }
@@ -399,13 +399,13 @@ void CModelerView::SetProjectionData( CPerspectiveProjection3D &prProjection, CD
   prProjection.ViewerPlacementL().pl_PositionVector = m_vTarget;
   prProjection.ViewerPlacementL().pl_OrientationAngle = m_angViewerOrientation;
   prProjection.Prepare();
-  prProjection.ViewerPlacementL().Translate_OwnSystem(FLOAT3D( 0.0f, 0.0f, m_fTargetDistance));
+  prProjection.ViewerPlacementL().Translate_OwnSystem(FLOAT3D(0.0f, 0.0f, m_fTargetDistance));
 }
 
 FLOAT CModelerView::GetModelToViewerDistance(void)
 {
   CPlacement3D plViewer = CPlacement3D( m_vTarget, m_angViewerOrientation);
-  plViewer.Translate_OwnSystem(FLOAT3D( 0.0f, 0.0f, m_fTargetDistance));
+  plViewer.Translate_OwnSystem(FLOAT3D(0.0f, 0.0f, m_fTargetDistance));
   FLOAT3D vDistance = plViewer.pl_PositionVector-m_plModelPlacement.pl_PositionVector;
   return vDistance.Length();
 }
@@ -415,7 +415,7 @@ void CModelerView::ClearBcg( COLOR color, CDrawPort *pDrawPort)
   // delete bcg or fill it with texture
   CTextureObject *ptoValid = 
     (CTextureObject *) theApp.GetValidBcgTexture( m_fnBcgTexture);
-  if( (m_IsWinBcgTexture) && ( ptoValid != NULL) )
+  if ((m_IsWinBcgTexture) && ( ptoValid != NULL) )
   {
     PIXaabbox2D screenBox;
     screenBox = PIXaabbox2D( PIX2D(0,0),
@@ -509,12 +509,12 @@ void CModelerView::DrawArrowAndTypeText(CPerspectiveProjection3D &prProjection,
     v2d0(1) = v3d0(1); v2d0(2) = v3d0(2);
     v2d1(1) = v3d1(1); v2d1(2) = v3d1(2);
 
-    if( (Abs(v2d1(1)-v2d0(1)) > 8) || (Abs(v2d1(2)-v2d0(2)) > 8) )
+    if ((Abs(v2d1(1)-v2d0(1)) > 8) || (Abs(v2d1(2)-v2d0(2)) > 8) )
     {
       // draw arrow-headed line between vertices
       DrawArrow( *m_pDrawPort, (PIX)v2d0(1), (PIX)v2d0(2), (PIX)v2d1(1), (PIX)v2d1(2), colColor, _FULL_);
       // type text over line
-      if( strText != "")
+      if (strText != "")
       {
         m_pDrawPort->SetFont( theApp.m_pfntFont);
         m_pDrawPort->PutTextCXY( strText, v2d1(1)-8, v2d1(2)-16);
@@ -530,9 +530,9 @@ void CModelerView::RenderAxis( CPerspectiveProjection3D &prProjection, CPlacemen
   MakeRotationMatrixFast( mRot, pl.pl_OrientationAngle);
   // get axis defining vertices
   FLOAT3D vCenter = pl.pl_PositionVector;
-  FLOAT3D vX = FLOAT3D( fSize, 0.0f, 0.0f);
-  FLOAT3D vY = FLOAT3D( 0.0f, fSize, 0.0f);
-  FLOAT3D vZ = FLOAT3D( 0.0f, 0.0f, fSize);
+  FLOAT3D vX = FLOAT3D(fSize, 0.0f, 0.0f);
+  FLOAT3D vY = FLOAT3D(0.0f, fSize, 0.0f);
+  FLOAT3D vZ = FLOAT3D(0.0f, 0.0f, fSize);
   FLOAT3D vRotX = vCenter+vX*mRot;
   FLOAT3D vRotY = vCenter+vY*mRot;
   FLOAT3D vRotZ = vCenter-vZ*mRot;
@@ -571,7 +571,7 @@ void CModelerView::RenderAxisOfAllAttachments(CPerspectiveProjection3D &prProjec
     RenderAxisOfAllAttachments( prProjection, plChild, itamo->amo_moModelObject);
     // don't render non-initialized attachments
     CModelData *pmd = (CModelData *) itamo->amo_moModelObject.GetData();
-    if( pmd == NULL) continue;
+    if (pmd == NULL) continue;
     // obtain bounding box of attachment
     FLOATaabbox3D box;
     pmd->GetAllFramesBBox( box);
@@ -594,45 +594,45 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
   
   // set effect textures (if they exist in edit model)
   try {
-    if( m_ModelObject.mo_toReflection.GetName() != pDoc->m_emEditModel.edm_fnReflectionTexture)
+    if (m_ModelObject.mo_toReflection.GetName() != pDoc->m_emEditModel.edm_fnReflectionTexture)
       m_ModelObject.mo_toReflection.SetData_t( pDoc->m_emEditModel.edm_fnReflectionTexture);
   } catch (char *strError) { (void) strError;}
   try {
-    if( m_ModelObject.mo_toSpecular.GetName() != pDoc->m_emEditModel.edm_fnSpecularTexture)
+    if (m_ModelObject.mo_toSpecular.GetName() != pDoc->m_emEditModel.edm_fnSpecularTexture)
       m_ModelObject.mo_toSpecular.SetData_t( pDoc->m_emEditModel.edm_fnSpecularTexture);
   } catch (char *strError) { (void) strError;}
   try {
-    if( m_ModelObject.mo_toBump.GetName() != pDoc->m_emEditModel.edm_fnBumpTexture)
+    if (m_ModelObject.mo_toBump.GetName() != pDoc->m_emEditModel.edm_fnBumpTexture)
       m_ModelObject.mo_toBump.SetData_t( pDoc->m_emEditModel.edm_fnBumpTexture);
   } catch (char *strError) { (void) strError;}
 
   // Calculate light position in absolute sytem 
   CModelInfo MI;
   FLOATaabbox3D MaxBB;
-  if( m_ModelObject.GetData() == NULL)
+  if (m_ModelObject.GetData() == NULL)
     return;
   m_ModelObject.GetModelInfo( MI);  // info describing our model (not light)
-  for( i=0; i<MI.mi_FramesCt; i++) { // here we find max bbox, union of all frames bboxes
+  for (i=0; i<MI.mi_FramesCt; i++) { // here we find max bbox, union of all frames bboxes
     MaxBB |= m_ModelObject.GetFrameBBox( i);
   }
 
   CPlacement3D plLightPlacement;
   plLightPlacement.pl_OrientationAngle = m_plLightPlacement.pl_OrientationAngle;
   plLightPlacement.pl_PositionVector = MaxBB.Center();
-  plLightPlacement.Translate_OwnSystem( FLOAT3D( 0.0f, 0.0f, m_LightDistance));
+  plLightPlacement.Translate_OwnSystem( FLOAT3D(0.0f, 0.0f, m_LightDistance));
   plLightPlacement.Translate_AbsoluteSystem( m_plModelPlacement.pl_PositionVector);
 
   pOldTD = (CTextureData *) m_ModelObject.mo_toTexture.GetData();
-  if( AssureValidTDI()) {
+  if (AssureValidTDI()) {
     pTD = m_ptdiTextureDataInfo->tdi_TextureData;
-    if( pTD != m_ModelObject.mo_toTexture.GetData()) {
+    if (pTD != m_ModelObject.mo_toTexture.GetData()) {
       m_ModelObject.mo_toTexture.SetData( pTD);
     }
   } else {
     m_ModelObject.mo_toTexture.SetData( NULL);
     ULONG CurrentTextureType = m_RenderPrefs.GetRenderType();
     // no need to revert to white-texture mode, renderer with handle NULL texture just fine
-    // if( CurrentTextureType&RT_TEXTURE) 
+    // if (CurrentTextureType&RT_TEXTURE) 
     //   m_RenderPrefs.SetTextureType( RT_WHITE_TEXTURE);
     // }
   }
@@ -641,10 +641,10 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
   mexWidth = m_ModelObject.GetWidth();
   mexHeight = m_ModelObject.GetHeight();
 
-  FLOAT3D FloorVtx1 = FLOAT3D( -6.0f, 0.0f, -6.0f);
-  FLOAT3D FloorVtx2 = FLOAT3D( -6.0f, 0.0f,  6.0f);
-  FLOAT3D FloorVtx3 = FLOAT3D(  6.0f, 0.0f,  6.0f);
-  FLOAT3D FloorVtx4 = FLOAT3D(  6.0f, 0.0f, -6.0f);
+  FLOAT3D FloorVtx1 = FLOAT3D(-6.0f, 0.0f, -6.0f);
+  FLOAT3D FloorVtx2 = FLOAT3D(-6.0f, 0.0f,  6.0f);
+  FLOAT3D FloorVtx3 = FLOAT3D(6.0f, 0.0f,  6.0f);
+  FLOAT3D FloorVtx4 = FLOAT3D(6.0f, 0.0f, -6.0f);
 
   // make floor plane from three of floor's vertices
   plFloorPlane = FLOATplane3D( FloorVtx1, FloorVtx2, FloorVtx3);
@@ -652,7 +652,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
   pDrawPort->FillZBuffer( ZBUF_BACK);
   ClearBcg( CLR_CLRF( m_PaperColor), pDrawPort);
 
-  if( !m_bMappingMode)
+  if (!m_bMappingMode)
   {
     // get current frame for info window
     m_iCurrentFrame = m_ModelObject.GetFrame();
@@ -663,17 +663,17 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     TIME tmPassed = m_ModelObject.GetPassedTime();
     
     BOOL bNowIsBeforeDelay = TimeIsBefore(tmPassed, asSound.as_fDelay, tmAnimLen);
-    if(bNowIsBeforeDelay) _bSoundPlayed = FALSE;
+    if (bNowIsBeforeDelay) _bSoundPlayed = FALSE;
 
-    if( (asSound.as_fnAttachedSound != "") && (asSound.as_bPlaying) )
+    if ((asSound.as_fnAttachedSound != "") && (asSound.as_bPlaying) )
     {
-      if( !_bSoundPlayed && !bNowIsBeforeDelay )
+      if (!_bSoundPlayed && !bNowIsBeforeDelay )
       {
         try
         {
           pDoc->m_soSoundObject.Stop();
           pDoc->m_soSoundObject.SetVolume( SL_VOLUME_MAX, SL_VOLUME_MAX);
-          if( asSound.as_bLooping)
+          if (asSound.as_bLooping)
             pDoc->m_soSoundObject.Play_t( asSound.as_fnAttachedSound, SOF_LOOP);
           else
             pDoc->m_soSoundObject.Play_t( asSound.as_fnAttachedSound, 0);
@@ -690,7 +690,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     // make perspective projection for lamp rendering
     CPerspectiveProjection3D prPerspectiveProjection;
 
-    if( m_FloorOn)
+    if (m_FloorOn)
     {
       // floor model and its texture must be valid
       ASSERT( theApp.m_pFloorModelObject != NULL);
@@ -699,7 +699,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       // initialize projection
       SetProjectionData( prPerspectiveProjection, pDrawPort);
       // set floor box's stretch factor
-      theApp.m_pFloorModelObject->mo_Stretch = FLOAT3D( 1.0f, 1.0f, 1.0f);
+      theApp.m_pFloorModelObject->mo_Stretch = FLOAT3D(1.0f, 1.0f, 1.0f);
       // set texture rendering mode and phong shading
       _mrpModelRenderPrefs.SetRenderType( RT_TEXTURE|RT_SHADING_PHONG);
       // render floor model
@@ -716,7 +716,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
 
       // set floor's placement and orientation
       rmRenderModel.SetObjectPlacement(
-        CPlacement3D(ANGLE3D( 0, 0, 0), FLOAT3D( 0.0f, 0.0f, 0.0f)));
+        CPlacement3D(ANGLE3D(0, 0, 0), FLOAT3D(0.0f, 0.0f, 0.0f)));
       // render floor
       theApp.m_pFloorModelObject->SetupModelRendering(rmRenderModel);
       theApp.m_pFloorModelObject->RenderModel(rmRenderModel);
@@ -760,10 +760,10 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     
     // simulate translation along z-axis
     CPlacement3D plTranslated = m_plModelPlacement;
-    if( bLoopValid && bSpeedValid && fSpeed!=0 && iLoop>0 && !m_ModelObject.IsPaused()) {
+    if (bLoopValid && bSpeedValid && fSpeed!=0 && iLoop>0 && !m_ModelObject.IsPaused()) {
       TIME tmPassed = CTimer::InSeconds(_pTimer->GetGameTick() - m_ModelObject.ao_llAnimStart);
       TIME tmDuration = m_ModelObject.GetCurrentAnimLength();
-      if( tmPassed>tmDuration*iLoop) {
+      if (tmPassed>tmDuration*iLoop) {
         tmPassed = 0;
         m_ModelObject.ResetAnim();
       }
@@ -778,9 +778,9 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     m_fCurrentMipFactor = rmRenderModel.rm_fMipFactor;
 
     // if model is visible
-    if( m_ModelObject.IsModelVisible( m_fCurrentMipFactor) || (m_InputAction == IA_MIP_RANGING)) {   
+    if (m_ModelObject.IsModelVisible( m_fCurrentMipFactor) || (m_InputAction == IA_MIP_RANGING)) {   
       // if floor is on
-      if( m_FloorOn) {
+      if (m_FloorOn) {
         // render shadow of document's model
          m_ModelObject.RenderShadow( rmRenderModel, plLightPlacement, 20.0f, 0.0f, 1.0f, plFloorPlane);
       }
@@ -792,7 +792,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     EndModelRenderingView();
 
     // if lamp mode is on or allways see lamp flag is set on and if lamp model exist
-    if( (m_LightModeOn || theApp.m_Preferences.ap_AllwaysSeeLamp)
+    if ((m_LightModeOn || theApp.m_Preferences.ap_AllwaysSeeLamp)
      && (theApp.m_pLampModelData != NULL))
     {
       // set projection data
@@ -815,7 +815,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       rmRenderModel.rm_colLight   = C_WHITE|CT_OPAQUE;
       rmRenderModel.rm_colAmbient = C_dGRAY|CT_OPAQUE;
       // set shading light placement
-      rmRenderModel.rm_vLightDirection = FLOAT3D( 1.0f, 1.0f, 1.0f);
+      rmRenderModel.rm_vLightDirection = FLOAT3D(1.0f, 1.0f, 1.0f);
       // set placement of lamp model
       rmRenderModel.SetObjectPlacement(plLightPlacement);
       // render lamp rendering
@@ -825,7 +825,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     }
   
     // test if we are in collision mode
-    if( m_bCollisionMode)
+    if (m_bCollisionMode)
     {
       // collision box model and its texture must be valid
       ASSERT( theApp.m_pCollisionBoxModelObject != NULL);
@@ -846,7 +846,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
 
       // obtain collision box offset vector
       CPlacement3D plRotatedCollisionBoxOffset = 
-        CPlacement3D( bbCollision.Center(), ANGLE3D( 0,0,0));
+        CPlacement3D( bbCollision.Center(), ANGLE3D(0,0,0));
       // convert collision box center into model coordinate system
       plRotatedCollisionBoxOffset.RelativeToAbsolute( m_plModelPlacement);
 
@@ -869,12 +869,12 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       EndModelRenderingView();
     }
 
-    if( m_bViewMeasureVertex)
+    if (m_bViewMeasureVertex)
     {
       // prepare the projection
       CPerspectiveProjection3D prProjection;
       SetProjectionData( prProjection, pDrawPort);
-      prProjection.ObjectPlacementL() = CPlacement3D(FLOAT3D(0,0,0), ANGLE3D(0,0,0));
+      prProjection.ObjectPlacementL() = CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
       prProjection.Prepare();
 
       FLOAT3D v3D;
@@ -890,12 +890,12 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     }
 
     // if we should render axis
-    if( m_atAxisType != AT_NONE)
+    if (m_atAxisType != AT_NONE)
     {
       // prepare the projection
       CPerspectiveProjection3D prProjection;
       SetProjectionData( prProjection, pDrawPort);
-      prProjection.ObjectPlacementL() = CPlacement3D(FLOAT3D(0,0,0), ANGLE3D(0,0,0));
+      prProjection.ObjectPlacementL() = CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
       prProjection.Prepare();
 
       // see if we should render only axis of main model
@@ -906,7 +906,7 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
         FLOAT fSize = Clamp(box.Size().Length()/6.0f, 0.5f, 10.0f);
         RenderAxis( prProjection, pl, fSize);
       }
-      if( m_atAxisType == AT_ALL) {
+      if (m_atAxisType == AT_ALL) {
         // render recursivly all attachments and their attachments,...
         RenderAxisOfAllAttachments( prProjection, plTranslated, m_ModelObject);
         _armRenderModels.PopAll();
@@ -934,10 +934,10 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     CTextureData *pOldTD;
     pOldTD = (CTextureData *) m_ModelObject.mo_toTexture.GetData();
     // try to get model's exsiting texture
-    if( AssureValidTDI())
+    if (AssureValidTDI())
     {
       pTD = m_ptdiTextureDataInfo->tdi_TextureData;
-      if(pTD != m_ModelObject.mo_toTexture.GetData())
+      if (pTD != m_ModelObject.mo_toTexture.GetData())
       {
         m_ModelObject.mo_toTexture.SetData( pTD);
       }
@@ -948,8 +948,8 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       m_ModelObject.mo_toTexture.SetData( NULL);
     }
 
-    if( (m_IsMappingBcgTexture) && (pTD != NULL) ) {
-      if( !m_bTileMappingBCG)
+    if ((m_IsMappingBcgTexture) && (pTD != NULL) ) {
+      if (!m_bTileMappingBCG)
       {
         MEXaabbox2D boxTexture(MEX2D(0,0), MEX2D(mexWidth-1, mexHeight-1));
         pDrawPort->PutTexture(&m_ModelObject.mo_toTexture, boxScreen, boxTexture);
@@ -982,15 +982,15 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     ModelMipInfo *pMMI = &pMD->md_MipInfos[ pDoc->m_iCurrentMip];
 
     // if pathes are not hidden for this mip model
-    if( pMMI->mmpi_ulFlags & MM_PATCHES_VISIBLE)
+    if (pMMI->mmpi_ulFlags & MM_PATCHES_VISIBLE)
     {
       INDEX iExistingPatch=0;
       // for each possible patch
-      for( INDEX iMaskBit=0; iMaskBit<MAX_TEXTUREPATCHES; iMaskBit++)
+      for (INDEX iMaskBit=0; iMaskBit<MAX_TEXTUREPATCHES; iMaskBit++)
       {
         CTextureData *ptdPatch = (CTextureData *) pMD->md_mpPatches[iMaskBit].mp_toTexture.GetData();
         // if current patch exists and is turned on
-        if( (ptdPatch != NULL) &&
+        if ((ptdPatch != NULL) &&
             (m_ModelObject.GetPatchesMask() & ((1UL) << iMaskBit)) )
         {
           MEX mexPatchU = pMD->md_mpPatches[iMaskBit].mp_mexPosition(1);
@@ -1009,9 +1009,9 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
     // draw unselected surfaces
     ModelMipInfo &mmi = pDoc->m_emEditModel.edm_md.md_MipInfos[ pDoc->m_iCurrentMip];
 
-    if( m_bRenderMappingInSurfaceColors)
+    if (m_bRenderMappingInSurfaceColors)
     {
-      for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+      for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
       {
         MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
         pDoc->m_emEditModel.DrawFilledSurface( pDrawPort, pDoc->m_iCurrentMip, iSurface, m_MagnifyFactor,
@@ -1019,12 +1019,12 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       }
     }                                                            
     
-    if( m_ShowAllSurfaces)
+    if (m_ShowAllSurfaces)
     {
-      for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+      for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
       {
         MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-        if( !(ms.ms_ulRenderingFlags&SRF_SELECTED))
+        if (!(ms.ms_ulRenderingFlags&SRF_SELECTED))
           pDoc->m_emEditModel.DrawWireSurface( pDrawPort, pDoc->m_iCurrentMip,
             iSurface, m_MagnifyFactor, m_offx, m_offy,
             theApp.m_Preferences.ap_MappingInactiveSurfaceColor,
@@ -1032,17 +1032,17 @@ void CModelerView::RenderView( CDrawPort *pDrawPort)
       }
     }
     // draw selected surfaces
-    for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+    for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
     {
       MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-      if( ms.ms_ulRenderingFlags&SRF_SELECTED)
+      if (ms.ms_ulRenderingFlags&SRF_SELECTED)
         pDoc->m_emEditModel.DrawWireSurface( pDrawPort, pDoc->m_iCurrentMip, iSurface,
               m_MagnifyFactor, m_offx, m_offy,
               theApp.m_Preferences.ap_MappingActiveSurfaceColor, 
               C_RED);
     }
     // if we should print surface numbers
-    if( m_bPrintSurfaceNumbers)
+    if (m_bPrintSurfaceNumbers)
     {
       pDoc->m_emEditModel.PrintSurfaceNumbers( pDrawPort, theApp.m_pfntFont,
         pDoc->m_iCurrentMip, m_MagnifyFactor, m_offx, m_offy, C_BLACK);
@@ -1057,17 +1057,17 @@ void CModelerView::OnDraw(CDC* pDC)
   ASSERT_VALID(pDoc);
   
   // ARGH!! I hate these two lines, very, very bad coding but can You do it better?
-  if( !pDoc->m_bDocLoadedOk) return;
+  if (!pDoc->m_bDocLoadedOk) return;
 
   // render view if drawport is valid
-  if( m_pDrawPort!=NULL && m_pDrawPort->Lock()) {
+  if (m_pDrawPort!=NULL && m_pDrawPort->Lock()) {
     CTimerValue tvStart = _pTimer->GetHighPrecisionTimer();
     RenderView( m_pDrawPort);
     m_udViewPicture.MarkUpdated();
     CTimerValue tvStop = _pTimer->GetHighPrecisionTimer();
     TIME tmDelta = (tvStop-tvStart).GetSeconds() +tmSwapBuffers;
     // should we print frame rate?
-    if( m_bFrameRate) {
+    if (m_bFrameRate) {
       // prepare string about things that impact to currently rendered picture
       CTString strFPS, strReport;
       STAT_Report( strReport);
@@ -1085,7 +1085,7 @@ void CModelerView::OnDraw(CDC* pDC)
     }
     m_pDrawPort->Unlock();
     // swap if there is a valid viewport
-    if( m_pViewPort!=NULL) {
+    if (m_pViewPort!=NULL) {
       tvStart = _pTimer->GetHighPrecisionTimer();
       m_pViewPort->SwapBuffers();
       tvStop = _pTimer->GetHighPrecisionTimer();
@@ -1102,9 +1102,9 @@ void CModelerView::OnDraw(CDC* pDC)
 
   // get active view 
   CModelerView *pActiveView = DYNAMIC_DOWNCAST(CModelerView, pMainFrame->GetActiveFrame()->GetActiveView());
-  if( pActiveView == this) {
+  if (pActiveView == this) {
     INDEX iSurface = pDoc->GetOnlySelectedSurface();
-    if( iSurface != -1) {
+    if (iSurface != -1) {
       // line of text
       char achrLine[ 256];
       achrLine[ 0] = 0;
@@ -1177,7 +1177,7 @@ void CModelerView::OnInitialUpdate()
   
   pDoc->m_emEditModel.GetFirstValidPatchIndex( m_iActivePatchBitIndex);
 
-  if( !pDoc->m_emEditModel.edm_WorkingSkins.IsEmpty())
+  if (!pDoc->m_emEditModel.edm_WorkingSkins.IsEmpty())
   {
   	m_ptdiTextureDataInfo = LIST_HEAD( pDoc->m_emEditModel.edm_WorkingSkins,
                                     CTextureDataInfo, tdi_ListNode);
@@ -1194,7 +1194,7 @@ void CModelerView::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
 	// if window canvas is valid, resize it
-  if( m_pViewPort!=NULL) m_pViewPort->Resize();
+  if (m_pViewPort!=NULL) m_pViewPort->Resize();
   theApp.m_chGlobal.MarkChanged();
 }
 
@@ -1232,13 +1232,13 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
   ANGLE dAngleY = AngleDeg( 0.5f * offset.y * fDistance);
   */
 
-  switch( m_InputAction)
+  switch (m_InputAction)
   {
     case IA_MOVING_MEASURE_VERTEX:
     {
-      CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0,0,0));
+      CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0.0f, 0.0f, 0.0f));
       plMeasureVtx.AbsoluteToRelative( plViewer);
-      plMeasureVtx.Translate_AbsoluteSystem( FLOAT3D( -dx, dy, 0.0f));
+      plMeasureVtx.Translate_AbsoluteSystem( FLOAT3D(-dx, dy, 0.0f));
       plMeasureVtx.RelativeToAbsolute( plViewer);
       m_vViewMeasureVertex = plMeasureVtx.pl_PositionVector;
       //m_vTarget = m_vViewMeasureVertex;
@@ -1249,7 +1249,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       m_plModelPlacement.AbsoluteToRelative( plViewer);
       // translate it
-      m_plModelPlacement.Translate_AbsoluteSystem( FLOAT3D( -dx, dy, 0.0f));
+      m_plModelPlacement.Translate_AbsoluteSystem( FLOAT3D(-dx, dy, 0.0f));
       // project the placement back from viewer's system
       m_plModelPlacement.RelativeToAbsolute( plViewer);
       theApp.m_chPlacement.MarkChanged();
@@ -1264,7 +1264,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       plTarget.AbsoluteToRelative( plViewer);
       // translate it
-      plTarget.Translate_AbsoluteSystem( FLOAT3D( dx, -dy, 0.0f));
+      plTarget.Translate_AbsoluteSystem( FLOAT3D(dx, -dy, 0.0f));
       // project the placement back from viewer's system
       plTarget.RelativeToAbsolute( plViewer);
       m_vTarget = plTarget.pl_PositionVector;
@@ -1278,7 +1278,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       plNew.AbsoluteToRelative( plViewer);
       // translate it
-      plNew.Translate_AbsoluteSystem( FLOAT3D( -dx, 0.0f, -dz));
+      plNew.Translate_AbsoluteSystem( FLOAT3D(-dx, 0.0f, -dz));
       // project the placement back from viewer's system
       plNew.RelativeToAbsolute( plViewer);
 
@@ -1288,9 +1288,9 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
     }
     case IA_ZOOMING_MEASURE_VERTEX:
     {
-      CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0,0,0));
+      CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0.0f, 0.0f, 0.0f));
       plMeasureVtx.AbsoluteToRelative( plViewer);
-      plMeasureVtx.Translate_AbsoluteSystem( FLOAT3D( -dx, 0.0f, -dz));
+      plMeasureVtx.Translate_AbsoluteSystem( FLOAT3D(-dx, 0.0f, -dz));
       plMeasureVtx.RelativeToAbsolute( plViewer);
       m_vViewMeasureVertex = plMeasureVtx.pl_PositionVector;
       //m_vTarget = m_vViewMeasureVertex;
@@ -1309,7 +1309,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       plTarget.AbsoluteToRelative( plViewer);
       // translate it
-      plTarget.Translate_AbsoluteSystem( FLOAT3D( dx, 0.0f, 0.0f));
+      plTarget.Translate_AbsoluteSystem( FLOAT3D(dx, 0.0f, 0.0f));
       // project the placement back from viewer's system
       plTarget.RelativeToAbsolute( plViewer);
       m_vTarget = plTarget.pl_PositionVector;
@@ -1321,7 +1321,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
     case IA_MIP_RANGING:
     {
       // can't come closer, only traveling away is allowed
-      if( offset.y > 0)
+      if (offset.y > 0)
       {
         break;
       }
@@ -1333,7 +1333,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
     case IA_ZOOMING_LIGHT:
     {
       float fNewDistance = m_LightDistance - dz;
-      if( fNewDistance > 0.2f)
+      if (fNewDistance > 0.2f)
       {
         m_LightDistance = fNewDistance;
       }
@@ -1345,7 +1345,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       m_plModelPlacement.AbsoluteToRelative( plViewer);
       // rotate it
-      m_plModelPlacement.Rotate_TrackBall( ANGLE3D( -dAngleX, -dAngleY, 0));
+      m_plModelPlacement.Rotate_TrackBall( ANGLE3D(-dAngleX, -dAngleY, 0));
       // project the placement back from viewer's system
       m_plModelPlacement.RelativeToAbsolute( plViewer);
       theApp.m_chPlacement.MarkChanged();
@@ -1355,12 +1355,12 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
     {
       // initialize viewer's orientation
       CPlacement3D plOrientation;
-      plOrientation.pl_PositionVector = FLOAT3D( 0.0f, 0.0f, 0.0f);
+      plOrientation.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
       plOrientation.pl_OrientationAngle = m_angViewerOrientation;
       // project the placement to the viewer's system
       plOrientation.AbsoluteToRelative( plViewer);
       // rotate it
-      plOrientation.Rotate_TrackBall( ANGLE3D( dAngleX, dAngleY, 0));
+      plOrientation.Rotate_TrackBall( ANGLE3D(dAngleX, dAngleY, 0));
       // project the placement back from viewer's system
       plOrientation.RelativeToAbsolute( plViewer);
       // copy it back to viewer
@@ -1375,7 +1375,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
       // project the placement to the viewer's system
       m_plLightPlacement.AbsoluteToRelative( plViewer);
       // rotate it
-      m_plLightPlacement.Rotate_TrackBall( ANGLE3D( -dAngleX/2, -dAngleY/2, 0));
+      m_plLightPlacement.Rotate_TrackBall( ANGLE3D(-dAngleX/2, -dAngleY/2, 0));
       // project the placement back from viewer's system
       m_plLightPlacement.RelativeToAbsolute( plViewer);
       theApp.m_chPlacement.MarkChanged();
@@ -1413,7 +1413,7 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
     case IA_ZOOMING_MAPPING:
     {
       float NewMagnifyFactor = m_MagnifyFactor + offset.y * m_MagnifyFactor/150.0f;
-      if( (NewMagnifyFactor > 1/32768.0f) && (NewMagnifyFactor < 8.0f) )
+      if ((NewMagnifyFactor > 1/32768.0f) && (NewMagnifyFactor < 8.0f) )
       {
  	      MEX mexWidth, mexHeight;
         mexWidth = m_ModelObject.GetWidth();
@@ -1443,10 +1443,10 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point)
 
   HWND hwndUnderMouse = ::WindowFromPoint( point);
   HWND hwndInfo = NULL;
-  if( pMainFrame->m_pInfoFrame != NULL)
+  if (pMainFrame->m_pInfoFrame != NULL)
     hwndInfo = pMainFrame->m_pInfoFrame->m_hWnd;
 
-  if( (m_hWnd != ::GetActiveWindow()) && ( hwndInfo != hwndUnderMouse) )
+  if ((m_hWnd != ::GetActiveWindow()) && ( hwndInfo != hwndUnderMouse) )
   {
     SetActiveWindow();
     SetFocus();
@@ -1461,7 +1461,7 @@ void CModelerView::MagnifyMapping(CPoint point, FLOAT fMagnification)
 {
   PIX pixDPWidth = m_pDrawPort->GetWidth();
   PIX pixDPHeight = m_pDrawPort->GetHeight();
-  if( fMagnification > 1.0f)
+  if (fMagnification > 1.0f)
   {
     // center clicked point
     m_offx += point.x - pixDPWidth/2;
@@ -1478,7 +1478,7 @@ void CModelerView::MagnifyMapping(CPoint point, FLOAT fMagnification)
   theApp.m_chPlacement.MarkChanged();
   Invalidate( FALSE);
 
-  if( fMagnification > 1.0f)
+  if (fMagnification > 1.0f)
   {
     // center cursor
     CPoint ptCenter;
@@ -1491,7 +1491,7 @@ void CModelerView::MagnifyMapping(CPoint point, FLOAT fMagnification)
 
 void CModelerView::FastZoomIn( CPoint point)
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     MagnifyMapping(point, 2.0f);
   }
@@ -1503,7 +1503,7 @@ void CModelerView::FastZoomIn( CPoint point)
 
 void CModelerView::FastZoomOut()
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     MagnifyMapping( CPoint(0,0), 0.5f);
   }
@@ -1527,22 +1527,22 @@ void CModelerView::OnLButtonDown(UINT nFlags, CPoint point)
   m_InputAction = IA_NONE;
   
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace)
+  if (bCtrl && bSpace)
   {
     FastZoomIn( point);
     return;
   }
 
   // in mapping mode
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     // LMB+space is used for mapping moving
-    if( bSpace)
+    if (bSpace)
     {
       m_InputAction = IA_MOVING_MAPPING;
     }
     // Ctrl is used for moving patch
-    else if( bCtrl)
+    else if (bCtrl)
     {
       m_InputAction = IA_MOVING_PATCH;
     }
@@ -1551,12 +1551,12 @@ void CModelerView::OnLButtonDown(UINT nFlags, CPoint point)
   else
   {
     // shift operations control light
-    if( bShift && bRMB)
+    if (bShift && bRMB)
     {
       m_InputAction = IA_ROTATING_LIGHT;
     }
     // alt colorizes surface
-    else if( bAlt)
+    else if (bAlt)
     {
       CPerspectiveProjection3D prProjection;
       SetProjectionData( prProjection, m_pDrawPort);
@@ -1569,9 +1569,9 @@ void CModelerView::OnLButtonDown(UINT nFlags, CPoint point)
       Invalidate( FALSE);
     }
     // control operations are used for changing model placement
-    else if( bCtrl)
+    else if (bCtrl)
     {
-      if(m_bViewMeasureVertex)
+      if (m_bViewMeasureVertex)
       {
         m_InputAction = IA_MOVING_MEASURE_VERTEX;
       }
@@ -1581,11 +1581,11 @@ void CModelerView::OnLButtonDown(UINT nFlags, CPoint point)
       }
     }
     // space operations are used for changing viewer placement
-    else if( bSpace && bRMB )
+    else if (bSpace && bRMB )
     {
       m_InputAction = IA_ROTATING_VIEWER;
     }
-    else if( bSpace)
+    else if (bSpace)
     {
       m_InputAction = IA_MOVING_VIEWER;
     }
@@ -1606,17 +1606,17 @@ void CModelerView::OnRButtonDown(UINT nFlags, CPoint point)
 
   m_InputAction = IA_NONE;
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomOut();
     return;
   }
 
   // if mapping mode
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   { // RMB + space is used for zooming mapping
-    if( bSpace) {
+    if (bSpace) {
       m_InputAction = IA_ZOOMING_MAPPING;
-    } else if( bCtrl) { // Ctrl is used for zooming patch
+    } else if (bCtrl) { // Ctrl is used for zooming patch
       m_InputAction = IA_ZOOMING_PATCH;
     } else {
       m_InputAction = IA_CONTEXT_MENU;
@@ -1625,7 +1625,7 @@ void CModelerView::OnRButtonDown(UINT nFlags, CPoint point)
   // model view mode
   else
   { // ctrl+shift start mip ranging
-    if( bCtrl && bShift)  {
+    if (bCtrl && bShift)  {
       m_InputAction = IA_MIP_RANGING;
       // We will turn auto-mip modeling off but before that we have to set current auto mip 
       // model as activ one (because of possible mip-modeling off situation)
@@ -1648,25 +1648,25 @@ void CModelerView::OnRButtonDown(UINT nFlags, CPoint point)
       Invalidate( FALSE);
     }
     // shift operations control light
-    else if( bShift && bLMB) {
+    else if (bShift && bLMB) {
       m_InputAction = IA_ROTATING_LIGHT;
     }
-    else if( bShift) {
+    else if (bShift) {
       m_InputAction = IA_ZOOMING_LIGHT;
     }
     // space operaties with viewer position
-    else if( bSpace && bLMB) {
+    else if (bSpace && bLMB) {
       m_InputAction = IA_ROTATING_VIEWER;
     }
-    else if( bSpace) {
+    else if (bSpace) {
       m_InputAction = IA_ZOOMING_VIEWER;
     }
     // ctrl operaties with model position
-    else if( bCtrl && bLMB) {
+    else if (bCtrl && bLMB) {
       m_InputAction = IA_ROTATING_MODEL;
     }
-    else if( bCtrl) {
-      if(m_bViewMeasureVertex)
+    else if (bCtrl) {
+      if (m_bViewMeasureVertex)
       {
         m_InputAction = IA_ZOOMING_MEASURE_VERTEX;
       }
@@ -1696,7 +1696,7 @@ void CModelerView::OnRButtonUp(UINT nFlags, CPoint point)
 {
   CModelerDoc *pDoc = (CModelerDoc *) GetDocument();
   
-  if( m_InputAction == IA_MIP_RANGING)
+  if (m_InputAction == IA_MIP_RANGING)
   {
     pDoc->SetModifiedFlag();
 
@@ -1714,9 +1714,9 @@ void CModelerView::OnRButtonUp(UINT nFlags, CPoint point)
     theApp.m_chGlobal.MarkChanged();
     // update info page
     CDlgInfoFrame *pInfoFrame = ((CMainFrame *)( theApp.m_pMainWnd))->m_pInfoFrame;
-    if( pInfoFrame == NULL) return;
+    if (pInfoFrame == NULL) return;
     CDlgInfoPgMip *pDlgMip = &pInfoFrame->m_pInfoSheet->m_PgInfoMip;
-    if( !::IsWindow(pDlgMip->m_hWnd)) return; 
+    if (!::IsWindow(pDlgMip->m_hWnd)) return; 
     pDlgMip->UpdateData( FALSE);
   }
 	
@@ -1745,7 +1745,7 @@ void PauseAnimForAllAttachments( CModelObject &mo)
 void CModelerView::OnAnimNextAnim() 
 {
 	m_ModelObject.NextAnim();
-  if( m_ModelObject.IsPaused())
+  if (m_ModelObject.IsPaused())
   {
 	  m_ModelObject.ao_llAnimStart = 0;
   }
@@ -1754,7 +1754,7 @@ void CModelerView::OnAnimNextAnim()
 void CModelerView::OnAnimPrevAnim() 
 {
 	m_ModelObject.PrevAnim();
-  if( m_ModelObject.IsPaused())
+  if (m_ModelObject.IsPaused())
   {
 	  m_ModelObject.ao_llAnimStart = 0;
   }
@@ -1762,7 +1762,7 @@ void CModelerView::OnAnimPrevAnim()
 
 void CModelerView::OnAnimPlay() 
 {
-  if( m_ModelObject.IsPaused())
+  if (m_ModelObject.IsPaused())
   {
     m_ModelObject.PlayAnim( m_ModelObject.GetAnim(), AOF_LOOPING|AOF_NORESTART);  
     PlayAnimForAllAttachments( m_ModelObject, AOF_LOOPING|AOF_NORESTART);    
@@ -1776,7 +1776,7 @@ void CModelerView::OnAnimPlay()
 
 void CModelerView::OnFirstFrame() 
 {
-  if( !m_ModelObject.IsPaused())
+  if (!m_ModelObject.IsPaused())
   {
     m_ModelObject.PauseAnim();
   }
@@ -1785,7 +1785,7 @@ void CModelerView::OnFirstFrame()
 
 void CModelerView::OnLastFrame() 
 {
-  if( !m_ModelObject.IsPaused())
+  if (!m_ModelObject.IsPaused())
   {
     m_ModelObject.PauseAnim();
   }
@@ -1794,7 +1794,7 @@ void CModelerView::OnLastFrame()
 
 void CModelerView::OnAnimNextFrame() 
 {
-  if( !m_ModelObject.IsPaused())
+  if (!m_ModelObject.IsPaused())
   {
     m_ModelObject.PauseAnim();
   }
@@ -1803,7 +1803,7 @@ void CModelerView::OnAnimNextFrame()
 
 void CModelerView::OnAnimPrevFrame() 
 {
-  if( !m_ModelObject.IsPaused())
+  if (!m_ModelObject.IsPaused())
   {
     m_ModelObject.PauseAnim();
   }
@@ -1812,7 +1812,7 @@ void CModelerView::OnAnimPrevFrame()
 
 void CModelerView::OnUpdateAnimPlay(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
     pCmdUI->Enable( FALSE);
   else if (m_ModelObject.IsPaused()) {
     pCmdUI->SetCheck(0);
@@ -1830,7 +1830,7 @@ void CModelerView::OnRestartAnimations()
   // retrieve current model's texture 
   CTextureData *pTD = (CTextureData *) m_ModelObject.mo_toTexture.GetData();
 	// if model has texture
-  if( pTD != NULL)
+  if (pTD != NULL)
   {
     // get model's texture animation index
     INDEX iTexCurrentAnim = m_ModelObject.mo_toTexture.GetAnim();
@@ -1841,7 +1841,7 @@ void CModelerView::OnRestartAnimations()
 
 void CModelerView::OnUpdateAnimNextframe(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
     pCmdUI->Enable( FALSE);
   else 
     pCmdUI->Enable(TRUE);
@@ -1849,7 +1849,7 @@ void CModelerView::OnUpdateAnimNextframe(CCmdUI* pCmdUI)
 
 void CModelerView::OnUpdateAnimPrevframe(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
     pCmdUI->Enable( FALSE);
   else
     pCmdUI->Enable(TRUE);
@@ -1878,18 +1878,18 @@ void CModelerView::OnIdle(void)
     theApp.m_chPlacement.MarkChanged();
   }
 
-  if( m_bDollyMipModeling)
+  if (m_bDollyMipModeling)
   {
-    if( m_fTargetDistance >= 100.0f)
+    if (m_fTargetDistance >= 100.0f)
     {
       m_fDollySpeedMipModeling = -2.0f;
     }
-    else if( m_fTargetDistance <= 3.0f)
+    else if (m_fTargetDistance <= 3.0f)
     {
       m_fDollySpeedMipModeling = 2.0f;
     }
     FLOAT fCorrector = 0.0f;
-    if( m_fTargetDistance<20.0f)
+    if (m_fTargetDistance<20.0f)
     {
       FLOAT fAbsDistance = Abs(m_fTargetDistance);
       fCorrector = (22.5f-fAbsDistance)/20.0f;
@@ -1898,7 +1898,7 @@ void CModelerView::OnIdle(void)
     theApp.m_chPlacement.MarkChanged();
   }
   
-  if( m_bDollyLight)
+  if (m_bDollyLight)
   {
     m_plLightPlacement.pl_OrientationAngle(1) += AngleDeg( 6.0f);
     m_plLightPlacement.pl_OrientationAngle(2) = 
@@ -1906,7 +1906,7 @@ void CModelerView::OnIdle(void)
     theApp.m_chPlacement.MarkChanged();
   }
 
-  if( m_bDollyLightColor)
+  if (m_bDollyLightColor)
   {
     UBYTE ubRed = 128+((BYTE)(sin( fTimeVar1)*127));
     UBYTE ubGreen = 128+((BYTE)(sin( fTimeVar2)*127));
@@ -1921,9 +1921,9 @@ void CModelerView::OnIdle(void)
                     theApp.m_chPlacement.IsUpToDate(m_udViewPicture) &&
                     (m_ModelObject.GetPatchesMask() == 0) );
   CTextureData *pTD = (CTextureData *) m_ModelObject.mo_toTexture.GetData();
-  if( (pTD != NULL) && (pTD->td_ctFrames > 1) ) bUpdate = TRUE;
+  if ((pTD != NULL) && (pTD->td_ctFrames > 1) ) bUpdate = TRUE;
   
-  if( bUpdate)
+  if (bUpdate)
   {
     Invalidate( FALSE);
   }
@@ -1956,7 +1956,7 @@ void CModelerView::OnAnimMipRough()
 
 void CModelerView::OnUpdateAnimMipPrecize(CCmdUI* pCmdUI) 
 {
-  if( m_ModelObject.IsAutoMipModeling())
+  if (m_ModelObject.IsAutoMipModeling())
     pCmdUI->Enable(FALSE);
   else
     pCmdUI->Enable(TRUE);
@@ -1964,7 +1964,7 @@ void CModelerView::OnUpdateAnimMipPrecize(CCmdUI* pCmdUI)
 
 void CModelerView::OnUpdateAnimMipRough(CCmdUI* pCmdUI) 
 {
-  if( m_ModelObject.IsAutoMipModeling())
+  if (m_ModelObject.IsAutoMipModeling())
     pCmdUI->Enable(FALSE);
   else
     pCmdUI->Enable(TRUE);
@@ -1972,7 +1972,7 @@ void CModelerView::OnUpdateAnimMipRough(CCmdUI* pCmdUI)
 
 void CModelerView::OnOptAutoMipModeling() 
 {
-  if( m_ModelObject.IsAutoMipModeling())
+  if (m_ModelObject.IsAutoMipModeling())
     m_ModelObject.AutoMipModelingOff();
   else
     m_ModelObject.AutoMipModelingOn();
@@ -1981,7 +1981,7 @@ void CModelerView::OnOptAutoMipModeling()
 
 void CModelerView::OnUpdateOptAutoMipModeling(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)    pCmdUI->Enable( FALSE);
+	if (m_bMappingMode)    pCmdUI->Enable( FALSE);
   else                pCmdUI->Enable( TRUE);
   pCmdUI->SetCheck( m_ModelObject.IsAutoMipModeling());
 }
@@ -1994,7 +1994,7 @@ void CModelerView::OnAnimRotation()
 
 void CModelerView::OnUpdateAnimRotation(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
     pCmdUI->Enable( FALSE);
 	pCmdUI->SetCheck( m_AutoRotating);
 }
@@ -2004,7 +2004,7 @@ CModelerView *CModelerView::GetActiveView(void)
   CModelerView *res;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   res = DYNAMIC_DOWNCAST(CModelerView, pMainFrame->GetActiveFrame()->GetActiveView());
-  if( (res != NULL) && (res->m_bMappingMode) )
+  if ((res != NULL) && (res->m_bMappingMode) )
     return NULL;
   return res;
 }
@@ -2014,7 +2014,7 @@ CModelerView *CModelerView::GetActiveMappingView(void)
   CModelerView *res;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   res = DYNAMIC_DOWNCAST(CModelerView, pMainFrame->GetActiveFrame()->GetActiveView());
-  if( (res != NULL) && (res->m_bMappingMode) )
+  if ((res != NULL) && (res->m_bMappingMode) )
     return res;
   return NULL;
 }
@@ -2022,7 +2022,7 @@ CModelerView *CModelerView::GetActiveMappingView(void)
 CModelerView *CModelerView::GetActiveMappingNormalView(void)
 {
   CModelerView *pModelerView = GetActiveView();
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
     return GetActiveMappingView();
   return pModelerView;
 }
@@ -2031,9 +2031,9 @@ void CModelerView::OnContextMenu(CWnd* pWnd, CPoint point)
 {
   CMenu menu;
 	
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
-    if( (m_InputAction == IA_CONTEXT_MENU) && (menu.LoadMenu(IDR_MAPPING_VIEW_POPUP)))
+    if ((m_InputAction == IA_CONTEXT_MENU) && (menu.LoadMenu(IDR_MAPPING_VIEW_POPUP)))
     {
 		  CMenu* pPopup = menu.GetSubMenu(0);
 		  ASSERT(pPopup != NULL);
@@ -2043,37 +2043,37 @@ void CModelerView::OnContextMenu(CWnd* pWnd, CPoint point)
   }
   else
   {
-    if( (m_InputAction == IA_CONTEXT_MENU) && (menu.LoadMenu(IDR_MODEL_VIEW_POPUP)))
+    if ((m_InputAction == IA_CONTEXT_MENU) && (menu.LoadMenu(IDR_MODEL_VIEW_POPUP)))
   	{
 		  CMenu* pPopup = menu.GetSubMenu(0);
 		  ASSERT(pPopup != NULL);
-		  if( m_RenderPrefs.BBoxFrameVisible())
+		  if (m_RenderPrefs.BBoxFrameVisible())
         pPopup->CheckMenuItem(ID_REND_BBOX_FRAME, MF_CHECKED);
-		  if( m_RenderPrefs.BBoxAllVisible())
+		  if (m_RenderPrefs.BBoxAllVisible())
         pPopup->CheckMenuItem(ID_REND_BBOX_ALL, MF_CHECKED);
 
-      if( m_RenderPrefs.WireOn()) pPopup->CheckMenuItem(ID_REND_WIRE_ONOFF, MF_CHECKED);
-      if( m_RenderPrefs.HiddenLines()) pPopup->CheckMenuItem(ID_REND_HIDDEN_LINES, MF_CHECKED);
+      if (m_RenderPrefs.WireOn()) pPopup->CheckMenuItem(ID_REND_WIRE_ONOFF, MF_CHECKED);
+      if (m_RenderPrefs.HiddenLines()) pPopup->CheckMenuItem(ID_REND_HIDDEN_LINES, MF_CHECKED);
     
       ULONG rtRenderType = m_RenderPrefs.GetRenderType();
-      if( (rtRenderType & RT_NO_POLYGON_FILL) != 0)
+      if ((rtRenderType & RT_NO_POLYGON_FILL) != 0)
         pPopup->CheckMenuItem( ID_REND_NO_TEXTURE, MF_CHECKED);
-      if( (rtRenderType & RT_WHITE_TEXTURE) != 0)
+      if ((rtRenderType & RT_WHITE_TEXTURE) != 0)
         pPopup->CheckMenuItem( ID_REND_WHITE_TEXTURE, MF_CHECKED);
-      if( (rtRenderType & RT_SURFACE_COLORS) != 0)
+      if ((rtRenderType & RT_SURFACE_COLORS) != 0)
         pPopup->CheckMenuItem( ID_REND_SURFACE_COLORS, MF_CHECKED);
-      if( (rtRenderType & RT_ON_COLORS) != 0)
+      if ((rtRenderType & RT_ON_COLORS) != 0)
         pPopup->CheckMenuItem( ID_REND_ON_COLORS, MF_CHECKED);
-      if( (rtRenderType & RT_OFF_COLORS) != 0)
+      if ((rtRenderType & RT_OFF_COLORS) != 0)
         pPopup->CheckMenuItem( ID_REND_OFF_COLORS, MF_CHECKED);
-      if( (rtRenderType & RT_TEXTURE) != 0)
+      if ((rtRenderType & RT_TEXTURE) != 0)
         pPopup->CheckMenuItem( ID_REND_USE_TEXTURE, MF_CHECKED);
     
-      if( (rtRenderType & RT_SHADING_NONE) != 0)
+      if ((rtRenderType & RT_SHADING_NONE) != 0)
         pPopup->CheckMenuItem( ID_REND_SHADING_NONE, MF_CHECKED);
-      if( (rtRenderType & RT_SHADING_LAMBERT) != 0)
+      if ((rtRenderType & RT_SHADING_LAMBERT) != 0)
         pPopup->CheckMenuItem( ID_REND_SHADING_LAMBERT, MF_CHECKED);
-      if( (rtRenderType & RT_SHADING_PHONG) != 0)
+      if ((rtRenderType & RT_SHADING_PHONG) != 0)
         pPopup->CheckMenuItem( ID_REND_PHONG, MF_CHECKED);
 
       pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -2114,7 +2114,7 @@ BOOL MyChooseColor( COLORREF &clrNewColor, CWnd &wndOwner)
   ccInit.lpCustColors = &MyCustColors[ 0];
   ccInit.hwndOwner = wndOwner.m_hWnd;
   
-  if( !ChooseColor( &ccInit))
+  if (!ChooseColor( &ccInit))
     return FALSE;
   
   clrNewColor = ccInit.rgbResult;
@@ -2123,7 +2123,7 @@ BOOL MyChooseColor( COLORREF &clrNewColor, CWnd &wndOwner)
 
 void CModelerView::OnPrefsChangeInk() 
 {
-  if( MyChooseColor( m_InkColor, *GetParent()))
+  if (MyChooseColor( m_InkColor, *GetParent()))
   {
     Invalidate( FALSE);
   }
@@ -2131,7 +2131,7 @@ void CModelerView::OnPrefsChangeInk()
 
 void CModelerView::OnPrefsChangePaper() 
 {
-  if( MyChooseColor( m_PaperColor, *GetParent()))
+  if (MyChooseColor( m_PaperColor, *GetParent()))
   {
     Invalidate( FALSE);
   }
@@ -2148,7 +2148,7 @@ void CModelerView::OnFileRemoveTexture()
   INDEX iIter = 0;
   FOREACHINLIST( CTextureDataInfo, tdi_ListNode, pDoc->m_emEditModel.edm_WorkingSkins, it)
   {
-    if( iCurSel == iIter)
+    if (iCurSel == iIter)
     {
       ptdiSelected = &it.Current();
       break;
@@ -2212,7 +2212,7 @@ void CModelerView::OnScriptUpdateMipmodels()
   CTFileName fnModelName = CTString(CStringA(pDoc->GetPathName()));
   CTFileName fnScriptName = fnModelName.FileDir() + fnModelName.FileName() + ".scr";
 	
-  if( ::MessageBoxA( this->m_hWnd, "Updating mip-models will discard current mip-model mapping "
+  if (::MessageBoxA( this->m_hWnd, "Updating mip-models will discard current mip-model mapping "
                                   "and colorizing data. Are you sure that you want that?",
              "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1|
              MB_SYSTEMMODAL | MB_TOPMOST) == IDYES)
@@ -2238,7 +2238,7 @@ void CModelerView::OnScriptUpdateMipmodels()
 
 void CModelerView::OnLightOn() 
 {
-	if( !m_bMappingMode)
+	if (!m_bMappingMode)
   {
     m_LightModeOn = !m_LightModeOn;
     Invalidate( FALSE);
@@ -2248,7 +2248,7 @@ void CModelerView::OnLightOn()
 void CModelerView::OnLightColor() 
 {
   COLORREF TmpColor = CLRF_CLR( m_LightColor);
-  if( MyChooseColor( TmpColor, *GetParent()))
+  if (MyChooseColor( TmpColor, *GetParent()))
   {
     m_LightColor = CLR_CLRF( TmpColor);
     Invalidate( FALSE);
@@ -2263,7 +2263,7 @@ void CModelerView::OnUpdateLightOn(CCmdUI* pCmdUI)
 
 void CModelerView::OnUpdateLightColor(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
     pCmdUI->Enable( FALSE);
 }
 
@@ -2330,7 +2330,7 @@ void CModelerView::OnRendUseTexture()
 void CModelerView::OnMappingOn() 
 {
   // if we are going into mapping mode
-  if( !m_bMappingMode)
+  if (!m_bMappingMode)
   {
     // remember auto mip modeling flag
     m_bAutoMipModelingBeforeMapping = m_ModelObject.IsAutoMipModeling();
@@ -2340,7 +2340,7 @@ void CModelerView::OnMappingOn()
   else
   {
     // restore auto mip modeling flag
-    if( m_bAutoMipModelingBeforeMapping)    m_ModelObject.AutoMipModelingOn();
+    if (m_bAutoMipModelingBeforeMapping)    m_ModelObject.AutoMipModelingOn();
     else                                    m_ModelObject.AutoMipModelingOff();
   }
 
@@ -2393,18 +2393,18 @@ void CModelerView::OnUpdateFileRemoveTexture(CCmdUI* pCmdUI)
 void CModelerView::OnMagnifyLess() 
 {
   BOOL bAlt = (GetKeyState( VK_MENU)&0x8000) != 0;
-	if( m_bMappingMode)
+	if (m_bMappingMode)
   {
-    if( m_MagnifyFactor > 1.0/16384.0)
+    if (m_MagnifyFactor > 1.0/16384.0)
     {
       m_MagnifyFactor /= 2.0f;
-      if( bAlt)
+      if (bAlt)
       {
         OnWindowFit();
       }
     }
   }	
-  else if( m_fTargetDistance < 65535.0f)
+  else if (m_fTargetDistance < 65535.0f)
   {
     m_fTargetDistance *= 2.0f;
   }
@@ -2414,18 +2414,18 @@ void CModelerView::OnMagnifyLess()
 void CModelerView::OnMagnifyMore() 
 {
   BOOL bAlt = (GetKeyState( VK_MENU)&0x8000) != 0;
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
-    if(m_MagnifyFactor < 4)
+    if (m_MagnifyFactor < 4)
     {
       m_MagnifyFactor *= 2.0f;
-      if( bAlt)
+      if (bAlt)
       {
         OnWindowFit();
       }
     }
   }
-  else if( m_fTargetDistance > 1.0f)
+  else if (m_fTargetDistance > 1.0f)
   {
     m_fTargetDistance /= 2.0f;
   }
@@ -2434,7 +2434,7 @@ void CModelerView::OnMagnifyMore()
 
 void CModelerView::OnWindowFit() 
 {
-  if( m_bMappingMode && !GetParent()->IsZoomed())
+  if (m_bMappingMode && !GetParent()->IsZoomed())
   {
  	  MEX mexWidth, mexHeight;
     mexWidth = m_ModelObject.GetWidth();
@@ -2453,18 +2453,18 @@ void CModelerView::OnWindowFit()
     pWnd->GetParent()->ScreenToClient( rectNewPos); // view's window size relative to working area
   
     rectNewPos.left += pixLeft;
-    if( rectNewPos.left < 0)
+    if (rectNewPos.left < 0)
       rectNewPos.left = 0;
     m_offx = 0;
     rectNewPos.top += pixUp;
-    if( rectNewPos.top < 0)
+    if (rectNewPos.top < 0)
       rectNewPos.top = 0;
     m_offy = 0;
     rectNewPos.right = rectNewPos.left + pixWidth + 12;
-    if( rectNewPos.right > rectClient.right)
+    if (rectNewPos.right > rectClient.right)
       rectNewPos.right = rectClient.right;
     rectNewPos.bottom = rectNewPos.top + pixHeight + 31;
-    if( rectNewPos.bottom > rectClient.bottom)
+    if (rectNewPos.bottom > rectClient.bottom)
       rectNewPos.bottom = rectClient.bottom;
     pWnd->MoveWindow( rectNewPos, TRUE);
     theApp.m_chGlobal.MarkChanged();
@@ -2473,7 +2473,7 @@ void CModelerView::OnWindowFit()
 
 void CModelerView::OnWindowCenter() 
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
  	  MEX mexWidth, mexHeight;
     mexWidth = m_ModelObject.GetWidth();
@@ -2503,7 +2503,7 @@ void CModelerView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CModelerView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-  if( m_InputAction != IA_MIP_RANGING)
+  if (m_InputAction != IA_MIP_RANGING)
   {
     m_InputAction = IA_NONE;
   }
@@ -2601,7 +2601,7 @@ void CModelerView::OnUpdateRendBboxFrame(CCmdUI* pCmdUI)
 void CModelerView::OnTakeScreenShoot() 
 {
   // redraw view
-  if( m_pDrawPort->Lock())
+  if (m_pDrawPort->Lock())
   {
     RenderView( m_pDrawPort);
     m_pDrawPort->Unlock();
@@ -2615,7 +2615,7 @@ void CModelerView::OnTakeScreenShoot()
   CTFileName fnSSFileName = _EngineGUI.FileRequester( "Select name for screen shot",
                             FILTER_TGA FILTER_END, "Take screen shoots directory",
                             "ScreenShots\\", "", NULL, FALSE);
-  if( fnSSFileName == "") return;
+  if (fnSSFileName == "") return;
 
   CWaitCursor StartWaitCursor;
   CDlgPleaseWait dlg( "Please wait while saving screen shoot:", fnSSFileName);
@@ -2679,9 +2679,9 @@ void CModelerView::OnRendFloor()
 
 void CModelerView::OnUpdateRendFloor(CCmdUI* pCmdUI) 
 {
-  if( !m_bMappingMode)
+  if (!m_bMappingMode)
   {
-    if( theApp.m_pFloorModelObject != NULL)
+    if (theApp.m_pFloorModelObject != NULL)
     {
       // set floor mode check (press in button)
       pCmdUI->SetCheck( m_FloorOn);
@@ -2703,12 +2703,12 @@ void CModelerView::OnStainsInsert()
   CWorkingPatch *pWP = NULL;
   int iSelected = pMainFrame->m_StainsComboBox.GetCurSel();
 
-  if( iSelected != CB_ERR)
+  if (iSelected != CB_ERR)
   {
     INDEX iCt = 0;
     FOREACHINLIST( CWorkingPatch, wp_ListNode, theApp.m_WorkingPatches, it)
     {
-      if( iCt == iSelected)
+      if (iCt == iSelected)
       {
         pWP = &it.Current();
       }
@@ -2723,7 +2723,7 @@ void CModelerView::OnStainsInsert()
   pMD->GetTextureDimensions( mexWidth, mexHeight);
   INDEX iMaskBit;
   // if patch adding is not succesefull
-  if( !pDoc->m_emEditModel.EditAddPatch( pWP->wp_FileName,
+  if (!pDoc->m_emEditModel.EditAddPatch( pWP->wp_FileName,
                       MEX2D( mexWidth/2-pTD->GetWidth()/2, mexHeight/2-pTD->GetHeight()/2),
                       iMaskBit) )
   {
@@ -2736,7 +2736,7 @@ void CModelerView::OnStainsInsert()
   pDoc->SetModifiedFlag();
   Invalidate( FALSE);
 
-  if( pMainFrame->m_dlgPatchesPalette != NULL)
+  if (pMainFrame->m_dlgPatchesPalette != NULL)
   {
     pMainFrame->m_dlgPatchesPalette->UpdateData( FALSE);
     pMainFrame->m_dlgPatchesPalette->Invalidate(FALSE);
@@ -2751,7 +2751,7 @@ void CModelerView::OnStainsDelete()
   while (pos != NULL)
   {
     CView *pView = pDoc->GetNextView( pos);
-    if( DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
+    if (DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
     {
       CModelerView* pModelerView = (CModelerView *) pView;
       pModelerView->m_ModelObject.HidePatch( m_iActivePatchBitIndex);
@@ -2769,10 +2769,10 @@ void CModelerView::OnStainsDelete()
   while (pos != NULL)
   {
     CView *pView = pDoc->GetNextView( pos);
-    if( DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
+    if (DYNAMIC_DOWNCAST(CModelerView, pView) != NULL)
     {
       CModelerView* pModelerView = (CModelerView *) pView;
-      if( pModelerView->m_iActivePatchBitIndex == iRemovedPatch)
+      if (pModelerView->m_iActivePatchBitIndex == iRemovedPatch)
       {
         pModelerView->m_iActivePatchBitIndex = m_iActivePatchBitIndex;
       }
@@ -2780,7 +2780,7 @@ void CModelerView::OnStainsDelete()
   }
   
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if( pMainFrame->m_dlgPatchesPalette != NULL)
+  if (pMainFrame->m_dlgPatchesPalette != NULL)
   {
     pMainFrame->m_dlgPatchesPalette->UpdateData( FALSE);
     pMainFrame->m_dlgPatchesPalette->Invalidate(FALSE);
@@ -2804,7 +2804,7 @@ void CModelerView::OnStainsPreviousStain()
   pDoc->m_emEditModel.GetPreviousValidPatchIndex( m_iActivePatchBitIndex);
 
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if( pMainFrame->m_dlgPatchesPalette != NULL)
+  if (pMainFrame->m_dlgPatchesPalette != NULL)
   {
     pMainFrame->m_dlgPatchesPalette->UpdateData( FALSE);
     pMainFrame->m_dlgPatchesPalette->Invalidate(FALSE);
@@ -2817,7 +2817,7 @@ void CModelerView::OnStainsNextStain()
   pDoc->m_emEditModel.GetNextValidPatchIndex( m_iActivePatchBitIndex);
 
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if( pMainFrame->m_dlgPatchesPalette != NULL)
+  if (pMainFrame->m_dlgPatchesPalette != NULL)
   {
     pMainFrame->m_dlgPatchesPalette->UpdateData( FALSE);
     pMainFrame->m_dlgPatchesPalette->Invalidate(FALSE);
@@ -2850,7 +2850,7 @@ void CModelerView::OnShadowBetter()
 
 void CModelerView::OnFallDown() 
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     m_offx = 0;
     m_offy = 0;
@@ -2858,7 +2858,7 @@ void CModelerView::OnFallDown()
   }
   else
   {
-    m_vViewMeasureVertex = FLOAT3D(0,0,0);
+    m_vViewMeasureVertex = FLOAT3D(0.0f, 0.0f, 0.0f);
     m_plModelPlacement.pl_PositionVector(1) = 0.0f;
     m_plModelPlacement.pl_PositionVector(2) = 0.0f;
     m_plModelPlacement.pl_PositionVector(3) = 0.0f;
@@ -2877,12 +2877,12 @@ void CModelerView::OnLButtonDblClk(UINT nFlags, CPoint point)
   BOOL bCtrl = nFlags & MK_CONTROL;
 
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace)
+  if (bCtrl && bSpace)
   {
     FastZoomIn( point);
   }
 
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     PIX pixDPWidth = m_pDrawPort->GetWidth();
     PIX pixDPHeight = m_pDrawPort->GetHeight();
@@ -2901,7 +2901,7 @@ void CModelerView::OnRButtonDblClk(UINT nFlags, CPoint point)
   BOOL bCtrl = nFlags & MK_CONTROL;
 
   // ctrl+space+XMB is used for 2x zooming
-  if( bCtrl && bSpace) {
+  if (bCtrl && bSpace) {
     FastZoomOut();
   }
 	
@@ -2910,7 +2910,7 @@ void CModelerView::OnRButtonDblClk(UINT nFlags, CPoint point)
 
 void CModelerView::OnKeyA()
 {
-	if( m_bMappingMode)
+	if (m_bMappingMode)
   {
     OnToggleAllSurfaces();
   }
@@ -2947,21 +2947,21 @@ void CModelerView::SaveThumbnail()
   CThumbnailSettings tsCurrent;
   FillThumbnailSettings( tsCurrent);
   // if we have precalculated thumbnail settings
-  if( pDoc->m_emEditModel.edm_tsThumbnailSettings.ts_bSet)
+  if (pDoc->m_emEditModel.edm_tsThumbnailSettings.ts_bSet)
   {
     // apply them
     ApplyThumbnailSettings( pDoc->m_emEditModel.edm_tsThumbnailSettings);
   }
 
   _pGfx->CreateWorkCanvas( 128, 128, &pDrawPort);
-  if( pDrawPort != NULL)
+  if (pDrawPort != NULL)
   {
     INDEX iCurrentMip = m_ModelObject.GetManualMipLevel();
     m_ModelObject.SetManualMipLevel(0);
     BOOL bAutoMipModeling = m_ModelObject.IsAutoMipModeling();
     m_ModelObject.AutoMipModelingOff();
 
-    if( pDrawPort->Lock())
+    if (pDrawPort->Lock())
     {
       BOOL bCollisionModeBefore = m_bCollisionMode;
       BOOL bMappingOnBefore = m_bMappingMode;
@@ -2998,7 +2998,7 @@ void CModelerView::SaveThumbnail()
     }
 
     m_ModelObject.SetManualMipLevel( iCurrentMip);
-    if( bAutoMipModeling)
+    if (bAutoMipModeling)
     {
       m_ModelObject.AutoMipModelingOn();
     }
@@ -3041,9 +3041,9 @@ void CModelerView::OnBanking()
 
 void CModelerView::OnUpdateCollisionBox(CCmdUI* pCmdUI) 
 {
-  if( !m_bMappingMode)
+  if (!m_bMappingMode)
   {
-    if( theApp.m_pCollisionBoxModelObject != NULL)
+    if (theApp.m_pCollisionBoxModelObject != NULL)
     {
       // set collision mode check (press in button)
       pCmdUI->SetCheck( m_bCollisionMode);
@@ -3059,7 +3059,7 @@ void CModelerView::OnUpdateCollisionBox(CCmdUI* pCmdUI)
 
 void CModelerView::OnCollisionBox() 
 {
-  if( theApp.m_pCollisionBoxModelObject != NULL)
+  if (theApp.m_pCollisionBoxModelObject != NULL)
   {
     m_bCollisionMode = !m_bCollisionMode;
     Invalidate( FALSE);
@@ -3068,7 +3068,7 @@ void CModelerView::OnCollisionBox()
 
 void CModelerView::OnResetViewer() 
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     m_offx = 0;
     m_offy = 0;
@@ -3136,7 +3136,7 @@ BOOL CModelerView::PreTranslateMessage(MSG* pMsg)
   BOOL bResult = CView::PreTranslateMessage(pMsg);
 
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if(pModelerView != this) return bResult;
+  if (pModelerView != this) return bResult;
   CModelerDoc* pDoc = GetDocument();
 
   // get key statuses 
@@ -3148,11 +3148,11 @@ BOOL CModelerView::PreTranslateMessage(MSG* pMsg)
   BOOL bLMB = (GetKeyState( VK_LBUTTON)&0x8000) != 0;
   BOOL bRMB = (GetKeyState( VK_RBUTTON)&0x8000) != 0;
 
-  if( (pMsg->message==WM_KEYDOWN) || bShift || bControl || bSpace || bLMB || bRMB )
+  if ((pMsg->message==WM_KEYDOWN) || bShift || bControl || bSpace || bLMB || bRMB )
   {
     m_bAnyKeyPressed = TRUE;
   }
-  else if(pMsg->message==WM_KEYUP)
+  else if (pMsg->message==WM_KEYUP)
   {
     m_bAnyKeyPressed = FALSE;
   }
@@ -3161,30 +3161,30 @@ BOOL CModelerView::PreTranslateMessage(MSG* pMsg)
   BOOL bAttachmentExists = (pAttPg!=NULL) && (pAttPg->GetCurrentAttachingPlacement() != -1);
   BOOL bViewHasFocus = (this == CWnd::GetFocus());
   // see if we are picking vertices to define axis
-  if( bViewHasFocus && bAttachmentExists && (pMsg->message==WM_KEYDOWN) &&
+  if (bViewHasFocus && bAttachmentExists && (pMsg->message==WM_KEYDOWN) &&
       (( pMsg->wParam=='1') || ( pMsg->wParam=='2') || ( pMsg->wParam=='3')) )
   {
     FLOAT3D vClosestVertex;
     INDEX iClosestVertex = GetClosestVertex( vClosestVertex);
-    if( iClosestVertex != -1)
+    if (iClosestVertex != -1)
     {
-      if( pMsg->wParam=='1') pAttPg->SetPlacementReferenceVertex(iClosestVertex, -1, -1);
-      if( pMsg->wParam=='2') pAttPg->SetPlacementReferenceVertex(-1, iClosestVertex, -1);
-      if( pMsg->wParam=='3') pAttPg->SetPlacementReferenceVertex(-1, -1, iClosestVertex);
+      if (pMsg->wParam=='1') pAttPg->SetPlacementReferenceVertex(iClosestVertex, -1, -1);
+      if (pMsg->wParam=='2') pAttPg->SetPlacementReferenceVertex(-1, iClosestVertex, -1);
+      if (pMsg->wParam=='3') pAttPg->SetPlacementReferenceVertex(-1, -1, iClosestVertex);
     }
   }
 
-  if( m_bViewMeasureVertex)
+  if (m_bViewMeasureVertex)
   {
     CTString strStatusLine;
-    CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0,0,0));
+    CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0.0f, 0.0f, 0.0f));
     plMeasureVtx.AbsoluteToRelative( m_plModelPlacement);
     FLOAT3D vDelta = plMeasureVtx.pl_PositionVector;
     strStatusLine.PrintF("Measure vertex offset: %g, %g, %g", vDelta(1), vDelta(2), vDelta(3));
     STATUS_LINE_MESSAGE( CString(strStatusLine));
   }
   // if we caught key or button down message
-  else if(
+  else if (
       (pMsg->message==WM_SYSKEYDOWN) ||
       (pMsg->message==WM_KEYDOWN) ||
       (pMsg->message==WM_KEYUP) ||
@@ -3195,20 +3195,20 @@ BOOL CModelerView::PreTranslateMessage(MSG* pMsg)
       (bShift || bAlt || bControl || bSpace || bLMB || bRMB) )
   {
     // in mapping mode
-    if( m_bMappingMode)
+    if (m_bMappingMode)
     {
       // nothing
-      if( !bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB)
+      if (!bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB)
       {
         STATUS_LINE_MESSAGE( L"Try: Space, Ctrl+Space"); 
       }
       // space
-      else if( !bShift && !bAlt && !bControl && bSpace && !bLMB && !bRMB)
+      else if (!bShift && !bAlt && !bControl && bSpace && !bLMB && !bRMB)
       {
         STATUS_LINE_MESSAGE( L"Move with LMB, zoom with RMB, center with LMBx2. Try: Ctrl+Space");
       }
       // ctrl+space
-      else if( !bShift && !bAlt && bControl && bSpace && !bLMB && !bRMB)
+      else if (!bShift && !bAlt && bControl && bSpace && !bLMB && !bRMB)
       {
         STATUS_LINE_MESSAGE( L"LMB zooms in, RMB zooms out");
       }
@@ -3217,28 +3217,28 @@ BOOL CModelerView::PreTranslateMessage(MSG* pMsg)
     else
     {
       // nothing
-      if( !bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB)
+      if (!bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB)
       {
         // nothing pressed
         STATUS_LINE_MESSAGE( L"Try: Space, Ctrl+Space, Ctrl, Shift"); 
       }
       // space
-      else if( !bShift && !bAlt && !bControl && bSpace && !bLMB && !bRMB && !m_bMappingMode)
+      else if (!bShift && !bAlt && !bControl && bSpace && !bLMB && !bRMB && !m_bMappingMode)
       {
         STATUS_LINE_MESSAGE( L"LMB moves, RMB zoomes, LMB+RMB rotates viewer. Try: Ctrl+Space");
       }
       // ctrl+space
-      else if( !bShift && !bAlt && bControl && bSpace && !bLMB && !bRMB && !m_bMappingMode)
+      else if (!bShift && !bAlt && bControl && bSpace && !bLMB && !bRMB && !m_bMappingMode)
       {
         STATUS_LINE_MESSAGE( L"LMB zooms in, RMB zoomes out");
       }
       // ctrl
-      else if( !bShift && !bAlt && bControl && !bSpace && !bLMB && !bRMB && !m_bMappingMode)
+      else if (!bShift && !bAlt && bControl && !bSpace && !bLMB && !bRMB && !m_bMappingMode)
       {
         STATUS_LINE_MESSAGE( L"LMB moves, RMB zoomes, LMB+RMB rotates model");
       }
       // shift
-      else if( bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB && !m_bMappingMode)
+      else if (bShift && !bAlt && !bControl && !bSpace && !bLMB && !bRMB && !m_bMappingMode)
       {
         STATUS_LINE_MESSAGE( L"RMB zoomes, LMB+RMB rotates light");
       }
@@ -3255,7 +3255,7 @@ void CModelerView::OnNextTexture()
   int iComboMembersCt = pMainFrame->m_SkinComboBox.GetCount();
   
   // if next combo member can't be selected
-  if( (iCurrentlySelected+1) >= iComboMembersCt)
+  if ((iCurrentlySelected+1) >= iComboMembersCt)
   {
     return;
   }
@@ -3287,7 +3287,7 @@ void CModelerView::OnPreviousTexture()
   int iCurrentlySelected = pMainFrame->m_SkinComboBox.GetCurSel();
   
   // if next combo member can't be selected
-  if( (iCurrentlySelected == 0) || (iCurrentlySelected==CB_ERR) )
+  if ((iCurrentlySelected == 0) || (iCurrentlySelected==CB_ERR) )
   {
     return;
   }
@@ -3338,7 +3338,7 @@ void CModelerView::OnRecreateTexture()
 
 void CModelerView::OnUpdateRecreateTexture(CCmdUI* pCmdUI) 
 {
-  if( AssureValidTDI())
+  if (AssureValidTDI())
   {
     pCmdUI->Enable( TRUE);
   }
@@ -3380,30 +3380,30 @@ void CModelerView::OnCreateMipModels()
         {
           File.GetLine_t(achrLine, 128);
         }
-		    while( (strlen( achrLine)== 0) || (achrLine[0]==';'));
+		    while ((strlen( achrLine)== 0) || (achrLine[0]==';'));
 
-		    if( EQUAL_SUB_STR( "DIRECTORY"))
+		    if (EQUAL_SUB_STR( "DIRECTORY"))
 		    {
 			    _strupr( achrLine);
           sscanf( achrLine, "DIRECTORY %s", achrBasePath);
-			    if( achrBasePath[ strlen( achrBasePath) - 1] != '\\')
+			    if (achrBasePath[ strlen( achrBasePath) - 1] != '\\')
 				    strcat( achrBasePath,"\\");
 		    }
-		    else if( EQUAL_SUB_STR( "MIP_MODELS"))
+		    else if (EQUAL_SUB_STR( "MIP_MODELS"))
         {
           File.GetLine_t(achrLine, 128);
   			  _strupr( achrLine);
 			    sscanf( achrLine, "%s", achrRestFrame);
 			    sprintf( achrRestFrameFullPath, "%s%s", achrBasePath, achrRestFrame);
         }
-		    else if( EQUAL_SUB_STR( "SIZE"))
+		    else if (EQUAL_SUB_STR( "SIZE"))
         {
   	      _strupr( achrLine);
           FLOAT fStretch = 1.0f;
 		      sscanf( achrLine, "SIZE %g", &fStretch);
           mStretch *= fStretch;
 		    }
-		    else if( EQUAL_SUB_STR( "TRANSFORM")) 
+		    else if (EQUAL_SUB_STR( "TRANSFORM")) 
         {
   	      _strupr( achrLine);
           FLOATmatrix3D mTran;
@@ -3414,14 +3414,14 @@ void CModelerView::OnCreateMipModels()
             &mTran(3,1), &mTran(3,2), &mTran(3,3));
           mStretch *= mTran;
         }
-		    else if( EQUAL_SUB_STR( "ANIM_START"))
+		    else if (EQUAL_SUB_STR( "ANIM_START"))
         {
   	      pDoc->m_emEditModel.edm_md.LoadFromScript_t( &File, &FrameNamesList);
           // extract file name of last rendered frame
           INDEX iFrame = 0;
           FOREACHINLIST( CFileNameNode, cfnn_Node, FrameNamesList, itFrameName)
           {
-            if( m_iCurrentFrame == iFrame)
+            if (m_iCurrentFrame == iFrame)
             {
               fnFrameFileName = CTString(itFrameName->cfnn_FileName);
               break;
@@ -3439,7 +3439,7 @@ void CModelerView::OnCreateMipModels()
       (void) pstrError;
     }
     // if frame name is extracted properly
-    if( fnFrameFileName != "")
+    if (fnFrameFileName != "")
     {
       // load rest frame
       objRestFrame.LoadAny3DFormat_t( CTString(achrRestFrameFullPath), mStretch);
@@ -3460,7 +3460,7 @@ void CModelerView::OnCreateMipModels()
       pMainFrame->m_NewProgress.ShowWindow(SW_SHOW);
 
       CDlgAutoMipModeling dlgAutoMipModeling;
-      if( (dlgAutoMipModeling.DoModal() != IDOK) ||
+      if ((dlgAutoMipModeling.DoModal() != IDOK) ||
           (dlgAutoMipModeling.m_iVerticesToRemove<=0) ||
           (dlgAutoMipModeling.m_iSurfacePreservingFactor<1) ||
           (dlgAutoMipModeling.m_iSurfacePreservingFactor>99) )
@@ -3475,12 +3475,12 @@ void CModelerView::OnCreateMipModels()
       pDoc->m_emEditModel.SaveMapping_t( CTString("Temp\\ForAutoMipMapping.map"), 0);
       // paste mapping over all smaller mip models
       INDEX iMipModel=1;
-      for( ; iMipModel<pDoc->m_emEditModel.edm_md.md_MipCt; iMipModel++)
+      for (; iMipModel<pDoc->m_emEditModel.edm_md.md_MipCt; iMipModel++)
       {
         pDoc->m_emEditModel.LoadMapping_t( CTString("Temp\\ForAutoMipMapping.map"), iMipModel);
       }
 
-      for( INDEX iSurface=1; 
+      for (INDEX iSurface=1; 
         iSurface<pDoc->m_emEditModel.edm_md.md_MipInfos[0].mmpi_MappingSurfaces.Count();
         iSurface++)
       {
@@ -3491,7 +3491,7 @@ void CModelerView::OnCreateMipModels()
         m_ModelObject.GetSurfaceRenderFlags( 0, iSurface, sstShading, sttTranslucency, ulRenderFlags);
         // get color of surface
         UBYTE ubSurfaceTransparency = (UBYTE) (m_ModelObject.GetSurfaceColor( 0, iSurface) & CT_OPAQUE);
-        for( iMipModel=1; iMipModel<pDoc->m_emEditModel.edm_md.md_MipCt; iMipModel++)
+        for (iMipModel=1; iMipModel<pDoc->m_emEditModel.edm_md.md_MipCt; iMipModel++)
         {
           // set render flags
           m_ModelObject.SetSurfaceRenderFlags( iMipModel, iSurface, sstShading, sttTranslucency, ulRenderFlags);
@@ -3541,7 +3541,7 @@ void CModelerView::OnPickVertex()
 {
   FLOAT3D vClosestVertex;
   INDEX iClosestVertex = GetClosestVertex( vClosestVertex);
-  if( iClosestVertex != -1)
+  if (iClosestVertex != -1)
   {
     char achrLine[ 256];
     sprintf( achrLine, "Vertex index = %d (%g, %g, %g)",
@@ -3563,7 +3563,7 @@ void CModelerView::OnUpdateDollyMipModeling(CCmdUI* pCmdUI)
 
 void CModelerView::OnAnimPlayOnce() 
 {
-  if( m_ModelObject.IsPaused()) m_ModelObject.ContinueAnim();  
+  if (m_ModelObject.IsPaused()) m_ModelObject.ContinueAnim();  
   m_ModelObject.ResetAnim();
   m_ModelObject.PlayAnim( m_ModelObject.GetAnim(), AOF_NORESTART);
 
@@ -3572,7 +3572,7 @@ void CModelerView::OnAnimPlayOnce()
 
 void CModelerView::OnUpdateAnimPlayOnce(CCmdUI* pCmdUI) 
 {
-	if( m_bMappingMode) pCmdUI->Enable( FALSE);
+	if (m_bMappingMode) pCmdUI->Enable( FALSE);
 }
 
 void CModelerView::FillThumbnailSettings( CThumbnailSettings &tsToReceive)
@@ -3624,7 +3624,7 @@ void CModelerView::OnAddReflectionTexture()
 {
   CTFileName fnChoosedFile = _EngineGUI.FileRequester( "Select reflection texture", 
     FILTER_TEX FILTER_ALL FILTER_END, "Reflection textures directory", "Textures\\");
-  if( fnChoosedFile == "") return;
+  if (fnChoosedFile == "") return;
   try
   {
     m_ModelObject.mo_toReflection.SetData_t( fnChoosedFile);
@@ -3641,7 +3641,7 @@ void CModelerView::OnAddSpecular()
 {
   CTFileName fnChoosedFile = _EngineGUI.FileRequester( "Select specular texture", 
     FILTER_TEX FILTER_ALL FILTER_END, "Specularity textures directory", "Textures\\");
-  if( fnChoosedFile == "") return;
+  if (fnChoosedFile == "") return;
   try
   {
     m_ModelObject.mo_toSpecular.SetData_t( fnChoosedFile);
@@ -3658,7 +3658,7 @@ void CModelerView::OnAddBumpTexture()
 {
   CTFileName fnChoosedFile = _EngineGUI.FileRequester( "Select bump texture", 
     FILTER_TEX FILTER_ALL FILTER_END, "Bump textures directory", "Textures\\");
-  if( fnChoosedFile == "") return;
+  if (fnChoosedFile == "") return;
   try
   {
     m_ModelObject.mo_toBump.SetData_t( fnChoosedFile);
@@ -3723,11 +3723,11 @@ void CModelerView::OnSurfaceNumbers()
 
 void CModelerView::OnUpdateSurfaceNumbers(CCmdUI* pCmdUI) 
 {
-	if( !m_bMappingMode)
+	if (!m_bMappingMode)
   {
     pCmdUI->Enable( FALSE);
   }
-  else if( m_bPrintSurfaceNumbers)
+  else if (m_bPrintSurfaceNumbers)
   {
     pCmdUI->SetCheck(1);
   }
@@ -3742,7 +3742,7 @@ void CModelerView::OnExportSurfaces()
   CTFileName fnExportFileName = _EngineGUI.FileRequester( "Select export file name",
                             FILTER_TXT FILTER_END, "Open model directory",
                             "Models\\", "", NULL, FALSE);
-  if( fnExportFileName == "") return;
+  if (fnExportFileName == "") return;
 
   CModelerDoc* pDoc = GetDocument();
   pDoc->m_emEditModel.ExportSurfaceNumbersAndNames( fnExportFileName);
@@ -3756,7 +3756,7 @@ void CModelerView::OnPreviousBcgTexture()
 
 void CModelerView::OnUpdatePreviousBcgTexture(CCmdUI* pCmdUI) 
 {
-  if( theApp.m_WorkingTextures.Count() > 1)
+  if (theApp.m_WorkingTextures.Count() > 1)
   {
     pCmdUI->Enable(TRUE);
   }
@@ -3774,7 +3774,7 @@ void CModelerView::OnNextBcgTexture()
 
 void CModelerView::OnUpdateNextBcgTexture(CCmdUI* pCmdUI) 
 {
-  if( theApp.m_WorkingTextures.Count() > 1)
+  if (theApp.m_WorkingTextures.Count() > 1)
   {
     pCmdUI->Enable(TRUE);
   }
@@ -3812,14 +3812,14 @@ void CModelerView::OnExportForSkining()
     _EngineGUI.FileRequester( "Select name to export mapping",
     "Pictures (*.tga)\0*.tga\0" FILTER_END,
     NULL, fnDirectory, fnDefaultSelected, NULL, FALSE);
-  if( fnExportName == "") return;
+  if (fnExportName == "") return;
 
   CTFileName fnFullPath = _fnmApplicationPath+fnExportName;
-  if( GetFileAttributesA( fnFullPath) != -1)
+  if (GetFileAttributesA( fnFullPath) != -1)
   {
     CTString strMsg;
     strMsg.PrintF( "File \"%s\" already exist. Do you want to replace it?", fnFullPath);
-    if( ::MessageBoxA( this->m_hWnd, strMsg, "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1|
+    if (::MessageBoxA( this->m_hWnd, strMsg, "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1|
                MB_SYSTEMMODAL | MB_TOPMOST) != IDYES)
     {
       return;
@@ -3827,7 +3827,7 @@ void CModelerView::OnExportForSkining()
   }
 
   CDlgExportForSkinning dlg( fnExportName);
-  if( dlg.DoModal() != IDOK) return;
+  if (dlg.DoModal() != IDOK) return;
   COLOR colPaper = dlg.m_ctrlPaperColor.GetColor();
   COLOR colWire = dlg.m_ctrlWireColor.GetColor();
 
@@ -3838,9 +3838,9 @@ void CModelerView::OnExportForSkining()
 
   CDrawPort *pdp;
   _pGfx->CreateWorkCanvas( pixWidth, pixHeight, &pdp);
-  if( pdp == NULL) return;
+  if (pdp == NULL) return;
   
-  if( !pdp->Lock()) return;
+  if (!pdp->Lock()) return;
 
   // clear bcg
   pdp->Fill(colPaper|CT_OPAQUE);
@@ -3851,20 +3851,20 @@ void CModelerView::OnExportForSkining()
   FLOAT fMagnifyFit = FLOAT(pixWidth)/mexWidth;
 
   ModelMipInfo &mmi = pDoc->m_emEditModel.edm_md.md_MipInfos[ 0];
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
   {
     // render surface color
-    if( dlg.m_bColoredSurfaces) {
+    if (dlg.m_bColoredSurfaces) {
       MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
       pDoc->m_emEditModel.DrawFilledSurface( pdp, 0, iSurface, fMagnifyFit, 0, 0, ms.ms_colColor, ms.ms_colColor);
     }
     // render wire frame
-    if( dlg.m_bWireFrame) {
+    if (dlg.m_bWireFrame) {
       pDoc->m_emEditModel.DrawWireSurface( pdp, 0, iSurface, fMagnifyFit, 0, 0, colWire, colWire);
     }
   }
   // if we should print surface numbers
-  if( dlg.m_bSurfaceNumbers) {
+  if (dlg.m_bSurfaceNumbers) {
     pDoc->m_emEditModel.PrintSurfaceNumbers( pdp, theApp.m_pfntFont, 0, fMagnifyFit, 0, 0, colWire);
     pDoc->m_emEditModel.ExportSurfaceNumbersAndNames( fnExportName.FileDir()+fnExportName.FileName()+".txt");
   }
@@ -3902,8 +3902,8 @@ void CModelerView::OnUpdateRenderSurfacesInColors(CCmdUI* pCmdUI)
 void CModelerView::OnViewAxis() 
 {
   if     ( m_atAxisType == AT_NONE) m_atAxisType = AT_MAIN;
-  else if( m_atAxisType == AT_MAIN) m_atAxisType = AT_ALL;
-  else if( m_atAxisType == AT_ALL ) m_atAxisType = AT_NONE;
+  else if (m_atAxisType == AT_MAIN) m_atAxisType = AT_ALL;
+  else if (m_atAxisType == AT_ALL ) m_atAxisType = AT_NONE;
   Invalidate( FALSE);
 }
 
@@ -3914,19 +3914,19 @@ void CModelerView::OnUpdateViewAxis(CCmdUI* pCmdUI)
   int iViewImage;
   pMainFrame->m_RenderControlBar.GetButtonInfo( 13, nIDView, nStyleView, iViewImage);
   // if no axis at all
-  if( m_atAxisType == AT_NONE)
+  if (m_atAxisType == AT_NONE)
   {
     pMainFrame->m_RenderControlBar.SetButtonInfo( 13, nIDView, nStyleView, 13);
     pCmdUI->SetCheck( FALSE);
   }
   // if only axis of main model are visible
-  else if( m_atAxisType == AT_MAIN)
+  else if (m_atAxisType == AT_MAIN)
   {
     pMainFrame->m_RenderControlBar.SetButtonInfo( 13, nIDView, nStyleView, 14);
     pCmdUI->SetCheck( TRUE);
   }
   // if all axis are visible
-  else if( m_atAxisType == AT_ALL)
+  else if (m_atAxisType == AT_ALL)
   {
     pMainFrame->m_RenderControlBar.SetButtonInfo( 13, nIDView, nStyleView, 15);
     pCmdUI->SetCheck( TRUE);
@@ -3943,7 +3943,7 @@ void CModelerView::OnViewInfo()
 void CModelerView::OnChangeAmbient() 
 {
   COLORREF clrfAmbient = CLRF_CLR( m_colAmbientColor);
-  if( MyChooseColor( clrfAmbient, *GetParent()))
+  if (MyChooseColor( clrfAmbient, *GetParent()))
   {
     m_colAmbientColor = CLR_CLRF( clrfAmbient);
     Invalidate( FALSE);
@@ -3970,7 +3970,7 @@ void CModelerView::OnUpdateToggleAllSurfaces(CCmdUI* pCmdUI)
 
 void CModelerView::OnKeyT() 
 {
-  if( m_bMappingMode)
+  if (m_bMappingMode)
   {
     OnTileTexture();
   }
@@ -4003,9 +4003,9 @@ void CModelerView::OnUpdateAnimLast(CCmdUI* pCmdUI)
 
 void CModelerView::OnToggleMeasureVtx() 
 {
-  if( m_bViewMeasureVertex)
+  if (m_bViewMeasureVertex)
   {
-    CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0,0,0));
+    CPlacement3D plMeasureVtx = CPlacement3D(m_vViewMeasureVertex, ANGLE3D(0.0f, 0.0f, 0.0f));
     plMeasureVtx.AbsoluteToRelative( m_plModelPlacement);
     FLOAT3D vDelta = plMeasureVtx.pl_PositionVector;
     // save closest vertex coordinates into file

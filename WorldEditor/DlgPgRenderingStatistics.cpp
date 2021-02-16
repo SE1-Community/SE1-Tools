@@ -44,12 +44,12 @@ CDlgPgRenderingStatistics::~CDlgPgRenderingStatistics()
 
 void CDlgPgRenderingStatistics::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
 	CPropertyPage::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     CTString strRenderingProfile = "No rendering profile curently available (use F11 in game mode)\r\n";
     CTString strCSGProfile = "\r\n";
@@ -103,7 +103,7 @@ BOOL CDlgPgRenderingStatistics::OnIdle(LONG lCount)
   CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
 
   // if we do have a window and a view and last rendered view is newer than rendering info
-  if( (IsWindow(m_hWnd)) &&
+  if ((IsWindow(m_hWnd)) &&
       (pWorldEditorView != NULL) &&
       (!pWorldEditorView->m_chViewChanged.IsUpToDate( m_udStatsUpdated)) )
   {

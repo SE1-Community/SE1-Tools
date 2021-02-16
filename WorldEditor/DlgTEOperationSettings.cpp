@@ -50,13 +50,13 @@ CDlgTEOperationSettings::CDlgTEOperationSettings(CWnd* pParent /*=NULL*/)
 void CDlgTEOperationSettings::DoDataExchange(CDataExchange* pDX)
 {
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
     m_strDistributionNoiseTexture=theApp.m_fnDistributionNoiseTexture.FileName();
     m_strContinousNoiseTexture=theApp.m_fnContinousNoiseTexture.FileName();
 
     CTerrain *ptrTerrain=GetTerrain();
-    if(ptrTerrain!=NULL)
+    if (ptrTerrain!=NULL)
     {
       GetDlgItem(IDC_EQUALIZE_VALUE)->EnableWindow( TRUE);
   	  m_fClampAltitude=FLOAT(theApp.m_uwEditAltitude)/65535*ptrTerrain->tr_vTerrainSize(2);
@@ -93,10 +93,10 @@ void CDlgTEOperationSettings::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     CTerrain *ptrTerrain=GetTerrain();
-    if(ptrTerrain!=NULL)
+    if (ptrTerrain!=NULL)
     {
 	    theApp.m_uwEditAltitude=m_fClampAltitude/ptrTerrain->tr_vTerrainSize(2)*65535;
     }
@@ -128,10 +128,10 @@ END_MESSAGE_MAP()
 
 CTString GetFilterName(INDEX iFilter)
 {
-  if(iFilter==FLT_SHARPEN) return "Sharpen";
-  if(iFilter==FLT_FINEBLUR) return "Fine blur";
-  if(iFilter==FLT_EMBOSS) return "Emboss";
-  if(iFilter==FLT_EDGEDETECT) return "Edge detect";
+  if (iFilter==FLT_SHARPEN) return "Sharpen";
+  if (iFilter==FLT_FINEBLUR) return "Fine blur";
+  if (iFilter==FLT_EMBOSS) return "Emboss";
+  if (iFilter==FLT_EDGEDETECT) return "Edge detect";
   return "Unknown";
 }
 
@@ -139,21 +139,21 @@ BOOL CDlgTEOperationSettings::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-  if( IsWindow( m_ctrlFilter.m_hWnd))
+  if (IsWindow( m_ctrlFilter.m_hWnd))
   {
     INDEX iItem;
     iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_SHARPEN)));
     m_ctrlFilter.SetItemData(iItem,FLT_SHARPEN);
-    if(theApp.m_iFilter==FLT_SHARPEN) m_ctrlFilter.SetCurSel(iItem);
+    if (theApp.m_iFilter==FLT_SHARPEN) m_ctrlFilter.SetCurSel(iItem);
     iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_FINEBLUR)));
     m_ctrlFilter.SetItemData(iItem,FLT_FINEBLUR);
-    if(theApp.m_iFilter==FLT_FINEBLUR) m_ctrlFilter.SetCurSel(iItem);
+    if (theApp.m_iFilter==FLT_FINEBLUR) m_ctrlFilter.SetCurSel(iItem);
     iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_EMBOSS)));
     m_ctrlFilter.SetItemData(iItem,FLT_EMBOSS);
-    if(theApp.m_iFilter==FLT_EMBOSS) m_ctrlFilter.SetCurSel(iItem);
+    if (theApp.m_iFilter==FLT_EMBOSS) m_ctrlFilter.SetCurSel(iItem);
     iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_EDGEDETECT)));
     m_ctrlFilter.SetItemData(iItem,FLT_EDGEDETECT);
-    if(theApp.m_iFilter==FLT_EDGEDETECT) m_ctrlFilter.SetCurSel(iItem);
+    if (theApp.m_iFilter==FLT_EDGEDETECT) m_ctrlFilter.SetCurSel(iItem);
 
     m_ctrlGenerationMethod.AddString(L"Subdivide and displace");
     m_ctrlGenerationMethod.AddString(L"Fractal Brownian motion (FBM)");
@@ -166,7 +166,7 @@ BOOL CDlgTEOperationSettings::OnInitDialog()
 
 void CDlgTEOperationSettings::OnViewNoiseTexture() 
 {
-  if(!SetupContinousNoiseTexture()) return;
+  if (!SetupContinousNoiseTexture()) return;
 
   POINT pt;
   GetCursorPos(&pt);
@@ -181,7 +181,7 @@ void CDlgTEOperationSettings::OnViewNoiseTexture()
 
 void CDlgTEOperationSettings::OnViewDistributionNoiseTexture() 
 {
-  if(!SetupDistributionNoiseTexture()) return;
+  if (!SetupDistributionNoiseTexture()) return;
 
   POINT pt;
   GetCursorPos(&pt);
@@ -199,9 +199,9 @@ void CDlgTEOperationSettings::OnBrowseContinousNoise()
   CTFileName fnNoise=_EngineGUI.FileRequester(
     "Noise texture", FILTER_TEX FILTER_ALL FILTER_END,
     "Noise texture directory", "Textures\\");
-  if( fnNoise=="") return;
+  if (fnNoise=="") return;
 
-  if(!SetupContinousNoiseTexture()) return;
+  if (!SetupContinousNoiseTexture()) return;
   theApp.m_fnContinousNoiseTexture=fnNoise;
   FreeContinousNoiseTexture();
   UpdateData(FALSE);
@@ -212,9 +212,9 @@ void CDlgTEOperationSettings::OnBrowseDistributionNoise()
   CTFileName fnNoise=_EngineGUI.FileRequester(
     "Noise texture", FILTER_TEX FILTER_ALL FILTER_END,
     "Noise texture directory", "Textures\\");
-  if( fnNoise=="") return;
+  if (fnNoise=="") return;
 
-  if(!SetupDistributionNoiseTexture()) return;
+  if (!SetupDistributionNoiseTexture()) return;
   theApp.m_fnDistributionNoiseTexture=fnNoise;
   FreeDistributionNoiseTexture();
   UpdateData(FALSE);
@@ -223,7 +223,7 @@ void CDlgTEOperationSettings::OnBrowseDistributionNoise()
 void CDlgTEOperationSettings::OnGenerationSettings() 
 {
   INDEX iItem=m_ctrlGenerationMethod.GetCurSel();
-  switch(iItem)
+  switch (iItem)
   {
   case 0:
   {
@@ -231,7 +231,7 @@ void CDlgTEOperationSettings::OnGenerationSettings()
     dlg.m_fEditFloat=theApp.m_iRNDSubdivideAndDisplaceItterations;
 	  dlg.m_strVarName = "Random itterations";
     dlg.m_strTitle = "Subdivide and displace";
-    if(dlg.DoModal()!=IDOK)
+    if (dlg.DoModal()!=IDOK)
     {
       return;
     }

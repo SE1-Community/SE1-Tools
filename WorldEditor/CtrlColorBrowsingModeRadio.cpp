@@ -54,7 +54,7 @@ END_MESSAGE_MAP()
 void CCtrlColorBrowsingModeRadio::OnClicked() 
 {
   // don't do anything if document doesn't exist
-  if( theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL) return;
   // select clicked axis radio
   m_pDialog->SelectColorBrowsingModeRadio( this);
   // show that second axis have been selected

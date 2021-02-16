@@ -63,7 +63,7 @@ END_MESSAGE_MAP()
 BOOL CDlgPgTerrain::OnIdle(LONG lCount)
 {
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( (pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
+  if ((pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
   m_wndTerrainInterface.OnIdle();
   return TRUE;
 }

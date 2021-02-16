@@ -67,7 +67,7 @@ void CDlgRenderingPreferences::DoDataExchange(CDataExchange* pDX)
   CModelRenderPrefs &pmrpPrefs = theApp.m_vpViewPrefs[ m_iBuffer].m_mrpModelRenderPrefs;
   CWorldRenderPrefs &pwrpPrefs = theApp.m_vpViewPrefs[ m_iBuffer].m_wrpWorldRenderPrefs;
   // if dialog is recieving data
-  if( (pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_hWnd) &&
+  if ((pDX->m_bSaveAndValidate == FALSE) && IsWindow( m_hWnd) &&
       IsWindow( m_VertexFillType.m_hWnd) &&
       IsWindow( m_EdgesFillType.m_hWnd) &&
       IsWindow( m_PolygonFillType.m_hWnd) &&
@@ -150,12 +150,12 @@ void CDlgRenderingPreferences::DoDataExchange(CDataExchange* pDX)
     // set currently selected modeler's texture rendering type
     ULONG rtRenderType = pmrpPrefs.GetRenderType();
     iFillType = 0;
-    if( (rtRenderType & RT_NO_POLYGON_FILL) != 0)       iFillType = 0;
-    else if( (rtRenderType & RT_WHITE_TEXTURE) != 0)    iFillType = 1;
-    else if( (rtRenderType & RT_SURFACE_COLORS) != 0)   iFillType = 2;
-    else if( (rtRenderType & RT_ON_COLORS) != 0)        iFillType = 3;
-    else if( (rtRenderType & RT_OFF_COLORS) != 0)       iFillType = 4;
-    else if( (rtRenderType & RT_TEXTURE) != 0)          iFillType = 5;
+    if ((rtRenderType & RT_NO_POLYGON_FILL) != 0)       iFillType = 0;
+    else if ((rtRenderType & RT_WHITE_TEXTURE) != 0)    iFillType = 1;
+    else if ((rtRenderType & RT_SURFACE_COLORS) != 0)   iFillType = 2;
+    else if ((rtRenderType & RT_ON_COLORS) != 0)        iFillType = 3;
+    else if ((rtRenderType & RT_OFF_COLORS) != 0)       iFillType = 4;
+    else if ((rtRenderType & RT_TEXTURE) != 0)          iFillType = 5;
     m_TextureFillType.SetCurSel( iFillType);
 
     enum CWorldRenderPrefs::LensFlaresType lftFlareFX = pwrpPrefs.GetLensFlares();
@@ -200,7 +200,7 @@ void CDlgRenderingPreferences::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     // set auto rendering range flag
     theApp.m_vpViewPrefs[ m_iBuffer].m_bAutoRenderingRange = m_bAutoRenderingRange;
@@ -250,7 +250,7 @@ void CDlgRenderingPreferences::DoDataExchange(CDataExchange* pDX)
     // get current model's texturizing type from model's texture combo box
     ULONG ulMdlFillType;
     ulMdlFillType = m_TextureFillType.GetCurSel();
-    switch( ulMdlFillType)
+    switch (ulMdlFillType)
     {
       case 0: {
         pmrpPrefs.SetRenderType( RT_NO_POLYGON_FILL);
@@ -284,7 +284,7 @@ void CDlgRenderingPreferences::DoDataExchange(CDataExchange* pDX)
     pmrpPrefs.SetWire( m_bWireFrame);
     pmrpPrefs.SetHiddenLines( m_bHidenLines);
     pmrpPrefs.BBoxAllShow( m_bBoundingBox);
-    if( m_bShadows) {
+    if (m_bShadows) {
       pmrpPrefs.SetShadowQuality( 0);
     } else {
       pmrpPrefs.SetShadowQuality( 255);
@@ -314,7 +314,7 @@ BOOL CDlgRenderingPreferences::OnInitDialog()
   // we will set window's name so we know on which buffer we are working on
   char chrWndTitle[ 64];
   // create new name
-  if( m_iBuffer!=10)
+  if (m_iBuffer!=10)
   {
     sprintf( chrWndTitle, "Change rendering preferences of buffer %d.", m_iBuffer+1);
   }
@@ -355,7 +355,7 @@ void CDlgRenderingPreferences::UpdateEditRangeControl()
   // must exists
   ASSERT( pWnd != NULL);
   // if rendering range flag is on
-  if( m_bAutoRenderingRange)
+  if (m_bAutoRenderingRange)
   {
     // disable edit rendering range control
     pWnd->EnableWindow( FALSE);
@@ -380,7 +380,7 @@ void CDlgRenderingPreferences::OnBrowseBcgPicture()
 {
   CTFileName fnBcgPicture = _EngineGUI.FileRequester( "Select background texture",
     "Texture (*.tex)\0*.tex\0" FILTER_TEX FILTER_END, "Background textures", "");
-  if( fnBcgPicture == "") return;
+  if (fnBcgPicture == "") return;
   sprintf( theApp.m_vpViewPrefs[ m_iBuffer].m_achrBcgPicture, "%s", fnBcgPicture);
   m_strBcgTexture = fnBcgPicture.FileName();
   UpdateData( FALSE);

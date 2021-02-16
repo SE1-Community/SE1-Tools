@@ -52,9 +52,9 @@ END_MESSAGE_MAP()
 CModelerDoc::CModelerDoc()
 {
   // Default clipboard variables used for storing copy/paste data
-  m_f3ClipboardCenter = FLOAT3D( 0.0f, 0.0f, 0.0f);
+  m_f3ClipboardCenter = FLOAT3D(0.0f, 0.0f, 0.0f);
   m_fClipboardZoom = FLOAT( 0.0f);
-  m_f3ClipboardHPB = FLOAT3D( 0.0f, 0.0f, 0.0f);
+  m_f3ClipboardHPB = FLOAT3D(0.0f, 0.0f, 0.0f);
   m_iCurrentMip = 0;
 }
 
@@ -161,9 +161,9 @@ BOOL CModelerDoc::OnOpenDocument(LPCTSTR lpszPathName)
   INDEX ctLoadedModels=m_emEditModel.edm_aamAttachedModels.Count();
   INDEX ctAttachmentPositions=m_emEditModel.edm_md.md_aampAttachedPosition.Count();
   
-  if(ctLoadedModels<ctAttachmentPositions)
+  if (ctLoadedModels<ctAttachmentPositions)
   {
-    for( INDEX iPos=ctLoadedModels; iPos<ctAttachmentPositions; iPos++)
+    for (INDEX iPos=ctLoadedModels; iPos<ctAttachmentPositions; iPos++)
     {
       m_emEditModel.edm_aamAttachedModels.New();
       m_emEditModel.edm_aamAttachedModels.Lock();
@@ -219,7 +219,7 @@ BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName)
   SetModifiedFlag( FALSE);
 
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     pModelerView->SaveThumbnail();
   }
@@ -229,17 +229,17 @@ BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName)
   while (pos!=NULL)
   {
     CModelerDoc *pmdCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(pos);
-    if( pmdCurrent != this)
+    if (pmdCurrent != this)
     {
       BOOL bUpdateAttachments = TRUE;
       
       // if document is modified
-      if( pmdCurrent->IsModified())
+      if (pmdCurrent->IsModified())
       {
         CTString strMessage;
         CTFileName fnDoc = CTString(CStringA(pmdCurrent->GetPathName()));
         strMessage.PrintF("Do you want to save model \"%s\" before reloading its attachments?", fnDoc.FileName() );
-        if( ::MessageBoxA( pMainFrame->m_hWnd, strMessage,
+        if (::MessageBoxA( pMainFrame->m_hWnd, strMessage,
                         "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1 | 
                         MB_TASKMODAL | MB_TOPMOST) != IDYES)
         {
@@ -252,7 +252,7 @@ BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName)
         }
       }
 
-      if( bUpdateAttachments)
+      if (bUpdateAttachments)
       {
         POSITION pos = pmdCurrent->GetFirstViewPosition();
         while (pos != NULL)
@@ -292,7 +292,7 @@ extern UINT APIENTRY ModelerFileRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wPa
 void CModelerDoc::OnFileAddTexture() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
     return;
 
   // call file requester for adding textures
@@ -318,7 +318,7 @@ void CModelerDoc::OnFileAddTexture()
       pNewTDI = NULL;
       AfxMessageBox( CString(err_str));
     }
-    if( pNewTDI != NULL)
+    if (pNewTDI != NULL)
     {
       SetModifiedFlag();
       pModelerView->m_ptdiTextureDataInfo = pNewTDI;
@@ -381,7 +381,7 @@ void CModelerDoc::SetupAttachments( void)
     {
       m_emEditModel.edm_aamAttachedModels.Lock();
       CAttachedModel *pamAttachedModel = &m_emEditModel.edm_aamAttachedModels[ iAttachment];
-      if( pamAttachedModel->am_bVisible)
+      if (pamAttachedModel->am_bVisible)
       {
         CAttachmentModelObject *pamo = pmvView->m_ModelObject.AddAttachmentModel( iAttachment);
         CModelData *pMD = (CModelData *) pamAttachedModel->am_moAttachedModel.GetData();
@@ -400,7 +400,7 @@ void CModelerDoc::SetupAttachments( void)
 void CModelerDoc::ClearSurfaceSelection(void)
 {
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
     ms.ms_ulRenderingFlags &= ~SRF_SELECTED;
   }
@@ -409,7 +409,7 @@ void CModelerDoc::ClearSurfaceSelection(void)
 void CModelerDoc::SelectAllSurfaces(void)
 {
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
     ms.ms_ulRenderingFlags |= SRF_SELECTED;
   }
@@ -419,24 +419,24 @@ INDEX CModelerDoc::GetCountOfSelectedSurfaces(void)
 {
   INDEX ctSelectedSurfaces = 0;
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
   {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-    if( ms.ms_ulRenderingFlags&SRF_SELECTED) ctSelectedSurfaces++;
+    if (ms.ms_ulRenderingFlags&SRF_SELECTED) ctSelectedSurfaces++;
   }
   return ctSelectedSurfaces;
 }
 
 INDEX CModelerDoc::GetOnlySelectedSurface(void)
 {
-  if( GetCountOfSelectedSurfaces() != 1) return -1;
+  if (GetCountOfSelectedSurfaces() != 1) return -1;
 
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
   INDEX iSurface=0;
-  for( ; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
+  for (; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++)
   {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-    if( ms.ms_ulRenderingFlags&SRF_SELECTED) break;
+    if (ms.ms_ulRenderingFlags&SRF_SELECTED) break;
   }
   return iSurface;
 }
@@ -455,9 +455,9 @@ void CModelerDoc::SelectPreviousSurface(void)
 {
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
   INDEX iFirstSelected = 1;
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-    if( ms.ms_ulRenderingFlags&SRF_SELECTED) {
+    if (ms.ms_ulRenderingFlags&SRF_SELECTED) {
       iFirstSelected = iSurface;
       break;
     }
@@ -472,8 +472,8 @@ void CModelerDoc::SelectPreviousSurface(void)
 void CModelerDoc::SelectSurface(INDEX iSurface, BOOL bClearRest)
 {
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
-  if( iSurface >= mmi.mmpi_MappingSurfaces.Count()) return;
-  if( bClearRest) ClearSurfaceSelection();
+  if (iSurface >= mmi.mmpi_MappingSurfaces.Count()) return;
+  if (bClearRest) ClearSurfaceSelection();
   MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
   ms.ms_ulRenderingFlags |= SRF_SELECTED;
   theApp.m_chGlobal.MarkChanged();
@@ -483,9 +483,9 @@ void CModelerDoc::SelectNextSurface(void)
 {
   ModelMipInfo &mmi = m_emEditModel.edm_md.md_MipInfos[ m_iCurrentMip];
   INDEX iFirstSelected = 1;
-  for( INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
+  for (INDEX iSurface=0; iSurface<mmi.mmpi_MappingSurfaces.Count(); iSurface++) {
     MappingSurface &ms = mmi.mmpi_MappingSurfaces[ iSurface];
-    if( ms.ms_ulRenderingFlags&SRF_SELECTED) {
+    if (ms.ms_ulRenderingFlags&SRF_SELECTED) {
       iFirstSelected = iSurface;
       break;
     }
@@ -511,14 +511,14 @@ void CModelerDoc::ToggleSurfaceSelection( INDEX iSurfaceToToggle)
 void CModelerDoc::SpreadSurfaceSelection( void)
 {
   ModelMipInfo &mmiSrc = m_emEditModel.edm_md.md_MipInfos[ 0];
-  for( INDEX iMip=1; iMip<m_emEditModel.edm_md.md_MipCt; iMip++) {
+  for (INDEX iMip=1; iMip<m_emEditModel.edm_md.md_MipCt; iMip++) {
     ModelMipInfo &mmiDst = m_emEditModel.edm_md.md_MipInfos[ iMip];
     // copy selected flag for surfaces with same names
-    for( INDEX iSurfaceSrc=0; iSurfaceSrc<mmiSrc.mmpi_MappingSurfaces.Count(); iSurfaceSrc++) {
+    for (INDEX iSurfaceSrc=0; iSurfaceSrc<mmiSrc.mmpi_MappingSurfaces.Count(); iSurfaceSrc++) {
       MappingSurface &msSrc = mmiSrc.mmpi_MappingSurfaces[ iSurfaceSrc];
-      for( INDEX iSurfaceDst=0; iSurfaceDst<mmiDst.mmpi_MappingSurfaces.Count(); iSurfaceDst++) {
+      for (INDEX iSurfaceDst=0; iSurfaceDst<mmiDst.mmpi_MappingSurfaces.Count(); iSurfaceDst++) {
         MappingSurface &msDst = mmiDst.mmpi_MappingSurfaces[ iSurfaceDst];
-        if( CTString(msSrc.ms_Name) == msDst.ms_Name) {
+        if (CTString(msSrc.ms_Name) == msDst.ms_Name) {
           msDst.ms_ulRenderingFlags &= ~SRF_SELECTED;
           msDst.ms_ulRenderingFlags |= msSrc.ms_ulRenderingFlags & SRF_SELECTED;
         }

@@ -54,7 +54,7 @@ void CEditConsole::SetTextFromConsole(void)
   const char *strString = _pConsole->GetBuffer();
   char *pch = strNew;
   // convert '\n' to '\r''\n'
-  while(*strString!=0) {
+  while (*strString!=0) {
     if (*strString=='\n') {
       *pch++='\r';
       *pch++='\n';
@@ -75,14 +75,14 @@ void CEditConsole::SetTextFromConsole(void)
 BOOL CEditConsole::PreTranslateMessage(MSG* pMsg) 
 {
   BOOL bCtrl = (GetKeyState( VK_CONTROL) & 128) != 0;
-  if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     // obtain current line index
     INDEX iCurrentLine = LineFromChar(-1);
     INDEX ctLinesEdited = GetLineCount();
     // obtain char offset of current line in whole edit string
     INDEX iCharOffset = LineFromChar(iCurrentLine);
-    if( !bCtrl && (iCharOffset != -1) )
+    if (!bCtrl && (iCharOffset != -1) )
     {
       // extract string to execute
       wchar_t achrToExecute[ 1024];
@@ -91,7 +91,7 @@ BOOL CEditConsole::PreTranslateMessage(MSG* pMsg)
       achrToExecute[ ctLetters] = 0;
       CTString strToExecute = CStringA(achrToExecute);
       CPrintF( ">%s\n", strToExecute);
-      if( ((const char*)strToExecute)[strlen(strToExecute)-1] != ';')
+      if (((const char*)strToExecute)[strlen(strToExecute)-1] != ';')
       {
         strToExecute += ";";
       }
@@ -104,7 +104,7 @@ BOOL CEditConsole::PreTranslateMessage(MSG* pMsg)
       _pGame->gam_strConsoleInputBuffer = CStringA(sHistory);
     }
     // if Ctrl is not pressed and current line is not last line, "swallow return"
-    if( !bCtrl && (ctLinesEdited-1 != iCurrentLine) )
+    if (!bCtrl && (ctLinesEdited-1 != iCurrentLine) )
     {
       return TRUE;
     }

@@ -44,11 +44,11 @@ void CPaletteDialog::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
   
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
-    if( pModelerView != NULL)
+    if (pModelerView != NULL)
     {
-      if( pModelerView->m_bOnColorMode)
+      if (pModelerView->m_bOnColorMode)
       {
         m_ModeString = "Mode: On";
       }
@@ -105,9 +105,9 @@ void CPaletteDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_MODE, m_ModeString);
 	//}}AFX_DATA_MAP
 
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
-    if( pModelerView != NULL)
+    if (pModelerView != NULL)
     {
       pModelerView->m_ModelObject.SetColorName( pModelerView->m_iChoosedColor, 
                                                 CTString(CStringA(m_ColorName)));
@@ -146,9 +146,9 @@ void CPaletteDialog::OnColorPalleteButton(UINT nID)
 BOOL CPaletteDialog::OnIdle(LONG lCount)
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView != m_LastViewUpdated)
+  if (pModelerView != m_LastViewUpdated)
   {
-    if( (pModelerView == NULL) || (m_LastViewUpdated == NULL) )
+    if ((pModelerView == NULL) || (m_LastViewUpdated == NULL) )
     {
       UpdateData( FALSE);
       Invalidate( FALSE);

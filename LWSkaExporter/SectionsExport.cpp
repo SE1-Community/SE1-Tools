@@ -78,7 +78,7 @@ Create( void *priv, LWItemID item, LWError *err )
   LWItemID pParentID = _iti->parent(item);
   //strdup()
   pii->bi_strParentName = strdup(_iti->name(pParentID));
-  if(pParentID == LWITEM_NULL) {
+  if (pParentID == LWITEM_NULL) {
     // this is root bone
     pii->bi_strParentName = "";
   }
@@ -89,11 +89,11 @@ Create( void *priv, LWItemID item, LWError *err )
   pii->bi_abfFrames = (BoneFrame*)malloc(sizeof(BoneFrame)*_ctFrames);
   
   // if first time here
-/*  if(_pbiFirst==NULL)
+/*  if (_pbiFirst==NULL)
   {
     // allocate space for storing absolute position for root bone
     _pmRootBoneAbs = (Matrix12*)malloc(sizeof(Matrix12)*_ctFrames);
-    for(int ifr=0;ifr<_ctFrames;ifr++)
+    for (int ifr=0;ifr<_ctFrames;ifr++)
     {
       // reset matrices of root bone for all frames
       MakeIdentityMatrix(_pmRootBoneAbs[ifr]);
@@ -257,7 +257,7 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
   _iti->param(bone,LWIP_PIVOT,access->time,pivotpos);
   _iti->param(bone,LWIP_PIVOT_ROT,access->time,pivotrot);
   float fPivotPos[3], fPivotRot[3];
-  for(int ia=0;ia<3;ia++)
+  for (int ia=0;ia<3;ia++)
   {
     fPivotPos[ia] = (float)pivotpos[ia];
     fPivotRot[ia] = (float)pivotrot[ia];
@@ -331,10 +331,10 @@ void AddBoneToCount(LWItemID objectid)
 	LWItemID childID;
 
 	childID = _iti->firstChild(objectid);
-	if(_iti->type(objectid) == LWI_OBJECT)
+	if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
-    if((_pmesh == NULL) && (childID == LWITEM_NULL))
+    if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
 			return;
 		}
@@ -365,11 +365,11 @@ void WriteBoneInfo(LWItemID objectid)
 
 
 	childID = _iti->firstChild(objectid);
-	if(_iti->type(objectid) == LWI_OBJECT)
+	if (_iti->type(objectid) == LWI_OBJECT)
   {
 		
     _pmesh = _obi->meshInfo(objectid, 0);
-    if((_pmesh == NULL) && (childID == LWITEM_NULL))
+    if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
 			return;
 		}
@@ -447,10 +447,10 @@ bool AddMotionHandler(LWItemID objectid)
 	LWItemID childID;
 
 	childID = _iti->firstChild(objectid);
-	if(_iti->type(objectid) == LWI_OBJECT)
+	if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
-    if((_pmesh == NULL) && (childID == LWITEM_NULL))
+    if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
 			return false;
 		}
@@ -482,10 +482,10 @@ int RemoveMotionHandler(LWItemID objectid)
 	LWItemID childID;
 
 	childID = _iti->firstChild(objectid);
-	if(_iti->type(objectid) == LWI_OBJECT)
+	if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
-    if((_pmesh == NULL) && (childID == LWITEM_NULL))
+    if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
 			return false;
 		}
@@ -494,7 +494,7 @@ int RemoveMotionHandler(LWItemID objectid)
 			_msg->error("ERROR: Item selection\n", NULL);	
 			return false;
 		}
-		for(int iServer=1;;iServer++) {
+		for (int iServer=1;;iServer++) {
 			const char *strServer = _iti->server(objectid, "ItemMotionHandler", iServer);
 			if (strServer==NULL) {
 				break;
@@ -527,7 +527,7 @@ int ExportBones()
 	LWItemID idMasterObjID;
 	char strMessage[256];
 
-	if(!_evaluate)
+	if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -545,11 +545,11 @@ int ExportBones()
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
 	idMasterObjID = LWITEM_NULL;
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
-    if(_iti->type(_objid) == LWI_OBJECT)
+    if (_iti->type(_objid) == LWI_OBJECT)
     {
-        if(_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
+        if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelected++;
 					idMasterObjID = _objid;
@@ -629,7 +629,7 @@ int ExportSecAnim(LWXPanelID pan)
   ctBoneEnvelopes = 0;
   ctMorphEnvelopes = 0;
 
-	if(!_evaluate)
+	if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -648,11 +648,11 @@ int ExportSecAnim(LWXPanelID pan)
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
 	idMasterObjID = LWITEM_NULL;
-  while(_objid != LWITEM_NULL)
+  while (_objid != LWITEM_NULL)
   {
-    if(_iti->type(_objid) == LWI_OBJECT)
+    if (_iti->type(_objid) == LWI_OBJECT)
     {
-        if(_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
+        if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelected++;
 					idMasterObjID = _objid;
@@ -725,7 +725,7 @@ int ExportSecAnim(LWXPanelID pan)
 
   float fTime;
   // export normal order
-  if(!bExportAnimBackward) {
+  if (!bExportAnimBackward) {
     // for each frame in current preview selection
     for (int iFrame=_ifi->previewStart; iFrame<=_ifi->previewEnd; iFrame+=_ifi->previewStep) {
       // go to that frame
@@ -773,7 +773,7 @@ int ExportSecAnim(LWXPanelID pan)
 
   // find the number of morph envelopes
 
-  for(MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
+  for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
     ctMorphEnvelopes++;
 
 
@@ -812,7 +812,7 @@ int ExportSecAnim(LWXPanelID pan)
     fprintf(_f, "  {\n");
 
     LWItemType itLast;
-    if(!pbiLast) itLast = LWI_OBJECT;
+    if (!pbiLast) itLast = LWI_OBJECT;
     else itLast = pbiLast->bi_lwItemType;
 
 
@@ -856,8 +856,8 @@ int ExportSecAnim(LWXPanelID pan)
   // free all morph infos
   { MorphInfo *pmi=_pmiFirst;
     MorphInfo *pmiNext=NULL;
-    for(;;) {
-      if(pmi==NULL) {
+    for (;;) {
+      if (pmi==NULL) {
         break;
       }
       pmiNext = pmi->mi_pmiNext;

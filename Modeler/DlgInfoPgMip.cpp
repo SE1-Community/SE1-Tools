@@ -57,7 +57,7 @@ void CDlgInfoPgMip::SetMipPageFromView(CModelerView* pModelerView)
   pModelerView->m_ModelObject.GetModelInfo( miModelInfo);
   INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel( pModelerView->m_fCurrentMipFactor);
 
-  if( !pModelerView->m_ModelObject.IsModelVisible(pModelerView->m_fCurrentMipFactor) )
+  if (!pModelerView->m_ModelObject.IsModelVisible(pModelerView->m_fCurrentMipFactor) )
   {
     m_strCurrentMipModel = "Not visible";
     m_strNoOfTriangles = "0";
@@ -84,7 +84,7 @@ void CDlgInfoPgMip::SetMipPageFromView(CModelerView* pModelerView)
 
   ModelMipInfo *pMMIFirst = &pDoc->m_emEditModel.edm_md.md_MipInfos[ iMipModel];
   // if patches are visible for current mip model
-  if( pMMIFirst->mmpi_ulFlags & MM_PATCHES_VISIBLE)
+  if (pMMIFirst->mmpi_ulFlags & MM_PATCHES_VISIBLE)
   {
     m_bHasPatches = TRUE;
   }
@@ -94,7 +94,7 @@ void CDlgInfoPgMip::SetMipPageFromView(CModelerView* pModelerView)
   }
 
   // if patches are visible for current mip model
-  if( pMMIFirst->mmpi_ulFlags & MM_ATTACHED_MODELS_VISIBLE)
+  if (pMMIFirst->mmpi_ulFlags & MM_ATTACHED_MODELS_VISIBLE)
   {
     m_bHasAttachedModels = TRUE;
   }
@@ -115,9 +115,9 @@ CDlgInfoPgMip::~CDlgInfoPgMip()
 void CDlgInfoPgMip::DoDataExchange(CDataExchange* pDX)
 {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
 
-  if( !pDX->m_bSaveAndValidate)  // if zero, model sets property sheet's data
+  if (!pDX->m_bSaveAndValidate)  // if zero, model sets property sheet's data
   {
     SetMipPageFromView( pModelerView);
     // mark that the values have been updated to reflect the state of the view
@@ -137,7 +137,7 @@ void CDlgInfoPgMip::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_HAS_ATTACHED_MODELS, m_bHasAttachedModels);
 	//}}AFX_DATA_MAP
 
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
     SetViewFromMipPage( pModelerView);
   }
@@ -181,14 +181,14 @@ void CDlgInfoPgMip::ToggleMipFlag( ULONG ulFlag)
   ModelMipInfo *pMMIFirst = &pDoc->m_emEditModel.edm_md.md_MipInfos[ pDoc->m_iCurrentMip];
   BOOL bSetting = (pMMIFirst->mmpi_ulFlags & ulFlag) == 0;
   // if setting, set just for this mip model
-  if( bSetting)
+  if (bSetting)
   {
     pMMIFirst->mmpi_ulFlags |= ulFlag;
   }
   // if clearing, clear for all further mip models
   else
   {
-    for( INDEX iMip=pDoc->m_iCurrentMip; iMip<pDoc->m_emEditModel.edm_md.md_MipCt; iMip++)
+    for (INDEX iMip=pDoc->m_iCurrentMip; iMip<pDoc->m_emEditModel.edm_md.md_MipCt; iMip++)
     {
       // get requested mip model
       ModelMipInfo *pMMI = &pDoc->m_emEditModel.edm_md.md_MipInfos[ iMip];
@@ -198,7 +198,7 @@ void CDlgInfoPgMip::ToggleMipFlag( ULONG ulFlag)
   }
   
   // for patcehs
-  if( ulFlag == MM_PATCHES_VISIBLE)
+  if (ulFlag == MM_PATCHES_VISIBLE)
   {
     // reaclculate patch-polygon connections
     pDoc->m_emEditModel.CalculatePatchesPerPolygon();

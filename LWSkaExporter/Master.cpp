@@ -170,10 +170,10 @@ int Activate_Master(long version, GlobalFunc *global, LWMasterHandler *local, vo
     return AFUNC_BADGLOBAL;
   }
 
-  if(version != LWMASTER_VERSION)
+  if (version != LWMASTER_VERSION)
         return(AFUNC_BADVERSION);
 
-  if(local->inst)
+  if (local->inst)
   {
       local->inst->create     = create;
       local->inst->destroy    = destroy;
@@ -183,7 +183,7 @@ int Activate_Master(long version, GlobalFunc *global, LWMasterHandler *local, vo
       local->inst->descln     = describe;
   }
 
-  if(local->item)
+  if (local->item)
   {
       local->item->useItems   = NULL;
       local->item->changeID   = NULL;
@@ -404,7 +404,7 @@ XCALL_(int) Interface_Master(long version, GlobalFunc *global, LWInterface *loca
   return AFUNC_BADGLOBAL;
   }
 
-//  for(SurfaceInstance *psi = _psiFirst; psi!=NULL; psi = psi->si_psiNext) {
+//  for (SurfaceInstance *psi = _psiFirst; psi!=NULL; psi = psi->si_psiNext) {
 //    (*message->info)("surface: ", _srf->name(psi->si_idSurface));
 //  }
   return(AFUNC_OK);
@@ -610,11 +610,11 @@ XCALL_(int) Activate_ModelerSurfaceToWeights( long version, GlobalFunc *global, 
 
   // count the surfaces
   ctSurfs = 0;
-  while(asurSurfaces[ctSurfs]!=NULL) {
+  while (asurSurfaces[ctSurfs]!=NULL) {
     ctSurfs++;
   }
 
-	{for(int iSurf=0; iSurf<ctSurfs; iSurf++) {
+	{for (int iSurf=0; iSurf<ctSurfs; iSurf++) {
 
     const char *strSurf = _srf->name(asurSurfaces[iSurf]);
     // for each polygon in the surface, add weight map values for all it's points

@@ -156,16 +156,16 @@ static UINT indicators[] =
 extern INDEX TestKeyBuffers(void)
 {
   INDEX iResult = -1;
-  if( (GetKeyState( '1') & 128) != 0) iResult = 0;
-  if( (GetKeyState( '2') & 128) != 0) iResult = 1;
-  if( (GetKeyState( '3') & 128) != 0) iResult = 2;
-  if( (GetKeyState( '4') & 128) != 0) iResult = 3;
-  if( (GetKeyState( '5') & 128) != 0) iResult = 4;
-  if( (GetKeyState( '6') & 128) != 0) iResult = 5;
-  if( (GetKeyState( '7') & 128) != 0) iResult = 6;
-  if( (GetKeyState( '8') & 128) != 0) iResult = 7;
-  if( (GetKeyState( '9') & 128) != 0) iResult = 8;
-  if( (GetKeyState( '0') & 128) != 0) iResult = 9;
+  if ((GetKeyState( '1') & 128) != 0) iResult = 0;
+  if ((GetKeyState( '2') & 128) != 0) iResult = 1;
+  if ((GetKeyState( '3') & 128) != 0) iResult = 2;
+  if ((GetKeyState( '4') & 128) != 0) iResult = 3;
+  if ((GetKeyState( '5') & 128) != 0) iResult = 4;
+  if ((GetKeyState( '6') & 128) != 0) iResult = 5;
+  if ((GetKeyState( '7') & 128) != 0) iResult = 6;
+  if ((GetKeyState( '8') & 128) != 0) iResult = 7;
+  if ((GetKeyState( '9') & 128) != 0) iResult = 8;
+  if ((GetKeyState( '0') & 128) != 0) iResult = 9;
   return iResult;
 }
 
@@ -187,14 +187,14 @@ CMainFrame::~CMainFrame()
   pApp->WriteProfileString(L"World editor", L"Last virtual tree", CString(m_fnLastVirtualTree));
 
   // destroy color palette
-  if( m_pColorPalette != NULL)
+  if (m_pColorPalette != NULL)
   {
     delete m_pColorPalette;
     m_pColorPalette = NULL;
   }
 
   // destroy tool tip
-  if( m_pwndToolTip != NULL)
+  if (m_pwndToolTip != NULL)
   {
     delete m_pwndToolTip;
     m_pwndToolTip = NULL;
@@ -377,7 +377,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Try to load virtual tree to browser
   m_fnLastVirtualTree = CTString( CStringA(pApp->GetProfileString(L"World editor",
     L"Last virtual tree", L"VirtualTrees\\BasicVirtualTree.vrt")));
-  if( m_fnLastVirtualTree != "")
+  if (m_fnLastVirtualTree != "")
   {
     try
     {
@@ -559,7 +559,7 @@ void CMainFrame::DockControlBarRelativeTo(CControlBar* pbarToDock,
                       0/*rectRelativeTo.top*/,
                       rectRelativeTo.left+rectToDock.Width(),
                       /*rectRelativeTo.top+*/rectToDock.Height() );
-	switch( ulDockDirection)
+	switch (ulDockDirection)
   {
   case DOCK_LEFT:
     {
@@ -629,7 +629,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 void CMainFrame::OnVirtualTree()
 {
-  if( m_Browser.m_TreeCtrl.m_bIsOpen)
+  if (m_Browser.m_TreeCtrl.m_bIsOpen)
   {
     m_Browser.m_TreeCtrl.CloseTreeCtrl();
   }
@@ -729,9 +729,9 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
   // obtain document
   CWorldEditorDoc *pDoc = theApp.GetDocument();
   // must not be null
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
   // if polygon mode
-  if( pDoc->m_iMode == POLYGON_MODE)
+  if (pDoc->m_iMode == POLYGON_MODE)
   {
     // polygon selection must contain selected polygons
     ASSERT(pDoc->m_selPolygonSelection.Count() != 0);
@@ -740,7 +740,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
     FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo)
     {
       // if this is first polygon in dynamic container
-      if( pDoc->m_selPolygonSelection.Pointer(0) == itbpo)
+      if (pDoc->m_selPolygonSelection.Pointer(0) == itbpo)
       {
         // it is, get color as one that others will compare with
         colIntersectingColor = itbpo->bpo_colColor;
@@ -748,7 +748,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
       else
       {
         // if selected polygon's color is not same as testing color
-        if( colIntersectingColor != itbpo->bpo_colColor)
+        if (colIntersectingColor != itbpo->bpo_colColor)
         {
           // set invalid color
           colIntersectingColor = MAX_ULONG;
@@ -757,7 +757,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
       }
     }
   }
-  else if( pDoc->m_iMode == SECTOR_MODE)
+  else if (pDoc->m_iMode == SECTOR_MODE)
   {
     // we must be in sector mode
     // sector selection must contain selected sectors
@@ -767,7 +767,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
     FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc)
     {
       // if this is first sector in dynamic container
-      if( pDoc->m_selSectorSelection.Pointer(0) == itbsc)
+      if (pDoc->m_selSectorSelection.Pointer(0) == itbsc)
       {
         // it is, get color as one that others will compare with
         colIntersectingColor = itbsc->bsc_colColor;
@@ -775,7 +775,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
       else
       {
         // if selected sector's color is not same as testing color
-        if( colIntersectingColor != itbsc->bsc_colColor)
+        if (colIntersectingColor != itbsc->bsc_colColor)
         {
           // set invalid color
           colIntersectingColor = MAX_ULONG;
@@ -790,9 +790,9 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
   }
 
   INDEX iSelectedColor = -1;
-  for( INDEX iColTab = 0; iColTab < 32; iColTab++)
+  for (INDEX iColTab = 0; iColTab < 32; iColTab++)
   {
-    if( colIntersectingColor == acol_ColorizePallete[ iColTab])
+    if (colIntersectingColor == acol_ColorizePallete[ iColTab])
     {
       iSelectedColor = iColTab;
       break;
@@ -800,7 +800,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
   }
 
   _pcolColorToSet = NULL;
-  if( m_pColorPalette == NULL)
+  if (m_pColorPalette == NULL)
   {
     // instantiate new choose color palette window
     m_pColorPalette = new CColorPaletteWnd;
@@ -809,7 +809,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
       NULL, L"Palette", WS_CHILD|WS_POPUP|WS_VISIBLE,
       rectWindow.left, rectWindow.top, rectWindow.Width(), rectWindow.Height(),
       m_hWnd, NULL, NULL);
-    if( !bResult)
+    if (!bResult)
     {
       AfxMessageBox( L"Error: Failed to create color palette");
       return;
@@ -828,7 +828,7 @@ void CMainFrame::CustomColorPicker( PIX pixX, PIX pixY)
 BOOL CMainFrame::OnIdle(LONG lCount)
 {
   // Call OnIdle() for info frame's property sheet
-  if( m_pInfoFrame != NULL)
+  if (m_pInfoFrame != NULL)
   {
     m_pInfoFrame->m_pInfoSheet->OnIdle( lCount);
   }
@@ -837,7 +837,7 @@ BOOL CMainFrame::OnIdle(LONG lCount)
   while (pos!=NULL)
   {
     CWorldEditorDoc *pDoc = (CWorldEditorDoc *)theApp.m_pDocTemplate->GetNextDoc(pos);
-    if(pDoc!=NULL)
+    if (pDoc!=NULL)
     {
       pDoc->OnIdle();
     }
@@ -870,7 +870,7 @@ void CMainFrame::ToggleInfoWindow(void)
 void CMainFrame::ShowInfoWindow()
 {
   // if it doesn't exist or is not visible
-  if( (m_pInfoFrame == NULL) ||
+  if ((m_pInfoFrame == NULL) ||
       (!m_pInfoFrame->IsWindowVisible()) )
   {
     // create it or toggle info state (to visible)
@@ -884,7 +884,7 @@ void CMainFrame::ShowInfoWindow()
 void CMainFrame::ResetInfoWindowPos()
 {
   // if it exists and is visible
-  if( (m_pInfoFrame != NULL) && (m_pInfoFrame->IsWindowVisible()) )
+  if ((m_pInfoFrame != NULL) && (m_pInfoFrame->IsWindowVisible()) )
   {
     PIX pixScrH = ::GetSystemMetrics(SM_CYSCREEN);
     // obtain placement of selected entities text ctrl' window
@@ -907,7 +907,7 @@ void CMainFrame::ResetInfoWindowPos()
 void CMainFrame::HideInfoWindow()
 {
   // if it exist and is visible
-  if( (m_pInfoFrame != NULL) &&
+  if ((m_pInfoFrame != NULL) &&
       (m_pInfoFrame->IsWindowVisible()) )
   {
     // toggle info state (to hidden)
@@ -918,13 +918,13 @@ void CMainFrame::HideInfoWindow()
 void CMainFrame::OnViewInfowindow()
 {
   // if info doesn't yet exist, create it
-  if( m_pInfoFrame == NULL)
+  if (m_pInfoFrame == NULL)
   {
     // create frame window for holding sheet object
     m_pInfoFrame = new CInfoFrame;
     // set initial size of rect window
     CRect rectInfoWindow(0, 0, 0, 0);
-    if( !m_pInfoFrame->Create( NULL, L"Tools info",
+    if (!m_pInfoFrame->Create( NULL, L"Tools info",
         MFS_SYNCACTIVE|WS_POPUP|WS_CAPTION|WS_SYSMENU, rectInfoWindow, this))
 	  {
 		  AfxMessageBox(L"Failed to create info frame window m_pInfoFrame");
@@ -933,7 +933,7 @@ void CMainFrame::OnViewInfowindow()
     //m_pInfoFrame->DragAcceptFiles();
   }
 
-  if( m_pInfoFrame->IsWindowVisible() )
+  if (m_pInfoFrame->IsWindowVisible() )
   {
     m_pInfoFrame->ShowWindow(SW_HIDE);
   }
@@ -947,7 +947,7 @@ void CMainFrame::OnViewInfowindow()
 void CMainFrame::OnUpdateViewInfowindow(CCmdUI* pCmdUI)
 {
   BOOL bInfoVisible = FALSE;
-  if( m_pInfoFrame != NULL)
+  if (m_pInfoFrame != NULL)
   {
     bInfoVisible = m_pInfoFrame->IsWindowVisible();
   }
@@ -957,7 +957,7 @@ void CMainFrame::OnUpdateViewInfowindow(CCmdUI* pCmdUI)
 void CMainFrame::ApplyTreeShortcut( INDEX iVDirBuffer, BOOL bCtrl)
 {
   // if control key pressed
-  if( bCtrl)
+  if (bCtrl)
   {
     // remember current virtual directory into buffer
     INDEX iSubDirsCt;
@@ -988,18 +988,18 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
   // alt is pressed
   BOOL bAlt = FALSE;
 
-  if(pMsg->message==_uiMessengerMsg)
+  if (pMsg->message==_uiMessengerMsg)
   {
     // if one application allready started
     HWND hwndMessenger = ::FindWindow(NULL, L"Croteam Messenger");
-    if(hwndMessenger != NULL)
+    if (hwndMessenger != NULL)
     {
       // force messenger to popup
       ::PostMessage( hwndMessenger, _uiMessengerForcePopup, 0, 0);
     }
   }    
 
-  if( pMsg->message==WM_LBUTTONDOWN)
+  if (pMsg->message==WM_LBUTTONDOWN)
   {
     BOOL bHasDocument = FALSE;
     POSITION pos = theApp.m_pDocTemplate->GetFirstDocPosition();
@@ -1009,7 +1009,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     }
 
     BOOL bMainFrameHasFocus = (this == CWnd::GetForegroundWindow());
-    if( !bHasDocument && bMainFrameHasFocus)
+    if (!bHasDocument && bMainFrameHasFocus)
     {
       static CTimerValue tvLast;
       static CPoint ptLast;
@@ -1017,7 +1017,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
       GetCursorPos( &ptNow);
       CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
       FLOAT tmDelta = (tvNow-tvLast).GetSeconds();
-      if( tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5)
+      if (tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5)
       {
         theApp.OnFileOpen();
       }
@@ -1027,12 +1027,12 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
   }
 
   // if we caught alt key message
-  if( pMsg->message==WM_SYSKEYDOWN)
+  if (pMsg->message==WM_SYSKEYDOWN)
   {
     // get key data
     int lKeyData = pMsg->lParam;
     // test if it is ghost Alt-F4 situation
-    if( lKeyData & (1L<<29))
+    if (lKeyData & (1L<<29))
     {
       // Alt key was really pressed
       bAlt = TRUE;
@@ -1040,7 +1040,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
   }
 
 	// if we caught key down message or alt key is pressed
-  if( (pMsg->message==WM_KEYDOWN) || bAlt)
+  if ((pMsg->message==WM_KEYDOWN) || bAlt)
   {
     int iVirtKey = (int) pMsg->wParam;
     int lKeyData = pMsg->lParam;
@@ -1056,15 +1056,15 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     BOOL bInsert = uwScanCode == 0x52;
 
     // if alt+shift+S pressed, we want to engage "Spawn flags" entity property
-    if( bShift && bAltPressed && (iVirtKey=='S') )
+    if (bShift && bAltPressed && (iVirtKey=='S') )
     {
       CPropertyComboBox *pPropertyCombo = &m_PropertyComboBar.m_PropertyComboBox;
       // for all members in properties combo box
-      for( INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
+      for (INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
       {
         CPropertyID *ppidPropertyID = (CPropertyID *) pPropertyCombo->GetItemData( iMember);
         // if this is valid property
-        if( (ppidPropertyID != NULL) && (ppidPropertyID->pid_strName == "Spawn flags (Alt+Shift+S)") )
+        if ((ppidPropertyID != NULL) && (ppidPropertyID->pid_strName == "Spawn flags (Alt+Shift+S)") )
         {
           // select spawn flags
           pPropertyCombo->SetCurSel( iMember);
@@ -1075,15 +1075,15 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     }
 
     // if alt+shift+A pressed, we want to engage "Parent" entity property
-    if( bShift && bAltPressed && (iVirtKey=='A') )
+    if (bShift && bAltPressed && (iVirtKey=='A') )
     {
       CPropertyComboBox *pPropertyCombo = &m_PropertyComboBar.m_PropertyComboBox;
       // for all members in properties combo box
-      for( INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
+      for (INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
       {
         CPropertyID *ppidPropertyID = (CPropertyID *) pPropertyCombo->GetItemData( iMember);
         // if this is valid property
-        if( (ppidPropertyID != NULL) && (ppidPropertyID->pid_strName == "Parent (Alt+Shift+A)") )
+        if ((ppidPropertyID != NULL) && (ppidPropertyID->pid_strName == "Parent (Alt+Shift+A)") )
         {
           // select spawn flags
           pPropertyCombo->SetCurSel( iMember);
@@ -1094,18 +1094,18 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     }
 
     // if shift pressed, we want to engage entity property shortcut
-    if( bShift && !bAltPressed)
+    if (bShift && !bAltPressed)
     {
       CPropertyComboBox *pPropertyCombo = &m_PropertyComboBar.m_PropertyComboBox;
       // for all members in properties combo box
-      for( INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
+      for (INDEX iMember = 0; iMember<pPropertyCombo->GetCount(); iMember++)
       {
         CPropertyID *ppidPropertyID = (CPropertyID *) pPropertyCombo->GetItemData( iMember);
         // if this is valid property
-        if( ppidPropertyID != NULL)
+        if (ppidPropertyID != NULL)
         {
           // if virtual key-code is same as shortcut for observing property
-          if( iVirtKey == ppidPropertyID->pid_chrShortcutKey)
+          if (iVirtKey == ppidPropertyID->pid_chrShortcutKey)
           {
             // select observing entity property
             pPropertyCombo->SetCurSel( iMember);
@@ -1115,7 +1115,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
         }
       }
     }
-    else if( (iVirtKey == 'Q') && !bAltPressed)
+    else if ((iVirtKey == 'Q') && !bAltPressed)
     {
       ToggleInfoWindow();
     }
@@ -1123,12 +1123,12 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
     {
       // remap key ID to number 0-9
       INDEX iNum=-1;
-      if( iVirtKey == '0') iNum = 9;
+      if (iVirtKey == '0') iNum = 9;
       else                 iNum = iVirtKey-'1';
-      if( (iNum>=0) && (iNum<=9) && !bAlt)
+      if ((iNum>=0) && (iNum<=9) && !bAlt)
       {
         CWorldEditorDoc *pDoc = theApp.GetDocument();
-        if( pDoc != NULL && pDoc->GetEditingMode()==TERRAIN_MODE)
+        if (pDoc != NULL && pDoc->GetEditingMode()==TERRAIN_MODE)
         {
           TICK llCurrentTime = _pTimer->GetTimeTick();
           if (_llLastNumKeyDownTime == -1)
@@ -1152,17 +1152,17 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
       }
     }
   }
-  if( pMsg->message==WM_KEYUP)
+  if (pMsg->message==WM_KEYUP)
   {
     // remap key ID to number 0-9
     INDEX iNum=-1;
     int iVirtKey = (int) pMsg->wParam;
-    if( iVirtKey == '0') iNum = 9;
+    if (iVirtKey == '0') iNum = 9;
     else                 iNum = iVirtKey-'1';
-    if( (iNum>=0) && (iNum<=9) && !bAlt)
+    if ((iNum>=0) && (iNum<=9) && !bAlt)
     {
       CWorldEditorDoc *pDoc = theApp.GetDocument();
-      if( pDoc != NULL && pDoc->GetEditingMode()==TERRAIN_MODE)
+      if (pDoc != NULL && pDoc->GetEditingMode()==TERRAIN_MODE)
       {
         TICK llCurrentTime = _pTimer->GetTimeTick();
         if (llCurrentTime-_llLastNumKeyDownTime < CTimer::InTicks(BRUSH_PRESSURE_DELAY))
@@ -1170,7 +1170,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
           if (llCurrentTime-_llLastTimePressureApplied < CTimer::InTicks(BRUSH_PRESSURE_SUB_DELAY))
           {
             INDEX iTens=floor((theApp.m_fTerrainBrushPressure-1.0f)/1024.0f*10.0f+0.5f);
-            if(iNum==9) iNum=-1;
+            if (iNum==9) iNum=-1;
             INDEX iResult=(iTens*10+iNum+1)%100;
             theApp.m_fTerrainBrushPressure=(iResult)/100.0f*1024.0f+1;
             _llLastTimePressureApplied = -1;
@@ -1251,13 +1251,13 @@ void CMainFrame::OnActivateApp(BOOL bActive, DWORD hTask)
 	CMDIFrameWnd::OnActivateApp(bActive, hTask);
 
   // if application is activated right now
-  if( bActive)
+  if (bActive)
   {
     // show mouse
     while (ShowCursor(TRUE)<0);
 
     // if browser is valid
-    if( ::IsWindow( m_Browser.m_BrowseWindow.m_hWnd))
+    if (::IsWindow( m_Browser.m_BrowseWindow.m_hWnd))
     {
       // refresh it
       m_Browser.Invalidate( FALSE);
@@ -1302,7 +1302,7 @@ void CMainFrame::StartApplication( CTString strApplicationToRun)
     &siStartupInfo,
     &piProcessInformation);
   // if process creation was not successful
-  if( !bSuccess)
+  if (!bSuccess)
   {
     WarningMessage( "WorldEditor was unable to run \"%s\"", (CTString&)fnApplicationToRun);
   }
@@ -1418,7 +1418,7 @@ void CMainFrame::OnShowTreeShortcuts()
 
   _llLastNumKeyDownTime = -1;
   BOOL bCtrl = (GetKeyState( VK_CONTROL)&0x8000) != 0;
-  if( dlgTreeShortcuts.m_iPressedShortcut != -1)
+  if (dlgTreeShortcuts.m_iPressedShortcut != -1)
   {
     ApplyTreeShortcut( dlgTreeShortcuts.m_iPressedShortcut, bCtrl);
   }
@@ -1460,7 +1460,7 @@ void CMainFrame::OnToolRecreateTexture()
 {
   CTFileName fnTextureToRecreate = _EngineGUI.BrowseTexture(
     CTString(""), KEY_NAME_CREATE_TEXTURE_DIR, "Browse texture to recreate");
-  if( fnTextureToRecreate != "")
+  if (fnTextureToRecreate != "")
   {
     _EngineGUI.CreateTexture( fnTextureToRecreate);
   }
@@ -1469,7 +1469,7 @@ void CMainFrame::OnToolRecreateTexture()
 void CMainFrame::OnRecreateCurrentTexture()
 {
   // there must be valid texture
-  if( theApp.m_ptdActiveTexture == NULL) return;
+  if (theApp.m_ptdActiveTexture == NULL) return;
   CTextureData *pTD = theApp.m_ptdActiveTexture;
   CTFileName fnTextureName = pTD->GetName();
   // call recreate texture dialog
@@ -1489,14 +1489,14 @@ void CMainFrame::OnRecreateCurrentTexture()
   // release the texture
   _pTextureStock->Release( ptdTextureToReload);
   // if browser is valid
-  if( ::IsWindow( m_Browser.m_BrowseWindow.m_hWnd))
+  if (::IsWindow( m_Browser.m_BrowseWindow.m_hWnd))
   {
     // refresh it
     m_Browser.m_BrowseWindow.Refresh();
   }
   // obtain document
   CWorldEditorDoc *pDoc = theApp.GetDocument();
-  if( pDoc != NULL)
+  if (pDoc != NULL)
   {
     // and refresh all views
     pDoc->UpdateAllViews( NULL);
@@ -1517,7 +1517,7 @@ void CMainFrame::ManualToolTipOn( PIX pixManualX, PIX pixManualY)
   CCustomToolTip &ctt = theApp.m_cttToolTips;
   ctt.cct_pCallback( ctt.cct_pThis, achrToolTip);
   //ASSERT( CTString(achrToolTip) != "");
-  if( CTString(achrToolTip) == "") return;
+  if (CTString(achrToolTip) == "") return;
 
   m_pwndToolTip = new CToolTipWnd;
   m_pwndToolTip->m_strText = achrToolTip;
@@ -1526,7 +1526,7 @@ void CMainFrame::ManualToolTipOn( PIX pixManualX, PIX pixManualY)
   m_pwndToolTip->m_pixManualY = pixManualY;
 
   const wchar_t *strWindowClass = AfxRegisterWndClass( CS_OWNDC|CS_NOCLOSE);
-  if( !m_pwndToolTip->CreateEx( WS_EX_TOPMOST, strWindowClass, L"Tool tip",
+  if (!m_pwndToolTip->CreateEx( WS_EX_TOPMOST, strWindowClass, L"Tool tip",
       WS_BORDER|WS_POPUP|WS_VISIBLE, 0, 0, 10, 10, m_hWnd, 0))
   {
     // program must never reach this point
@@ -1539,9 +1539,9 @@ void CMainFrame::ManualToolTipUpdate( void)
   CCustomToolTip &ctt = theApp.m_cttToolTips;
   ctt.cct_pCallback( ctt.cct_pThis, achrToolTip);
   ASSERT( CTString(achrToolTip) != "");
-  if( CTString(achrToolTip) == "") return;
+  if (CTString(achrToolTip) == "") return;
   
-  if( m_pwndToolTip == NULL) return;
+  if (m_pwndToolTip == NULL) return;
 
   m_pwndToolTip->m_strText = achrToolTip;
   m_pwndToolTip->ManualUpdate();
@@ -1556,16 +1556,16 @@ void CMainFrame::OnTimer(UINT nIDEvent)
   CCustomToolTip &ctt = theApp.m_cttToolTips;
 
   // if tool tip happened
-  if( (nIDEvent == 0) && (m_pwndToolTip == NULL) )
+  if ((nIDEvent == 0) && (m_pwndToolTip == NULL) )
   {
-    if( hwndParent == ctt.cct_hwndCaller)
+    if (hwndParent == ctt.cct_hwndCaller)
     {
       // if game is on, disable tool tips
-      if( _pInput->IsInputEnabled()) return;
+      if (_pInput->IsInputEnabled()) return;
 
       ctt.cct_pCallback( ctt.cct_pThis, achrToolTip);
 
-      if( CTString(achrToolTip) == "")
+      if (CTString(achrToolTip) == "")
       {
         KillTimer( 0);
         return;
@@ -1576,7 +1576,7 @@ void CMainFrame::OnTimer(UINT nIDEvent)
       m_pwndToolTip->m_bManualControl = FALSE;
 
       const wchar_t *strWindowClass = AfxRegisterWndClass( CS_OWNDC|CS_NOCLOSE);
-      if( !m_pwndToolTip->CreateEx( WS_EX_TOPMOST, strWindowClass, L"Tool tip",
+      if (!m_pwndToolTip->CreateEx( WS_EX_TOPMOST, strWindowClass, L"Tool tip",
           WS_BORDER|WS_POPUP|WS_VISIBLE, 0, 0, 10, 10, m_hWnd, 0))
       {
         // program must never reach this point
@@ -1591,9 +1591,9 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 
 LRESULT CMainFrame::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-  if( message==WM_SYSCOMMAND)
+  if (message==WM_SYSCOMMAND)
   {
-    switch( wParam & ~0x0F)
+    switch (wParam & ~0x0F)
     {
     case SC_SCREENSAVE:
     case SC_MONITORPOWER:
@@ -1608,13 +1608,13 @@ void CMainFrame::OnHelpFinder()
 {
   CWorldEditorDoc *pDoc = theApp.GetDocument();
   // must not be null
-  if( pDoc != NULL) 
+  if (pDoc != NULL) 
   {
     // if entity mode
-    if( pDoc->m_iMode == ENTITY_MODE)
+    if (pDoc->m_iMode == ENTITY_MODE)
     {
       // if only one entity selected
-      if( pDoc->m_selEntitySelection.Count() == 1)
+      if (pDoc->m_selEntitySelection.Count() == 1)
       {
         CEntity *pen = pDoc->m_selEntitySelection.GetFirstInSelection();  
         CTFileName fnecl = pen->GetClass()->GetName();

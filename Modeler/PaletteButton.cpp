@@ -52,7 +52,7 @@ void CPaletteButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   CDC *pDC = GetDC();
 
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL)
+  if (pModelerView == NULL)
   {
     pDC->FillSolidRect( &lpDrawItemStruct->rcItem, 0x00aaaaaa);
     pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_RAISED, BF_RECT);
@@ -65,7 +65,7 @@ void CPaletteButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
     pDC->FillSolidRect( &lpDrawItemStruct->rcItem, clrfColor);
     ULONG ulMask = pModelerView->m_ModelObject.mo_ColorMask;
-    if( ulMask & ((1L) << iButtonNo))
+    if (ulMask & ((1L) << iButtonNo))
       pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_SUNKEN, BF_RECT);
     else
       pDC->DrawEdge( &lpDrawItemStruct->rcItem, EDGE_RAISED, BF_RECT);
@@ -77,10 +77,10 @@ void CPaletteButton::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	INDEX iClickedColor = GetDlgCtrlID()-IDC_COLOR_PALETTE_BUTTON_BASE;
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView != NULL)
+  if (pModelerView != NULL)
   {
     // Doubble clicked, change mode
-    if( pModelerView->m_iChoosedColor == iClickedColor)
+    if (pModelerView->m_iChoosedColor == iClickedColor)
     {
       pModelerView->m_bOnColorMode = !pModelerView->m_bOnColorMode;
     }
@@ -101,7 +101,7 @@ void CPaletteButton::OnRButtonDown(UINT nFlags, CPoint point)
 	INDEX iClickedColor = GetDlgCtrlID()-IDC_COLOR_PALETTE_BUTTON_BASE;
 	
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( (pModelerView != NULL) && (iClickedColor < 30))
+  if ((pModelerView != NULL) && (iClickedColor < 30))
   {
     ULONG ulMask = pModelerView->m_ModelObject.mo_ColorMask;
     ulMask = ulMask ^ ((1L) << iClickedColor);

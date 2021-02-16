@@ -59,7 +59,7 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
 
   // obtain curently selected property ID
   CPropertyID *ppidProperty = m_pDialog->GetSelectedProperty();
-  if( ppidProperty == NULL ||
+  if (ppidProperty == NULL ||
       !((ppidProperty->pid_eptType == CEntityProperty::EPT_FILENAME) ||
         (ppidProperty->pid_eptType == CEntityProperty::EPT_FILENAMENODEP)) ) return CTString("");
 
@@ -74,9 +74,9 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
     // obtain property ptr
     CEntityProperty *pepProperty = iten->PropertyForName( ppidProperty->pid_strName);
     // if this is first entity in dynamic container
-    if( pDoc->m_selEntitySelection.Pointer(0) == iten)
+    if (pDoc->m_selEntitySelection.Pointer(0) == iten)
     {
-      if( m_bFileNameNoDep)
+      if (m_bFileNameNoDep)
       {
         fnIntersectingFileNoDep = ENTITYPROPERTY( &*iten, pepProperty->ep_slOffset, CTFileNameNoDep);
       }
@@ -87,10 +87,10 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
     }
     else
     {
-      if( m_bFileNameNoDep)
+      if (m_bFileNameNoDep)
       {
         CTFileNameNoDep fnCurrentFileNoDep = ENTITYPROPERTY( &*iten, pepProperty->ep_slOffset, CTFileNameNoDep);
-        if( fnCurrentFileNoDep != fnIntersectingFileNoDep)
+        if (fnCurrentFileNoDep != fnIntersectingFileNoDep)
         {
           fnIntersectingFileNoDep = CTString("");
           break;
@@ -99,7 +99,7 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
       else
       {
         CTFileName fnCurrentFile = ENTITYPROPERTY( &*iten, pepProperty->ep_slOffset, CTFileName);
-        if( fnCurrentFile != fnIntersectingFile)
+        if (fnCurrentFile != fnIntersectingFile)
         {
           fnIntersectingFile = CTString("");
           break;
@@ -109,7 +109,7 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
   }
   // unlock selection's dynamic container
   pDoc->m_selEntitySelection.Unlock();
-  if( m_bFileNameNoDep)
+  if (m_bFileNameNoDep)
   {
     return fnIntersectingFileNoDep;
   }
@@ -122,41 +122,41 @@ CTFileName CCtrlBrowseFile::GetIntersectingFile()
 void CCtrlBrowseFile::OnClicked()
 {
   // don't do anything if document doesn't exist
-  if( theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL) return;
   // obtain curently active document
   CWorldEditorDoc *pDoc = theApp.GetDocument();
 
   // obtain curently selected property ID
   CPropertyID *ppidProperty = m_pDialog->GetSelectedProperty();
-  if( ppidProperty == NULL) return;
+  if (ppidProperty == NULL) return;
 
   // file name to contain selection intersecting file
   CTFileName fnIntersectingFile = GetIntersectingFile();
 
   // call file requester
   CTFileName fnChoosedFile;
-  if( fnIntersectingFile.FileExt() == ".mdl")
+  if (fnIntersectingFile.FileExt() == ".mdl")
   {
     fnChoosedFile = _EngineGUI.FileRequester( "Choose file",
     FILTER_MDL FILTER_ALL FILTER_END,
     KEY_NAME_REQUEST_FILE_DIR, fnIntersectingFile.FileDir(),
     fnIntersectingFile.FileName()+fnIntersectingFile.FileExt());
   }
-  else if( fnIntersectingFile.FileExt() == ".tex")
+  else if (fnIntersectingFile.FileExt() == ".tex")
   {
     fnChoosedFile = _EngineGUI.FileRequester( "Choose file",
     FILTER_TEX FILTER_ALL FILTER_END,
     KEY_NAME_REQUEST_FILE_DIR, fnIntersectingFile.FileDir(),
     fnIntersectingFile.FileName()+fnIntersectingFile.FileExt());
   }
-  else if( fnIntersectingFile.FileExt() == ".wav")
+  else if (fnIntersectingFile.FileExt() == ".wav")
   {
     fnChoosedFile = _EngineGUI.FileRequester( "Choose file",
     FILTER_WAV FILTER_ALL FILTER_END,
     KEY_NAME_REQUEST_FILE_DIR, fnIntersectingFile.FileDir(),
     fnIntersectingFile.FileName()+fnIntersectingFile.FileExt());
   }
-  else if( fnIntersectingFile.FileExt() == ".smc")
+  else if (fnIntersectingFile.FileExt() == ".smc")
   {
     fnChoosedFile = _EngineGUI.FileRequester( "Choose file",
     FILTER_SMC FILTER_ALL FILTER_END,
@@ -171,7 +171,7 @@ void CCtrlBrowseFile::OnClicked()
     fnIntersectingFile.FileName()+fnIntersectingFile.FileExt());
   }
 
-  if( fnChoosedFile == "") return;
+  if (fnChoosedFile == "") return;
 
   // for each of the selected entities
   FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -181,7 +181,7 @@ void CCtrlBrowseFile::OnClicked()
     // discard old entity settings
     iten->End();
     // set new file name value
-    if( m_bFileNameNoDep)
+    if (m_bFileNameNoDep)
     {
       ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CTFileNameNoDep) =
         (CTFileNameNoDep) fnChoosedFile;

@@ -52,12 +52,12 @@ BOOL CTriangularisationCombo::OnIdle(LONG lCount)
   // get document ptr
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
 
-  if( (pDoc == NULL) ||
+  if ((pDoc == NULL) ||
       (pDoc->GetEditingMode() != CSG_MODE) ||
       (!pDoc->m_bPrimitiveMode) )
   {
     // we should disable triangularisation combo
-    if(GetCount() == 1) return TRUE; // we allready have "not available" in combo
+    if (GetCount() == 1) return TRUE; // we allready have "not available" in combo
     // remove all combo entries
     ResetContent();
     // set none available message
@@ -68,7 +68,7 @@ BOOL CTriangularisationCombo::OnIdle(LONG lCount)
   else
   {
     // if it is allready enabled
-    if(GetCount() != 1) return TRUE;
+    if (GetCount() != 1) return TRUE;
     ResetContent();
     // add all possible triangularisation types
     AddString( L"None");
@@ -99,7 +99,7 @@ void CTriangularisationCombo::OnSelchange()
 {
   // get document ptr
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if( pDoc == NULL) return;
+  if (pDoc == NULL) return;
 
   int iSelected = GetCurSel();
   theApp.m_vfpCurrent.vfp_ttTriangularisationType = (enum TriangularisationType) iSelected;
@@ -110,7 +110,7 @@ void CTriangularisationCombo::OnSelchange()
 void CTriangularisationCombo::OnDropdown() 
 {
   INDEX ctItems = GetCount();
-  if( ctItems == CB_ERR) return;
+  if (ctItems == CB_ERR) return;
   
   CRect rectCombo;
   GetWindowRect( &rectCombo);
@@ -119,7 +119,7 @@ void CTriangularisationCombo::OnDropdown()
   PIX pixMaxHeight = pixScreenHeight - rectCombo.top;
 
   CWnd *pwndParent = GetParent();
-  if( pwndParent == NULL) return;
+  if (pwndParent == NULL) return;
   pwndParent->ScreenToClient( &rectCombo);
   PIX pixNewHeight = GetItemHeight(0)*(ctItems+2);
   rectCombo.bottom = rectCombo.top + ClampUp( pixNewHeight, pixMaxHeight);

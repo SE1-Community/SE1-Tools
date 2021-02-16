@@ -57,7 +57,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
   
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE )
+  if (pDX->m_bSaveAndValidate == FALSE )
   {
     m_MappingPaper.SetColor( m_Prefs.ap_MappingPaperColor);
     m_MappingActiveInk.SetColor( m_Prefs.ap_MappingActiveSurfaceColor);
@@ -107,7 +107,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
   
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
     m_Prefs.ap_MappingPaperColor = m_MappingPaper.GetColor();
     m_Prefs.ap_MappingActiveSurfaceColor = m_MappingActiveInk.GetColor();
@@ -131,7 +131,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
 	  m_Prefs.ap_fDefaultBanking = m_fDefaultBanking;
 	  m_Prefs.ap_fDefaultFOW = m_fDefaultFOW;
 
-    if( !theApp.m_WorkingTextures.IsEmpty())
+    if (!theApp.m_WorkingTextures.IsEmpty())
     {
       m_Prefs.ap_DefaultWinBcgTexture = 
         ((CBcgTexture *) m_ComboWinBcgTexture.GetItemDataPtr( 
@@ -142,9 +142,9 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     }
     INDEX iCurSel=m_ctrlGfxApi.GetCurSel();
     INDEX iOldGfxApi=theApp.m_iApi;
-    if( iCurSel!=CB_ERR)
+    if (iCurSel!=CB_ERR)
     {
-      switch(iCurSel)
+      switch (iCurSel)
       {
       case 0:
         theApp.m_iApi=GAT_OGL;
@@ -158,7 +158,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
         {
         }
       }
-      if( iOldGfxApi!=theApp.m_iApi)
+      if (iOldGfxApi!=theApp.m_iApi)
       {
         _pGfx->ResetDisplayMode((enum GfxAPIType) theApp.m_iApi);
       }
@@ -187,9 +187,9 @@ BOOL CDlgPreferences::OnInitDialog()
   m_ctrlGfxApi.AddString(L"DirectX");
 #endif // SE1_D3D
 
-  if( IsWindow(m_ctrlGfxApi.m_hWnd))
+  if (IsWindow(m_ctrlGfxApi.m_hWnd))
   {
-    switch(theApp.m_iApi)
+    switch (theApp.m_iApi)
     {
     case GAT_OGL:
       m_ctrlGfxApi.SetCurSel(0);
@@ -212,7 +212,7 @@ void CDlgPreferences::InitTextureCombos()
   
   m_ComboWinBcgTexture.ResetContent();
   INDEX iChoosedWinBcg = 0;
-  if( theApp.m_WorkingTextures.IsEmpty())
+  if (theApp.m_WorkingTextures.IsEmpty())
   {
     m_ComboWinBcgTexture.AddString( L"None available");
     m_ComboWinBcgTexture.EnableWindow( FALSE);
@@ -223,7 +223,7 @@ void CDlgPreferences::InitTextureCombos()
     INDEX iTexCt = 0;      
     FOREACHINLIST( CBcgTexture, wt_ListNode, theApp.m_WorkingTextures, it_wt)
     {
-      if( it_wt->wt_FileName == m_Prefs.ap_DefaultWinBcgTexture)
+      if (it_wt->wt_FileName == m_Prefs.ap_DefaultWinBcgTexture)
         iChoosedWinBcg = iTexCt;
       
       iIndex = m_ComboWinBcgTexture.AddString( CString(it_wt->wt_FileName.FileName()));
@@ -246,11 +246,11 @@ void CDlgPreferences::OnAddWorkingTexture()
     // add new working texture
     theApp.AddModelerWorkingTexture( itTexture.Current());
   }
-  if( afnWorkingTextures.Count() != 0)
+  if (afnWorkingTextures.Count() != 0)
   {
     InitTextureCombos();
     INDEX iTextures = m_ComboWinBcgTexture.GetCount();
-    if( (iTextures > 0) && (iTextures != CB_ERR) )
+    if ((iTextures > 0) && (iTextures != CB_ERR) )
     {
       // select last added texture as current
       m_ComboWinBcgTexture.SetCurSel( iTextures-1);
@@ -260,13 +260,13 @@ void CDlgPreferences::OnAddWorkingTexture()
 
 void CDlgPreferences::OnRemoveWorkingTexture() 
 {
-  if( theApp.m_WorkingTextures.Count() == 0)
+  if (theApp.m_WorkingTextures.Count() == 0)
   {
     return;
   }
 
   INDEX cur_sel = m_ComboWinBcgTexture.GetCurSel();
-  if( cur_sel != LB_ERR)
+  if (cur_sel != LB_ERR)
   {
     CBcgTexture *pWT = (CBcgTexture *) m_ComboWinBcgTexture.GetItemDataPtr( cur_sel);
     pWT->wt_ListNode.Remove();

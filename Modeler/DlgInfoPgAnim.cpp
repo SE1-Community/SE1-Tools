@@ -91,7 +91,7 @@ void CDlgInfoPgAnim::SetAnimPageFromView(CModelerView* pModelerView)
   sprintf( value, "%.4f", aiInfo.ai_NumberOfFrames*aiInfo.ai_SecsPerFrame);
   m_strAnimationLenght = value;
 
-  if( bIsPaused)
+  if (bIsPaused)
   {
     m_strAnimState = "Paused";
   }
@@ -104,11 +104,11 @@ void CDlgInfoPgAnim::SetAnimPageFromView(CModelerView* pModelerView)
 void CDlgInfoPgAnim::DoDataExchange(CDataExchange* pDX)
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = theApp.GetDocument();
 
   // if dialog is recieving data
-  if(pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {                    
     SetAnimPageFromView( pModelerView);
     // mark that the values have been updated to reflect the state of the view
@@ -130,20 +130,20 @@ void CDlgInfoPgAnim::DoDataExchange(CDataExchange* pDX)
   CAnimInfo aiInfo;
   INDEX iAnim = pModelerView->m_ModelObject.GetAnim();
   pModelerView->m_ModelObject.GetAnimInfo( iAnim, aiInfo);
-  if(pDX->m_bSaveAndValidate == TRUE)
+  if (pDX->m_bSaveAndValidate == TRUE)
   {
     DDX_SkyFloat(pDX, IDC_ANIM_SPEED, m_fAnimSpeed);
   }
-  else if( m_fAnimSpeed != aiInfo.ai_SecsPerFrame)
+  else if (m_fAnimSpeed != aiInfo.ai_SecsPerFrame)
   {
     m_fAnimSpeed = aiInfo.ai_SecsPerFrame;
     DDX_SkyFloat(pDX, IDC_ANIM_SPEED, m_fAnimSpeed);
   }
 
   // if dialog is giving data
-  if(pDX->m_bSaveAndValidate == TRUE)
+  if (pDX->m_bSaveAndValidate == TRUE)
   {                    
-    if( (m_fAnimSpeed > 0) && (m_fAnimSpeed<100) )
+    if ((m_fAnimSpeed > 0) && (m_fAnimSpeed<100) )
     {
       pDoc->m_emEditModel.edm_md.SetSpeed( iAnim, m_fAnimSpeed);
     }

@@ -49,7 +49,7 @@ CSize CDlgTemplate::CalcDynamicLayout(int nLength, DWORD nMode)
 {
   CSize csResult;
   // Return default if it is being docked or floated
-  if(nMode & LM_VERTDOCK) {
+  if (nMode & LM_VERTDOCK) {
     csResult = m_Size;
     CRect rc;
     // get main frm
@@ -58,7 +58,7 @@ CSize CDlgTemplate::CalcDynamicLayout(int nLength, DWORD nMode)
     CMDIClientWnd *pMDIClient = &pMainFrame->m_wndMDIClient;
     pMDIClient->GetWindowRect(rc);
     csResult.cy = rc.bottom - rc.top;
-  } else if((nMode & LM_VERTDOCK) || (nMode & LM_HORZDOCK)) {
+  } else if ((nMode & LM_VERTDOCK) || (nMode & LM_HORZDOCK)) {
     // if not docked stretch to fit
     if (nMode & LM_STRETCH) {
       csResult = CSize((nMode & LM_HORZ) ? 32767 : m_Size.cx,
@@ -111,7 +111,7 @@ INDEX CDlgTemplate::GetDockingSide()
 {
 
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if(pMainFrame==NULL) return -1;
+  if (pMainFrame==NULL) return -1;
 
   CWnd *pParent = GetParent(); ASSERT(pParent!=NULL);
 //CWnd *pParentsParent = pParent->GetParent(); ASSERT(pParentsParent!=NULL);
@@ -123,36 +123,36 @@ INDEX CDlgTemplate::GetDockingSide()
   pMainFrame->GetWindowRect(&rcMainFrame);
 
   // is left docking enable
-  if(dlg_ulEnabledDockingSides&CBRS_ALIGN_LEFT) {
+  if (dlg_ulEnabledDockingSides&CBRS_ALIGN_LEFT) {
     // check if docked to left side
-    if(rcParent.left-4 == rcMainFrame.left) {
+    if (rcParent.left-4 == rcMainFrame.left) {
       return AFX_IDW_DOCKBAR_LEFT;
     }
   }
 
   // is right docking enable
-  if(dlg_ulEnabledDockingSides&CBRS_ALIGN_RIGHT) {
+  if (dlg_ulEnabledDockingSides&CBRS_ALIGN_RIGHT) {
     // check if docked to right side
-    if(rcParent.right+4 == rcMainFrame.right) {
+    if (rcParent.right+4 == rcMainFrame.right) {
       return AFX_IDW_DOCKBAR_RIGHT;
     }
   }
 
   // is bottom docking enable
-  if(dlg_ulEnabledDockingSides&CBRS_ALIGN_BOTTOM) {
+  if (dlg_ulEnabledDockingSides&CBRS_ALIGN_BOTTOM) {
     // check if docked to bottom side
-    if(rcParent.bottom+4 == rcMainFrame.bottom) {
+    if (rcParent.bottom+4 == rcMainFrame.bottom) {
       return AFX_IDW_DOCKBAR_BOTTOM;
     }
   }
 
-  if(dlg_ulEnabledDockingSides&CBRS_ALIGN_TOP) {
+  if (dlg_ulEnabledDockingSides&CBRS_ALIGN_TOP) {
     ASSERT(FALSE);
   }
 /*
-  } else if(rcParent.right+4 == rcMainFrame.right) {
+  } else if (rcParent.right+4 == rcMainFrame.right) {
     return AFX_IDW_DOCKBAR_RIGHT;
-  } else if(rcParent.bottom+4 == rcMainFrame.bottom) {
+  } else if (rcParent.bottom+4 == rcMainFrame.bottom) {
     return AFX_IDW_DOCKBAR_BOTTOM;
   } */
 
@@ -160,12 +160,12 @@ INDEX CDlgTemplate::GetDockingSide()
   return AFX_IDW_DOCKBAR_BOTTOM;
 /*
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if(pMainFrame==NULL) return -1;
+  if (pMainFrame==NULL) return -1;
 
   CWnd *pParent = GetParent();
   ASSERT(pParent!=NULL);
   CWnd *pParentsParent = pParent->GetParent();
-  if(pParentsParent==NULL) {
+  if (pParentsParent==NULL) {
     pParentsParent = pParent;
   }
 
@@ -175,11 +175,11 @@ INDEX CDlgTemplate::GetDockingSide()
   pParent->GetWindowRect(&rcParent);
   pMainFrame->GetWindowRect(&rcMainFrame);
 
-  if(rcParent.left-4 == rcMainFrame.left) {
+  if (rcParent.left-4 == rcMainFrame.left) {
     return AFX_IDW_DOCKBAR_LEFT;
-  } else if(rcParent.right+4 == rcMainFrame.right) {
+  } else if (rcParent.right+4 == rcMainFrame.right) {
     return AFX_IDW_DOCKBAR_RIGHT;
-  } else if(rcParent.bottom+4 == rcMainFrame.bottom) {
+  } else if (rcParent.bottom+4 == rcMainFrame.bottom) {
     return AFX_IDW_DOCKBAR_BOTTOM;
   } 
 
@@ -190,18 +190,18 @@ INDEX CDlgTemplate::GetDockingSide()
 
 void CDlgTemplate::AdjustSplitter()
 {
-  if(!theApp.bAppInitialized) return;
-  if(dlg_iSplitterID==(-1)) return;
+  if (!theApp.bAppInitialized) return;
+  if (dlg_iSplitterID==(-1)) return;
 
   INDEX iDockSide = GetDockingSide();
   INDEX iSplitterSide = AFX_IDW_DOCKBAR_FLOAT;
-  if(iDockSide==AFX_IDW_DOCKBAR_LEFT) {
+  if (iDockSide==AFX_IDW_DOCKBAR_LEFT) {
     iSplitterSide = AFX_IDW_DOCKBAR_RIGHT;
-  } else if(iDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+  } else if (iDockSide==AFX_IDW_DOCKBAR_RIGHT) {
     iSplitterSide = AFX_IDW_DOCKBAR_LEFT;
-  } else if(iDockSide==AFX_IDW_DOCKBAR_TOP) {
+  } else if (iDockSide==AFX_IDW_DOCKBAR_TOP) {
     iSplitterSide = AFX_IDW_DOCKBAR_BOTTOM;
-  } else if(iDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+  } else if (iDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
     iSplitterSide = AFX_IDW_DOCKBAR_TOP;
   }
   dlg_spSlitter.SetDockingSide(iSplitterSide);
@@ -226,7 +226,7 @@ void CDlgTemplate::DockCtrlBar()
 void CDlgTemplate::SetSplitterControlID(INDEX iSplitterID)
 {
   // subclass splitter
-  if(!dlg_spSlitter.SubclassDlgItem(iSplitterID,this)) {
+  if (!dlg_spSlitter.SubclassDlgItem(iSplitterID,this)) {
     FatalError("Error in subclassing dlg item\n");
   }
 

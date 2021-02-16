@@ -51,13 +51,13 @@ void CLinkedSurfaceList::OnLButtonDblClk(UINT nFlags, CPoint point)
   INDEX ctItems = GetCount();
 
   CRect rectItem;
-  for( INDEX iItem=0; iItem<ctItems; iItem++)
+  for (INDEX iItem=0; iItem<ctItems; iItem++)
   {
     GetItemRect( iItem, &rectItem);
-    if( rectItem.PtInRect( point))  SetCheck( iItem, 1);
+    if (rectItem.PtInRect( point))  SetCheck( iItem, 1);
     else                            SetCheck( iItem, 0);
   }
-  if( m_pdlgParentDialog != NULL) 
+  if (m_pdlgParentDialog != NULL) 
   {
     m_pdlgParentDialog->UpdateData( TRUE);
     m_pdlgParentDialog->EndDialog( IDOK);
@@ -68,9 +68,9 @@ void CLinkedSurfaceList::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 BOOL CLinkedSurfaceList::PreTranslateMessage(MSG* pMsg) 
 {
-  if( (pMsg->message==WM_KEYDOWN) && (pMsg->wParam=='Z') )
+  if ((pMsg->message==WM_KEYDOWN) && (pMsg->wParam=='Z') )
   {
-    if( m_pdlgParentDialog != NULL) 
+    if (m_pdlgParentDialog != NULL) 
     {
       m_pdlgParentDialog->EndDialog( IDCANCEL);
       return FALSE;

@@ -49,7 +49,7 @@ CDlgPgPosition::~CDlgPgPosition()
 
 void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
 {
-  if( theApp.m_bDisableDataExchange) return;
+  if (theApp.m_bDisableDataExchange) return;
 
   CPropertyPage::DoDataExchange(pDX);
 
@@ -58,15 +58,15 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
   // if document doesn't exist, return
-  if( pDoc == NULL)  return;
+  if (pDoc == NULL)  return;
   // get active view 
   CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
 
   // if dialog is recieving data
-  if( pDX->m_bSaveAndValidate == FALSE)
+  if (pDX->m_bSaveAndValidate == FALSE)
   {
 	  // is CSG on?
-    if( pDoc->m_pwoSecondLayer != NULL)
+    if (pDoc->m_pwoSecondLayer != NULL)
     {
       // yes, pick up coordinates for editting from second layer
       m_fHeading = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(1));
@@ -78,7 +78,7 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
       m_fZ = pDoc->m_plSecondLayer.pl_PositionVector(3);
     }
     // otherwise if we are in entity mode and there is only one entity selected
-    else if( (pDoc->m_iMode == ENTITY_MODE) && ( pDoc->m_selEntitySelection.Count() == 1) )
+    else if ((pDoc->m_iMode == ENTITY_MODE) && ( pDoc->m_selEntitySelection.Count() == 1) )
     {
       // lock selection's dynamic container
       pDoc->m_selEntitySelection.Lock();
@@ -110,10 +110,10 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if( pDX->m_bSaveAndValidate != FALSE)
+  if (pDX->m_bSaveAndValidate != FALSE)
   {
 	  // is CSG on?
-    if( pDoc->m_pwoSecondLayer != NULL)
+    if (pDoc->m_pwoSecondLayer != NULL)
     {
       // yes, copy coordinates from editting controls into second layer
       pDoc->m_plSecondLayer.pl_OrientationAngle(1) = AngleDeg( m_fHeading);
@@ -131,7 +131,7 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
       pDoc->UpdateAllViews( NULL);
     }
     // otherwise if we are in entity mode
-    else if( pDoc->m_iMode == ENTITY_MODE)
+    else if (pDoc->m_iMode == ENTITY_MODE)
     {
       // there must be only one entity selected
       ASSERT( pDoc->m_selEntitySelection.Count() == 1);
@@ -183,10 +183,10 @@ BOOL CDlgPgPosition::OnIdle(LONG lCount)
 {
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if( (pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
+  if ((pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
 
   // if selections have been changed (they are not up to date)
-  if( !pDoc->m_chSelections.IsUpToDate( m_udSelection))
+  if (!pDoc->m_chSelections.IsUpToDate( m_udSelection))
   {
     // update dialog data
     UpdateData( FALSE);
@@ -197,7 +197,7 @@ BOOL CDlgPgPosition::OnIdle(LONG lCount)
 
 BOOL CDlgPgPosition::PreTranslateMessage(MSG* pMsg) 
 {
-	if(pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
   {
     // move coordinates from page to entity and snap them
     UpdateData( TRUE);

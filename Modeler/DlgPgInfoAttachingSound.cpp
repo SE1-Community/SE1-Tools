@@ -49,15 +49,15 @@ void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange* pDX)
 	CPropertyPage::DoDataExchange(pDX);
 
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if(pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
 
   // if transfering data from document to dialog
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
     m_strAttachedSound = asSound.as_fnAttachedSound;
-    if( m_strAttachedSound == "")
+    if (m_strAttachedSound == "")
       m_strAttachedSound = "<No sound>";
     m_bLooping = asSound.as_bLooping;
     m_bPlaying = asSound.as_bPlaying;
@@ -74,9 +74,9 @@ void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 
   // if transfering data from dialog to document
-  if( pDX->m_bSaveAndValidate)
+  if (pDX->m_bSaveAndValidate)
   {
-    if( m_strAttachedSound != "<No sound>")
+    if (m_strAttachedSound != "<No sound>")
     {
       asSound.as_fnAttachedSound = CTString( CStringA(m_strAttachedSound));
       asSound.as_bLooping = m_bLooping;
@@ -117,7 +117,7 @@ BOOL CDlgPgInfoAttachingSound::OnIdle(LONG lCount)
 void CDlgPgInfoAttachingSound::OnBrowseSound() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
 
@@ -127,7 +127,7 @@ void CDlgPgInfoAttachingSound::OnBrowseSound()
     FILTER_WAV FILTER_END,
     "Sounds directory", "Sounds",
     asSound.as_fnAttachedSound.FileName()+asSound.as_fnAttachedSound.FileExt());
-  if( fnNewSound == "") return;
+  if (fnNewSound == "") return;
 
   asSound.as_fnAttachedSound = fnNewSound;
   pDoc->SetModifiedFlag();
@@ -138,7 +138,7 @@ void CDlgPgInfoAttachingSound::OnBrowseSound()
 void CDlgPgInfoAttachingSound::OnAttachingSoundNone() 
 {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if( pModelerView == NULL) return;
+  if (pModelerView == NULL) return;
   CModelerDoc* pDoc = pModelerView->GetDocument();  
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
   asSound.as_fnAttachedSound = CTString("");

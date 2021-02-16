@@ -104,9 +104,9 @@ void CDlgInfoFrame::OnClose()
 
 BOOL CDlgInfoFrame::PreTranslateMessage(MSG* pMsg) 
 {
-  if( pMsg->message == WM_SYSCOMMAND)
+  if (pMsg->message == WM_SYSCOMMAND)
   {
-    if( (pMsg->wParam == SC_MINIMIZE) || ( pMsg->wParam == SC_MAXIMIZE))
+    if ((pMsg->wParam == SC_MINIMIZE) || ( pMsg->wParam == SC_MAXIMIZE))
       pMsg->wParam = SC_RESTORE;
   }
 	return CMiniFrameWnd::PreTranslateMessage(pMsg);

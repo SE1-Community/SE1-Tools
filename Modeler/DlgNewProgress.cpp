@@ -43,7 +43,7 @@ void CDlgNewProgress::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
-  if( !pDX->m_bSaveAndValidate)
+  if (!pDX->m_bSaveAndValidate)
   {
     m_ProgressMessage = m_strNewMessage;
   }

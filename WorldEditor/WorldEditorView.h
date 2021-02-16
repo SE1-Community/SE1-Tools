@@ -156,7 +156,7 @@ public:
 public:
   // obtain draw port
   inline CDrawPort *GetDrawPort( void) {
-    if( theApp.m_bChangeDisplayModeInProgress)
+    if (theApp.m_bChangeDisplayModeInProgress)
       return NULL;
     else
       return m_pdpDrawPort;
@@ -164,7 +164,7 @@ public:
   // obtain view port
   inline CViewPort *GetViewPort( void)
   {
-    if( theApp.m_bChangeDisplayModeInProgress)
+    if (theApp.m_bChangeDisplayModeInProgress)
       return NULL;
     else
       return m_pvpViewPort;

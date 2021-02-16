@@ -58,13 +58,13 @@ END_MESSAGE_MAP()
 
 void CVirtualTreeCtrl::CloseTreeCtrl(void) 
 {
-	if( m_bIsOpen)
+	if (m_bIsOpen)
   {
     m_pBrowser->m_TreeHeight = CLOSED_TREE;
     m_pBrowser->CalcDynamicLayout(0, LM_HORZDOCK);
 	  m_bIsOpen = FALSE;
 
-    if( GetCount() != 0)
+    if (GetCount() != 0)
     {
       HTREEITEM pSelectedItem = GetSelectedItem();
       ASSERT( pSelectedItem != NULL);
@@ -78,12 +78,12 @@ void CVirtualTreeCtrl::CloseTreeCtrl(void)
 
 void CVirtualTreeCtrl::OpenTreeCtrl(void)
 {
-	if( !m_bIsOpen)
+	if (!m_bIsOpen)
   {
     m_pBrowser->m_TreeHeight = OPEN_TREE;
     m_pBrowser->CalcDynamicLayout(0, LM_HORZDOCK);
     m_bIsOpen = TRUE;
-    if( GetCount() != 0)
+    if (GetCount() != 0)
     {
       HTREEITEM pSelectedItem = GetSelectedItem();
       ASSERT( pSelectedItem != NULL);
@@ -96,7 +96,7 @@ void CVirtualTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
   CVirtualTreeNode *pVTN = ItemForCoordinate(point);
   // if is not null and not root
-  if( pVTN!=NULL && pVTN->vnt_pvtnParent!=NULL)
+  if (pVTN!=NULL && pVTN->vnt_pvtnParent!=NULL)
   {
     CTString strAddr;
     strAddr.PrintF("VTN%d", pVTN);
@@ -114,7 +114,7 @@ CVirtualTreeNode *CVirtualTreeCtrl::ItemForCoordinate(CPoint pt)
 {
   UINT ulFlags;
   HTREEITEM pItem=HitTest(pt, &ulFlags);
-  if( pItem==NULL || !(ulFlags&TVHT_ONITEMICON)) return NULL;
+  if (pItem==NULL || !(ulFlags&TVHT_ONITEMICON)) return NULL;
   CVirtualTreeNode *pVTN = (CVirtualTreeNode *)GetItemData( pItem);
   return pVTN;
 }
@@ -132,23 +132,23 @@ void CVirtualTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
   BOOL bAlt = (nFlags & (1L<<13)) != 0;
 	
   /*
-  if( uwScanCode == 82)                // Insert
+  if (uwScanCode == 82)                // Insert
   {
     m_pBrowser->OnCreateDirectory();
   }
-	else if( uwScanCode == 83)           // Delete
+	else if (uwScanCode == 83)           // Delete
   {
     m_pBrowser->OnDeleteDirectory();
   }
-	else if( bAlt && (uwScanCode == 19)) // Alt-R - rename
+	else if (bAlt && (uwScanCode == 19)) // Alt-R - rename
   {
     m_pBrowser->OnRenameDirectory();
   }
-	else if( bAlt && (uwScanCode == 38)) // Alt+O - open
+	else if (bAlt && (uwScanCode == 38)) // Alt+O - open
   {
     m_pBrowser->OnLoadVirtualTree();
   }
-	else if( bAlt && (uwScanCode == 31)) // Alt+S - save
+	else if (bAlt && (uwScanCode == 31)) // Alt+S - save
   {
     m_pBrowser->OnSaveVirtualTree();
   }
@@ -160,7 +160,7 @@ void CVirtualTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CVirtualTreeCtrl::OnContextMenu( CPoint point) 
 {
   CMenu menu;
-  if( menu.LoadMenu(IDR_VTREEPOPUP))
+  if (menu.LoadMenu(IDR_VTREEPOPUP))
   {
 		CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
@@ -178,18 +178,18 @@ void CVirtualTreeCtrl::OnDropFiles(HDROP hDropInfo)
   DragQueryPoint( hDropInfo, &point);
   
   CVirtualTreeNode *pVTNDst = ItemForCoordinate(point);
-  if( pVTNDst!=NULL)
+  if (pVTNDst!=NULL)
   {
-    for( INDEX i=0; i<ctFiles; i++)
+    for (INDEX i=0; i<ctFiles; i++)
     {
 	    wchar_t chrFile[ 256];
       DragQueryFile( hDropInfo, i, chrFile, 256);
       CTString strAddr = CTString(CStringA(chrFile));
-      if( strAddr != "")
+      if (strAddr != "")
       {
         CVirtualTreeNode *pVTNSrc;
         strAddr.ScanF("VTN%d", &pVTNSrc);
-        if(pVTNSrc==pVTNDst) return;
+        if (pVTNSrc==pVTNDst) return;
         pVTNSrc->MoveToDirectory( pVTNDst);
         // delete all items
         DeleteAllItems();

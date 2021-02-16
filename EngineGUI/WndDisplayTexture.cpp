@@ -76,9 +76,9 @@ void CWndDisplayTexture::OnPaint()
 {
   { CPaintDC dc(this); } // device context for painting
 	
-  if( m_iTimerID==-1) m_iTimerID = (int)SetTimer( 1, 50, NULL);
+  if (m_iTimerID==-1) m_iTimerID = (int)SetTimer( 1, 50, NULL);
 
-  if( m_pViewPort==NULL && m_pDrawPort==NULL)
+  if (m_pViewPort==NULL && m_pDrawPort==NULL)
   { // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
@@ -87,18 +87,18 @@ void CWndDisplayTexture::OnPaint()
   CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
   BOOL bAlphaChannel = FALSE;
   // if there is a valid drawport, and the drawport can be locked
-  if( m_pDrawPort!=NULL && m_pDrawPort->Lock())
+  if (m_pDrawPort!=NULL && m_pDrawPort->Lock())
   { // if it has any texture
-    if( pTD!=NULL) {
+    if (pTD!=NULL) {
       PIX pixWidth  = pTD->GetPixWidth();
       PIX pixHeight = pTD->GetPixHeight();
       // adjust for effect texture
-      if( pTD->td_ptegEffect != NULL) {
+      if (pTD->td_ptegEffect != NULL) {
         pixWidth  = pTD->td_pixBufferWidth;
         pixHeight = pTD->td_pixBufferHeight;
       }
       // get window / texture factor
-      if( pixWidth >= pixHeight) {
+      if (pixWidth >= pixHeight) {
         m_fWndTexRatio = FLOAT(m_pDrawPort->GetWidth())  /pixWidth;
       } else {
         m_fWndTexRatio = FLOAT(m_pDrawPort->GetHeight()) /pixHeight;
@@ -124,13 +124,13 @@ void CWndDisplayTexture::OnPaint()
     // if chequered alpha flag is turned on
 #define CHESS_BOX_WIDTH  16
 #define CHESS_BOX_HEIGHT 16
-    if( m_bChequeredAlpha && bAlphaChannel) 
+    if (m_bChequeredAlpha && bAlphaChannel) 
     { // create chess looking background
-      for( INDEX iVert=0; iVert<(m_pixWinHeight/CHESS_BOX_HEIGHT)+1; iVert++) {
+      for (INDEX iVert=0; iVert<(m_pixWinHeight/CHESS_BOX_HEIGHT)+1; iVert++) {
         // create chess looking background
-        for( INDEX iHoriz=0; iHoriz<(m_pixWinWidth/CHESS_BOX_WIDTH)+1; iHoriz++) {
+        for (INDEX iHoriz=0; iHoriz<(m_pixWinWidth/CHESS_BOX_WIDTH)+1; iHoriz++) {
           COLOR colBox = C_WHITE;
-          if( (iHoriz+iVert)&1) colBox = C_lGRAY;
+          if ((iHoriz+iVert)&1) colBox = C_lGRAY;
           // fill part of a drawport with a given color
           m_pDrawPort->Fill( iHoriz*CHESS_BOX_WIDTH +m_pixWinOffsetU, 
                              iVert *CHESS_BOX_HEIGHT+m_pixWinOffsetV,
@@ -140,7 +140,7 @@ void CWndDisplayTexture::OnPaint()
     }
 
     // if it has any texture
-    if( pTD!=NULL) {
+    if (pTD!=NULL) {
       // create rectangle proportional with texture ratio covering whole draw port
       PIXaabbox2D rectPict = PIXaabbox2D( PIX2D( m_pixWinOffsetU, m_pixWinOffsetV),
                                           PIX2D( m_pixWinOffsetU+m_pixWinWidth, m_pixWinOffsetV+m_pixWinHeight));
@@ -149,7 +149,7 @@ void CWndDisplayTexture::OnPaint()
     } 
 
     // draw line on left mouse move
-    if( m_bDrawLine) {
+    if (m_bDrawLine) {
       m_pDrawPort->DrawLine(m_pixLineStartU, m_pixLineStartV, 
                             m_pixLineStopU,  m_pixLineStopV, C_WHITE|CT_OPAQUE, 0xCCCCCCCC);
       m_pDrawPort->DrawLine(m_pixLineStartU, m_pixLineStartV, 
@@ -159,15 +159,15 @@ void CWndDisplayTexture::OnPaint()
     // unlock the drawport
     m_pDrawPort->Unlock();
     // swap if there is a valid viewport
-    if( m_pViewPort!=NULL) m_pViewPort->SwapBuffers();
+    if (m_pViewPort!=NULL) m_pViewPort->SwapBuffers();
   }
 
   // if this is effect texture
-  if( pTD!=NULL && pTD->td_ptegEffect!=NULL)
+  if (pTD!=NULL && pTD->td_ptegEffect!=NULL)
   { // display rendering speed
     DOUBLE dMS = pTD->td_ptegEffect->GetRenderingTime() * 1000.0;
     // only if valid
-    if( dMS>0) {
+    if (dMS>0) {
       char achrSpeed[256];
       CDlgCreateEffectTexture *pDialog = (CDlgCreateEffectTexture*)GetParent();
       sprintf( achrSpeed, "Rendering speed: %.2f ms", dMS);
@@ -183,7 +183,7 @@ void CWndDisplayTexture::OnPaint()
 void CWndDisplayTexture::OnTimer(UINT nIDEvent) 
 {
 	// on our timer discard test animation window
-  if( nIDEvent == 1)
+  if (nIDEvent == 1)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
     if (llCurrentTick > _llLastTick)
@@ -200,7 +200,7 @@ void CWndDisplayTexture::OnTimer(UINT nIDEvent)
 
 void CWndDisplayTexture::OnDestroy() 
 {
-  if( m_pViewPort != NULL)
+  if (m_pViewPort != NULL)
   {
     _pGfx->DestroyWindowCanvas( m_pViewPort);
     m_pViewPort = NULL;
@@ -226,13 +226,13 @@ void CWndDisplayTexture::OnLButtonDown(UINT nFlags, CPoint point)
   CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
   PIX pixU = point.x-m_pixWinOffsetU;
   PIX pixV = point.y-m_pixWinOffsetV;
-  if( pixU<0 || pixU>m_pixWinWidth ) return;
-  if( pixV<0 || pixV>m_pixWinHeight) return;
+  if (pixU<0 || pixU>m_pixWinWidth ) return;
+  if (pixV<0 || pixV>m_pixWinHeight) return;
   pixU = PIX(pixU/m_fWndTexRatio);
   pixV = PIX(pixV/m_fWndTexRatio);
   
   // if there is valid mouse down function set
-  if( m_pLeftMouseButtonClicked != NULL)
+  if (m_pLeftMouseButtonClicked != NULL)
   { // call it
     m_pLeftMouseButtonClicked(pixU, pixV);
   }
@@ -249,13 +249,13 @@ void CWndDisplayTexture::OnLButtonUp(UINT nFlags, CPoint point)
   CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
   PIX pixU = point.x-m_pixWinOffsetU;
   PIX pixV = point.y-m_pixWinOffsetV;
-  if( pixU<0 || pixU>m_pixWinWidth ) return;
-  if( pixV<0 || pixV>m_pixWinHeight) return;
+  if (pixU<0 || pixU>m_pixWinWidth ) return;
+  if (pixV<0 || pixV>m_pixWinHeight) return;
   pixU = PIX(pixU/m_fWndTexRatio);
   pixV = PIX(pixV/m_fWndTexRatio);
   
   // if there is valid mouse down function set
-  if( m_pLeftMouseButtonReleased != NULL)
+  if (m_pLeftMouseButtonReleased != NULL)
   { // call it
     m_pLeftMouseButtonReleased(pixU, pixV);
   }
@@ -269,13 +269,13 @@ void CWndDisplayTexture::OnRButtonDown(UINT nFlags, CPoint point)
   CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
   PIX pixU = point.x-m_pixWinOffsetU;
   PIX pixV = point.y-m_pixWinOffsetV;
-  if( pixU<0 || pixU>m_pixWinWidth ) return;
-  if( pixV<0 || pixV>m_pixWinHeight) return;
+  if (pixU<0 || pixU>m_pixWinWidth ) return;
+  if (pixV<0 || pixV>m_pixWinHeight) return;
   pixU = PIX(pixU/m_fWndTexRatio);
   pixV = PIX(pixV/m_fWndTexRatio);
   
   // if there is valid mouse down function set
-  if( m_pRightMouseButtonClicked != NULL)
+  if (m_pRightMouseButtonClicked != NULL)
   { // call it
     m_pRightMouseButtonClicked(pixU, pixV);
   }
@@ -291,13 +291,13 @@ void CWndDisplayTexture::OnMouseMove(UINT nFlags, CPoint point)
     CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
     PIX pixU = point.x-m_pixWinOffsetU;
     PIX pixV = point.y-m_pixWinOffsetV;
-    if( pixU<0 || pixU>m_pixWinWidth ) return;
-    if( pixV<0 || pixV>m_pixWinHeight) return;
+    if (pixU<0 || pixU>m_pixWinWidth ) return;
+    if (pixV<0 || pixV>m_pixWinHeight) return;
     pixU = PIX(pixU/m_fWndTexRatio);
     pixV = PIX(pixV/m_fWndTexRatio);
   
     // if there is valid mouse down function set
-    if( m_pRightMouseButtonMoved != NULL)
+    if (m_pRightMouseButtonMoved != NULL)
     { // call it
       m_pRightMouseButtonMoved(pixU, pixV);
     }
