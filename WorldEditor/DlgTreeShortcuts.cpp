@@ -31,17 +31,17 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDlgTreeShortcuts::CDlgTreeShortcuts(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgTreeShortcuts::IDD, pParent)
+  : CDialog(CDlgTreeShortcuts::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgTreeShortcuts)
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgTreeShortcuts)
+  //}}AFX_DATA_INIT
   m_iPressedShortcut = -1;
 }
 
 
 void CDlgTreeShortcuts::DoDataExchange(CDataExchange* pDX)
 {
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 
   CDialog::DoDataExchange(pDX);
 
@@ -74,15 +74,15 @@ void CDlgTreeShortcuts::DoDataExchange(CDataExchange* pDX)
     }
   }
 
-	//{{AFX_DATA_MAP(CDlgTreeShortcuts)
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgTreeShortcuts)
+  //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CDlgTreeShortcuts, CDialog)
-	//{{AFX_MSG_MAP(CDlgTreeShortcuts)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgTreeShortcuts)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
   ON_COMMAND_RANGE(IDC_SHORTCUT01, IDC_SHORTCUT10, OnTreeShortcut)
 END_MESSAGE_MAP()
 
@@ -91,21 +91,21 @@ END_MESSAGE_MAP()
 
 BOOL CDlgTreeShortcuts::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN)
+  if (pMsg->message == WM_KEYDOWN)
   {
     if (pMsg->wParam == VK_RETURN)
     {
       pMsg->wParam = VK_SPACE;
     }
-	  // if we caught key down message
-    if ((pMsg->wParam!=VK_CONTROL) &&
-        (pMsg->wParam!=VK_ESCAPE) &&
-        (pMsg->wParam!=VK_TAB) &&
-        (pMsg->wParam!=VK_UP) &&
-        (pMsg->wParam!=VK_DOWN) &&
-        (pMsg->wParam!='W') )
+    // if we caught key down message
+    if ((pMsg->wParam != VK_CONTROL) &&
+        (pMsg->wParam != VK_ESCAPE) &&
+        (pMsg->wParam != VK_TAB) &&
+        (pMsg->wParam != VK_UP) &&
+        (pMsg->wParam != VK_DOWN) &&
+        (pMsg->wParam != 'W') )
     {
-      if ((pMsg->wParam>='0') && (pMsg->wParam<='9') )
+      if ((pMsg->wParam >= '0') && (pMsg->wParam <= '9') )
       {
         // remap key ID to number 0-9
         if (pMsg->wParam == '0') m_iPressedShortcut = 9;

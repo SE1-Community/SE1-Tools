@@ -29,7 +29,7 @@ class CEditConsole : public CEdit
 {
 // Construction
 public:
-	CEditConsole();
+  CEditConsole();
 
 // Attributes
 public:
@@ -39,22 +39,22 @@ public:
   void SetTextFromConsole(void);
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CEditConsole)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CEditConsole)
+  public:
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CEditConsole();
+  virtual ~CEditConsole();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CEditConsole)
-	//}}AFX_MSG
+  //{{AFX_MSG(CEditConsole)
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

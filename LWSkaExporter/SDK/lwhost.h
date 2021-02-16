@@ -138,7 +138,7 @@ typedef struct st_LWMessageFuncs {
 
 #define LWINF_GETMAJOR(x)       (((x) & LWINF_MAJORREV) >> 20)
 #define LWINF_GETMINOR(x)       (((x) & LWINF_MINORREV) >> 16)
-#define LWINF_GETBUILD(x)       (((x) & LWINF_BUILD)    >>  4)
+#define LWINF_GETBUILD(x)       (((x) & LWINF_BUILD)    >> 4)
 
 
 /*

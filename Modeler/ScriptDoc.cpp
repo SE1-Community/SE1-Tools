@@ -36,9 +36,9 @@ CScriptDoc::CScriptDoc()
 
 BOOL CScriptDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-	return TRUE;
+  if (!CDocument::OnNewDocument())
+    return FALSE;
+  return TRUE;
 }
 
 CScriptDoc::~CScriptDoc()
@@ -47,9 +47,9 @@ CScriptDoc::~CScriptDoc()
 
 
 BEGIN_MESSAGE_MAP(CScriptDoc, CDocument)
-	//{{AFX_MSG_MAP(CScriptDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CScriptDoc)
+    // NOTE - the ClassWizard will add and remove mapping macros here.
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -58,12 +58,12 @@ END_MESSAGE_MAP()
 #ifdef _DEBUG
 void CScriptDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+  CDocument::AssertValid();
 }
 
 void CScriptDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+  CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -72,7 +72,7 @@ void CScriptDoc::Dump(CDumpContext& dc) const
 
 void CScriptDoc::Serialize(CArchive& ar)
 {
-	((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
+  ((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
 }
 
 /////////////////////////////////////////////////////////////////////////////

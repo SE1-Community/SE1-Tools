@@ -29,7 +29,7 @@ class CCheckBox : public CButton
 {
 // Construction
 public:
-	CCheckBox();
+  CCheckBox();
   void SetIndex(INDEX iFlagIndex, ULONG ulFlags);
 
 // Attributes
@@ -40,21 +40,21 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CCheckBox)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CCheckBox)
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CCheckBox();
+  virtual ~CCheckBox();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CCheckBox)
-	afx_msg void OnClicked();
-	//}}AFX_MSG
+  //{{AFX_MSG(CCheckBox)
+  afx_msg void OnClicked();
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

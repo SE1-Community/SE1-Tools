@@ -30,19 +30,19 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDlgVideoQuality::CDlgVideoQuality(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgVideoQuality::IDD, pParent)
+  : CDialog(CDlgVideoQuality::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgVideoQuality)
-	m_radioObjectShadowQuality = -1;
-	m_radioTextureQuality = -1;
-	m_radioWorldShadowQuality = -1;
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgVideoQuality)
+  m_radioObjectShadowQuality = -1;
+  m_radioTextureQuality = -1;
+  m_radioWorldShadowQuality = -1;
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
   
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE)
@@ -74,11 +74,11 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
     */
   }
 
-	//{{AFX_DATA_MAP(CDlgVideoQuality)
-	DDX_Radio(pDX, IDC_OBJECT_SHADOW_QUALITY, m_radioObjectShadowQuality);
-	DDX_Radio(pDX, IDC_TEXTURE_QUALITY, m_radioTextureQuality);
-	DDX_Radio(pDX, IDC_WORLD_SHADOW_QUALITY, m_radioWorldShadowQuality);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgVideoQuality)
+  DDX_Radio(pDX, IDC_OBJECT_SHADOW_QUALITY, m_radioObjectShadowQuality);
+  DDX_Radio(pDX, IDC_TEXTURE_QUALITY, m_radioTextureQuality);
+  DDX_Radio(pDX, IDC_WORLD_SHADOW_QUALITY, m_radioWorldShadowQuality);
+  //}}AFX_DATA_MAP
   
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -113,9 +113,9 @@ void CDlgVideoQuality::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgVideoQuality, CDialog)
-	//{{AFX_MSG_MAP(CDlgVideoQuality)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgVideoQuality)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

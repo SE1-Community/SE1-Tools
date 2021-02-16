@@ -169,22 +169,22 @@ CDlgClient::CDlgClient(CWnd* pParent )
 }
 
 BEGIN_MESSAGE_MAP(CDlgClient, CDialog)
-	//{{AFX_MSG_MAP(CDlgClient)
-	ON_BN_CLICKED(IDC_CB_COMPRESION, OnCbCompresion)
-	ON_BN_CLICKED(IDC_CB_SECPERFRAME, OnCbSecperframe)
-	ON_CBN_SELENDOK(IDC_CB_PARENTBONE, OnSelendokCbParentbone)
-	ON_CBN_SELENDOK(IDC_CB_PARENTMODEL, OnSelendokCbParentmodel)
-	ON_WM_SHOWWINDOW()
-	ON_WM_VSCROLL()
-	ON_CBN_SELENDOK(IDC_CB_SHADER, OnSelendokCbShader)
-	ON_BN_CLICKED(IDC_BT_CONVERT, OnBtConvert)
-	ON_BN_CLICKED(IDC_BT_RELOAD_TEXTURE, OnBtReloadTexture)
-	ON_BN_CLICKED(IDC_BT_RECREATE_TEXTURE, OnBtRecreateTexture)
-	ON_BN_CLICKED(IDC_BT_BROWSE_TEXTURE, OnBtBrowseTexture)
-	ON_BN_CLICKED(IDC_BT_RESET_COLISION, OnBtResetColision)
-	ON_BN_CLICKED(IDC_BT_RESET_OFFSET, OnBtResetOffset)
-	ON_BN_CLICKED(IDC_BT_CALC_ALLFRAMES_BBOX, OnBtCalcAllframesBbox)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgClient)
+  ON_BN_CLICKED(IDC_CB_COMPRESION, OnCbCompresion)
+  ON_BN_CLICKED(IDC_CB_SECPERFRAME, OnCbSecperframe)
+  ON_CBN_SELENDOK(IDC_CB_PARENTBONE, OnSelendokCbParentbone)
+  ON_CBN_SELENDOK(IDC_CB_PARENTMODEL, OnSelendokCbParentmodel)
+  ON_WM_SHOWWINDOW()
+  ON_WM_VSCROLL()
+  ON_CBN_SELENDOK(IDC_CB_SHADER, OnSelendokCbShader)
+  ON_BN_CLICKED(IDC_BT_CONVERT, OnBtConvert)
+  ON_BN_CLICKED(IDC_BT_RELOAD_TEXTURE, OnBtReloadTexture)
+  ON_BN_CLICKED(IDC_BT_RECREATE_TEXTURE, OnBtRecreateTexture)
+  ON_BN_CLICKED(IDC_BT_BROWSE_TEXTURE, OnBtBrowseTexture)
+  ON_BN_CLICKED(IDC_BT_RESET_COLISION, OnBtResetColision)
+  ON_BN_CLICKED(IDC_BT_RESET_OFFSET, OnBtResetOffset)
+  ON_BN_CLICKED(IDC_BT_CALC_ALLFRAMES_BBOX, OnBtCalcAllframesBbox)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -205,7 +205,7 @@ void CDlgClient::OnCbCompresion()
   INDEX iParent = m_Tree.GetItemData(hParent);
   NodeInfo &niParent = theApp.aNodeInfo[iParent];
   // get type of selected item
-  ASSERT(niSelected.ni_iType==NT_ANIMATION);
+  ASSERT(niSelected.ni_iType == NT_ANIMATION);
 
   CAnimSet *pas = (CAnimSet*)niParent.ni_pPtr;
   Animation *pan = (Animation*)niSelected.ni_pPtr;
@@ -238,7 +238,7 @@ void CDlgClient::OnCbSecperframe()
   INDEX iParent = m_Tree.GetItemData(hParent);
   NodeInfo &niParent = theApp.aNodeInfo[iParent];
   // get type of selected item
-  ASSERT(niSelected.ni_iType==NT_ANIMATION);
+  ASSERT(niSelected.ni_iType == NT_ANIMATION);
 
   CAnimSet *pas = (CAnimSet*)niParent.ni_pPtr;
   Animation *pan = (Animation*)niSelected.ni_pPtr;
@@ -260,7 +260,7 @@ void CDlgClient::OnCbSecperframe()
 void CDlgClient::OnSelendokCbParentbone() 
 {
   CComboBox *cbParentBone = ((CComboBox*)GetDlgItem(IDC_CB_PARENTBONE));
-  if (pmiSelected==NULL) return;
+  if (pmiSelected == NULL) return;
 
   wchar_t strParentName[256];
   cbParentBone->GetLBText(cbParentBone->GetCurSel(),&strParentName[0]);
@@ -354,13 +354,13 @@ void CDlgClient::OnSelendokCbParentmodel()
 void CDlgClient::OnSelendokCbShader() 
 {
   CComboBox *cbShader = ((CComboBox*)DLGSHADER.GetDlgItem(IDC_CB_SHADER));
-  ASSERT(cbShader!=NULL);
+  ASSERT(cbShader != NULL);
   // get selected item and his parent
   HTREEITEM hSelected = m_Tree.GetSelectedItem();
   if (hSelected == NULL) return;
   INDEX iSelected = m_Tree.GetItemData(hSelected);
   NodeInfo &niSelected = theApp.aNodeInfo[iSelected];
-  ASSERT(niSelected.ni_iType==NT_MESHSURFACE);
+  ASSERT(niSelected.ni_iType == NT_MESHSURFACE);
   MeshSurface *pmsrf = (MeshSurface*)niSelected.ni_pPtr;
 
   // get text of current seleceted item in combo
@@ -378,7 +378,7 @@ void CDlgClient::OnSelendokCbShader()
 void CDlgClient::OnShowWindow(BOOL bShow, UINT nStatus) 
 {
   CComboBox *cbShader = ((CComboBox*)GetDlgItem(IDC_CB_SHADER));
-  if ((bShow==TRUE) && (cbShader!=NULL))
+  if ((bShow == TRUE) && (cbShader != NULL))
   {
     // read all shaders files
     CDynamicStackArray<CTFileName> afnShaders;
@@ -390,7 +390,7 @@ void CDlgClient::OnShowWindow(BOOL bShow, UINT nStatus)
       cbShader->AddString(CString(fnShader.FileName()));
     }
   }
-	CDialog::OnShowWindow(bShow, nStatus);
+  CDialog::OnShowWindow(bShow, nStatus);
 }
 
 void CDlgClient::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
@@ -398,10 +398,10 @@ void CDlgClient::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
   int iPosition = GetScrollPos(SB_VERT);
   int iMin,iMax;
   GetScrollRange(SB_VERT,&iMin,&iMax);
-  if (iMax<=iMin) return;
+  if (iMax <= iMin) return;
 
-	CDialog::OnVScroll(nSBCode, nPos, pScrollBar);
-	switch (nSBCode )
+  CDialog::OnVScroll(nSBCode, nPos, pScrollBar);
+  switch (nSBCode )
   {
     case SB_THUMBTRACK:
     case SB_THUMBPOSITION:
@@ -435,23 +435,23 @@ void CDlgClient::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 BOOL CDlgClient::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN)
+  if (pMsg->message == WM_KEYDOWN)
   {
-    if (((int)pMsg->wParam==VK_ESCAPE) || ((int)pMsg->wParam==VK_RETURN))
+    if (((int)pMsg->wParam == VK_ESCAPE) || ((int)pMsg->wParam == VK_RETURN))
     {
       // don't let dialog to get enter or esc key
       return TRUE;
     }
   }
-	
-	return CDialog::PreTranslateMessage(pMsg);
+  
+  return CDialog::PreTranslateMessage(pMsg);
 }
 
 void CDlgClient::OnBtConvert() 
 {
   HTREEITEM hSelected = m_Tree.GetSelectedItem();
   // just in case that no item is seleceted
-  if (hSelected==NULL) {
+  if (hSelected == NULL) {
     return;
   }
 
@@ -501,7 +501,7 @@ void CDlgClient::OnBtReloadTexture()
 {
   HTREEITEM hSelected = m_Tree.GetSelectedItem();
   // just in case that no item is seleceted
-  if (hSelected==NULL) {
+  if (hSelected == NULL) {
     return;
   }
   
@@ -519,7 +519,7 @@ void CDlgClient::OnBtRecreateTexture()
 {
   HTREEITEM hSelected = m_Tree.GetSelectedItem();
   // just in case that no item is seleceted
-  if (hSelected==NULL) {
+  if (hSelected == NULL) {
     return;
   }
   NodeInfo &niSelected = theApp.m_dlgBarTreeView.GetNodeInfo(hSelected);
@@ -536,19 +536,19 @@ void CDlgClient::OnBtRecreateTexture()
 
 void CDlgClient::OnBtBrowseTexture() 
 {
-	CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
-  if (pDoc==NULL) {
+  CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
+  if (pDoc == NULL) {
     ASSERT(FALSE);
     return;
   }
 
   HTREEITEM hSelected = m_Tree.GetSelectedItem();;
-  if (hSelected==NULL) {
+  if (hSelected == NULL) {
     ASSERT(FALSE);
     return;
   }
   HTREEITEM hParent = m_Tree.GetParentItem(hSelected);
-  if (hParent==NULL) {
+  if (hParent == NULL) {
     ASSERT(FALSE);
     return;
   }
@@ -562,15 +562,15 @@ void CDlgClient::OnBtBrowseTexture()
     TextureInstance *pti = (TextureInstance*)ni.ni_pPtr;
     MeshInstance *pmshi = (MeshInstance*)niParent.ni_pPtr;
     CModelInstance *pmi = (CModelInstance*)ni.pmi;
-    ASSERT(pmi!=NULL);
-    ASSERT(pti!=NULL);
-    ASSERT(pmshi!=NULL);
+    ASSERT(pmi != NULL);
+    ASSERT(pti != NULL);
+    ASSERT(pmshi != NULL);
 
     // browse texture
     //CDynamicArray<CTFileName> afnTexture;
     CTFileName fnTexture = _EngineGUI.FileRequester( "Open texture files", 
       FILTER_TEXTURE, "Open directory", "Models\\", "", NULL);
-    if (fnTexture=="") {
+    if (fnTexture == "") {
       return;
     }
 
@@ -588,7 +588,7 @@ void CDlgClient::OnBtBrowseTexture()
 
 void CDlgClient::OnBtResetColision() 
 {
-	CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
+  CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   NodeInfo &ni = theApp.m_dlgBarTreeView.GetSelectedNodeInfo();
   if (ni.ni_iType == NT_COLISIONBOX) {
     ColisionBox &cb = *(ColisionBox*)ni.ni_pPtr;
@@ -604,7 +604,7 @@ void CDlgClient::OnBtResetColision()
 
 void CDlgClient::OnBtResetOffset() 
 {
-	CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
+  CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   NodeInfo &ni = theApp.m_dlgBarTreeView.GetSelectedNodeInfo();
   if (ni.ni_iType == NT_MODELINSTANCE) {
     CModelInstance &mi = *(CModelInstance*)ni.ni_pPtr;
@@ -652,7 +652,7 @@ static void ClearAnimQueue(CModelInstance &mi)
 // Recalculate all frames bounding box for current model
 void CDlgClient::OnBtCalcAllframesBbox() 
 {
-	CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
+  CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   CModelInstance *pmi = pmiSelected;
   if (pmi == NULL) return;
   FLOATaabbox3D bbox;
@@ -675,13 +675,13 @@ void CDlgClient::OnBtCalcAllframesBbox()
       ClearAnimQueue(*pmi);
       pmi->NewClearState(0.0f);
       pmi->AddAnimation(an.an_iID,AN_NOGROUP_SORT,1,0);
-      ASSERT(aq.aq_Lists.Count()==1);
+      ASSERT(aq.aq_Lists.Count() == 1);
       FLOAT fNow = CTimer::InSeconds(aq.aq_Lists[0].al_llStartTime) - fSecPerFrame*ctFrames;
 
       // for each frame in animation
       for (INDEX ifr=0;ifr<ctFrames;ifr++) {
         AnimList &an = aq.aq_Lists[0];
-        ASSERT(an.al_PlayedAnims.Count()==1);
+        ASSERT(an.al_PlayedAnims.Count() == 1);
         PlayedAnim &pa = an.al_PlayedAnims[0];
         an.al_llStartTime = CTimer::InTicks(fNow);
         pa.pa_llStartTime = CTimer::InTicks(fNow);

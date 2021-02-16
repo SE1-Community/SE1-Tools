@@ -29,8 +29,8 @@ class CDropDown : public CComboBox
 {
 // Construction
 public:
-	CDropDown();
-	virtual ~CDropDown();
+  CDropDown();
+  virtual ~CDropDown();
 
   void SetDataPtr(INDEX *pID);
   CTString m_strID; // ID of control (base texture)
@@ -40,17 +40,17 @@ public:
 
 
   
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CDropDown)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CDropDown)
+  //}}AFX_VIRTUAL
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CDropDown)
-	afx_msg void OnSelendok();
-	//}}AFX_MSG
+  //{{AFX_MSG(CDropDown)
+  afx_msg void OnSelendok();
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

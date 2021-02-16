@@ -40,15 +40,15 @@ CModelTreeCtrl::~CModelTreeCtrl()
 }
 
 BEGIN_MESSAGE_MAP(CModelTreeCtrl, CTreeCtrl)
-	//{{AFX_MSG_MAP(CModelTreeCtrl)
+  //{{AFX_MSG_MAP(CModelTreeCtrl)
   ON_NOTIFY_REFLECT (TVN_SELCHANGED, OnSelChanged)
-	ON_WM_CHAR()
-	ON_NOTIFY_REFLECT(TVN_KEYDOWN, OnKeydown)
-	ON_NOTIFY_REFLECT(NM_CLICK, OnItemClick)
-	ON_NOTIFY_REFLECT(NM_DBLCLK, OnItemDblclk)
-	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
-	ON_NOTIFY_REFLECT(NM_RDBLCLK, OnRdblclk)
-	//}}AFX_MSG_MAP
+  ON_WM_CHAR()
+  ON_NOTIFY_REFLECT(TVN_KEYDOWN, OnKeydown)
+  ON_NOTIFY_REFLECT(NM_CLICK, OnItemClick)
+  ON_NOTIFY_REFLECT(NM_DBLCLK, OnItemDblclk)
+  ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
+  ON_NOTIFY_REFLECT(NM_RDBLCLK, OnRdblclk)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 void CModelTreeCtrl::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
@@ -69,7 +69,7 @@ void CModelTreeCtrl::OnItemClick(NMHDR* pNMHDR, LRESULT* pResult)
   GetCursorPos(&pt);
   ScreenToClient(&pt);
   HTREEITEM hClicked = HitTest(pt,&uiFlags);
-  if (hClicked!=NULL) {
+  if (hClicked != NULL) {
     RECT rcItem;
     // get item rect
     GetItemRect(hClicked,&rcItem,TRUE);
@@ -91,7 +91,7 @@ void CModelTreeCtrl::OnItemClick(NMHDR* pNMHDR, LRESULT* pResult)
       theApp.m_dlgBarTreeView.OnItemIconClick(hClicked);
     }
   }
-	*pResult = 0;
+  *pResult = 0;
 }
 
 void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -101,7 +101,7 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
   GetCursorPos(&pt);
   ScreenToClient(&pt);
   HTREEITEM hClicked = HitTest(pt,&uiFlags);
-  if (hClicked!=NULL)
+  if (hClicked != NULL)
   {
     NodeInfo &ni = theApp.m_dlgBarTreeView.GetNodeInfo(hClicked);
     RECT rcItem;
@@ -137,42 +137,42 @@ void CModelTreeCtrl::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
         case NT_ALLFRAMESBBOX  : iMenuIndex = 6; break;
         case NT_MESHSURFACE    : iMenuIndex =-1; break;
       }
-      if (iMenuIndex>=0) {
+      if (iMenuIndex >= 0) {
         Select(hClicked,TVGN_CARET);
         CMenu *pPopup = menu.GetSubMenu(iMenuIndex);
         CSeriousSkaStudioView *pSKAView = theApp.GetActiveView();
-        if (pPopup!=NULL && pSKAView!=NULL) {
+        if (pPopup != NULL && pSKAView != NULL) {
           CRect rc;
           GetWindowRect(&rc);
           pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
-								       rc.left+pt.x, rc.top+pt.y, pSKAView);
+                       rc.left+pt.x, rc.top+pt.y, pSKAView);
         }
       }
     }
   }
-	*pResult = 1;
+  *pResult = 1;
 }
 
 void CModelTreeCtrl::OnRdblclk(NMHDR* pNMHDR, LRESULT* pResult) 
 {
   OnRclick(pNMHDR,pResult);
-	*pResult = 1;
+  *pResult = 1;
 }
 
 void CModelTreeCtrl::OnItemDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	OnItemClick(pNMHDR,pResult);
-	*pResult = 0;
+  OnItemClick(pNMHDR,pResult);
+  *pResult = 0;
 }
 
 void CModelTreeCtrl::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	CTreeCtrl::OnChar(nChar, nRepCnt, nFlags);
+  CTreeCtrl::OnChar(nChar, nRepCnt, nFlags);
 }
 
 void CModelTreeCtrl::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pNMHDR; 
+  TV_KEYDOWN* pTVKeyDown = (TV_KEYDOWN*)pNMHDR; 
   BOOL bControl = (GetKeyState( VK_CONTROL)&0x8000) != 0;
 
   switch (pTVKeyDown->wVKey)
@@ -199,6 +199,6 @@ void CModelTreeCtrl::OnKeydown(NMHDR* pNMHDR, LRESULT* pResult)
     }
     break;
   }
-	
-	*pResult = 0;
+  
+  *pResult = 0;
 }

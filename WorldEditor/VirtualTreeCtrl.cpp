@@ -45,12 +45,12 @@ void CVirtualTreeCtrl::SetBrowserPtr( CBrowser *pBrowser)
 }
 
 BEGIN_MESSAGE_MAP(CVirtualTreeCtrl, CTreeCtrl)
-	//{{AFX_MSG_MAP(CVirtualTreeCtrl)
-	ON_WM_LBUTTONDBLCLK()
-	ON_WM_KEYDOWN()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_DROPFILES()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CVirtualTreeCtrl)
+  ON_WM_LBUTTONDBLCLK()
+  ON_WM_KEYDOWN()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_DROPFILES()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -58,11 +58,11 @@ END_MESSAGE_MAP()
 
 void CVirtualTreeCtrl::CloseTreeCtrl(void) 
 {
-	if (m_bIsOpen)
+  if (m_bIsOpen)
   {
     m_pBrowser->m_TreeHeight = CLOSED_TREE;
     m_pBrowser->CalcDynamicLayout(0, LM_HORZDOCK);
-	  m_bIsOpen = FALSE;
+    m_bIsOpen = FALSE;
 
     if (GetCount() != 0)
     {
@@ -73,12 +73,12 @@ void CVirtualTreeCtrl::CloseTreeCtrl(void)
     }
   }
   // Enable drag/drop open
-	DragAcceptFiles();
+  DragAcceptFiles();
 }
 
 void CVirtualTreeCtrl::OpenTreeCtrl(void)
 {
-	if (!m_bIsOpen)
+  if (!m_bIsOpen)
   {
     m_pBrowser->m_TreeHeight = OPEN_TREE;
     m_pBrowser->CalcDynamicLayout(0, LM_HORZDOCK);
@@ -96,7 +96,7 @@ void CVirtualTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
   CVirtualTreeNode *pVTN = ItemForCoordinate(point);
   // if is not null and not root
-  if (pVTN!=NULL && pVTN->vnt_pvtnParent!=NULL)
+  if (pVTN != NULL && pVTN->vnt_pvtnParent != NULL)
   {
     CTString strAddr;
     strAddr.PrintF("VTN%d", pVTN);
@@ -106,7 +106,7 @@ void CVirtualTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
   }
 
   OpenTreeCtrl();
-	CTreeCtrl::OnLButtonDown(nFlags, point);
+  CTreeCtrl::OnLButtonDown(nFlags, point);
 }
 
 
@@ -114,46 +114,46 @@ CVirtualTreeNode *CVirtualTreeCtrl::ItemForCoordinate(CPoint pt)
 {
   UINT ulFlags;
   HTREEITEM pItem=HitTest(pt, &ulFlags);
-  if (pItem==NULL || !(ulFlags&TVHT_ONITEMICON)) return NULL;
+  if (pItem == NULL || !(ulFlags&TVHT_ONITEMICON)) return NULL;
   CVirtualTreeNode *pVTN = (CVirtualTreeNode *)GetItemData( pItem);
   return pVTN;
 }
 
 void CVirtualTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
-	CloseTreeCtrl();
-	
-	CTreeCtrl::OnLButtonDblClk(nFlags, point);
+  CloseTreeCtrl();
+  
+  CTreeCtrl::OnLButtonDblClk(nFlags, point);
 }
 
 void CVirtualTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	UWORD uwScanCode = nFlags & 255;
-  BOOL bAlt = (nFlags & (1L<<13)) != 0;
-	
+  UWORD uwScanCode = nFlags & 255;
+  BOOL bAlt = (nFlags & (1L << 13)) != 0;
+  
   /*
   if (uwScanCode == 82)                // Insert
   {
     m_pBrowser->OnCreateDirectory();
   }
-	else if (uwScanCode == 83)           // Delete
+  else if (uwScanCode == 83)           // Delete
   {
     m_pBrowser->OnDeleteDirectory();
   }
-	else if (bAlt && (uwScanCode == 19)) // Alt-R - rename
+  else if (bAlt && (uwScanCode == 19)) // Alt-R - rename
   {
     m_pBrowser->OnRenameDirectory();
   }
-	else if (bAlt && (uwScanCode == 38)) // Alt+O - open
+  else if (bAlt && (uwScanCode == 38)) // Alt+O - open
   {
     m_pBrowser->OnLoadVirtualTree();
   }
-	else if (bAlt && (uwScanCode == 31)) // Alt+S - save
+  else if (bAlt && (uwScanCode == 31)) // Alt+S - save
   {
     m_pBrowser->OnSaveVirtualTree();
   }
   */
-	
+  
   CTreeCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
@@ -162,15 +162,15 @@ void CVirtualTreeCtrl::OnContextMenu( CPoint point)
   CMenu menu;
   if (menu.LoadMenu(IDR_VTREEPOPUP))
   {
-		CMenu* pPopup = menu.GetSubMenu(0);
+    CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
-								 point.x, point.y, m_pBrowser);
+                 point.x, point.y, m_pBrowser);
   }
 }
 
 void CVirtualTreeCtrl::OnDropFiles(HDROP hDropInfo) 
 {
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   INDEX ctFiles = DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0);
 
   // get dropped coordinates
@@ -178,18 +178,18 @@ void CVirtualTreeCtrl::OnDropFiles(HDROP hDropInfo)
   DragQueryPoint( hDropInfo, &point);
   
   CVirtualTreeNode *pVTNDst = ItemForCoordinate(point);
-  if (pVTNDst!=NULL)
+  if (pVTNDst != NULL)
   {
     for (INDEX i=0; i<ctFiles; i++)
     {
-	    wchar_t chrFile[ 256];
+      wchar_t chrFile[ 256];
       DragQueryFile( hDropInfo, i, chrFile, 256);
       CTString strAddr = CTString(CStringA(chrFile));
       if (strAddr != "")
       {
         CVirtualTreeNode *pVTNSrc;
         strAddr.ScanF("VTN%d", &pVTNSrc);
-        if (pVTNSrc==pVTNDst) return;
+        if (pVTNSrc == pVTNDst) return;
         pVTNSrc->MoveToDirectory( pVTNDst);
         // delete all items
         DeleteAllItems();
@@ -202,5 +202,5 @@ void CVirtualTreeCtrl::OnDropFiles(HDROP hDropInfo)
     }
   }
 
-	CTreeCtrl::OnDropFiles(hDropInfo);
+  CTreeCtrl::OnDropFiles(hDropInfo);
 }

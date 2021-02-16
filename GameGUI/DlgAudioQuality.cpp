@@ -30,18 +30,18 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDlgAudioQuality::CDlgAudioQuality(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgAudioQuality::IDD, pParent)
+  : CDialog(CDlgAudioQuality::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgAudioQuality)
-	m_iAudioQualityRadio = -1;
-	m_bUseDirectSound3D = FALSE;
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgAudioQuality)
+  m_iAudioQualityRadio = -1;
+  m_bUseDirectSound3D = FALSE;
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE)
@@ -59,9 +59,9 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX)
   }
 
   //{{AFX_DATA_MAP(CDlgAudioQuality)
-	DDX_Radio(pDX, IDC_AUDIO_QUALITY_LOW, m_iAudioQualityRadio);
-	DDX_Check(pDX, IDC_USE_DSOUND3D, m_bUseDirectSound3D);
-	//}}AFX_DATA_MAP
+  DDX_Radio(pDX, IDC_AUDIO_QUALITY_LOW, m_iAudioQualityRadio);
+  DDX_Check(pDX, IDC_USE_DSOUND3D, m_bUseDirectSound3D);
+  //}}AFX_DATA_MAP
   
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -81,9 +81,9 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgAudioQuality, CDialog)
-	//{{AFX_MSG_MAP(CDlgAudioQuality)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgAudioQuality)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

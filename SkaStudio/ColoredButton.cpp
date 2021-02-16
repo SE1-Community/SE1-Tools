@@ -67,19 +67,19 @@ CColoredButton::~CColoredButton()
 
 
 BEGIN_MESSAGE_MAP(CColoredButton, CButton)
-	//{{AFX_MSG_MAP(CColoredButton)
-	ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_CONTEXTMENU()
+  //{{AFX_MSG_MAP(CColoredButton)
+  ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
+  ON_WM_MOUSEMOVE()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_LBUTTONUP()
+  ON_WM_CONTEXTMENU()
 /*
-	ON_COMMAND(ID_COPY_COLOR, OnCopyColor)
-	ON_COMMAND(ID_PASTE_COLOR, OnPasteColor)
-	ON_COMMAND(ID_NUMERIC_ALPHA, OnNumericAlpha)
+  ON_COMMAND(ID_COPY_COLOR, OnCopyColor)
+  ON_COMMAND(ID_PASTE_COLOR, OnPasteColor)
+  ON_COMMAND(ID_NUMERIC_ALPHA, OnNumericAlpha)
 */
-	ON_WM_LBUTTONDBLCLK()
-	//}}AFX_MSG_MAP
+  ON_WM_LBUTTONDBLCLK()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -169,7 +169,7 @@ void CColoredButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 BOOL MyChooseColor( COLORREF &clrNewColor, CWnd &wndOwner)
 {
-	COLORREF MyCustColors[ 16];
+  COLORREF MyCustColors[ 16];
   CHOOSECOLOR ccInit;
 
   ASSERT( &wndOwner != NULL);
@@ -251,7 +251,7 @@ static BOOL _bMouseMoveEnabled;
 void CColoredButton::OnLButtonDown(UINT nFlags, CPoint point) 
 {
   m_ptCenter.x = ::GetSystemMetrics(SM_CXSCREEN)/2;
-	m_ptCenter.y = ::GetSystemMetrics(SM_CYSCREEN)/2;
+  m_ptCenter.y = ::GetSystemMetrics(SM_CYSCREEN)/2;
   GetCursorPos( &m_ptStarting);
 
   SetOverButtonInfo( point);
@@ -359,7 +359,7 @@ void CColoredButton::OnContextMenu(CWnd* pWnd, CPoint point)
   {
     CMenu* pPopup = menu.GetSubMenu(0);
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
-								 point.x, point.y, this);
+                 point.x, point.y, this);
   }
 */
 }
@@ -398,5 +398,5 @@ void CColoredButton::OnNumericAlpha()
 void CColoredButton::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
   OnNumericAlpha();
-	CButton::OnLButtonDblClk(nFlags, point);
+  CButton::OnLButtonDblClk(nFlags, point);
 }

@@ -44,11 +44,11 @@ CWndTestAnimation::~CWndTestAnimation()
 
 
 BEGIN_MESSAGE_MAP(CWndTestAnimation, CWnd)
-	//{{AFX_MSG_MAP(CWndTestAnimation)
-	ON_WM_PAINT()
-	ON_WM_TIMER()
-	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CWndTestAnimation)
+  ON_WM_PAINT()
+  ON_WM_TIMER()
+  ON_WM_DESTROY()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -94,7 +94,7 @@ void CWndTestAnimation::OnPaint()
     // unlock the drawport
     m_pDrawPort->Unlock();
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       // swap it
       m_pViewPort->SwapBuffers();
@@ -105,7 +105,7 @@ void CWndTestAnimation::OnPaint()
 static TICK _llLastTick = 0;
 void CWndTestAnimation::OnTimer(UINT nIDEvent) 
 {
-	// on our timer discard test animation window
+  // on our timer discard test animation window
   if (nIDEvent == 1)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
@@ -114,17 +114,17 @@ void CWndTestAnimation::OnTimer(UINT nIDEvent)
       _pTimer->SetGameTick(llCurrentTick);
       _llLastTick = llCurrentTick;
     }
-    Invalidate(FALSE);	
+    Invalidate(FALSE);  
   }
 
-	CWnd::OnTimer(nIDEvent);
+  CWnd::OnTimer(nIDEvent);
 }
 
 void CWndTestAnimation::OnDestroy() 
 {
   KillTimer( m_iTimerID);
   _pTimer->SetGameTick(0);
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 
   if (m_pViewPort != NULL)
   {

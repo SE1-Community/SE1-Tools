@@ -40,9 +40,9 @@ CPrimitiveHistoryCombo::~CPrimitiveHistoryCombo()
 
 
 BEGIN_MESSAGE_MAP(CPrimitiveHistoryCombo, CComboBox)
-	//{{AFX_MSG_MAP(CPrimitiveHistoryCombo)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CPrimitiveHistoryCombo)
+    // NOTE - the ClassWizard will add and remove mapping macros here.
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -149,14 +149,14 @@ void CPrimitiveHistoryCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   if (pVFP->vfp_ptPrimitiveType == PT_STAIRCASES)
   {
     HICON hTopStairsIcon;
-    if (     pVFP->vfp_iTopShape == 0) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_STAIRS);
+    if (pVFP->vfp_iTopShape == 0) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_STAIRS);
     else if (pVFP->vfp_iTopShape == 1) hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_SLOPE);
     else                               hTopStairsIcon = theApp.LoadIcon( IDR_ICON_TOP_CEILING);
     pDC->DrawIcon( pixCursor, rectItem.top, hTopStairsIcon);
     pixCursor += 22;
 
     HICON hBottomStairsIcon;
-    if (     pVFP->vfp_iTopShape == 0) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_STAIRS);
+    if (pVFP->vfp_iTopShape == 0) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_STAIRS);
     else if (pVFP->vfp_iTopShape == 1) hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_SLOPE);
     else                               hBottomStairsIcon = theApp.LoadIcon( IDR_ICON_BOTTOM_FLOOR);
     pDC->DrawIcon( pixCursor, rectItem.top, hBottomStairsIcon);

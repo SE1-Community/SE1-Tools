@@ -67,13 +67,13 @@ INDEX ctMeshVxAfterOpt = 0;
 // CSeriousSkaStudioApp
 
 BEGIN_MESSAGE_MAP(CSeriousSkaStudioApp, CWinApp)
-	//{{AFX_MSG_MAP(CSeriousSkaStudioApp)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
-	ON_COMMAND(ID_FILE_NEW, OnFileNew)
-	ON_COMMAND(ID_IMPORT_CONVERT, OnImportConvert)
-	//}}AFX_MSG_MAP
-	// Standard file based document commands
+  //{{AFX_MSG_MAP(CSeriousSkaStudioApp)
+  ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+  ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
+  ON_COMMAND(ID_FILE_NEW, OnFileNew)
+  ON_COMMAND(ID_IMPORT_CONVERT, OnImportConvert)
+  //}}AFX_MSG_MAP
+  // Standard file based document commands
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ void CSeriousSkaStudioApp::DisableRendering()
 void CSeriousSkaStudioApp::EnableRendering()
 {
   ctNoRenderRequests--;
-  ASSERT(ctNoRenderRequests>=0);
+  ASSERT(ctNoRenderRequests >= 0);
   ctNoRenderRequests = ClampDn(ctNoRenderRequests,(INDEX)0);
 }
 INDEX CSeriousSkaStudioApp::GetDisableRenderRequests()
@@ -117,43 +117,43 @@ BOOL CSeriousSkaStudioApp::InitInstance()
 
 int CSeriousSkaStudioApp::Run()
 {
-	int iResult;
+  int iResult;
   CTSTREAM_BEGIN {
     iResult=CWinApp::Run();
   } CTSTREAM_END;
-	return iResult;
+  return iResult;
 }
 
 BOOL CSeriousSkaStudioApp::SubInitInstance()
 {
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
+  // Standard initialization
+  // If you are not using these features and wish to reduce the size
+  //  of your final executable, you should remove from the following
+  //  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
+  Enable3dControls();      // Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+  Enable3dControlsStatic();  // Call this when linking to MFC statically
 #endif
 
-	// Change the registry key under which our settings are stored.
-	// TODO: You should modify this string to be something appropriate
-	// such as the name of your company or organization.
-	SetRegistryKey( L"CroTeam");
+  // Change the registry key under which our settings are stored.
+  // TODO: You should modify this string to be something appropriate
+  // such as the name of your company or organization.
+  SetRegistryKey( L"CroTeam");
 
-	LoadStdProfileSettings(8);  // Load standard INI file options (including MRU)
+  LoadStdProfileSettings(8);  // Load standard INI file options (including MRU)
 
-	// Register the application's document templates.  Document templates
-	//  serve as the connection between documents, frame windows and views.
+  // Register the application's document templates.  Document templates
+  //  serve as the connection between documents, frame windows and views.
 
   CMultiDocTemplate* pDocTemplate;
   m_pdtDocTemplate = pDocTemplate = new CMultiDocTemplate(
-		IDR_SERIOUTYPE,
-		RUNTIME_CLASS(CSeriousSkaStudioDoc),
-		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
-		RUNTIME_CLASS(CSeriousSkaStudioView));
-	AddDocTemplate(m_pdtDocTemplate);
+    IDR_SERIOUTYPE,
+    RUNTIME_CLASS(CSeriousSkaStudioDoc),
+    RUNTIME_CLASS(CChildFrame), // custom MDI child frame
+    RUNTIME_CLASS(CSeriousSkaStudioView));
+  AddDocTemplate(m_pdtDocTemplate);
 
   // initialize entire engine
   SE_InitEngine("");
@@ -178,29 +178,29 @@ BOOL CSeriousSkaStudioApp::SubInitInstance()
   }
   
   // create main MDI Frame window
-	CMainFrame* pMainFrame = new CMainFrame;
-	if (!pMainFrame->LoadFrame(IDR_MAINFRAME))
-		return FALSE;
-	m_pMainWnd = pMainFrame;
+  CMainFrame* pMainFrame = new CMainFrame;
+  if (!pMainFrame->LoadFrame(IDR_MAINFRAME))
+    return FALSE;
+  m_pMainWnd = pMainFrame;
 
   // Enable drag/drop open
-	m_pMainWnd->DragAcceptFiles();
+  m_pMainWnd->DragAcceptFiles();
 
-	// Enable DDE Execute open
-	EnableShellOpen();
-	RegisterShellFileTypes(TRUE);
+  // Enable DDE Execute open
+  EnableShellOpen();
+  RegisterShellFileTypes(TRUE);
 
-	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
-	
+  // Parse command line for standard shell commands, DDE, file open
+  CCommandLineInfo cmdInfo;
+  
   // don't start new document automatically
   cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
 
   ParseCommandLine(cmdInfo);
 
-	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
-		return FALSE;
+  // Dispatch commands specified on the command line
+  if (!ProcessShellCommand(cmdInfo))
+    return FALSE;
 
   // load startup script
   _pShell->Execute( "include \"Scripts\\SkaStudio_Startup.ini\"");
@@ -222,15 +222,15 @@ BOOL CSeriousSkaStudioApp::SubInitInstance()
   // theApp.m_wndSpliterLogFrame.SubclassDlgItem(IDC_SPLITER_LOG_FRAME,&m_dlgErrorList);
   // theApp.m_wndSpliterLogFrame.SetOrientation(SPF_TOP);
   // The main window has been initialized, so show and update it.
-	pMainFrame->ShowWindow(m_nCmdShow|SW_SHOWMAXIMIZED);
-	pMainFrame->UpdateWindow();
-	return TRUE;
+  pMainFrame->ShowWindow(m_nCmdShow|SW_SHOWMAXIMIZED);
+  pMainFrame->UpdateWindow();
+  return TRUE;
 }
 
 BOOL CSeriousSkaStudioApp::OnIdle(LONG lCount) 
 {
   POSITION pos = m_pdtDocTemplate->GetFirstDocPosition();
-  while (pos!=NULL)
+  while (pos != NULL)
   {
     CSeriousSkaStudioDoc *pmdCurrent = (CSeriousSkaStudioDoc *)m_pdtDocTemplate->GetNextDoc(pos);
     pmdCurrent->OnIdle();
@@ -253,21 +253,21 @@ void CSeriousSkaStudioApp::OnFileNew()
 
   CDocument* pDocument = m_pdtDocTemplate->CreateNewDocument();
   if (pDocument == NULL)
-	{
-		TRACE0("CDocTemplate::CreateNewDocument returned NULL.\n");
-		AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
-		return;
-	}
-	ASSERT_VALID(pDocument);
+  {
+    TRACE0("CDocTemplate::CreateNewDocument returned NULL.\n");
+    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
+    return;
+  }
+  ASSERT_VALID(pDocument);
   // View creation
-	CFrameWnd* pFrame = m_pdtDocTemplate->CreateNewFrame(pDocument, NULL);
-	if (pFrame == NULL)
-	{
-		AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
-		delete pDocument;       // explicit delete on error
-		return;
-	}
-	ASSERT_VALID(pFrame);
+  CFrameWnd* pFrame = m_pdtDocTemplate->CreateNewFrame(pDocument, NULL);
+  if (pFrame == NULL)
+  {
+    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
+    delete pDocument;       // explicit delete on error
+    return;
+  }
+  ASSERT_VALID(pFrame);
 
   // add file to mru
   CTString strFileName = pmi->mi_fnSourceFile.FileName() + pmi->mi_fnSourceFile.FileExt();
@@ -279,7 +279,7 @@ void CSeriousSkaStudioApp::OnFileNew()
   pDocument->SetTitle(CString(strFileName));
 
   pDocument->SetModifiedFlag( FALSE);
-	m_pdtDocTemplate->InitialUpdateFrame(pFrame, pDocument, TRUE);
+  m_pdtDocTemplate->InitialUpdateFrame(pFrame, pDocument, TRUE);
   // set root model instance
   theApp.GetDocument()->m_ModelInstance = pmi;
   // theApp.SaveRootModel();
@@ -296,7 +296,7 @@ void CSeriousSkaStudioApp::OnFileOpen()
     "ASCII model files (*.smc)\0*.smc\0"
     "All files (*.*)\0*.*\0\0",
     "Open directory", "Models\\", "");
-  if (fnSim=="") return;
+  if (fnSim == "") return;
 
   CTFileName fnFull;
   fnFull = _fnmApplicationPath + fnSim;
@@ -311,21 +311,21 @@ void CSeriousSkaStudioApp::OnFileOpen()
   // create new document
   CDocument* pDocument = m_pdtDocTemplate->CreateNewDocument();
   if (pDocument == NULL)
-	{
-		TRACE0("CDocTemplate::CreateNewDocument returned NULL.\n");
-		AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
-		return;
-	}
-	ASSERT_VALID(pDocument);
+  {
+    TRACE0("CDocTemplate::CreateNewDocument returned NULL.\n");
+    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
+    return;
+  }
+  ASSERT_VALID(pDocument);
   // View creation
-	CFrameWnd* pFrame = m_pdtDocTemplate->CreateNewFrame(pDocument, NULL);
-	if (pFrame == NULL)
-	{
-		AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
-		delete pDocument;       // explicit delete on error
-		return;
-	}
-	ASSERT_VALID(pFrame);
+  CFrameWnd* pFrame = m_pdtDocTemplate->CreateNewFrame(pDocument, NULL);
+  if (pFrame == NULL)
+  {
+    AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
+    delete pDocument;       // explicit delete on error
+    return;
+  }
+  ASSERT_VALID(pFrame);
 
   pDocument->SetModifiedFlag( FALSE);
 
@@ -391,7 +391,7 @@ BOOL StartParser(CTString fnParseFile)
   // load data
   try
   {
-    if (yyin==NULL) {
+    if (yyin == NULL) {
       ThrowF_t("Cannot open file '%s'!", (const char*)fnParseFile );
     }
 
@@ -406,7 +406,7 @@ BOOL StartParser(CTString fnParseFile)
     WarningMessage(strError);
     // AfxMessageBox(strError);
     theApp.ErrorMessage(strError);
-    if (yyin!=NULL) fclose(yyin);
+    if (yyin != NULL) fclose(yyin);
     return FALSE;
   }
 return TRUE;
@@ -563,14 +563,14 @@ BOOL CSeriousSkaStudioApp::ConvertAnimSet(CTFileName fnAnimSet)
 // Save smc file
 void CSeriousSkaStudioApp::SaveSmcFile(CModelInstance &mi,BOOL bSaveChildren)
 {
-	CSeriousSkaStudioDoc *pDoc = GetDocument();
+  CSeriousSkaStudioDoc *pDoc = GetDocument();
 
   // first get first model instance that has its file
   CModelInstance *pmiParent=NULL;
   CModelInstance *pmiFirst=&mi;
   CTFileName fnSmc = mi.mi_fnSourceFile;
   CModelInstance *pfmi = mi.GetFirstNonReferencedParent(GetDocument()->m_ModelInstance);
-  if (pfmi!=NULL) {
+  if (pfmi != NULL) {
     pmiParent = pfmi->GetParent(pDoc->m_ModelInstance);
     pmiFirst = pfmi;
     fnSmc = pfmi->mi_fnSourceFile;
@@ -765,9 +765,9 @@ BOOL CSeriousSkaStudioApp::ConvertAnimationInAnimSet(CAnimSet *pas,Animation *pa
 void CSeriousSkaStudioApp::UpdateRootModelInstance()
 {
   CSeriousSkaStudioDoc *pDoc = GetDocument();
-  if (pDoc!=NULL) {
+  if (pDoc != NULL) {
     CModelInstance *pmi = pDoc->m_ModelInstance;
-    if (pmi!=NULL) {
+    if (pmi != NULL) {
       m_dlgBarTreeView.UpdateModelInstInfo(pmi);
     }
   }
@@ -776,10 +776,10 @@ void CSeriousSkaStudioApp::UpdateRootModelInstance()
 void CSeriousSkaStudioApp::ReloadRootModelInstance()
 {
   DisableRendering();
-	CSeriousSkaStudioDoc *pDoc = GetDocument();
+  CSeriousSkaStudioDoc *pDoc = GetDocument();
   CModelInstance *pmi=NULL;
 
-  if (pDoc==NULL) pmi = NULL;
+  if (pDoc == NULL) pmi = NULL;
   else pmi = pDoc->m_ModelInstance;
   // flag for parser to remember source file names
   CModelInstance::EnableSrcRememberFN(TRUE);
@@ -818,7 +818,7 @@ void CSeriousSkaStudioApp::ReselectCurrentItem()
 
 void CSeriousSkaStudioApp::OnImportConvert() 
 {
-	CSeriousSkaStudioDoc *pDoc = GetDocument();
+  CSeriousSkaStudioDoc *pDoc = GetDocument();
   CDynamicArray<CTFileName> afnCovert;
   _EngineGUI.FileRequester( "Open ASCII intermediate files",
     FILTER_ASCII FILTER_MESH_LIST FILTER_SKELETON_LIST FILTER_ANIMSET_LISTS FILTER_ALL,
@@ -836,21 +836,21 @@ void CSeriousSkaStudioApp::OnImportConvert()
     char fnCurent[256];
     strcpy(fnCurent,itConvert.Current());
     char *pchDot = strrchr(fnCurent, '.');
-    if (pchDot==NULL) 
+    if (pchDot == NULL) 
       continue;
-    else if (strcmp((_strlwr(pchDot)),".aml")==0) 
+    else if (strcmp((_strlwr(pchDot)),".aml") == 0) 
     {
       if (ConvertMesh(itConvert.Current()))
       {
         ctMeshes++;
       }
     }
-    else if (strcmp((_strlwr(pchDot)),".asl")==0)
+    else if (strcmp((_strlwr(pchDot)),".asl") == 0)
     {
       if (ConvertSkeleton(itConvert.Current()))
         ctSkeletons++;
     }
-    else if (strcmp((_strlwr(pchDot)),".aal")==0)
+    else if (strcmp((_strlwr(pchDot)),".aal") == 0)
     {
       if (ConvertAnimSet(itConvert.Current()))
         ctAnimSets++;
@@ -872,14 +872,14 @@ void CSeriousSkaStudioApp::OnImportConvert()
 static INDEX iCurSpaces=0;
 void CSeriousSkaStudioApp::SaveModelInstance_t(CModelInstance *pmi,CModelInstance *pmiParent,CTFileStream &ostrFile,BOOL bSaveChildren)
 {
-  ASSERT(pmi!=NULL);
+  ASSERT(pmi != NULL);
 
   FLOATmatrix3D mat;
   FLOAT3D vPos = pmi->mi_qvOffset.vPos;
   ANGLE3D aRot;
   BOOL bSaveOffSet = TRUE;
   // if model instance have parent
-  if (pmiParent!=NULL) {
+  if (pmiParent != NULL) {
     // if source file names are same, save offsets in file
     bSaveOffSet = (pmi->mi_fnSourceFile == pmiParent->mi_fnSourceFile);
   }
@@ -1028,7 +1028,7 @@ void CSeriousSkaStudioApp::SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShader
     MeshSurface &msrf = pmlod->mlod_aSurfaces[isrf];
     ShaderParams *pShdParams = &msrf.msrf_ShadingParams;
     CTString strShaderName;
-    if (msrf.msrf_pShader!=NULL) strShaderName = msrf.msrf_pShader->GetName();
+    if (msrf.msrf_pShader != NULL) strShaderName = msrf.msrf_pShader->GetName();
     CTString strSurfName = ska_GetStringFromTable(msrf.msrf_iSurfaceID);
     
     ostrFile.FPrintF_t("  SHADER_SURFACE \"%s\";\n  {\n",(const char*)strSurfName);
@@ -1228,7 +1228,7 @@ CModelInstance *CSeriousSkaStudioApp::OnAddNewModelInstance()
     "ASCII model files (*.smc)\0*.smc\0"
     "All files (*.*)\0*.*\0\0",
     "Open directory", "Models\\", "");
-  if (fnSim=="") return NULL;
+  if (fnSim == "") return NULL;
   CTFileName fnFull;
   fnFull = _fnmApplicationPath + fnSim;
   CModelInstance::EnableSrcRememberFN(TRUE);
@@ -1380,7 +1380,7 @@ void CSeriousSkaStudioApp::NotificationMessage(const char *strFormat, ...)
 int CSeriousSkaStudioApp::ExitInstance() 
 {
   SE_EndEngine();
-	return CWinApp::ExitInstance();
+  return CWinApp::ExitInstance();
 }
 
 // save root model instance with children and all binary files
@@ -1404,8 +1404,8 @@ void CSeriousSkaStudioApp::SaveRootModelAs()
 
 BOOL CSeriousSkaStudioApp::SaveModelAs(CModelInstance *pmi)
 {
-  ASSERT(pmi!=NULL);
-  if (pmi==NULL) return FALSE;
+  ASSERT(pmi != NULL);
+  if (pmi == NULL) return FALSE;
   CModelInstance *pmiParent = NULL;
   CString fnOldSmcFile;
 
@@ -1415,7 +1415,7 @@ BOOL CSeriousSkaStudioApp::SaveModelAs(CModelInstance *pmi)
     "ASCII model files (*.smc)\0*.smc\0"
     "All files (*.*)\0*.*\0\0",
     "Open directory", "Models\\", "",NULL,FALSE);
-  if (fnSim=="") return FALSE;
+  if (fnSim == "") return FALSE;
 
   CTFileName fnFull;
   fnFull = _fnmApplicationPath + fnSim;
@@ -1449,7 +1449,7 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
     SaveMeshListFile(mshi,FALSE);
   }
   CSkeleton *psklSkeleton = mi.mi_psklSkeleton;
-  if (psklSkeleton!=NULL) {
+  if (psklSkeleton != NULL) {
     // try to save skeleton
     try {
       psklSkeleton->Save_t(psklSkeleton->ser_FileName);
@@ -1492,47 +1492,47 @@ void CSeriousSkaStudioApp::SaveModel(CModelInstance &mi)
 class CAboutDlg : public CDialog
 {
 public:
-	CAboutDlg();
+  CAboutDlg();
 
 // Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
+  //{{AFX_DATA(CAboutDlg)
+  enum { IDD = IDD_ABOUTBOX };
+  //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CAboutDlg)
+  protected:
+  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CAboutDlg)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CAboutDlg)
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CAboutDlg)
+  //}}AFX_DATA_INIT
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CAboutDlg)
+  //}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CAboutDlg)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 // App command to run the dialog
 void CSeriousSkaStudioApp::OnAppAbout()
 {
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
+  CAboutDlg aboutDlg;
+  aboutDlg.DoModal();
 }

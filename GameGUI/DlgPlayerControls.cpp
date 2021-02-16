@@ -35,10 +35,10 @@ CDlgPlayerControls::CDlgPlayerControls(CControls &ctrlControls, CWnd* pParent /*
   m_ctrlControls = ctrlControls;
 
   //{{AFX_DATA_INIT(CDlgPlayerControls)
-	m_bInvertControler = FALSE;
-	m_iRelativeAbsoluteType = -1;
-	m_strPressNewButton = _T("");
-	//}}AFX_DATA_INIT
+  m_bInvertControler = FALSE;
+  m_iRelativeAbsoluteType = -1;
+  m_strPressNewButton = _T("");
+  //}}AFX_DATA_INIT
 }
 
 
@@ -109,18 +109,18 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
       GetDlgItem( IDC_CONTROLER_SENSITIVITY_T)->EnableWindow(bEnableControls);
     }
   }
-	
+  
   //{{AFX_DATA_MAP(CDlgPlayerControls)
-	DDX_Control(pDX, IDC_AXIS_ACTIONS_LIST, m_listAxisActions);
-	DDX_Control(pDX, IDC_BUTTON_ACTIONS_LIST, m_listButtonActions);
-	DDX_Control(pDX, IDC_EDIT_SECOND_CONTROL, m_editSecondControl);
-	DDX_Control(pDX, IDC_EDIT_FIRST_CONTROL, m_editFirstControl);
-	DDX_Control(pDX, IDC_CONTROLER_SENSITIVITY, m_sliderControlerSensitivity);
-	DDX_Control(pDX, IDC_CONTROLER_AXIS, m_comboControlerAxis);
-	DDX_Check(pDX, IDC_INVERT_CONTROLER, m_bInvertControler);
-	DDX_Radio(pDX, IDC_RELATIVE_ABSOLUTE_TYPE, m_iRelativeAbsoluteType);
-	DDX_Text(pDX, IDC_PRESS_MESSAGE, m_strPressNewButton);
-	//}}AFX_DATA_MAP
+  DDX_Control(pDX, IDC_AXIS_ACTIONS_LIST, m_listAxisActions);
+  DDX_Control(pDX, IDC_BUTTON_ACTIONS_LIST, m_listButtonActions);
+  DDX_Control(pDX, IDC_EDIT_SECOND_CONTROL, m_editSecondControl);
+  DDX_Control(pDX, IDC_EDIT_FIRST_CONTROL, m_editFirstControl);
+  DDX_Control(pDX, IDC_CONTROLER_SENSITIVITY, m_sliderControlerSensitivity);
+  DDX_Control(pDX, IDC_CONTROLER_AXIS, m_comboControlerAxis);
+  DDX_Check(pDX, IDC_INVERT_CONTROLER, m_bInvertControler);
+  DDX_Radio(pDX, IDC_RELATIVE_ABSOLUTE_TYPE, m_iRelativeAbsoluteType);
+  DDX_Text(pDX, IDC_PRESS_MESSAGE, m_strPressNewButton);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -149,19 +149,19 @@ void CDlgPlayerControls::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgPlayerControls, CDialog)
-	//{{AFX_MSG_MAP(CDlgPlayerControls)
-	ON_EN_SETFOCUS(IDC_EDIT_FIRST_CONTROL, OnSetfocusEditFirstControl)
-	ON_EN_SETFOCUS(IDC_EDIT_SECOND_CONTROL, OnSetfocusEditSecondControl)
-	ON_BN_CLICKED(ID_FIRST_CONTROL_NONE, OnFirstControlNone)
-	ON_BN_CLICKED(ID_SECOND_CONTROL_NONE, OnSecondControlNone)
-	ON_BN_CLICKED(ID_DEFAULT, OnDefault)
-	ON_CBN_SELCHANGE(IDC_CONTROLER_AXIS, OnSelchangeControlerAxis)
-	ON_BN_CLICKED(ID_MOVE_CONTROL_UP, OnMoveControlUp)
-	ON_BN_CLICKED(ID_MOVE_CONTROL_DOWN, OnMoveControlDown)
-	ON_BN_CLICKED(ID_BUTTON_ACTION_ADD, OnButtonActionAdd)
-	ON_BN_CLICKED(ID_BUTTON_ACTION_EDIT, OnButtonActionEdit)
-	ON_BN_CLICKED(ID_BUTTON_ACTION_REMOVE, OnButtonActionRemove)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgPlayerControls)
+  ON_EN_SETFOCUS(IDC_EDIT_FIRST_CONTROL, OnSetfocusEditFirstControl)
+  ON_EN_SETFOCUS(IDC_EDIT_SECOND_CONTROL, OnSetfocusEditSecondControl)
+  ON_BN_CLICKED(ID_FIRST_CONTROL_NONE, OnFirstControlNone)
+  ON_BN_CLICKED(ID_SECOND_CONTROL_NONE, OnSecondControlNone)
+  ON_BN_CLICKED(ID_DEFAULT, OnDefault)
+  ON_CBN_SELCHANGE(IDC_CONTROLER_AXIS, OnSelchangeControlerAxis)
+  ON_BN_CLICKED(ID_MOVE_CONTROL_UP, OnMoveControlUp)
+  ON_BN_CLICKED(ID_MOVE_CONTROL_DOWN, OnMoveControlDown)
+  ON_BN_CLICKED(ID_BUTTON_ACTION_ADD, OnButtonActionAdd)
+  ON_BN_CLICKED(ID_BUTTON_ACTION_EDIT, OnButtonActionEdit)
+  ON_BN_CLICKED(ID_BUTTON_ACTION_REMOVE, OnButtonActionRemove)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -248,8 +248,8 @@ void CDlgPlayerControls::FillAxisList(void)
 
 BOOL CDlgPlayerControls::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
-	
+  CDialog::OnInitDialog();
+  
   // initialize controler sensitivity
   m_sliderControlerSensitivity.SetRange( 1, SENSITIVITY_SLIDER_POSITIONS);
   m_sliderControlerSensitivity.SetTicFreq( 1);
@@ -340,11 +340,11 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
   // set message string to dialog
   m_strPressNewButton = achrMessage;
   // activate string in text control
-	UpdateData( FALSE);
+  UpdateData( FALSE);
   
   // enable application
   AfxGetMainWnd()->EnableWindow();
-	AfxGetMainWnd()->SetActiveWindow();
+  AfxGetMainWnd()->SetActiveWindow();
 
   // enable direct input
   _pInput->EnableInput(m_hWnd);
@@ -358,9 +358,9 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
     {
       // if pressed
       if (_pInput->GetButtonState( iButton)
-        || (iButton==KID_MOUSE1 && (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0)
-        || (iButton==KID_MOUSE2 && (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0)
-        || (iButton==KID_MOUSE3 && (GetAsyncKeyState(VK_MBUTTON) & 0x8000) != 0))
+        || (iButton == KID_MOUSE1 && (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0)
+        || (iButton == KID_MOUSE2 && (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0)
+        || (iButton == KID_MOUSE3 && (GetAsyncKeyState(VK_MBUTTON) & 0x8000) != 0))
       {
         // disable direct input
         _pInput->DisableInput();
@@ -385,9 +385,9 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
         }
         // refresh list control
         FillActionsList();
-      	// refresh first button edit control
+        // refresh first button edit control
         SetFirstAndSecondButtonNames();
-  	    
+        
         // disable application
         AfxGetMainWnd()->EnableWindow( FALSE);
         // activate dialog
@@ -415,7 +415,7 @@ void CDlgPlayerControls::ActivatePressKey( char *strFirstOrSecond)
   // delete press button message
   m_strPressNewButton = "";
   // notice change
-	UpdateData( FALSE);
+  UpdateData( FALSE);
 }
 
 void CDlgPlayerControls::OnSetfocusEditFirstControl() 
@@ -481,7 +481,7 @@ void CDlgPlayerControls::OnSecondControlNone()
 
 void CDlgPlayerControls::OnDefault() 
 {
-	// switch controls to default
+  // switch controls to default
   m_ctrlControls.SwitchToDefaults();
 
 

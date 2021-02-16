@@ -24,7 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+  #error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -67,7 +67,7 @@ class CSeriousSkaStudioApp : public CWinApp
 {
 public:
   CMultiDocTemplate* m_pdtDocTemplate;
-	CSeriousSkaStudioApp();
+  CSeriousSkaStudioApp();
   BOOL SubInitInstance();
   CSeriousSkaStudioDoc *GetDocument();
   CSeriousSkaStudioView *GetActiveView(void);
@@ -142,23 +142,23 @@ private:
 
   
   // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CSeriousSkaStudioApp)
-	public:
-	virtual BOOL InitInstance();
-	virtual BOOL OnIdle(LONG lCount);
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CSeriousSkaStudioApp)
+  public:
+  virtual BOOL InitInstance();
+  virtual BOOL OnIdle(LONG lCount);
   virtual int Run();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
+  virtual int ExitInstance();
+  //}}AFX_VIRTUAL
 
 // Implementation
-	//{{AFX_MSG(CSeriousSkaStudioApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnFileOpen();
+  //{{AFX_MSG(CSeriousSkaStudioApp)
+  afx_msg void OnAppAbout();
+  afx_msg void OnFileOpen();
   afx_msg void OnFileNew();
-	afx_msg void OnImportConvert();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  afx_msg void OnImportConvert();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 extern CSeriousSkaStudioApp theApp;

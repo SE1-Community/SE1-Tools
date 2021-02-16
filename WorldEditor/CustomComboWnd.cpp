@@ -100,15 +100,15 @@ PIXaabbox2D CCustomComboWnd::GetLineBBox( INDEX iLine)
 }
 
 BEGIN_MESSAGE_MAP(CCustomComboWnd, CWnd)
-	//{{AFX_MSG_MAP(CCustomComboWnd)
-	ON_WM_PAINT()
-	ON_WM_KILLFOCUS()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEMOVE()
-	ON_WM_DESTROY()
-	ON_WM_TIMER()
-	ON_WM_LBUTTONUP()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CCustomComboWnd)
+  ON_WM_PAINT()
+  ON_WM_KILLFOCUS()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_MOUSEMOVE()
+  ON_WM_DESTROY()
+  ON_WM_TIMER()
+  ON_WM_LBUTTONUP()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -152,7 +152,7 @@ void CCustomComboWnd::OnPaint()
 
       PIXaabbox2D boxPoint( PIX2D( ptMouse.x, ptMouse.y), PIX2D(ptMouse.x, ptMouse.y) );
       BOOL bUnderMouse=(boxLine & boxPoint) == boxPoint;
-      BOOL bSelected=(m_pfResult!=NULL && iLine==*m_pfResult);
+      BOOL bSelected=(m_pfResult != NULL && iLine == *m_pfResult);
 
       COLOR colFill=C_BLACK|CT_TRANSPARENT;
       if (bUnderMouse&&bSelected)  colFill=COLOR_SELECTED_UNDER_MOUSE;
@@ -167,7 +167,7 @@ void CCustomComboWnd::OnPaint()
     m_pDrawPort->Unlock();
 
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -251,7 +251,7 @@ void CCustomComboWnd::RenderOneLine( INDEX iLine, PIXaabbox2D rectLine, CDrawPor
   pdp->Fill(rectLine.Min()(1)-1, rectLine.Min()(2)-1, 
                           rectLine.Max()(1)-rectLine.Min()(1)+1, rectLine.Max()(2)-rectLine.Min()(2)+1,
                           colFill);
-  if (cl.cl_fnmTexture!="")
+  if (cl.cl_fnmTexture != "")
   {
     CTextureObject to;
     try
@@ -279,7 +279,7 @@ void CCustomComboWnd::RenderOneLine( INDEX iLine, PIXaabbox2D rectLine, CDrawPor
 void CCustomComboWnd::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd != pMainFrame->m_pwndToolTip && pNewWnd != this)
   {
     // destroy combo
     DestroyWindow();
@@ -294,30 +294,30 @@ void CCustomComboWnd::OnLButtonDown(UINT nFlags, CPoint point)
 void CCustomComboWnd::OnMouseMove(UINT nFlags, CPoint point) 
 {
   Invalidate(FALSE);
-	CWnd::OnMouseMove(nFlags, point);
+  CWnd::OnMouseMove(nFlags, point);
 }
 
 void CCustomComboWnd::OnDestroy() 
 {
   KillTimer( m_iTimerID);
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 }
 
 void CCustomComboWnd::OnTimer(UINT nIDEvent) 
 {
-  Invalidate(FALSE);	
-	CWnd::OnTimer(nIDEvent);
+  Invalidate(FALSE);  
+  CWnd::OnTimer(nIDEvent);
 }
 
 BOOL CCustomComboWnd::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();
     return TRUE;
   }
-	return CWnd::PreTranslateMessage(pMsg);
+  return CWnd::PreTranslateMessage(pMsg);
 }
 
 void CCustomComboWnd::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -329,7 +329,7 @@ void CCustomComboWnd::OnLButtonUp(UINT nFlags, CPoint point)
   {
     if ((GetLineBBox( iLine) & boxPoint) == boxPoint)
     {
-      if (m_pfResult!=NULL)
+      if (m_pfResult != NULL)
       {
         *m_pfResult= m_dcComboLines[iLine].cl_ulValue;
         // destroy combo
@@ -337,7 +337,7 @@ void CCustomComboWnd::OnLButtonUp(UINT nFlags, CPoint point)
         DeleteTempMap();
         return;
       }
-      if (m_pOnSelect!=NULL)
+      if (m_pOnSelect != NULL)
       {
         void (*pOnSelect)(INDEX iSelected)=m_pOnSelect;
         INDEX iValue=m_dcComboLines[iLine].cl_ulValue;
@@ -349,6 +349,6 @@ void CCustomComboWnd::OnLButtonUp(UINT nFlags, CPoint point)
       }
     }
   }
-	
-	CWnd::OnLButtonUp(nFlags, point);
+  
+  CWnd::OnLButtonUp(nFlags, point);
 }

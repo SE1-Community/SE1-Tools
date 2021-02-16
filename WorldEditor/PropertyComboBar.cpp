@@ -140,16 +140,16 @@ BOOL CPropertyComboBar::Create( CWnd* pParentWnd, UINT nIDTemplate,
 }
 
 BEGIN_MESSAGE_MAP(CPropertyComboBar, CDialogBar)
-	//{{AFX_MSG_MAP(CPropertyComboBar)
-	ON_WM_HSCROLL()
-	//}}AFX_MSG_MAP
-	ON_UPDATE_COMMAND_UI(IDC_BROWSE_FILE, OnUpdateBrowseFile)
-	ON_UPDATE_COMMAND_UI(IDC_NO_FILE, OnUpdateNoFile)
-	ON_UPDATE_COMMAND_UI(IDC_NO_TARGET, OnUpdateNoTarget)
-	ON_UPDATE_COMMAND_UI(IDC_EDIT_COLOR, OnUpdateEditColor)
-	ON_UPDATE_COMMAND_UI(ID_FLAGS_PROPERTY, OnUpdateEditFlags)
-	ON_COMMAND(IDC_NO_FILE, OnNoFile)
-	ON_COMMAND(IDC_NO_TARGET, OnNoTarget)
+  //{{AFX_MSG_MAP(CPropertyComboBar)
+  ON_WM_HSCROLL()
+  //}}AFX_MSG_MAP
+  ON_UPDATE_COMMAND_UI(IDC_BROWSE_FILE, OnUpdateBrowseFile)
+  ON_UPDATE_COMMAND_UI(IDC_NO_FILE, OnUpdateNoFile)
+  ON_UPDATE_COMMAND_UI(IDC_NO_TARGET, OnUpdateNoTarget)
+  ON_UPDATE_COMMAND_UI(IDC_EDIT_COLOR, OnUpdateEditColor)
+  ON_UPDATE_COMMAND_UI(ID_FLAGS_PROPERTY, OnUpdateEditFlags)
+  ON_COMMAND(IDC_NO_FILE, OnNoFile)
+  ON_COMMAND(IDC_NO_TARGET, OnNoTarget)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -208,21 +208,21 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
       SET_SPAWN_FLAG( SPF_NORMAL, m_EditNormalSpawn);
       SET_SPAWN_FLAG( SPF_HARD, m_EditHardSpawn);
       SET_SPAWN_FLAG( SPF_EXTREME, m_EditExtremeSpawn);
-      SET_SPAWN_FLAG( SPF_EXTREME<<1, m_EditDifficulty_1);
-      SET_SPAWN_FLAG( SPF_EXTREME<<2, m_EditDifficulty_2);
-      SET_SPAWN_FLAG( SPF_EXTREME<<3, m_EditDifficulty_3);
-      SET_SPAWN_FLAG( SPF_EXTREME<<4, m_EditDifficulty_4);
-      SET_SPAWN_FLAG( SPF_EXTREME<<5, m_EditDifficulty_5);
+      SET_SPAWN_FLAG( SPF_EXTREME << 1, m_EditDifficulty_1);
+      SET_SPAWN_FLAG( SPF_EXTREME << 2, m_EditDifficulty_2);
+      SET_SPAWN_FLAG( SPF_EXTREME << 3, m_EditDifficulty_3);
+      SET_SPAWN_FLAG( SPF_EXTREME << 4, m_EditDifficulty_4);
+      SET_SPAWN_FLAG( SPF_EXTREME << 5, m_EditDifficulty_5);
 
       SET_SPAWN_FLAG( SPF_SINGLEPLAYER, m_EditSingleSpawn);
       SET_SPAWN_FLAG( SPF_DEATHMATCH, m_EditDeathMatchSpawn);
       SET_SPAWN_FLAG( SPF_COOPERATIVE, m_EditCooperativeSpawn);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<1, m_EditGameMode_1);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<2, m_EditGameMode_2);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<3, m_EditGameMode_3);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<4, m_EditGameMode_4);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<5, m_EditGameMode_5);
-      SET_SPAWN_FLAG( SPF_COOPERATIVE<<6, m_EditGameMode_6);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 1, m_EditGameMode_1);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 2, m_EditGameMode_2);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 3, m_EditGameMode_3);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 4, m_EditGameMode_4);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 5, m_EditGameMode_5);
+      SET_SPAWN_FLAG( SPF_COOPERATIVE << 6, m_EditGameMode_6);
     }
   }
   
@@ -233,7 +233,7 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_ENTITY_CLASS, m_strEntityClass);
   DDX_Text(pDX, IDC_ENTITY_NAME, m_strEntityName);
   DDX_Text(pDX, IDC_ENTITY_DESCRIPTION, m_strEntityDescription);
-	
+  
   if (m_EditBBoxMinCtrl.IsWindowVisible())
   {
     DDX_SkyFloat(pDX, IDC_EDIT_BBOX_MIN, m_fEditingBBoxMin);
@@ -544,21 +544,21 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
           GET_SPAWN_MASKS( SPF_NORMAL, m_EditNormalSpawn);
           GET_SPAWN_MASKS( SPF_HARD, m_EditHardSpawn);
           GET_SPAWN_MASKS( SPF_EXTREME, m_EditExtremeSpawn);
-          GET_SPAWN_MASKS( SPF_EXTREME<<1, m_EditDifficulty_1);
-          GET_SPAWN_MASKS( SPF_EXTREME<<2, m_EditDifficulty_2);
-          GET_SPAWN_MASKS( SPF_EXTREME<<3, m_EditDifficulty_3);
-          GET_SPAWN_MASKS( SPF_EXTREME<<4, m_EditDifficulty_4);
-          GET_SPAWN_MASKS( SPF_EXTREME<<5, m_EditDifficulty_5);
+          GET_SPAWN_MASKS( SPF_EXTREME << 1, m_EditDifficulty_1);
+          GET_SPAWN_MASKS( SPF_EXTREME << 2, m_EditDifficulty_2);
+          GET_SPAWN_MASKS( SPF_EXTREME << 3, m_EditDifficulty_3);
+          GET_SPAWN_MASKS( SPF_EXTREME << 4, m_EditDifficulty_4);
+          GET_SPAWN_MASKS( SPF_EXTREME << 5, m_EditDifficulty_5);
 
           GET_SPAWN_MASKS( SPF_SINGLEPLAYER, m_EditSingleSpawn);
           GET_SPAWN_MASKS( SPF_DEATHMATCH, m_EditDeathMatchSpawn);
           GET_SPAWN_MASKS( SPF_COOPERATIVE, m_EditCooperativeSpawn);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<1, m_EditGameMode_1);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<2, m_EditGameMode_2);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<3, m_EditGameMode_3);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<4, m_EditGameMode_4);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<5, m_EditGameMode_5);
-          GET_SPAWN_MASKS( SPF_COOPERATIVE<<6, m_EditGameMode_6);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 1, m_EditGameMode_1);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 2, m_EditGameMode_2);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 3, m_EditGameMode_3);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 4, m_EditGameMode_4);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 5, m_EditGameMode_5);
+          GET_SPAWN_MASKS( SPF_COOPERATIVE << 6, m_EditGameMode_6);
 
           // for each of the selected entities set spawn flags
           FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten)
@@ -580,8 +580,8 @@ void CPropertyComboBar::DoDataExchange(CDataExchange* pDX)
       pDoc->UpdateAllViews( NULL);
     }
   }
-	
-	CDialogBar::DoDataExchange(pDX);
+  
+  CDialogBar::DoDataExchange(pDX);
 }
 //--------------------------------------------------------------------------------------------
 CSize CPropertyComboBar::CalcDynamicLayout(int nLength, DWORD nMode)
@@ -725,13 +725,13 @@ void CPropertyComboBar::SetFirstValidEmptyTargetProperty(CEntity *penTarget)
         CEntity *penOldTarget = ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, CEntityPointer);
         BOOL bValidTarget = iten->IsTargetValid( penpProperty->ep_slOffset, penTarget);
         // if this ptr is already set
-        if (penOldTarget==penTarget)
+        if (penOldTarget == penTarget)
         {
           // don't do anything
           return;
         }
         // stop checking if ptr isn't NULL or if not valid target
-        if (penOldTarget!=NULL || !bValidTarget)
+        if (penOldTarget != NULL || !bValidTarget)
         {
           continue;
         }
@@ -962,9 +962,9 @@ void CPropertyComboBar::ArrangeControls()
           // for all enumerated members
           for (INDEX iEnum = 0; iEnum<epEnum->epet_ctValues; iEnum++)
           {
-            if (epEnum->epet_aepevValues[ iEnum].epev_strName!="")
+            if (epEnum->epet_aepevValues[ iEnum].epev_strName != "")
             {
-              ulEditable|=(1UL)<<epEnum->epet_aepevValues[ iEnum].epev_iValue;
+              ulEditable|=(1UL) << epEnum->epet_aepevValues[ iEnum].epev_iValue;
               CTString strBitName=epEnum->epet_aepevValues[ iEnum].epev_strName;
               m_ctrlEditFlags.SetBitDescription(iEnum, strBitName);
             }
@@ -1233,7 +1233,7 @@ void CPropertyComboBar::ArrangeControls()
               }
               else
               {
-                if (iJointAnimation!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+                if (iJointAnimation != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
                 {
                   iJointAnimation = -1;
                 }
@@ -1302,7 +1302,7 @@ void CPropertyComboBar::ArrangeControls()
               }
               else
               {
-                if (iJointIllumination!=ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
+                if (iJointIllumination != ENTITYPROPERTY( &*iten, penpProperty->ep_slOffset, INDEX) )
                 {
                   iJointIllumination = -1;
                 }
@@ -1833,7 +1833,7 @@ void CPropertyComboBar::SetIntersectingEntityClassName(void)
 
 void CPropertyComboBar::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 {
-	CDialogBar::OnHScroll(nSBCode, nPos, pScrollBar);
+  CDialogBar::OnHScroll(nSBCode, nPos, pScrollBar);
   // copy color to selected entities
   SetColorPropertyToEntities( m_EditColorCtrl.GetColor());
 
@@ -1851,8 +1851,8 @@ CEntity *CPropertyComboBar::GetSelectedEntityPtr(void)
   CPropertyID *ppidProperty = GetSelectedProperty();
   // if there is valid property selected
   if ((ppidProperty == NULL) || 
-	 ((ppidProperty->pid_eptType != CEntityProperty::EPT_ENTITYPTR) &&
-	  (ppidProperty->pid_eptType != CEntityProperty::EPT_PARENT)) )
+   ((ppidProperty->pid_eptType != CEntityProperty::EPT_ENTITYPTR) &&
+    (ppidProperty->pid_eptType != CEntityProperty::EPT_PARENT)) )
   {
     return NULL;
   }
@@ -1927,7 +1927,7 @@ void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
       // obtain entity class ptr
       CDLLEntityClass *pdecDLLClass = iten->GetClass()->ec_pdecDLLClass;
       // for all classes in hierarchy of this entity
-      for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+      for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
       {
         // for all properties
         for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
@@ -1952,7 +1952,7 @@ void CPropertyComboBar::ClearAllTargets(CEntity *penClicked)
     // obtain entity class ptr
     CDLLEntityClass *pdecDLLClass = penClicked->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
       for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)

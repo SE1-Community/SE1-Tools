@@ -49,16 +49,16 @@ CBrushPaletteWnd::~CBrushPaletteWnd()
 
 
 BEGIN_MESSAGE_MAP(CBrushPaletteWnd, CWnd)
-	//{{AFX_MSG_MAP(CBrushPaletteWnd)
-	ON_WM_PAINT()
-	ON_WM_KILLFOCUS()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_RBUTTONDOWN()
-	ON_WM_MOUSEMOVE()
-	ON_WM_DESTROY()
-	ON_WM_TIMER()
-	ON_WM_LBUTTONUP()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CBrushPaletteWnd)
+  ON_WM_PAINT()
+  ON_WM_KILLFOCUS()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_RBUTTONDOWN()
+  ON_WM_MOUSEMOVE()
+  ON_WM_DESTROY()
+  ON_WM_TIMER()
+  ON_WM_LBUTTONUP()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -116,7 +116,7 @@ void CBrushPaletteWnd::OnPaint()
 
       TIME tm = CTimer::InSeconds(_pTimer->GetTimeTick());
       // if we are drawing selected brush
-      if (iBrush==theApp.m_fCurrentTerrainBrush)
+      if (iBrush == theApp.m_fCurrentTerrainBrush)
       {
         if (m_pDrawPort->Lock())
         {
@@ -134,7 +134,7 @@ void CBrushPaletteWnd::OnPaint()
         if (m_pDrawPort->Lock())
         {
           INDEX iRot=((ULONG)(tm*25.0f))&7;
-          ULONG ulLineType=0x0f0f0f0f<<iRot;
+          ULONG ulLineType=0x0f0f0f0f << iRot;
           m_pDrawPort->DrawBorder(boxBrush.Min()(1)-1, boxBrush.Min()(2)-1, 
                                   boxBrush.Max()(1)-boxBrush.Min()(1)+2, boxBrush.Max()(2)-boxBrush.Min()(2)+2,
                                   C_BLUE|CT_OPAQUE, ulLineType);
@@ -147,7 +147,7 @@ void CBrushPaletteWnd::OnPaint()
     m_pDrawPort->Unlock();
 
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -157,7 +157,7 @@ void CBrushPaletteWnd::OnPaint()
 void CBrushPaletteWnd::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd != pMainFrame->m_pwndToolTip && pNewWnd != this)
   {
     // destroy brush palette
     _pBrushPalette = NULL;
@@ -192,13 +192,13 @@ void CBrushPaletteWnd::OnRButtonDown(UINT nFlags, CPoint point)
 void CBrushPaletteWnd::OnMouseMove(UINT nFlags, CPoint point) 
 {
   Invalidate(FALSE);
-	CWnd::OnMouseMove(nFlags, point);
+  CWnd::OnMouseMove(nFlags, point);
 }
 
 void CBrushPaletteWnd::OnDestroy() 
 {
   KillTimer( m_iTimerID);
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 }
 
 void CBrushPaletteWnd::OnTimer(UINT nIDEvent) 
@@ -215,20 +215,20 @@ void CBrushPaletteWnd::OnTimer(UINT nIDEvent)
     return;
   }
 
-  Invalidate(FALSE);	
-	CWnd::OnTimer(nIDEvent);
+  Invalidate(FALSE);  
+  CWnd::OnTimer(nIDEvent);
 }
 
 BOOL CBrushPaletteWnd::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();
     return TRUE;
   }
 
-	return CWnd::PreTranslateMessage(pMsg);
+  return CWnd::PreTranslateMessage(pMsg);
 }
 
 void CBrushPaletteWnd::OnLButtonUp(UINT nFlags, CPoint point) 

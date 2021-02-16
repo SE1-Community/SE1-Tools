@@ -41,10 +41,10 @@ CCSGDesitnationCombo::~CCSGDesitnationCombo()
 
 
 BEGIN_MESSAGE_MAP(CCSGDesitnationCombo, CComboBox)
-	//{{AFX_MSG_MAP(CCSGDesitnationCombo)
-	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
-	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CCSGDesitnationCombo)
+  ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
+  ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ BOOL CCSGDesitnationCombo::OnIdle(LONG lCount)
       {
         // if the entity is brush
         CEntity::RenderType rt = iten->GetRenderType();
-        if (rt==CEntity::RT_BRUSH || rt==CEntity::RT_FIELDBRUSH)
+        if (rt == CEntity::RT_BRUSH || rt == CEntity::RT_FIELDBRUSH)
         {
           CTString strEntityName = iten->GetName();
           // and it has name property defined

@@ -36,7 +36,7 @@ struct NodeInfo
 class CModelTreeCtrl : public CTreeCtrl
 {
 public:
-	CModelTreeCtrl();
+  CModelTreeCtrl();
 // Operations
 public:
 // Overrides
@@ -44,20 +44,20 @@ public:
 
 // Implementation
 public:
-	virtual ~CModelTreeCtrl();
+  virtual ~CModelTreeCtrl();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CModelTreeCtrl)
+  //{{AFX_MSG(CModelTreeCtrl)
   afx_msg void OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemClick(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemDblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRdblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+  afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnItemClick(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnItemDblclk(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnRdblclk(NMHDR* pNMHDR, LRESULT* pResult);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 
 };
 

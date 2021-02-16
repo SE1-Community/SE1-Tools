@@ -28,9 +28,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class CSplitterFrame : public CWnd
 {
-	DECLARE_DYNCREATE(CSplitterFrame)
+  DECLARE_DYNCREATE(CSplitterFrame)
 public:
-	CSplitterFrame();           // protected constructor used by dynamic creation
+  CSplitterFrame();           // protected constructor used by dynamic creation
 /*
   int GetPosX();
   int iStartPosX;
@@ -57,26 +57,26 @@ protected:
   BOOL  sp_bDockingEnabled;
 // Operations
 public:
-//	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+//  virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CSplitterFrame)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CSplitterFrame)
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CSplitterFrame();
+  virtual ~CSplitterFrame();
 
-	// Generated message map functions
-	//{{AFX_MSG(CSplitterFrame)
-	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  // Generated message map functions
+  //{{AFX_MSG(CSplitterFrame)
+  afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+  afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+  afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+  afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+  afx_msg void OnSize(UINT nType, int cx, int cy);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

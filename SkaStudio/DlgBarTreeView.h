@@ -58,8 +58,8 @@ public:
 class CDlgBarTreeView : public CDlgTemplate
 {
 public:
-	CDlgBarTreeView();
-	virtual ~CDlgBarTreeView();
+  CDlgBarTreeView();
+  virtual ~CDlgBarTreeView();
 
   BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID);
   CSize CalcDynamicLayout(int nLength, DWORD nMode);
@@ -173,14 +173,14 @@ public:
   CTextBox m_tbTextureName;
 
 //  CSize m_Size;
-	// Generated message map functions
+  // Generated message map functions
 
 protected:
-	//{{AFX_MSG(CDlgBarTreeView)
-	afx_msg void OnSelchangeModeSelectTab(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CDlgBarTreeView)
+  afx_msg void OnSelchangeModeSelectTab(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnSize(UINT nType, int cx, int cy);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 
 };
 

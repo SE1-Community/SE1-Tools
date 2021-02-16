@@ -29,7 +29,7 @@ class CConsoleSymbolsCombo : public CComboBox
 {
 // Construction
 public:
-	CConsoleSymbolsCombo();
+  CConsoleSymbolsCombo();
 
 // Attributes
 public:
@@ -38,23 +38,23 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CConsoleSymbolsCombo)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CConsoleSymbolsCombo)
+  public:
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CConsoleSymbolsCombo();
+  virtual ~CConsoleSymbolsCombo();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CConsoleSymbolsCombo)
-	afx_msg void OnSelchange();
-	//}}AFX_MSG
+  //{{AFX_MSG(CConsoleSymbolsCombo)
+  afx_msg void OnSelchange();
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

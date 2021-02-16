@@ -26,15 +26,15 @@ CEngineGUI _EngineGUI;
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
-					 )
+           )
 {
     switch (ul_reason_for_call)
-	{
-		case DLL_PROCESS_ATTACH:
-		case DLL_THREAD_ATTACH:
-		case DLL_THREAD_DETACH:
-		case DLL_PROCESS_DETACH:
-			break;
+  {
+    case DLL_PROCESS_ATTACH:
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+      break;
     }
     return TRUE;
 }
@@ -269,7 +269,7 @@ void CEngineGUI::GetFullScreenModeFromRegistry( CTString strSectionName, CDispla
   if (dm.dm_ddDepth<DD_DEFAULT || dm.dm_ddDepth>DD_32BIT) dm.dm_ddDepth = DD_DEFAULT;
   strResult = CStringA(AfxGetApp()->GetProfileString( CString(strSectionName), L"Full screen API", L"OpenGL"));
 #ifdef SE1_D3D
-  gat = (strResult=="Direct3D") ? GAT_D3D : GAT_OGL;
+  gat = (strResult == "Direct3D") ? GAT_D3D : GAT_OGL;
 #else // SE1_D3D
   gat = GAT_OGL;
 #endif // SE1_D3D
@@ -280,7 +280,7 @@ void CEngineGUI::SetFullScreenModeToRegistry( CTString strSectionName, CDisplayM
 {
   CTString strDM( 0, "%d x %d x %d", dm.dm_pixSizeI, dm.dm_pixSizeJ, dm.dm_ddDepth);
 #ifdef SE1_D3D
-  CTString strGAT = (gat==GAT_D3D) ? "Direct3D" : "OpenGL";
+  CTString strGAT = (gat == GAT_D3D) ? "Direct3D" : "OpenGL";
 #else // SE1_D3D
   CTString strGAT = "OpenGL";
 #endif // SE1_D3D

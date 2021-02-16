@@ -31,29 +31,29 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgPlayerAppearance::CDlgPlayerAppearance(CPlayerCharacter &pcPlayerCharacter,
                                            CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgPlayerAppearance::IDD, pParent)
+  : CDialog(CDlgPlayerAppearance::IDD, pParent)
 {
-	// make a copy of player's appearance, we will change it
+  // make a copy of player's appearance, we will change it
   m_pcPlayerCharacter = pcPlayerCharacter;
   //{{AFX_DATA_INIT(CDlgPlayerAppearance)
-		// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
+    // NOTE: the ClassWizard will add member initialization here
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgPlayerAppearance::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgPlayerAppearance)
-	DDX_Control(pDX, IDC_AVAILABLE_APPEARANCES, m_comboAvailableAppearances);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CDlgPlayerAppearance)
+  DDX_Control(pDX, IDC_AVAILABLE_APPEARANCES, m_comboAvailableAppearances);
+  //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CDlgPlayerAppearance, CDialog)
-	//{{AFX_MSG_MAP(CDlgPlayerAppearance)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgPlayerAppearance)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

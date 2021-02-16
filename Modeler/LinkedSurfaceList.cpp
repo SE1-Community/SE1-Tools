@@ -38,9 +38,9 @@ CLinkedSurfaceList::~CLinkedSurfaceList()
 
 
 BEGIN_MESSAGE_MAP(CLinkedSurfaceList, CCheckListBox)
-	//{{AFX_MSG_MAP(CLinkedSurfaceList)
-	ON_WM_LBUTTONDBLCLK()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CLinkedSurfaceList)
+  ON_WM_LBUTTONDBLCLK()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ void CLinkedSurfaceList::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 BOOL CLinkedSurfaceList::PreTranslateMessage(MSG* pMsg) 
 {
-  if ((pMsg->message==WM_KEYDOWN) && (pMsg->wParam=='Z') )
+  if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == 'Z') )
   {
     if (m_pdlgParentDialog != NULL) 
     {
@@ -77,5 +77,5 @@ BOOL CLinkedSurfaceList::PreTranslateMessage(MSG* pMsg)
     }
   }
 
-	return CCheckListBox::PreTranslateMessage(pMsg);
+  return CCheckListBox::PreTranslateMessage(pMsg);
 }

@@ -37,13 +37,13 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CModelerDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CModelerDoc, CDocument)
-	//{{AFX_MSG_MAP(CModelerDoc)
-	ON_COMMAND(ID_FILE_ADD_TEXTURE, OnFileAddTexture)
-	ON_UPDATE_COMMAND_UI(ID_FILE_ADD_TEXTURE, OnUpdateFileAddTexture)
-	ON_COMMAND(ID_NEXT_SURFACE, OnNextSurface)
-	ON_COMMAND(ID_PREV_SURFACE, OnPrevSurface)
-	ON_COMMAND(ID_LINK_SURFACES, OnLinkSurfaces)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CModelerDoc)
+  ON_COMMAND(ID_FILE_ADD_TEXTURE, OnFileAddTexture)
+  ON_UPDATE_COMMAND_UI(ID_FILE_ADD_TEXTURE, OnUpdateFileAddTexture)
+  ON_COMMAND(ID_NEXT_SURFACE, OnNextSurface)
+  ON_COMMAND(ID_PREV_SURFACE, OnPrevSurface)
+  ON_COMMAND(ID_LINK_SURFACES, OnLinkSurfaces)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ BOOL CModelerDoc::CreateModelFromScriptFile( CTFileName fnScrFileName, char *str
   try
   {
     CWaitCursor StartWaitCursor;
-   	
+     
     CRect rectMainFrameSize;
     CRect rectProgress, rectProgressNew;
     
@@ -97,8 +97,8 @@ BOOL CModelerDoc::CreateModelFromScriptFile( CTFileName fnScrFileName, char *str
     return FALSE;
   }
   pMainFrame->m_NewProgress.DestroyWindow();
-	m_bDocLoadedOk = TRUE;
-	return TRUE;
+  m_bDocLoadedOk = TRUE;
+  return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -106,12 +106,12 @@ BOOL CModelerDoc::CreateModelFromScriptFile( CTFileName fnScrFileName, char *str
 
 void CModelerDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-	}
-	else
-	{
-	}
+  if (ar.IsStoring())
+  {
+  }
+  else
+  {
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -120,12 +120,12 @@ void CModelerDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CModelerDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+  CDocument::AssertValid();
 }
 
 void CModelerDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+  CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -134,7 +134,7 @@ void CModelerDoc::Dump(CDumpContext& dc) const
 
 BOOL CModelerDoc::OnOpenDocument(LPCTSTR lpszPathName) 
 {
-	m_bDocLoadedOk = FALSE;
+  m_bDocLoadedOk = FALSE;
   CTFileName fnModelFile = CTString(CStringA(lpszPathName));
 
   try
@@ -184,7 +184,7 @@ BOOL CModelerDoc::OnOpenDocument(LPCTSTR lpszPathName)
     }
   }
 
-	m_bDocLoadedOk = TRUE;
+  m_bDocLoadedOk = TRUE;
   // flush stale caches
   _pShell->Execute("FreeUnusedStock();");
   SelectSurface( 0, TRUE);
@@ -194,7 +194,7 @@ BOOL CModelerDoc::OnOpenDocument(LPCTSTR lpszPathName)
 BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	//return CDocument::OnSaveDocument(lpszPathName);
+  //return CDocument::OnSaveDocument(lpszPathName);
   CTFileName fnModelFile = CTString(CStringA(lpszPathName));
   try
   {
@@ -208,7 +208,7 @@ BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
   try
   {
-  	m_emEditModel.Save_t( fnModelFile);
+    m_emEditModel.Save_t( fnModelFile);
     m_emEditModel.SaveMapping_t( fnModelFile.NoExt()+".map", 0);
   }
   catch( char *err_str)
@@ -226,7 +226,7 @@ BOOL CModelerDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
   // reload attachments of all loaded models 
   POSITION pos = theApp.m_pdtModelDocTemplate->GetFirstDocPosition();
-  while (pos!=NULL)
+  while (pos != NULL)
   {
     CModelerDoc *pmdCurrent = (CModelerDoc *)theApp.m_pdtModelDocTemplate->GetNextDoc(pos);
     if (pmdCurrent != this)
@@ -275,7 +275,7 @@ void CModelerDoc::OnIdle(void)
 {
   POSITION pos = GetFirstViewPosition();
 
-  while ( pos !=NULL) {
+  while (pos != NULL) {
     CModelerView *pmvCurrent = (CModelerView *) GetNextView(pos);
     pmvCurrent->OnIdle();
   }
@@ -287,7 +287,7 @@ void CModelerDoc::SetModifiedFlag( BOOL bModified /*= TRUE*/ )
   CDocument::SetModifiedFlag(bModified);
 }
 
-extern UINT APIENTRY ModelerFileRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARAM lParam);
+extern UINT APIENTRY ModelerFileRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,  LPARAM lParam);
 
 void CModelerDoc::OnFileAddTexture() 
 {
@@ -352,7 +352,7 @@ void CModelerDoc::SelectMipModel( INDEX iMipToSelect)
   m_iCurrentMip = iMipToSelect;
   POSITION pos = GetFirstViewPosition();
 
-  while ( pos !=NULL) {
+  while (pos != NULL) {
     CModelerView *pmvCurrent = (CModelerView *) GetNextView(pos);
     pmvCurrent->m_ModelObject.SetManualMipLevel( iMipToSelect);
   }
@@ -363,7 +363,7 @@ void CModelerDoc::SelectMipModel( INDEX iMipToSelect)
 void CModelerDoc::ClearAttachments( void)
 {
   POSITION pos = GetFirstViewPosition();
-  while ( pos !=NULL)
+  while (pos != NULL)
   {
     CModelerView *pmvView = (CModelerView *) GetNextView(pos);
     pmvView->m_ModelObject.RemoveAllAttachmentModels();
@@ -373,7 +373,7 @@ void CModelerDoc::ClearAttachments( void)
 void CModelerDoc::SetupAttachments( void)
 {
   POSITION pos = GetFirstViewPosition();
-  while ( pos !=NULL)
+  while (pos != NULL)
   {
     CModelerView *pmvView = (CModelerView *) GetNextView(pos);
     INDEX iAttachment = 0;

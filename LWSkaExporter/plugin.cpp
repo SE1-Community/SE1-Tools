@@ -36,13 +36,13 @@ extern XCALL_(int) Activate_CopyWeightMaps( long version, GlobalFunc *global, Me
 
 extern "C" ServerRecord ServerDesc[] = {
    { LWITEMMOTION_HCLASS,   DEBUGEXT "internal_SEAnimExport", (ActivateFunc*)&Animation_Handler, NULL },
-	 { LWITEMMOTION_HCLASS,   DEBUGEXT "internal_SESectionAnimExport", (ActivateFunc*)&SectionAnimation_Handler, NULL },	
+   { LWITEMMOTION_HCLASS,   DEBUGEXT "internal_SESectionAnimExport", (ActivateFunc*)&SectionAnimation_Handler, NULL },  
    { LWSHADER_HCLASS, DEBUGEXT "SE_Shaders", (ActivateFunc*)&Handler_SurfaceParameters, NULL },
    { LWSHADER_ICLASS, DEBUGEXT "SE_Shaders", (ActivateFunc*)&Interface_SurfaceParameters, NULL },
    { LWMASTER_HCLASS, DEBUGEXT "SE_Exporter", (ActivateFunc*)&Activate_Master, NULL },
    { LWMASTER_ICLASS, DEBUGEXT "SE_Exporter", (ActivateFunc*)&Interface_Master, NULL },
-	 { LWMESHEDIT_CLASS, DEBUGEXT "SE_Modeler_Exporter", (ActivateFunc*)&Activate_ModelerMeshExporter, NULL },
-	 { LWMESHEDIT_CLASS, DEBUGEXT "SE_SurfaceToWeights", (ActivateFunc*)&Activate_ModelerSurfaceToWeights, NULL },
-	 { LWMESHEDIT_CLASS, DEBUGEXT "SE_CopyWeightMaps", (ActivateFunc*)&Activate_CopyWeightMaps, NULL },
+   { LWMESHEDIT_CLASS, DEBUGEXT "SE_Modeler_Exporter", (ActivateFunc*)&Activate_ModelerMeshExporter, NULL },
+   { LWMESHEDIT_CLASS, DEBUGEXT "SE_SurfaceToWeights", (ActivateFunc*)&Activate_ModelerSurfaceToWeights, NULL },
+   { LWMESHEDIT_CLASS, DEBUGEXT "SE_CopyWeightMaps", (ActivateFunc*)&Activate_CopyWeightMaps, NULL },
    { NULL }
 };

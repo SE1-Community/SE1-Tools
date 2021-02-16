@@ -31,20 +31,20 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDlgPlayerSettings::CDlgPlayerSettings(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgPlayerSettings::IDD, pParent)
+  : CDialog(CDlgPlayerSettings::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgPlayerSettings)
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgPlayerSettings)
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgPlayerSettings::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgPlayerSettings)
-	DDX_Control(pDX, IDC_AVAILABLE_CONTROLS, m_listAvailableControls);
-	DDX_Control(pDX, IDC_AVAILABLE_PLAYERS, m_listAvailablePlayers);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CDlgPlayerSettings)
+  DDX_Control(pDX, IDC_AVAILABLE_CONTROLS, m_listAvailableControls);
+  DDX_Control(pDX, IDC_AVAILABLE_PLAYERS, m_listAvailablePlayers);
+  //}}AFX_DATA_MAP
   
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -65,12 +65,12 @@ void CDlgPlayerSettings::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgPlayerSettings, CDialog)
-	//{{AFX_MSG_MAP(CDlgPlayerSettings)
-	ON_BN_CLICKED(IDC_PLAYER_APPEARANCE, OnPlayerAppearance)
-	ON_BN_CLICKED(IDC_EDIT_CONTROLS, OnEditControls)
-	ON_BN_CLICKED(IDC_RENAME_CONTROLS, OnRenameControls)
-	ON_BN_CLICKED(IDC_RENAME_PLAYER, OnRenamePlayer)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgPlayerSettings)
+  ON_BN_CLICKED(IDC_PLAYER_APPEARANCE, OnPlayerAppearance)
+  ON_BN_CLICKED(IDC_EDIT_CONTROLS, OnEditControls)
+  ON_BN_CLICKED(IDC_RENAME_CONTROLS, OnRenameControls)
+  ON_BN_CLICKED(IDC_RENAME_PLAYER, OnRenamePlayer)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ void CDlgPlayerSettings::OnPlayerAppearance()
     // load it from the file
     plPlayerInfo.Load_t( fnPlayerName);
     // call player appearance dialog
-	  CDlgPlayerAppearance dlgPlayerAppearance( plPlayerInfo.pi_pcPlayerCharacter);
+    CDlgPlayerAppearance dlgPlayerAppearance( plPlayerInfo.pi_pcPlayerCharacter);
     // if user wants to change player's appearance
     if (dlgPlayerAppearance.DoModal() == IDOK)
     {
@@ -131,9 +131,9 @@ void CDlgPlayerSettings::InitPlayersAndControlsLists(void)
 
 BOOL CDlgPlayerSettings::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+  CDialog::OnInitDialog();
   InitPlayersAndControlsLists();
-	return TRUE;
+  return TRUE;
 }
 
 void CDlgPlayerSettings::OnEditControls() 

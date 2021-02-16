@@ -38,13 +38,13 @@ CAxisListCtrl::~CAxisListCtrl()
 
 
 BEGIN_MESSAGE_MAP(CAxisListCtrl, CListCtrl)
-	//{{AFX_MSG_MAP(CAxisListCtrl)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_KEYUP()
-	ON_WM_KEYDOWN()
-	ON_WM_SETFOCUS()
-	ON_WM_KILLFOCUS()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CAxisListCtrl)
+  ON_WM_LBUTTONDOWN()
+  ON_WM_KEYUP()
+  ON_WM_KEYDOWN()
+  ON_WM_SETFOCUS()
+  ON_WM_KILLFOCUS()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -54,27 +54,27 @@ void CAxisListCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData( TRUE);
-	CListCtrl::OnLButtonDown(nFlags, point);
+  CListCtrl::OnLButtonDown(nFlags, point);
   // set state of new controler's attributes
-	((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
+  ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
 
 void CAxisListCtrl::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData( TRUE);
-	CListCtrl::OnKeyUp(nChar, nRepCnt, nFlags);
+  CListCtrl::OnKeyUp(nChar, nRepCnt, nFlags);
   // set state of new controler's attributes
-	((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
+  ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
 
 void CAxisListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData( TRUE);
-	CListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
+  CListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
   // set state of new controler's attributes
-	((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
+  ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
 
 
@@ -99,7 +99,7 @@ void CAxisListCtrl::OnSetFocus(CWnd* pOldWnd)
 
 void CAxisListCtrl::OnKillFocus(CWnd* pNewWnd) 
 {
-	CListCtrl::OnKillFocus(pNewWnd);
+  CListCtrl::OnKillFocus(pNewWnd);
 
   // get selected action
   INDEX iSelectedAction = GetNextItem( -1, LVNI_SELECTED);
@@ -109,12 +109,12 @@ void CAxisListCtrl::OnKillFocus(CWnd* pNewWnd)
 
 BOOL CAxisListCtrl::PreTranslateMessage(MSG* pMsg) 
 {
-	// if return pressed
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  // if return pressed
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
   {
     ((CDlgPlayerControls *)GetParent())->m_comboControlerAxis.SetFocus();
     // don't translate messages
     return TRUE;
   }
-	return CListCtrl::PreTranslateMessage(pMsg);
+  return CListCtrl::PreTranslateMessage(pMsg);
 }

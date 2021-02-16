@@ -29,31 +29,31 @@ class CTextBox : public CEdit
 {
 // Construction
 public:
-	CTextBox();
+  CTextBox();
   void ValueChanged();
 
   CTString m_strID; // ID of control (base float)
   void SetDataPtr(FLOAT *pFloat);
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CTextBox)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CTextBox)
+  public:
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CTextBox();
+  virtual ~CTextBox();
 
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CTextBox)
-	afx_msg void OnChange();
-	//}}AFX_MSG
+  //{{AFX_MSG(CTextBox)
+  afx_msg void OnChange();
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

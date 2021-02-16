@@ -42,11 +42,11 @@ CMDIClientWnd::~CMDIClientWnd()
 
 
 BEGIN_MESSAGE_MAP(CMDIClientWnd, CWnd)
-	//{{AFX_MSG_MAP(CMDIClientWnd)
-	ON_WM_SIZE()
-	ON_WM_SIZING()
-	ON_WM_LBUTTONDOWN()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CMDIClientWnd)
+  ON_WM_SIZE()
+  ON_WM_SIZING()
+  ON_WM_LBUTTONDOWN()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -65,7 +65,7 @@ void CMDIClientWnd::SetCurrentRect(CRect &rc)
 
 void CMDIClientWnd::OnSize(UINT nType, int cx, int cy) 
 {
-	CPoint pt;
+  CPoint pt;
   CRect rc;
 
 
@@ -116,7 +116,7 @@ void CMDIClientWnd::OnSize(UINT nType, int cx, int cy)
 
 void CMDIClientWnd::OnSizing(UINT fwSide, LPRECT pRect) 
 {
-	CWnd::OnSizing(fwSide, pRect);
+  CWnd::OnSizing(fwSide, pRect);
 }
 
 void CMDIClientWnd::OnLButtonDown(UINT nFlags, CPoint point) 
@@ -132,5 +132,5 @@ void CMDIClientWnd::OnLButtonDown(UINT nFlags, CPoint point)
   }
   tvLast=tvNow;
   ptLast = ptNow;
-	CWnd::OnLButtonDown(nFlags, point);
+  CWnd::OnLButtonDown(nFlags, point);
 }

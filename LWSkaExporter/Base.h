@@ -41,18 +41,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <lwcmdseq.h>
 
 #include "vecmat.h"
-		
+    
 #ifndef NDEBUG
 #define DEBUGEXT "Debug:"
-#else	
+#else  
 #define DEBUGEXT ""
 #endif
-			
+      
 
 #define SE_ANIM_VER "0.1"
 
-#define ML_HALF_FACE_FORWARD (1UL<<0)  // front face forward
-#define ML_FULL_FACE_FORWARD (1UL<<1)  // half face fprward
+#define ML_HALF_FACE_FORWARD (1UL << 0)  // front face forward
+#define ML_FULL_FACE_FORWARD (1UL << 1)  // half face fprward
 
 struct SurfaceInstance {
   SurfaceInstance *si_psiNext;
@@ -118,15 +118,15 @@ extern int ExportSkeleton(void);
 extern int ExportBones(void);
 extern int ExportSecAnim(LWXPanelID pan) ;
 
-extern void		MakeIdentityMatrix(Matrix12 &mat);
-extern void		MatrixTranspose(Matrix12 &r, const Matrix12 &m);
-extern void		MatrixMultiply(Matrix12 &c,const Matrix12 &m, const Matrix12 &n);
-extern void		MatrixCopy(Matrix12 &c, const Matrix12 &m);
-extern void		MakeRotationAndPosMatrix(Matrix12 &mrm_f, float *pmrm_vPos, float *pmrm_vRot);
-extern void		PrintMatrix(FILE *_f, Matrix12 &mat, int ctSpaces);
+extern void    MakeIdentityMatrix(Matrix12 &mat);
+extern void    MatrixTranspose(Matrix12 &r, const Matrix12 &m);
+extern void    MatrixMultiply(Matrix12 &c,const Matrix12 &m, const Matrix12 &n);
+extern void    MatrixCopy(Matrix12 &c, const Matrix12 &m);
+extern void    MakeRotationAndPosMatrix(Matrix12 &mrm_f, float *pmrm_vPos, float *pmrm_vRot);
+extern void    PrintMatrix(FILE *_f, Matrix12 &mat, int ctSpaces);
 extern double GetCurrentTime();
-extern void		GetAnimID(char *fnAnimFile);
-extern bool		ExecCmd(const char *strFormat, ...);
+extern void    GetAnimID(char *fnAnimFile);
+extern bool    ExecCmd(const char *strFormat, ...);
 extern void FindMorphChannels(LWChanGroupID idParentGroup);
 
 extern void ExportMesh_modeler(int iFaceForward);

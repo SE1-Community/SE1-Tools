@@ -25,7 +25,7 @@ class CPressKeyEditControl : public CEdit
 {
 // Construction
 public:
-	CPressKeyEditControl();
+  CPressKeyEditControl();
 
 // Attributes
 public:
@@ -34,22 +34,22 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CPressKeyEditControl)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CPressKeyEditControl)
+  public:
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CPressKeyEditControl();
+  virtual ~CPressKeyEditControl();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CPressKeyEditControl)
-	//}}AFX_MSG
+  //{{AFX_MSG(CPressKeyEditControl)
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

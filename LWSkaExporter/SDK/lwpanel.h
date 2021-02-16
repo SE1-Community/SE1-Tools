@@ -234,7 +234,7 @@ typedef struct st_DrawFuncs {
         void    (*drawLine)(LWPanelID,int,int,int,int,int);             /* color,x,y,x2,y2      */
         void    (*drawBox)(LWPanelID,int,int,int,int,int);              /* color,x,y,w,h        */
         void    (*drawRGBBox)(LWPanelID,int,int,int,int,int,int,int);   /* r,g,b,x,y,w,h        */
-        void    (*drawBorder)(LWPanelID,int,int,int,int,int);                   /* indent,x,y,w,h       (h==0 -> divider)       */
+        void    (*drawBorder)(LWPanelID,int,int,int,int,int);                   /* indent,x,y,w,h       (h == 0 -> divider)       */
         int     (*textWidth)(LWPanelID,char *);                                                 /* text */
         void    (*drawText)(LWPanelID,char *,int,int,int);              /* text,color,x,y */
         const LWDisplayMetrics   *(*dispMetrics)();
@@ -272,7 +272,7 @@ typedef struct st_LWRasterFuncs {
         void            (*drawBox)(LWRasterID,int,int,int,int,int);         /* color,x,y,w,h        */
         void            (*drawRGBBox)(LWRasterID,int,int,int,int,int,int,int);      /* r,g,b,x,y,w,h        */
         void            (*eraseBox)(LWRasterID,int,int,int,int);            /* x,y,w,h        */
-        void            (*drawBorder)(LWRasterID,int,int,int,int,int);      /* indent,x,y,w,h       (h==0 -> divider)       */
+        void            (*drawBorder)(LWRasterID,int,int,int,int,int);      /* indent,x,y,w,h       (h == 0 -> divider)       */
         void            (*drawText)(LWRasterID,char *,int,int,int);         /* text,color,x,y */
 
         LWRasterID      (*create)(int,int,int);                                                         /* w, h, flags */
@@ -283,7 +283,7 @@ typedef struct st_LWRasterFuncs {
 
 typedef struct st_ContextMenuFuncs {
         LWContextMenuID (*cmenuCreate)(LWPanPopupDesc *desc, void *userdata);
-        int             (*cmenuDeploy)(LWContextMenuID menu, LWPanelID pan, int item); // item==-1 for no choice initially and/or on return 
+        int             (*cmenuDeploy)(LWContextMenuID menu, LWPanelID pan, int item); // item == -1 for no choice initially and/or on return 
         void            (*cmenuDestroy)(LWContextMenuID menu);
 } ContextMenuFuncs;
 
@@ -590,7 +590,7 @@ typedef int              InputMode;
 
 #define LWDK_DELETE       ((LWDualKey) 0x1020)
 #define LWDK_HELP         ((LWDualKey) 0x1021)
-#define LWDK_RETURN       ((LWDualKey) 0x1022)
+#define LWDK_return      ((LWDualKey) 0x1022)
 
 #define LWDK_HOME      ((LWDualKey) 0x108F)
 #define LWDK_END       ((LWDualKey) 0x1090)

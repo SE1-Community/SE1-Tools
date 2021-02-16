@@ -94,7 +94,7 @@ int __cdecl qsort_ComparePolPntsByPnt(const void *elem1, const void *elem2)
 int GetPntIndex(LWPntID id)
 {
   LWPntID *p = (LWPntID *)bsearch(&id, _aidPntIDs, _ctPntIDs, sizeof(id), qsort_CompareIDs);
-  if (p==NULL) {
+  if (p == NULL) {
     assert(false);
     return 0;
   } else {
@@ -104,7 +104,7 @@ int GetPntIndex(LWPntID id)
 int GetPolIndex(LWPolID id)
 {
   LWPolID *p = (LWPolID *)bsearch(&id, _aidPolIDs, _ctPolIDs, sizeof(id), qsort_CompareIDs);
-  if (p==NULL) {
+  if (p == NULL) {
     assert(false);
     return 0;
   } else {
@@ -212,9 +212,9 @@ void MakeNormals(void)
   {for (int iPntPol=0; iPntPol<_ctPolPnts; iPntPol++) {
     LWPntID idThis = _appPntPols[iPntPol].pp_idPnt;
     // if new point
-    if (idThis!=idLastPnt) {
+    if (idThis != idLastPnt) {
       // store value for the last point (unless it was the first one)
-      if (idLastPnt!=NULL) {
+      if (idLastPnt != NULL) {
         int iLastPnt = GetPntIndex(idLastPnt);
         normalize(vNormalSum);
         _avPntNormals[iLastPnt][0] = vNormalSum[0];
@@ -263,7 +263,7 @@ void ExtractMeshData(void)
   _ctPolPnts = 0;
   for (int iPol=0; iPol<_ctPolIDs; iPol++) {
     int ct = _pmesh->polSize(_pmesh, _aidPolIDs[iPol]);
-    if (ct!=3) {
+    if (ct != 3) {
       _msg->error("All objects must be triangles!", NULL);
     }
     _ctPolPnts += ct;
@@ -333,7 +333,7 @@ void ExtractMeshData(void)
     for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
       // get the weight
       float v[1];
-      if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0]!=0.0f) {
+      if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0] != 0.0f) {
         ct++;
       }
     }
@@ -481,20 +481,20 @@ int ExportMesh(LWXPanelID pan)
     char fnmOut[256];
     strcpy(fnmOut, _strFileName);
     char *pchDot = strrchr(fnmOut, '.');
-    if (pchDot!=NULL) {
+    if (pchDot != NULL) {
       strcpy(pchDot, ".am");
     }
     _f = fopen(fnmOut, "w");
-    if (_f==NULL) {
+    if (_f == NULL) {
       _msg->error("Can't open file", fnmOut);
       goto end;
     }
 
     // write the mesh header
     fprintf(_f, "SE_MESH %s;\n\n",SE_ANIM_VER);
-    if (iFaceForward==ML_HALF_FACE_FORWARD) {
+    if (iFaceForward == ML_HALF_FACE_FORWARD) {
       fprintf(_f, "HALF_FACE_FORWARD TRUE;\n\n");
-    } else if (iFaceForward==ML_FULL_FACE_FORWARD) {
+    } else if (iFaceForward == ML_FULL_FACE_FORWARD) {
       fprintf(_f, "FULL_FACE_FORWARD TRUE;\n\n");
     }
 
@@ -562,7 +562,7 @@ int ExportMesh(LWXPanelID pan)
 
     // count the surfaces
     _ctSurfs = 0;
-    while (_asurSurfaces[_ctSurfs]!=NULL) {
+    while (_asurSurfaces[_ctSurfs] != NULL) {
       _ctSurfs++;
     }
 
@@ -577,7 +577,7 @@ int ExportMesh(LWXPanelID pan)
       // count the polygons
       int iSurfPols = 0;
       {for (int i=0; i<_ctPolIDs; i++) {
-        if (strcmp(_pmesh->polTag(_pmesh, _aidPolIDs[i], LWPTAG_SURF), strSurf)==0) {
+        if (strcmp(_pmesh->polTag(_pmesh, _aidPolIDs[i], LWPTAG_SURF), strSurf) == 0) {
           iSurfPols++;
         }
       }}
@@ -588,7 +588,7 @@ int ExportMesh(LWXPanelID pan)
       for (int iTri=0; iTri<_ctPolIDs; iTri++) {
         LWPolID idPol = _aidPolIDs[iTri];
         // if not in this surface
-        if (strcmp(_pmesh->polTag(_pmesh, idPol, LWPTAG_SURF), strSurf)!=0) {
+        if (strcmp(_pmesh->polTag(_pmesh, idPol, LWPTAG_SURF), strSurf) != 0) {
           // skip it
           continue;
         }
@@ -623,7 +623,7 @@ int ExportMesh(LWXPanelID pan)
       {for (int iPolPnt=0; iPolPnt<_ctPolPnts; iPolPnt++) {
         // get the coords
         float v[1];
-        if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0]!=0.0f) {
+        if (_pmesh->pntVGet(_pmesh, _appPolPnts[iPolPnt].pp_idPnt, v) && v[0] != 0.0f) {
           if (v[0] < 0) {
             _msg->error("Weight map value lesser than zero!",NULL);
           } else {
@@ -707,47 +707,47 @@ int ExportMesh(LWXPanelID pan)
 
   end:
     // close and free everything
-    if (_f!=NULL) {
+    if (_f != NULL) {
       fclose(_f);
       _f=NULL;
     }
-    if (_aidPntIDs!=NULL) {
+    if (_aidPntIDs != NULL) {
       free(_aidPntIDs);
       _aidPntIDs = NULL;
     }
-    if (_aidPolIDs!=NULL) {
+    if (_aidPolIDs != NULL) {
       free(_aidPolIDs);
       _aidPolIDs = NULL;
     }
-    if (_appPolPnts!=NULL) {
+    if (_appPolPnts != NULL) {
       free(_appPolPnts);
       _appPolPnts = NULL;
     }
-    if (_appPntPols!=NULL) {
+    if (_appPntPols != NULL) {
       free(_appPntPols);
       _appPntPols = NULL;
     }
-    if (_avPnts!=NULL) {
+    if (_avPnts != NULL) {
       free(_avPnts);
       _avPnts = NULL;
     }
-    if (_avPolNormals!=NULL) {
+    if (_avPolNormals != NULL) {
       free(_avPolNormals);
       _avPolNormals = NULL;
     }
-    if (_avPntNormals!=NULL) {
+    if (_avPntNormals != NULL) {
       free(_avPntNormals);
       _avPntNormals = NULL;
     }
-    if (_strFileName!=NULL) {
+    if (_strFileName != NULL) {
       free(_strFileName);
       _strFileName = NULL;
     }
-    if (_astrUVMapNames!=NULL) {
+    if (_astrUVMapNames != NULL) {
       free(_astrUVMapNames);
       _astrUVMapNames = NULL;
     }
-    if (_astrWeightMapNames!=NULL) {
+    if (_astrWeightMapNames != NULL) {
       free(_astrWeightMapNames);
       _astrWeightMapNames = NULL;
     }

@@ -38,6 +38,6 @@ typedef struct st_LWEnvironmentHandler {
         unsigned int    (*flags)    (LWInstance);
 } LWEnvironmentHandler;
 
-#define LWENF_TRANSPARENT       (1<<0)
+#define LWENF_TRANSPARENT       (1 << 0)
 
 #endif

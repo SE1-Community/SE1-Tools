@@ -42,11 +42,11 @@ void Initialize(const CTFileName &fnGameSettings)
     CTFileName fnmExpanded;
     ExpandFilePath(EFP_READ, CTString(GAMEDLL), fnmExpanded);
     HMODULE hGame = LoadLibraryA(fnmExpanded);
-    if (hGame==NULL) {
+    if (hGame == NULL) {
       ThrowF_t("%s", GetWindowsError(GetLastError()));
     }
     CGame* (*GAME_Create)(void) = (CGame* (*)(void))GetProcAddress(hGame, "GAME_Create");
-    if (GAME_Create==NULL) {
+    if (GAME_Create == NULL) {
       ThrowF_t("%s", GetWindowsError(GetLastError()));
     }
     _pGame = GAME_Create();
@@ -144,15 +144,15 @@ static int iDialogResult;
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
-					 )
+           )
 {
     switch (ul_reason_for_call)
-	{
-		case DLL_PROCESS_ATTACH:
-		case DLL_THREAD_ATTACH:
-		case DLL_THREAD_DETACH:
-		case DLL_PROCESS_DETACH:
-			break;
+  {
+    case DLL_PROCESS_ATTACH:
+    case DLL_THREAD_ATTACH:
+    case DLL_THREAD_DETACH:
+    case DLL_PROCESS_DETACH:
+      break;
     }
     return TRUE;
 }

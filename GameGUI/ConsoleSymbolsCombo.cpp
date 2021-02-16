@@ -38,9 +38,9 @@ CConsoleSymbolsCombo::~CConsoleSymbolsCombo()
 
 
 BEGIN_MESSAGE_MAP(CConsoleSymbolsCombo, CComboBox)
-	//{{AFX_MSG_MAP(CConsoleSymbolsCombo)
-	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CConsoleSymbolsCombo)
+  ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ END_MESSAGE_MAP()
 
 BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
   {
     INDEX iSelectedSymbol = GetCurSel();
     // if there is a valid player selected
@@ -81,7 +81,7 @@ BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG* pMsg)
       return TRUE;
     }
   }
-	return CComboBox::PreTranslateMessage(pMsg);
+  return CComboBox::PreTranslateMessage(pMsg);
 }
 
 void CConsoleSymbolsCombo::OnSelchange() 

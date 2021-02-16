@@ -97,7 +97,7 @@ void CTerrainInterface::HideCursor(void)
   GetClientRect( &rect);
   ClientToScreen( &rect);
   ClipCursor(&rect);
-  while (ShowCursor(FALSE)>=0);
+  while (ShowCursor(FALSE) >= 0);
 }
 
 void CTerrainInterface::UnhideCursor(void)
@@ -108,10 +108,10 @@ void CTerrainInterface::UnhideCursor(void)
 
 void GetButtonOffset(CTIButton &tib, PIX &pixOffsetX, PIX &pixOffsetY)
 {
-  if (tib.tib_iLayer!=-1)
+  if (tib.tib_iLayer != -1)
   {
     CTerrain *ptrTerrain=GetTerrain();
-    if (ptrTerrain==NULL) return;
+    if (ptrTerrain == NULL) return;
 
     pixOffsetX=LAYER_START_X;
     pixOffsetY=(ptrTerrain->tr_atlLayers.Count()-1-tib.tib_iLayer)*LAYER_HEIGHT-_fScrollLayers;
@@ -122,7 +122,7 @@ void GetButtonOffset(CTIButton &tib, PIX &pixOffsetX, PIX &pixOffsetY)
 void LoadSurface(CTFileName fnSurface)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   try
   {
@@ -144,12 +144,12 @@ void LoadSurface(CTFileName fnSurface)
     ptrTerrain->tr_atlLayers[0].ResetLayerMask(0xFF);
 
     ctLayers=0;
-    strmFile>>ctLayers;
+    strmFile >> ctLayers;
 
     for (INDEX iLayer=0; iLayer<ctLayers; iLayer++)
     {
       CTFileName fnTexture;
-      strmFile>>fnTexture;
+      strmFile >> fnTexture;
       // check if texture exists
       if (!FileExists( fnTexture))
       {
@@ -157,7 +157,7 @@ void LoadSurface(CTFileName fnSurface)
       }
 
       CTerrainLayer *ptlLayer=&ptrTerrain->tr_atlLayers[0];
-      if (iLayer!=0)
+      if (iLayer != 0)
       {
         ptlLayer=&ptrTerrain->AddLayer_t(fnTexture, LT_NORMAL, FALSE);
       }
@@ -167,43 +167,43 @@ void LoadSurface(CTFileName fnSurface)
       }
 
       // load surface
-      strmFile>>ptlLayer->tl_fRotateX;
-      strmFile>>ptlLayer->tl_fRotateY;
-      strmFile>>ptlLayer->tl_fStretchX;
-      strmFile>>ptlLayer->tl_fStretchY;
-      strmFile>>ptlLayer->tl_fOffsetX;
-      strmFile>>ptlLayer->tl_fOffsetY;
+      strmFile >> ptlLayer->tl_fRotateX;
+      strmFile >> ptlLayer->tl_fRotateY;
+      strmFile >> ptlLayer->tl_fStretchX;
+      strmFile >> ptlLayer->tl_fStretchY;
+      strmFile >> ptlLayer->tl_fOffsetX;
+      strmFile >> ptlLayer->tl_fOffsetY;
 
-      strmFile>>ptlLayer->tl_bAutoRegenerated;
-      strmFile>>ptlLayer->tl_fCoverage;
-      strmFile>>ptlLayer->tl_fCoverageNoise;
-      strmFile>>ptlLayer->tl_fCoverageRandom;
+      strmFile >> ptlLayer->tl_bAutoRegenerated;
+      strmFile >> ptlLayer->tl_fCoverage;
+      strmFile >> ptlLayer->tl_fCoverageNoise;
+      strmFile >> ptlLayer->tl_fCoverageRandom;
 
-      strmFile>>ptlLayer->tl_bApplyMinAltitude;
-      strmFile>>ptlLayer->tl_fMinAltitude;
-      strmFile>>ptlLayer->tl_fMinAltitudeFade;
-      strmFile>>ptlLayer->tl_fMinAltitudeNoise;
-      strmFile>>ptlLayer->tl_fMinAltitudeRandom;
+      strmFile >> ptlLayer->tl_bApplyMinAltitude;
+      strmFile >> ptlLayer->tl_fMinAltitude;
+      strmFile >> ptlLayer->tl_fMinAltitudeFade;
+      strmFile >> ptlLayer->tl_fMinAltitudeNoise;
+      strmFile >> ptlLayer->tl_fMinAltitudeRandom;
 
-      strmFile>>ptlLayer->tl_bApplyMaxAltitude;
-      strmFile>>ptlLayer->tl_fMaxAltitude;
-      strmFile>>ptlLayer->tl_fMaxAltitudeFade;
-      strmFile>>ptlLayer->tl_fMaxAltitudeNoise;
-      strmFile>>ptlLayer->tl_fMaxAltitudeRandom;
+      strmFile >> ptlLayer->tl_bApplyMaxAltitude;
+      strmFile >> ptlLayer->tl_fMaxAltitude;
+      strmFile >> ptlLayer->tl_fMaxAltitudeFade;
+      strmFile >> ptlLayer->tl_fMaxAltitudeNoise;
+      strmFile >> ptlLayer->tl_fMaxAltitudeRandom;
 
-      strmFile>>ptlLayer->tl_bApplyMinSlope;
-      strmFile>>ptlLayer->tl_fMinSlope;
-      strmFile>>ptlLayer->tl_fMinSlopeFade;
-      strmFile>>ptlLayer->tl_fMinSlopeNoise;
-      strmFile>>ptlLayer->tl_fMinSlopeRandom;
+      strmFile >> ptlLayer->tl_bApplyMinSlope;
+      strmFile >> ptlLayer->tl_fMinSlope;
+      strmFile >> ptlLayer->tl_fMinSlopeFade;
+      strmFile >> ptlLayer->tl_fMinSlopeNoise;
+      strmFile >> ptlLayer->tl_fMinSlopeRandom;
 
-      strmFile>>ptlLayer->tl_bApplyMaxSlope;
-      strmFile>>ptlLayer->tl_fMaxSlope;
-      strmFile>>ptlLayer->tl_fMaxSlopeFade;
-      strmFile>>ptlLayer->tl_fMaxSlopeNoise;
-      strmFile>>ptlLayer->tl_fMaxSlopeRandom;
-      
-      strmFile>>ptlLayer->tl_colMultiply;
+      strmFile >> ptlLayer->tl_bApplyMaxSlope;
+      strmFile >> ptlLayer->tl_fMaxSlope;
+      strmFile >> ptlLayer->tl_fMaxSlopeFade;
+      strmFile >> ptlLayer->tl_fMaxSlopeNoise;
+      strmFile >> ptlLayer->tl_fMaxSlopeRandom;
+
+      strmFile >> ptlLayer->tl_colMultiply;
     }
 
     strmFile.Close();
@@ -222,7 +222,7 @@ void LoadSurface(CTFileName fnSurface)
 void SaveSurface(CTFileName fnSurface)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   try
   {
@@ -234,55 +234,55 @@ void SaveSurface(CTFileName fnSurface)
     strmFile.WriteID_t(TERRAIN_SURFACE_VER);
 
     INDEX ctLayers=ptrTerrain->tr_atlLayers.Count();
-    strmFile<<ctLayers;
+    strmFile << ctLayers;
 
     for (INDEX iLayer=0; iLayer<ctLayers; iLayer++)
     {
       CTerrainLayer *ptlLayer=&ptrTerrain->tr_atlLayers[iLayer];
 
-      if (ptlLayer->tl_ptdTexture==NULL) continue;
+      if (ptlLayer->tl_ptdTexture == NULL) continue;
       CTFileName fnTexture=ptlLayer->tl_ptdTexture->GetName();
 
-      strmFile<<fnTexture;
+      strmFile << fnTexture;
 
       // save surface
-      strmFile<<ptlLayer->tl_fRotateX;
-      strmFile<<ptlLayer->tl_fRotateY;
-      strmFile<<ptlLayer->tl_fStretchX;
-      strmFile<<ptlLayer->tl_fStretchY;
-      strmFile<<ptlLayer->tl_fOffsetX;
-      strmFile<<ptlLayer->tl_fOffsetY;
+      strmFile << ptlLayer->tl_fRotateX;
+      strmFile << ptlLayer->tl_fRotateY;
+      strmFile << ptlLayer->tl_fStretchX;
+      strmFile << ptlLayer->tl_fStretchY;
+      strmFile << ptlLayer->tl_fOffsetX;
+      strmFile << ptlLayer->tl_fOffsetY;
 
-      strmFile<<ptlLayer->tl_bAutoRegenerated;
-      strmFile<<ptlLayer->tl_fCoverage;
-      strmFile<<ptlLayer->tl_fCoverageNoise;
-      strmFile<<ptlLayer->tl_fCoverageRandom;
+      strmFile << ptlLayer->tl_bAutoRegenerated;
+      strmFile << ptlLayer->tl_fCoverage;
+      strmFile << ptlLayer->tl_fCoverageNoise;
+      strmFile << ptlLayer->tl_fCoverageRandom;
 
-      strmFile<<ptlLayer->tl_bApplyMinAltitude;
-      strmFile<<ptlLayer->tl_fMinAltitude;
-      strmFile<<ptlLayer->tl_fMinAltitudeFade;
-      strmFile<<ptlLayer->tl_fMinAltitudeNoise;
-      strmFile<<ptlLayer->tl_fMinAltitudeRandom;
+      strmFile << ptlLayer->tl_bApplyMinAltitude;
+      strmFile << ptlLayer->tl_fMinAltitude;
+      strmFile << ptlLayer->tl_fMinAltitudeFade;
+      strmFile << ptlLayer->tl_fMinAltitudeNoise;
+      strmFile << ptlLayer->tl_fMinAltitudeRandom;
 
-      strmFile<<ptlLayer->tl_bApplyMaxAltitude;
-      strmFile<<ptlLayer->tl_fMaxAltitude;
-      strmFile<<ptlLayer->tl_fMaxAltitudeFade;
-      strmFile<<ptlLayer->tl_fMaxAltitudeNoise;
-      strmFile<<ptlLayer->tl_fMaxAltitudeRandom;
+      strmFile << ptlLayer->tl_bApplyMaxAltitude;
+      strmFile << ptlLayer->tl_fMaxAltitude;
+      strmFile << ptlLayer->tl_fMaxAltitudeFade;
+      strmFile << ptlLayer->tl_fMaxAltitudeNoise;
+      strmFile << ptlLayer->tl_fMaxAltitudeRandom;
 
-      strmFile<<ptlLayer->tl_bApplyMinSlope;
-      strmFile<<ptlLayer->tl_fMinSlope;
-      strmFile<<ptlLayer->tl_fMinSlopeFade;
-      strmFile<<ptlLayer->tl_fMinSlopeNoise;
-      strmFile<<ptlLayer->tl_fMinSlopeRandom;
+      strmFile << ptlLayer->tl_bApplyMinSlope;
+      strmFile << ptlLayer->tl_fMinSlope;
+      strmFile << ptlLayer->tl_fMinSlopeFade;
+      strmFile << ptlLayer->tl_fMinSlopeNoise;
+      strmFile << ptlLayer->tl_fMinSlopeRandom;
 
-      strmFile<<ptlLayer->tl_bApplyMaxSlope;
-      strmFile<<ptlLayer->tl_fMaxSlope;
-      strmFile<<ptlLayer->tl_fMaxSlopeFade;
-      strmFile<<ptlLayer->tl_fMaxSlopeNoise;
-      strmFile<<ptlLayer->tl_fMaxSlopeRandom;
+      strmFile << ptlLayer->tl_bApplyMaxSlope;
+      strmFile << ptlLayer->tl_fMaxSlope;
+      strmFile << ptlLayer->tl_fMaxSlopeFade;
+      strmFile << ptlLayer->tl_fMaxSlopeNoise;
+      strmFile << ptlLayer->tl_fMaxSlopeRandom;
 
-      strmFile<<ptlLayer->tl_colMultiply;
+      strmFile << ptlLayer->tl_colMultiply;
     }
 
     strmFile.Close();
@@ -382,18 +382,18 @@ CTerrainInterface::~CTerrainInterface()
 
 
 BEGIN_MESSAGE_MAP(CTerrainInterface, CWnd)
-	//{{AFX_MSG_MAP(CTerrainInterface)
-	ON_WM_PAINT()
-	ON_WM_DESTROY()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONUP()
-	ON_WM_RBUTTONDOWN()
-	ON_WM_RBUTTONUP()
-	ON_WM_LBUTTONDBLCLK()
-	ON_WM_DROPFILES()
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CTerrainInterface)
+  ON_WM_PAINT()
+  ON_WM_DESTROY()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_MOUSEMOVE()
+  ON_WM_LBUTTONUP()
+  ON_WM_RBUTTONDOWN()
+  ON_WM_RBUTTONUP()
+  ON_WM_LBUTTONDBLCLK()
+  ON_WM_DROPFILES()
+  ON_WM_CREATE()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -416,7 +416,7 @@ void CTerrainInterface::OnPaint()
   // if there is a valid drawport, and the drawport can be locked
   if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
   {
-    if (dcButtons.Count()==0 || GetTerrain()!=_ptrLastEditedTerrain)
+    if (dcButtons.Count() == 0 || GetTerrain() != _ptrLastEditedTerrain)
     {
       InitializeInterface(m_pDrawPort);
       _ptrLastEditedTerrain=GetTerrain();
@@ -435,7 +435,7 @@ void CTerrainInterface::OnPaint()
     // unlock the drawport
     m_pDrawPort->Unlock();
 
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -453,7 +453,7 @@ void CTerrainInterface::RenderInterface(CDrawPort *pdp)
     PIX pixOffsetX=0;
     PIX pixOffsetY=0;
     GetButtonOffset(tib, pixOffsetX, pixOffsetY);
-    if (tib.tib_pPreRender!=NULL) tib.tib_pPreRender(&tib, pdp);
+    if (tib.tib_pPreRender != NULL) tib.tib_pPreRender(&tib, pdp);
 
     PIX x=tib.tib_fx+pixOffsetX;
     PIX y=tib.tib_fy+pixOffsetY;
@@ -471,12 +471,12 @@ void CTerrainInterface::RenderInterface(CDrawPort *pdp)
     }
     
     // icon texture
-    if (tib.tib_iIcon!=-1)
+    if (tib.tib_iIcon != -1)
     {
       PIXaabbox2D boxScreen=PIXaabbox2D( PIX2D(x,y), PIX2D(x+dx, y+dy));
       MEXaabbox2D boxTexture=MEXaabbox2D( MEX2D(16*tib.tib_iIcon,0), MEX2D(16*tib.tib_iIcon+16,16));
       COLOR colMultiply=C_WHITE|CT_OPAQUE;
-      if (tib.tib_pIsEnabled!=NULL && !tib.tib_pIsEnabled(&tib))
+      if (tib.tib_pIsEnabled != NULL && !tib.tib_pIsEnabled(&tib))
       {
         colMultiply=C_dGRAY|CT_OPAQUE;
       }
@@ -484,7 +484,7 @@ void CTerrainInterface::RenderInterface(CDrawPort *pdp)
     }
     
     // custom render
-    if (tib.tib_pOnRender!=NULL) tib.tib_pOnRender(&tib, pdp);
+    if (tib.tib_pOnRender != NULL) tib.tib_pOnRender(&tib, pdp);
     
     // icon border
     if (tib.tib_colBorderColor&0xFF)
@@ -511,7 +511,7 @@ PIX2D GetLayerSize(CDrawPort *pdp)
 
 void CTerrainInterface::OnDestroy() 
 {
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 
   if (m_pViewPort != NULL)
   {
@@ -527,7 +527,7 @@ void GenerateTerrainBrushTexture( INDEX iBrush, FLOAT fHotSpot, FLOAT fFallOff)
 {
 #if ALLOW_TERRAINS
   INDEX iLog2=INDEX(ceil(Log2(fFallOff*2+2)));
-  PIX pixSize=1UL<<(iLog2+1);
+  PIX pixSize=1UL << (iLog2+1);
   FLOAT fcx=pixSize/2.0f;
   FLOAT fcy=pixSize/2.0f;
   CImageInfo ii;
@@ -712,7 +712,7 @@ void RenderLayerTexture(CTIButton *ptib, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer!=NULL && ptlLayer->tl_ptdTexture!=NULL)
+  if (ptlLayer != NULL && ptlLayer->tl_ptdTexture != NULL)
   {
     CTextureObject to;
     to.SetData(ptlLayer->tl_ptdTexture);
@@ -729,7 +729,7 @@ void RenderLayerBcg(CTIButton *ptib, CDrawPort *pdp)
   PIX pixOffsetX=0;
   PIX pixOffsetY=0;
   GetButtonOffset(tib, pixOffsetX, pixOffsetY);
-  if (tib.tib_pPreRender!=NULL) tib.tib_pPreRender(&tib, pdp);
+  if (tib.tib_pPreRender != NULL) tib.tib_pPreRender(&tib, pdp);
 
   PIX x=tib.tib_fx+pixOffsetX;
   PIX y=tib.tib_fy+pixOffsetY;
@@ -737,7 +737,7 @@ void RenderLayerBcg(CTIButton *ptib, CDrawPort *pdp)
   PIX dy=tib.tib_fdy;
 
   COLOR colBcg=C_WHITE|CT_OPAQUE;
-  if (tib.tib_iLayer==GetLayerIndex())                colBcg=COL_SELECTED_LAYER;
+  if (tib.tib_iLayer == GetLayerIndex())                colBcg=COL_SELECTED_LAYER;
   else if (iLayer&1)                                  colBcg=COL_ODD_LAYERS;
   else                                                colBcg=COL_EVEN_LAYERS;
 
@@ -752,7 +752,7 @@ void RenderLayerMask(CTIButton *ptib, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer!=NULL && ptlLayer->tl_ptdTexture!=NULL)
+  if (ptlLayer != NULL && ptlLayer->tl_ptdTexture != NULL)
   {
     CTextureObject to;
     CTextureData *ptd=ptlLayer->GetThumbnail(64,64);
@@ -771,7 +771,7 @@ void GetBrushModeInfo(INDEX iMode, INDEX &iIcon, CTString &strText)
   case TBM_PAINT:
     {
       strText="Paint (J)";
-      if (INDEX(theApp.m_iTerrainEditMode)==TEM_HEIGHTMAP) iIcon=12;
+      if (INDEX(theApp.m_iTerrainEditMode) == TEM_HEIGHTMAP) iIcon=12;
       else                                                iIcon=8;
       break;
     }
@@ -789,7 +789,7 @@ void GetBrushModeInfo(INDEX iMode, INDEX &iIcon, CTString &strText)
 
 void UpdateEditModeIcon(CTIButton *ptib, CDrawPort *pdp)
 {
-  if (INDEX(theApp.m_iTerrainEditMode)==TEM_HEIGHTMAP) ptib->tib_iIcon=20;
+  if (INDEX(theApp.m_iTerrainEditMode) == TEM_HEIGHTMAP) ptib->tib_iIcon=20;
   else                                                ptib->tib_iIcon=19;
 }
 
@@ -805,7 +805,7 @@ void UpdateLayerVisibleFlag(CTIButton *ptib, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer!=NULL)
+  if (ptlLayer != NULL)
   {
     if (ptlLayer->tl_bVisible) ptib->tib_iIcon=3;
     else                       ptib->tib_iIcon=4;
@@ -814,7 +814,7 @@ void UpdateLayerVisibleFlag(CTIButton *ptib, CDrawPort *pdp)
 
 void UpdatePressure(CTIButton *ptib, CDrawPort *pdp)
 {
-  if (theApp.m_fTerrainBrushPressureEnum>=0)
+  if (theApp.m_fTerrainBrushPressureEnum >= 0)
   {
     theApp.m_fTerrainBrushPressure=(theApp.m_fTerrainBrushPressureEnum+1)/10.0f*1024.0f+1;
     theApp.m_fTerrainBrushPressureEnum=-1;
@@ -825,7 +825,7 @@ void SetAsActiveLayer(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   SelectLayer(ptib->tib_iLayer);
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  if (pDoc!=NULL)
+  if (pDoc != NULL)
   {
     pDoc->m_chSelections.MarkChanged();
   }
@@ -836,10 +836,10 @@ void ApplyLayerCommand(INDEX iSelectedItem)
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   CTerrainLayer *ptlLayer=GetLayer();
   INDEX iLayer=GetLayerIndex();
-  if (ptlLayer!=NULL)
+  if (ptlLayer != NULL)
   {
     switch (iSelectedItem)
     {
@@ -851,7 +851,7 @@ void ApplyLayerCommand(INDEX iSelectedItem)
           "Warning !", MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1| MB_SYSTEMMODAL | MB_TOPMOST) == IDYES)
         {
           ptrTerrain->RemoveLayer(iLayer);
-          if (GetLayerIndex()>=ptrTerrain->tr_atlLayers.Count())
+          if (GetLayerIndex() >= ptrTerrain->tr_atlLayers.Count())
           {
             SelectLayer(ptrTerrain->tr_atlLayers.Count()-1);
           }
@@ -913,7 +913,7 @@ void DisplayLayerTexture(INDEX iLayer)
   CWndDisplayTexture *pDisplay=new CWndDisplayTexture;
 
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer!=NULL && ptlLayer->tl_ptdTexture!=NULL)
+  if (ptlLayer != NULL && ptlLayer->tl_ptdTexture != NULL)
   {
     POINT pt;
     GetCursorPos(&pt);
@@ -926,10 +926,10 @@ void DisplayLayerTexture(INDEX iLayer)
 void ApplyLayerTextureCommand(INDEX iSelectedItem)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   CTerrainLayer *ptlLayer=GetLayer();
   INDEX iLayer=GetLayerIndex();
-  if (ptlLayer!=NULL)
+  if (ptlLayer != NULL)
   {
     switch (iSelectedItem)
     {
@@ -938,7 +938,7 @@ void ApplyLayerTextureCommand(INDEX iSelectedItem)
       CTFileName fnGradient=_EngineGUI.FileRequester(
         "Select izohipse gradient", FILTER_TEX FILTER_ALL FILTER_END,
         "Texture directory", "Textures\\");
-      if (fnGradient=="") return;
+      if (fnGradient == "") return;
 
       CTextureData *ptdGradient;
       try
@@ -956,7 +956,7 @@ void ApplyLayerTextureCommand(INDEX iSelectedItem)
       CTFileName fnIzohipseTexture=_EngineGUI.FileRequester(
         "Choose name for izohipse texture", FILTER_TEX FILTER_ALL FILTER_END,
         "Texture directory", "Textures\\");
-      if (fnIzohipseTexture=="") return;
+      if (fnIzohipseTexture == "") return;
 
       INDEX iHMWidth=ptrTerrain->tr_pixHeightMapWidth;
       INDEX iHMHeight=ptrTerrain->tr_pixHeightMapHeight;
@@ -969,7 +969,7 @@ void ApplyLayerTextureCommand(INDEX iSelectedItem)
 
       INDEX iGradientHeight=ptdGradient->GetPixHeight();
       UWORD *puw=ptrTerrain->tr_auwHeightMap;
-      if (puw==NULL) return;
+      if (puw == NULL) return;
       for (INDEX iy=0; iy<ii.ii_Height; iy++)
       {
         for (INDEX ix=0; ix<ii.ii_Width; ix++)
@@ -1011,7 +1011,7 @@ void ApplyLayerTextureCommand(INDEX iSelectedItem)
       CTFileName fnTexture=_EngineGUI.FileRequester(
         "Browse texture", FILTER_TEX FILTER_ALL FILTER_END,
         "Texture directory", "Textures\\");
-      if (fnTexture=="") return;
+      if (fnTexture == "") return;
 
       try
       {
@@ -1038,7 +1038,7 @@ void DisplayLayerMask(INDEX iLayer)
   CWndDisplayTexture *pDisplay=new CWndDisplayTexture;
 
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer!=NULL && ptlLayer->tl_ptdTexture!=NULL)
+  if (ptlLayer != NULL && ptlLayer->tl_ptdTexture != NULL)
   {
     CTextureData *ptd=ptlLayer->GetThumbnail(ptlLayer->tl_iMaskWidth-1,ptlLayer->tl_iMaskHeight-1);
 
@@ -1055,10 +1055,10 @@ void ApplyLayerMaskCommand(INDEX iSelectedItem)
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   CTerrainLayer *ptlLayer=GetLayer();
   INDEX iLayer=GetLayerIndex();
-  if (ptlLayer!=NULL)
+  if (ptlLayer != NULL)
   {
     switch (iSelectedItem)
     {
@@ -1085,7 +1085,7 @@ void ApplyLayerMaskCommand(INDEX iSelectedItem)
       CTFileName fnMaskMap=_EngineGUI.FileRequester(
         "Import layer mask", FILTER_TGA FILTER_PCX FILTER_ALL FILTER_END,
         "Layer mask directory", "Textures\\");
-      if (fnMaskMap=="") return;
+      if (fnMaskMap == "") return;
       try
       {
         ptlLayer->ImportLayerMask_t(fnMaskMap);
@@ -1104,7 +1104,7 @@ void ApplyLayerMaskCommand(INDEX iSelectedItem)
       CTFileName fnMaskMap=_EngineGUI.FileRequester(
         "Export layer mask", FILTER_TGA FILTER_PCX FILTER_ALL FILTER_END,
         "Layer mask directory", "Textures\\");
-      if (fnMaskMap=="") return;
+      if (fnMaskMap == "") return;
       try
       {
         ptlLayer->ExportLayerMask_t(fnMaskMap);
@@ -1135,7 +1135,7 @@ void PickLayerColor(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer==NULL) return;
+  if (ptlLayer == NULL) return;
 
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   COLORREF colMfc=CLRF_CLR( ptlLayer->tl_colMultiply);
@@ -1149,7 +1149,7 @@ void NumericAlpha(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer==NULL) return;
+  if (ptlLayer == NULL) return;
 
   CDlgNumericAlpha dlgNumericAlpha( ptlLayer->tl_colMultiply&0xFF);
   if (dlgNumericAlpha.DoModal() == IDOK)
@@ -1162,10 +1162,10 @@ void NumericAlpha(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void InvokeLayerOptions(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer==-1) return;
+  if (iLayer == -1) return;
 
   CDlgEditTerrainLayer dlg;
-  if (dlg.DoModal()==IDOK)
+  if (dlg.DoModal() == IDOK)
   {
     GenerateLayerDistribution(iLayer);
   }
@@ -1188,7 +1188,7 @@ void PickSelectedLayerBcgColor(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 INDEX InsertItemMacro( CCustomComboWnd *pCC, CTString strText, INDEX iIcon=-1, INDEX iValue=-1, COLOR col=COL_DEFAULT_ITEM)
 {
   INDEX iItem;
-  if (iIcon!=-1)
+  if (iIcon != -1)
   {
     MEXaabbox2D boxIcon=MEXaabbox2D( MEX2D(16*iIcon,0), MEX2D(16*iIcon+16,16));
     DECLARE_CTFILENAME( fnTerrainEditIcons, "Textures\\Editor\\TerrainEditingIcons.tex");
@@ -1199,7 +1199,7 @@ INDEX InsertItemMacro( CCustomComboWnd *pCC, CTString strText, INDEX iIcon=-1, I
     iItem=pCC->InsertItem( strText);
   }
 
-  if (iValue!=-1) 
+  if (iValue != -1) 
   {
     pCC->SetItemValue(iItem, iValue);
   }
@@ -1211,7 +1211,7 @@ INDEX InsertItemMacro( CCustomComboWnd *pCC, CTString strText, INDEX iIcon=-1, I
 void InvokeLayerPopup(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CCustomComboWnd *pCombo=new CCustomComboWnd;
   InsertItemMacro( pCombo, "Delete layer", -1, 0);
@@ -1227,7 +1227,7 @@ void InvokeLayerPopup(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void InvokeLayerTexturePopup(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CCustomComboWnd *pCombo=new CCustomComboWnd;
   InsertItemMacro( pCombo, "Create izohipse texture", 22, 0);
@@ -1240,7 +1240,7 @@ void InvokeLayerTexturePopup(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void InvokeLayerMaskPopup(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CCustomComboWnd *pCombo=new CCustomComboWnd;
   InsertItemMacro( pCombo, "Fill mask",     17, 0);
@@ -1260,11 +1260,11 @@ CTString GetStretchInfo(CTIButton *ptib, CPoint pt, CDrawPort *pdp, BOOL bLmb)
 {
   CTString strInfo;
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
     CTerrain *ptrTerrain=GetTerrain();
-    if (ptlLayer!=NULL && ptrTerrain!=NULL)
+    if (ptlLayer != NULL && ptrTerrain != NULL)
     {
       strInfo.PrintF("Texture stretch: %g", ptlLayer->tl_fStretchX);
       return strInfo;
@@ -1276,7 +1276,7 @@ CTString GetStretchInfo(CTIButton *ptib, CPoint pt, CDrawPort *pdp, BOOL bLmb)
 CTString GetEditedData(CTIButton *ptib, CPoint pt, CDrawPort *pdp, BOOL bLmb)
 {
   CTString strInfo;
-  if (ptib->tib_pfData1!=NULL)  strInfo.PrintF("%f", ptib->tib_pfData1);
+  if (ptib->tib_pfData1 != NULL)  strInfo.PrintF("%f", ptib->tib_pfData1);
   return strInfo;
 }
 
@@ -1292,11 +1292,11 @@ void OnDropIntoLayerTexture(CTIButton *ptib, CPoint pt, CDrawPort *pdp, CTFileNa
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptlLayer!=NULL && ptrTerrain!=NULL)
+  if (ptlLayer != NULL && ptrTerrain != NULL)
   {
-    ASSERT(ptlLayer->tl_ptdTexture!=NULL);
+    ASSERT(ptlLayer->tl_ptdTexture != NULL);
     CTFileName fnOldTexture=CTFILENAME("Textures\\Editor\\Default.tex");
-    if (ptlLayer->tl_ptdTexture!=NULL)
+    if (ptlLayer->tl_ptdTexture != NULL)
     {
       fnOldTexture=ptlLayer->tl_ptdTexture->GetName();
     }
@@ -1332,10 +1332,10 @@ void OnDropIntoLayerTexture(CTIButton *ptib, CPoint pt, CDrawPort *pdp, CTFileNa
 void ToggleLayerVisibleFlag(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
-    if (ptlLayer!=NULL)
+    if (ptlLayer != NULL)
     {
       ptlLayer->tl_bVisible=!ptlLayer->tl_bVisible;
       CTerrain *ptrTerrain=GetTerrain();
@@ -1347,10 +1347,10 @@ void ToggleLayerVisibleFlag(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void ToggleFlag(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
-    if (ptlLayer!=NULL)
+    if (ptlLayer != NULL)
     {
       BOOL bOldValue=*(BOOL*)((UBYTE*)ptlLayer+(ULONG)ptib->tib_pfData1);
       bOldValue=!bOldValue;
@@ -1362,17 +1362,17 @@ void ToggleFlag(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 BOOL DisableIfNoTerrainSelected(CTIButton *ptib)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  return ptrTerrain!=NULL;
+  return ptrTerrain != NULL;
 }
 
 CTString GetNormalizedPercentageInfo(CTIButton *ptib, CPoint pt, CDrawPort *pdp, BOOL bLmb)
 {
   CTString strInfo;
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
-    if (ptlLayer!=NULL)
+    if (ptlLayer != NULL)
     {
       FLOAT *pfNormalized=(FLOAT *)((UBYTE*)ptlLayer+(ULONG)ptib->tib_pfData1);
       FLOAT fValue=*pfNormalized;
@@ -1385,11 +1385,11 @@ CTString GetNormalizedPercentageInfo(CTIButton *ptib, CPoint pt, CDrawPort *pdp,
 
 void ChangeLayerDistributionData(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 {
-  if (ptib->tib_pfData1==NULL) return;
+  if (ptib->tib_pfData1 == NULL) return;
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer==-1) return;
+  if (iLayer == -1) return;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer==NULL) return;
+  if (ptlLayer == NULL) return;
   
   FLOAT *pfNormalized=(FLOAT *)((UBYTE*)ptlLayer+(ULONG)ptib->tib_pfData1);
   FLOAT fOldValue=*pfNormalized;
@@ -1403,11 +1403,11 @@ void ChangeLayerDistributionData(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPor
 
 void ChangeData(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 {
-  if (ptib->tib_pfData1!=NULL)
+  if (ptib->tib_pfData1 != NULL)
   {
     FLOAT fData=*ptib->tib_pfData1;
     FLOAT fAdd=ptib->tib_fDataDelta*fdx;
-    if ((fData+fAdd)>=ptib->tib_fDataMax)
+    if ((fData+fAdd) >= ptib->tib_fDataMax)
     {
       if (ptib->tib_bWrapData)
       {
@@ -1418,7 +1418,7 @@ void ChangeData(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
         fData=ptib->tib_fDataMax;
       }
     }
-    else if ((fData+fAdd)<=ptib->tib_fDataMin)
+    else if ((fData+fAdd) <= ptib->tib_fDataMin)
     {
       if (ptib->tib_bWrapData)
       {
@@ -1440,10 +1440,10 @@ void ChangeData(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 void ChangeTextureRotation(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
-    if (ptlLayer!=NULL)
+    if (ptlLayer != NULL)
     {
       FLOAT fAdd=CHANGE_ANGLE_SENSITIVITY*fdx;
       ptlLayer->tl_fRotateX+=fAdd;
@@ -1455,10 +1455,10 @@ void ChangeTextureRotation(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp
 void ChangeTextureOffset(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
-    if (ptlLayer!=NULL)
+    if (ptlLayer != NULL)
     {
       FLOAT fAddX=CHANGE_OFFSET_SENSITIVITY*fdx;
       FLOAT fAddY=CHANGE_OFFSET_SENSITIVITY*fdy;
@@ -1471,19 +1471,19 @@ void ChangeTextureOffset(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 void ChangeTextureStretch(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
-  if (iLayer!=-1)
+  if (iLayer != -1)
   {
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
     CTerrain *ptrTerrain=GetTerrain();
-    if (ptlLayer!=NULL && ptrTerrain!=NULL)
+    if (ptlLayer != NULL && ptrTerrain != NULL)
     {
-      if (fdx>=CHANGE_STRETCH_SENSITIVITY)
+      if (fdx >= CHANGE_STRETCH_SENSITIVITY)
       {
         ptlLayer->tl_fStretchX/=2;
         ptlLayer->tl_fStretchY/=2;
         ptrTerrain->RefreshTerrain();
       }
-      else if (fdx<=-CHANGE_STRETCH_SENSITIVITY)
+      else if (fdx <= -CHANGE_STRETCH_SENSITIVITY)
       {
         ptlLayer->tl_fStretchX*=2;
         ptlLayer->tl_fStretchY*=2;
@@ -1495,31 +1495,31 @@ void ChangeTextureStretch(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)
 
 void OnSelectBrush(INDEX iSelectedItem)
 {
-  if (iSelectedItem>=0 && iSelectedItem<CT_BRUSH_MODES)
+  if (iSelectedItem >= 0 && iSelectedItem<CT_BRUSH_MODES)
   {
     theApp.m_iTerrainBrushMode=iSelectedItem;
     theApp.m_ctTerrainPageCanvas.MarkChanged();
     theApp.GetDocument()->SetStatusLineModeInfoMessage();
   }
-  else if (iSelectedItem==-1)
+  else if (iSelectedItem == -1)
   {
     CTerrain *ptrTerrain=GetTerrain();
-    if (ptrTerrain==NULL) return;
+    if (ptrTerrain == NULL) return;
 
-	  CDlgEditFloat dlg;
+    CDlgEditFloat dlg;
     dlg.m_fEditFloat=theApp.m_fPosterizeStep;
-	  dlg.m_strVarName = "Posterize step (m)";
+    dlg.m_strVarName = "Posterize step (m)";
     dlg.m_strTitle = "Enter posterize step";
-    if (dlg.DoModal()!=IDOK) return;
+    if (dlg.DoModal() != IDOK) return;
     theApp.m_fPosterizeStep=dlg.m_fEditFloat;
   }
   // auto update terrain distribution flag
-  else if (iSelectedItem==50)
+  else if (iSelectedItem == 50)
   {
     theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution=!theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution;
   }
   // settings
-  else if (iSelectedItem==100)
+  else if (iSelectedItem == 100)
   {
     CDlgTEOperationSettings dlg;
     dlg.DoModal();
@@ -1581,7 +1581,7 @@ void NextEnum(CTIButton *ptib, CPoint pt)
 FLOAT GetMaxSliderPos(CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return 0;
+  if (ptrTerrain == NULL) return 0;
   FLOAT fMaxPos=ClampDn(ptrTerrain->tr_atlLayers.Count()*LAYER_HEIGHT-pdp->GetHeight(),PIX(0));
   return fMaxPos;
 }
@@ -1600,7 +1600,7 @@ void RenderLayerColor(CTIButton *ptib, CDrawPort *pdp)
 {
   INDEX iLayer=ptib->tib_iLayer;
   CTerrainLayer *ptlLayer=GetLayer(iLayer);
-  if (ptlLayer==NULL) return;
+  if (ptlLayer == NULL) return;
 
   PIXaabbox2D box=GetButtonScreenBox(*ptib);
   pdp->Fill(box.Min()(1), box.Min()(2), box.Size()(1), box.Size()(2), ptlLayer->tl_colMultiply);
@@ -1647,7 +1647,7 @@ void DisplayHeightMap(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void ApplyTerrainOptions(INDEX iSelectedItem)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   switch (iSelectedItem)
   {
@@ -1754,7 +1754,7 @@ void ApplyTerrainOptions(INDEX iSelectedItem)
 void InvokeTerrainOptions(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CCustomComboWnd *pCombo=new CCustomComboWnd;
   INDEX iItem=0;
@@ -1788,11 +1788,11 @@ void DisplayHeightMapWindow(CPoint pt)
   CImageInfo ii;
 
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   PIX pixW=ptrTerrain->tr_pixHeightMapWidth;
   PIX pixH=ptrTerrain->tr_pixHeightMapHeight;
-  if (ptrTerrain->tr_auwHeightMap==NULL) return;
+  if (ptrTerrain->tr_auwHeightMap == NULL) return;
   ii.ii_BitsPerPixel=32;
   ii.ii_Width=pixW-1;
   ii.ii_Height=pixH-1;
@@ -1848,7 +1848,7 @@ void OnSelectLoadSave(INDEX iSelectedItem)
     CTFileName fnSurface=_EngineGUI.FileRequester(
       "Load surface", "Surfaces (*.sfc)\0*.sfc\0" FILTER_ALL FILTER_END,
       "Surface directory", "Surfaces\\");
-    if (fnSurface=="") return;
+    if (fnSurface == "") return;
     LoadSurface(fnSurface);
     break;
   }
@@ -1857,7 +1857,7 @@ void OnSelectLoadSave(INDEX iSelectedItem)
     CTFileName fnSurface=_EngineGUI.FileRequester(
       "Save surface", "Surfaces (*.sfc)\0*.sfc\0" FILTER_ALL FILTER_END,
       "Surface directory", "Surfaces\\");
-    if (fnSurface=="") return;
+    if (fnSurface == "") return;
     SaveSurface(fnSurface);
     break;
   }
@@ -1867,7 +1867,7 @@ void OnSelectLoadSave(INDEX iSelectedItem)
 void ApplyImportExport(INDEX iOperation)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CTFileName fnHeightmap;
   if (iOperation<2)
@@ -1875,14 +1875,14 @@ void ApplyImportExport(INDEX iOperation)
     fnHeightmap=_EngineGUI.FileRequester(
       "Import heightmap", FILTER_TGA FILTER_PCX FILTER_ALL FILTER_END,
       "Terrain heightmap directory", "Textures\\");
-    if (fnHeightmap=="") return;
+    if (fnHeightmap == "") return;
   }
   else
   {
     fnHeightmap=_EngineGUI.FileRequester(
       "Export heightmap", FILTER_TGA FILTER_PCX FILTER_ALL FILTER_END,
       "Terrain heightmap directory", "Textures\\");
-    if (fnHeightmap=="") return;
+    if (fnHeightmap == "") return;
   }
 
   try
@@ -1931,7 +1931,7 @@ void GenerateLayerDistribution(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 void InvokeImportExportCombo(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   CCustomComboWnd *pCombo=new CCustomComboWnd;
   InsertItemMacro( pCombo, "Import 8-bit",  22, 0);
@@ -1949,7 +1949,7 @@ void InvokeTerrainTilePalette( PIX pixX, PIX pixY)
 {
   CWndTerrainTilePalette *pDisplay=new CWndTerrainTilePalette;
   CTerrainLayer *ptlLayer=GetLayer();
-  if (ptlLayer!=NULL && ptlLayer->tl_ptdTexture!=NULL)
+  if (ptlLayer != NULL && ptlLayer->tl_ptdTexture != NULL)
   {
     pDisplay->Initialize(pixX, pixY, ptlLayer->tl_ptdTexture, TRUE);
   }
@@ -2000,7 +2000,7 @@ void InvokeBrushPalette(CTIButton *ptib, CPoint pt, CDrawPort *pdp)
 
 BOOL CTerrainInterface::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
 {
-	return CWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
+  return CWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
 }
 
 BOOL CTerrainInterface::IsClicked(CTIButton &tib, CPoint pt) const
@@ -2021,7 +2021,7 @@ BOOL _bDummyMouseMove=FALSE;
 BOOL _bMouseTrapInProgress=FALSE;
 void CTerrainInterface::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	CWnd::OnLButtonDown(nFlags, point);
+  CWnd::OnLButtonDown(nFlags, point);
   SetFocus();
 
   m_ptMouseDown=point;
@@ -2035,7 +2035,7 @@ void CTerrainInterface::OnLButtonDown(UINT nFlags, CPoint point)
     
     if (IsClicked(tib, point))
     {
-      if (tib.tib_pOnLeftClick!=NULL)
+      if (tib.tib_pOnLeftClick != NULL)
       {
         tib.tib_pOnLeftClick(&tib, m_ptMouse, m_pDrawPort);
         _bMouseTrapInProgress=FALSE;
@@ -2043,10 +2043,10 @@ void CTerrainInterface::OnLButtonDown(UINT nFlags, CPoint point)
         Invalidate(FALSE);
         if (!tib.tib_bContinueTesting) break;
       }
-      if (tib.tib_pOnLeftClickMove!=NULL)
+      if (tib.tib_pOnLeftClickMove != NULL)
       {
         // display tool tip
-        if (tib.tib_pGetClickMoveData!=NULL)
+        if (tib.tib_pGetClickMoveData != NULL)
         {
           CTString strInfo=tib.tib_pGetClickMoveData(&tib, point, m_pDrawPort, TRUE);
           _strToolTip=strInfo;
@@ -2105,7 +2105,7 @@ void CTerrainInterface::OnMouseMove(UINT nFlags, CPoint point)
     {
       CTIButton &tib=*ittib;
     
-      if (IsClicked(tib, m_ptMouseDown) && tib.tib_pOnLeftClickMove!=NULL)
+      if (IsClicked(tib, m_ptMouseDown) && tib.tib_pOnLeftClickMove != NULL)
       {
         if (tib.tib_bMouseTrapForMove)
         {
@@ -2120,7 +2120,7 @@ void CTerrainInterface::OnMouseMove(UINT nFlags, CPoint point)
         Invalidate(FALSE);
         
         // update tool tip
-        if (tib.tib_pGetClickMoveData!=NULL)
+        if (tib.tib_pGetClickMoveData != NULL)
         {
           _strToolTip=tib.tib_pGetClickMoveData(&tib, point, m_pDrawPort, TRUE);
           theApp.m_cttToolTips.ManualUpdate();
@@ -2136,7 +2136,7 @@ void CTerrainInterface::OnMouseMove(UINT nFlags, CPoint point)
     {
       CTIButton &tib=*ittib;
     
-      if (IsClicked(tib, m_ptMouseDown) && tib.tib_pOnRightClickMove!=NULL)
+      if (IsClicked(tib, m_ptMouseDown) && tib.tib_pOnRightClickMove != NULL)
       {
         if (tib.tib_bMouseTrapForMove)
         {
@@ -2151,7 +2151,7 @@ void CTerrainInterface::OnMouseMove(UINT nFlags, CPoint point)
         Invalidate(FALSE);
         
         // update tool tip
-        if (tib.tib_pGetClickMoveData!=NULL)
+        if (tib.tib_pGetClickMoveData != NULL)
         {
           _strToolTip=tib.tib_pGetClickMoveData(&tib, point, m_pDrawPort, FALSE);
           theApp.m_cttToolTips.ManualUpdate();
@@ -2188,7 +2188,7 @@ BOOL CTerrainInterface::PreTranslateMessage(MSG* pMsg)
 
 void CTerrainInterface::OnRButtonDown(UINT nFlags, CPoint point) 
 {
-	CWnd::OnRButtonDown(nFlags, point);
+  CWnd::OnRButtonDown(nFlags, point);
   SetFocus();
 
   m_ptMouseDown=point;
@@ -2202,7 +2202,7 @@ void CTerrainInterface::OnRButtonDown(UINT nFlags, CPoint point)
     
     if (IsClicked(tib, point))
     {
-      if (tib.tib_pOnRightClick!=NULL)
+      if (tib.tib_pOnRightClick != NULL)
       {
         tib.tib_pOnRightClick(&tib, m_ptMouse, m_pDrawPort);
         _bMouseTrapInProgress=FALSE;
@@ -2210,10 +2210,10 @@ void CTerrainInterface::OnRButtonDown(UINT nFlags, CPoint point)
         Invalidate(FALSE);
         if (!tib.tib_bContinueTesting) break;
       }
-      if (tib.tib_pOnRightClickMove!=NULL)
+      if (tib.tib_pOnRightClickMove != NULL)
       {
         // display tool tip
-        if (tib.tib_pGetClickMoveData!=NULL)
+        if (tib.tib_pGetClickMoveData != NULL)
         {
           CTString strInfo=tib.tib_pGetClickMoveData(&tib, point, m_pDrawPort, TRUE);
           _strToolTip=strInfo;
@@ -2251,7 +2251,7 @@ void CTerrainInterface::OnRButtonUp(UINT nFlags, CPoint point)
     m_ptMouseDown.x=-1;
     m_ptMouseDown.y=-1;
   }
-	CWnd::OnRButtonUp(nFlags, point);
+  CWnd::OnRButtonUp(nFlags, point);
 }
 
 void CTerrainInterface::OnIdle(void)
@@ -2265,9 +2265,9 @@ void CTerrainInterface::OnIdle(void)
   }
 
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain!=NULL)
+  if (ptrTerrain != NULL)
   {
-    if (GetLayerIndex()>=ptrTerrain->tr_atlLayers.Count())
+    if (GetLayerIndex() >= ptrTerrain->tr_atlLayers.Count())
     {
       SelectLayer(0);
     }
@@ -2282,10 +2282,10 @@ void CTerrainInterface::OnIdle(void)
   }
   
   // if should re-initialize interface
-  if (pDoc!=NULL && !pDoc->m_chSelections.IsUpToDate( m_udTerrainPage) ||
+  if (pDoc != NULL && !pDoc->m_chSelections.IsUpToDate( m_udTerrainPage) ||
      !theApp.m_ctTerrainPage.IsUpToDate( m_udTerrainPage) )
   {
-    if (m_pDrawPort!=NULL)
+    if (m_pDrawPort != NULL)
     {
       InitializeInterface(m_pDrawPort);
       Invalidate(FALSE);
@@ -2312,7 +2312,7 @@ void CTerrainInterface::OnDropFiles(HDROP hDropInfo)
     return;
   }
 
-	// buffer for dropped file name
+  // buffer for dropped file name
   wchar_t chrFile[ 256];
   // place dropped file name into buffer
   DragQueryFile( hDropInfo, 0, chrFile, 256);
@@ -2326,21 +2326,21 @@ void CTerrainInterface::OnDropFiles(HDROP hDropInfo)
   FOREACHINDYNAMICCONTAINER( dcButtons, CTIButton, ittib)
   {
     CTIButton &tib=*ittib;    
-    if (IsClicked(tib, ptMouse) && tib.tib_pOnDropFiles!=NULL)
+    if (IsClicked(tib, ptMouse) && tib.tib_pOnDropFiles != NULL)
     {
       tib.tib_pOnDropFiles(&tib, ptMouse, m_pDrawPort, fnDropped);
     }
   }
-	CWnd::OnDropFiles(hDropInfo);
+  CWnd::OnDropFiles(hDropInfo);
 }
 
 int CTerrainInterface::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if (CWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
+  if (CWnd::OnCreate(lpCreateStruct) == -1)
+    return -1;
   DragAcceptFiles();
   EnableToolTips( TRUE);
-	return 0;
+  return 0;
 }
 
 int CTerrainInterface::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
@@ -2352,7 +2352,7 @@ int CTerrainInterface::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
     _strToolTip="";
     if (IsClicked(tib, point))
     {
-      if (tib.tib_strToolTip!="" && tib.tib_strToolTip[0]!='_')
+      if (tib.tib_strToolTip != "" && tib.tib_strToolTip[0] != '_')
       {
         _strToolTip=tib.tib_strToolTip;
         return 1;
@@ -2364,7 +2364,7 @@ int CTerrainInterface::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 
 void CTerrainInterface::InitializeInterface(CDrawPort *pdp)
 {
-	try
+  try
   {
     DECLARE_CTFILENAME( fnTerrainEditIcons, "Textures\\Editor\\TerrainEditingIcons.tex");
     _toIcons.SetData_t(fnTerrainEditIcons);
@@ -2424,7 +2424,7 @@ void CTerrainInterface::InitializeInterface(CDrawPort *pdp)
   ptib->tib_pIsEnabled=DisableIfNoTerrainSelected;
 
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain!=NULL)
+  if (ptrTerrain != NULL)
   {
     for (INDEX iLayer=0; iLayer<ptrTerrain->tr_atlLayers.Count(); iLayer++)
     {
@@ -2453,7 +2453,7 @@ void CTerrainInterface::InitializeInterface(CDrawPort *pdp)
         C_BLACK|CT_OPAQUE);
       ptib->SetFunctions( RenderLayerMask, NULL, NULL, InvokeLayerMaskPopup);
 
-      if (tlLayer.tl_ltType==LT_NORMAL)
+      if (tlLayer.tl_ltType == LT_NORMAL)
       {
         ptib=AddButton(dcButtons, LAYER_HEIGHT*2,2,16,16,iLayer,0, "Rotate texture");
         ptib->SetFunctions( NULL, NULL, ChangeTextureRotation);
@@ -2540,7 +2540,7 @@ void CTerrainInterface::InitializeInterface(CDrawPort *pdp)
         ptib=AddButton(dcButtons, GetLayerSize(pdp)(1)-16-SLIDER_WIDTH-1,GetLayerSize(pdp)(2)-20,16,16,iLayer,26, "Layer options (Ctrl+Shift+L)");
         ptib->SetFunctions( NULL, InvokeLayerOptions);  
       }
-      else if (tlLayer.tl_ltType==LT_TILE)
+      else if (tlLayer.tl_ltType == LT_TILE)
       {
       }
 

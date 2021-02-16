@@ -249,7 +249,7 @@ void MatchGoalOrientation(LWItemID objectID,float *frot,double time)
 
   parentID = _iti->parent(objectID);
   while (parentID != LWITEM_NULL) {
-    bGoalOrient	= _iti->flags(parentID) & LWITEMF_GOAL_ORIENT;
+    bGoalOrient  = _iti->flags(parentID) & LWITEMF_GOAL_ORIENT;
     if (bGoalOrient) {
       MatchGoalOrientation(parentID,frot,time);
     } else {
@@ -280,7 +280,7 @@ bool ExecCmd(const char *strFormat, ...)
   va_start(arg, strFormat);
   vsprintf(strCommand, strFormat, arg);
   {int iOk = _evaluate(_serverData, strCommand);
-  if (iOk==0) {
+  if (iOk == 0) {
     _msg->error("Can't execute command", strCommand);
     return false;
   }}
@@ -310,11 +310,11 @@ static MorphInfo *_pmiFirst = NULL; // linked list of all instances
 static Matrix12 *_pmRootBoneAbs=NULL;
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Create()
 
 Handler callback.  Allocate and initialize instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWInstance )
 Create( void *priv, LWItemID item, LWError *err )
@@ -340,7 +340,7 @@ Create( void *priv, LWItemID item, LWError *err )
   pii->bi_abfFrames = (BoneFrame*)malloc(sizeof(BoneFrame)*_ctFrames);
   
   // if first time here
-  if (_pbiFirst==NULL)
+  if (_pbiFirst == NULL)
   {
     // allocate space for storing absolute position for root bone
     _pmRootBoneAbs = (Matrix12*)malloc(sizeof(Matrix12)*_ctFrames);
@@ -360,11 +360,11 @@ Create( void *priv, LWItemID item, LWError *err )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Destroy()
 
 Handler callback.  Free resources allocated by Create().
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static void )
 Destroy( BoneInfo *inst)
@@ -375,11 +375,11 @@ Destroy( BoneInfo *inst)
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Copy()
 
 Handler callback.  Copy instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Copy( BoneInfo *to, BoneInfo *from )
@@ -390,11 +390,11 @@ Copy( BoneInfo *to, BoneInfo *from )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Load()
 
 Handler callback.  Read instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Load( BoneInfo *inst, const LWLoadState *ls )
@@ -404,11 +404,11 @@ Load( BoneInfo *inst, const LWLoadState *ls )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Save()
 
 Handler callback.  Write instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Save( BoneInfo *inst, const LWSaveState *ss )
@@ -418,12 +418,12 @@ Save( BoneInfo *inst, const LWSaveState *ss )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Describe()
 
 Handler callback.  Write a short, human-readable string describing
 the instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static const char * )
 Describe( BoneInfo *inst )
@@ -435,11 +435,11 @@ Describe( BoneInfo *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Flags()
 
 Handler callback.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static int )
 Flags( BoneInfo *inst )
@@ -449,11 +449,11 @@ Flags( BoneInfo *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Evaluate()
 
 Handler callback.  This is where we can modify the item's motion.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static void )
 Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
@@ -466,7 +466,7 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
   
   LWItemID bone = access->item;
 
-  int bGoalOrient	= _iti->flags(bone) & LWITEMF_GOAL_ORIENT;
+  int bGoalOrient  = _iti->flags(bone) & LWITEMF_GOAL_ORIENT;
 
   if (bRecordDefaultFrame)
   {
@@ -511,7 +511,7 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 
 
     // if this is not bone
-    if ((pii->bi_lwItemType!=LWI_BONE))// && (pii->bi_pbiNext!=NULL) && (pii->bi_pbiNext->bi_lwItemType == LWI_BONE))
+    if ((pii->bi_lwItemType != LWI_BONE))// && (pii->bi_pbiNext != NULL) && (pii->bi_pbiNext->bi_lwItemType == LWI_BONE))
     {
       // get pivot position
       _iti->param(bone,LWIP_PIVOT,access->time,pivotpos);
@@ -553,21 +553,21 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Handler()
 
 Handler activation function.  Check the version and fill in the
 callback fields of the handler structure.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( int )
 Animation_Handler( long version, GlobalFunc *_global, LWItemMotionHandler *local,
    void *serverData)
 {
-  if ( version != LWITEMMOTION_VERSION ) return AFUNC_BADVERSION;
+  if (version != LWITEMMOTION_VERSION ) return AFUNC_BADVERSION;
 
   _iti = (LWItemInfo *)_global(LWITEMINFO_GLOBAL, GFUSE_TRANSIENT);
-  if (_iti==NULL) {
+  if (_iti == NULL) {
     return AFUNC_BADGLOBAL;
   }
 
@@ -606,7 +606,7 @@ static bool ActivateExportHandler(LWItemID itemID)
   LWItemID pParentID = _iti->parent(boneid);
 
   // apply export handeler for all bones in scene
-  while (boneid!=LWITEM_NULL) {
+  while (boneid != LWITEM_NULL) {
     if (!ApplyExportHander(boneid)) 
     {
       // failed
@@ -644,10 +644,10 @@ static bool RemoveExportHander(LWItemID itemID)
   }
   for (int iServer=1;;iServer++) {
     const char *strServer = _iti->server(itemID, "ItemMotionHandler", iServer);
-    if (strServer==NULL) {
+    if (strServer == NULL) {
       break;
     }
-    if (strcmp(strServer, DEBUGEXT "internal_SEAnimExport")==0) {
+    if (strcmp(strServer, DEBUGEXT "internal_SEAnimExport") == 0) {
       if (!ExecCmd("RemoveServer ItemMotionHandler %d", iServer)) {
         return false;
       }
@@ -682,7 +682,7 @@ static void DeactivateExportHandler(LWItemID itemID)
 
 
   // remove export handeler for all bones in scene
-  while (boneid!=LWITEM_NULL) {
+  while (boneid != LWITEM_NULL) {
     if (!RemoveExportHander(boneid))
     {
       return;
@@ -697,21 +697,21 @@ void FindMorphChannels(LWChanGroupID idParentGroup)
 {
   // for each group in the given parent
   for (LWChanGroupID idGroup = _chi->nextGroup(idParentGroup, NULL); 
-      idGroup!=NULL; 
+      idGroup != NULL; 
       idGroup = _chi->nextGroup(idParentGroup, idGroup)) {
     const char *strGroupName = _chi->groupName(idGroup);
-    if (idParentGroup==NULL && strcmp(strGroupName, _iti->name(_objid))!=0) {
+    if (idParentGroup == NULL && strcmp(strGroupName, _iti->name(_objid)) != 0) {
       continue;
     }
 
     // for each channel in the group
     for (LWChannelID idChan = _chi->nextChannel(idGroup, NULL); 
-        idChan!=NULL; 
+        idChan != NULL; 
         idChan = _chi->nextChannel(idGroup, idChan)) {
       // generate morhpmap name from the info about the channel and its parents
       const char *strName = _chi->channelName(idChan);
       char strMapName[256] = "";
-      if (idParentGroup!=NULL) {
+      if (idParentGroup != NULL) {
         strcat(strMapName, strGroupName);
         strcat(strMapName, ".");
       }
@@ -719,10 +719,10 @@ void FindMorphChannels(LWChanGroupID idParentGroup)
 
       // if the morphmap does not exist, skip the channel
       void *pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_MORF, strMapName);
-      if (pMap==NULL) {
+      if (pMap == NULL) {
         pMap = _pmesh->pntVLookup(_pmesh, LWVMAP_SPOT, strMapName);
       }
-      if (pMap==NULL) {
+      if (pMap == NULL) {
         continue;
       }
       // select that morhpmap
@@ -731,7 +731,7 @@ void FindMorphChannels(LWChanGroupID idParentGroup)
       // check if any point uses that vmap
       int iUsed = _pmesh->scanPoints(_pmesh, CheckPointVmap, NULL);
       // if not used
-      if (iUsed==0) {
+      if (iUsed == 0) {
         // skip it
         continue;
       }
@@ -766,7 +766,7 @@ void GetAnimID(char *fnAnimFile)
   int IResultS = pchSlash - temp + 1;
   int IResultD = pchDot - temp;
 
-  if ((pchDot!=NULL) && (pchSlash!=NULL))
+  if ((pchDot != NULL) && (pchSlash != NULL))
   {
     int len = IResultD-IResultS;
     memcpy(strAnimName,&temp[IResultS],len);
@@ -774,7 +774,7 @@ void GetAnimID(char *fnAnimFile)
     strAnimName[len+1] = 0;
     strcat(strAnimName,_sci->name);
     char *pchDot2 = strrchr(strAnimName, '.');
-    if (pchDot2!=NULL) *pchDot2 = 0;
+    if (pchDot2 != NULL) *pchDot2 = 0;
   }
   else
   {
@@ -900,24 +900,24 @@ int ExportAnim(LWXPanelID pan)
     strcpy(fnmOut, _strFileName);
     // get first slash in filename
     char *pchSlash = strrchr(fnmOut, '.');
-    if (pchSlash!=NULL) {
+    if (pchSlash != NULL) {
       *(pchSlash++) = '_';
       strcpy(pchSlash,_sci->name);
       char *pchDot = strrchr(fnmOut, '.');
-      if (pchDot!=NULL)
+      if (pchDot != NULL)
       {
         strcpy(pchDot, ".aa");
       }
     }
     _f = fopen(fnmOut, "w");
-    if (_f==NULL) {
+    if (_f == NULL) {
       _msg->error("Can't open file", fnmOut);
       goto end;
     }
 
     // calculate number of frames to export
     _ctFrames = ((_ifi->previewEnd-_ifi->previewStart)/_ifi->previewStep)+1;
-    if (_ctFrames<=0) {
+    if (_ctFrames <= 0) {
       _ctFrames = 1;
     }
     _iFrame = 0;
@@ -939,19 +939,19 @@ int ExportAnim(LWXPanelID pan)
 
     {
     // for each frame in current preview selection
-    for (int iFrame=_ifi->previewStart; iFrame<=_ifi->previewEnd; iFrame+=_ifi->previewStep) {
+    for (int iFrame=_ifi->previewStart; iFrame <= _ifi->previewEnd; iFrame+=_ifi->previewStep) {
       // go to that frame
       if (!ExecCmd("GoToFrame %d", iFrame)) {
         goto end;
       }
   
-      assert(_iFrame>=0 && _iFrame<_ctFrames);
+      assert(_iFrame >= 0 && _iFrame<_ctFrames);
 
       // NOTE: walking all frames implicitly lets the internal itemmotion handler record all bone positions
       // we walk the morph maps manually
 
       // for each morph in list
-      for (MorphInfo *pmi=_pmiFirst; pmi!=NULL; pmi = pmi->mi_pmiNext) {
+      for (MorphInfo *pmi=_pmiFirst; pmi != NULL; pmi = pmi->mi_pmiNext) {
         // evaluate the channel value in this frame
         pmi->mi_afFrames[_iFrame] = (float)_chi->channelEvaluate(pmi->mi_idChannel, GetCurrentTime());
       }
@@ -973,7 +973,7 @@ int ExportAnim(LWXPanelID pan)
 
     // calculate bone and morph envelopes
     {
-      for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
+      for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi != NULL; ptmpbi = ptmpbi->bi_pbiNext)
       {
         // LWBONEF_ACTIVE =
         unsigned int uiFlags = ptmpbi->bi_uiFlags;
@@ -984,7 +984,7 @@ int ExportAnim(LWXPanelID pan)
         }
       }
 
-      for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
+      for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi != NULL; ptmpmi = ptmpmi->mi_pmiNext)
         ctMorphEnvelopes++;
     }
 
@@ -995,7 +995,7 @@ int ExportAnim(LWXPanelID pan)
     // last item
     {
     BoneInfo *pbiLast = NULL;
-    for (BoneInfo *pbi=_pbiFirst; pbi!=NULL; pbi = pbi->bi_pbiNext)
+    for (BoneInfo *pbi=_pbiFirst; pbi != NULL; pbi = pbi->bi_pbiNext)
     {
       bool bRootBone = false;
       if (pbi->bi_lwItemType == LWI_BONE && pbi->bi_uiFlags&LWBONEF_ACTIVE) {
@@ -1024,7 +1024,7 @@ int ExportAnim(LWXPanelID pan)
         // if export anims backward
         if (bExportAnimBackward) {
           // for each frame
-          for (int iFrame=_ctFrames-1; iFrame>=0; iFrame--) {
+          for (int iFrame=_ctFrames-1; iFrame >= 0; iFrame--) {
             // write anim
             WriteAnimFrame(pbi,iFrame);
           }
@@ -1046,14 +1046,14 @@ int ExportAnim(LWXPanelID pan)
     fprintf(_f, "\nMORPHENVELOPES %d\n{\n", ctMorphEnvelopes);
 
     // for each morph in list
-    {for (MorphInfo *pmi=_pmiFirst; pmi!=NULL; pmi = pmi->mi_pmiNext)
+    {for (MorphInfo *pmi=_pmiFirst; pmi != NULL; pmi = pmi->mi_pmiNext)
     {
       // write its info
       fprintf(_f, "  NAME \"%s\"\n", pmi->mi_strName);
       fprintf(_f, "  {\n");
        // if export anims backward
       if (bExportAnimBackward) {
-        for (int iFrame=_ctFrames-1; iFrame>=0; iFrame--)
+        for (int iFrame=_ctFrames-1; iFrame >= 0; iFrame--)
         {
           fprintf(_f, "    %g;\n", pmi->mi_afFrames[iFrame]);
         }
@@ -1074,7 +1074,7 @@ int ExportAnim(LWXPanelID pan)
     { MorphInfo *pmi=_pmiFirst;
       MorphInfo *pmiNext=NULL;
       for (;;) {
-        if (pmi==NULL) {
+        if (pmi == NULL) {
           break;
         }
         pmiNext = pmi->mi_pmiNext;
@@ -1095,7 +1095,7 @@ int ExportAnim(LWXPanelID pan)
     DeactivateExportHandler(_objid);
 
     // close and free everything
-    if (_f!=NULL) {
+    if (_f != NULL) {
       fclose(_f);
       _f=NULL;
     }
@@ -1188,11 +1188,11 @@ int ExportSkeleton(void)
     char fnmOut[256];
     strcpy(fnmOut, _strFileName);
     char *pchDot = strrchr(fnmOut, '.');
-    if (pchDot!=NULL) {
+    if (pchDot != NULL) {
       strcpy(pchDot, ".as");
     }
     _f = fopen(fnmOut, "w");
-    if (_f==NULL) {
+    if (_f == NULL) {
       _msg->error("Can't open file", fnmOut);
       goto end;
     }
@@ -1215,7 +1215,7 @@ int ExportSkeleton(void)
     bRecordDefaultFrame = false;
 
     {
-    for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi!=NULL; ptmpbi = ptmpbi->bi_pbiNext)
+    for (BoneInfo *ptmpbi=_pbiFirst; ptmpbi != NULL; ptmpbi = ptmpbi->bi_pbiNext)
     {
       if (ptmpbi->bi_lwItemType == LWI_BONE) {
         ctSkeletonBones++;
@@ -1227,7 +1227,7 @@ int ExportSkeleton(void)
     fprintf(_f, "BONES %d\n{\n",ctSkeletonBones);
 
     Matrix12 bi_mRot;
-    {for (BoneInfo *pbi=_pbiFirst; pbi!=NULL; pbi = pbi->bi_pbiNext)
+    {for (BoneInfo *pbi=_pbiFirst; pbi != NULL; pbi = pbi->bi_pbiNext)
     {
       if (pbi->bi_lwItemType == LWI_BONE)
       {
@@ -1256,7 +1256,7 @@ int ExportSkeleton(void)
 
   end:
     DeactivateExportHandler(_objid);
-    if (_f!=NULL)
+    if (_f != NULL)
     {
       fclose(_f);
       _f=NULL;

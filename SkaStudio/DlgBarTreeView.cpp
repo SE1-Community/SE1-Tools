@@ -48,10 +48,10 @@ CStaticArray<class CColorControl> _accColors;
 extern INDEX iCustomControlID;
 
 BEGIN_MESSAGE_MAP(CDlgBarTreeView, CDlgTemplate)
-	//{{AFX_MSG_MAP(CDlgBarTreeView)
-	ON_NOTIFY(TCN_SELCHANGE, IDC_MODE_SELECT_TAB, OnSelchangeModeSelectTab)
-	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgBarTreeView)
+  ON_NOTIFY(TCN_SELCHANGE, IDC_MODE_SELECT_TAB, OnSelchangeModeSelectTab)
+  ON_WM_SIZE()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CDlgBarTreeView::CDlgBarTreeView()
@@ -64,7 +64,7 @@ CDlgBarTreeView::~CDlgBarTreeView()
 // returns info of item in tree view
 NodeInfo &CDlgBarTreeView::GetNodeInfo(HTREEITEM hItem)
 {
-  ASSERT(hItem!=NULL);
+  ASSERT(hItem != NULL);
   INDEX iNodeIndex = m_TreeCtrl.GetItemData(hItem);
   return theApp.aNodeInfo[iNodeIndex];
 }
@@ -73,10 +73,10 @@ NodeInfo &CDlgBarTreeView::GetNodeInfo(HTREEITEM hItem)
 NodeInfo &CDlgBarTreeView::GetSelectedNodeInfo()
 {
   HTREEITEM hSelected = m_TreeCtrl.GetSelectedItem();
-  ASSERT(hSelected!=NULL);
+  ASSERT(hSelected != NULL);
   // aditional check
   INDEX iNodeIndex = 0;
-  if (hSelected!=NULL) {
+  if (hSelected != NULL) {
     iNodeIndex = m_TreeCtrl.GetItemData(hSelected);
   }
   return theApp.aNodeInfo[iNodeIndex];
@@ -120,12 +120,12 @@ void CDlgBarTreeView::ShowControlGroup(INDEX iGroup)
       pdlgCurrent = NULL;
     break;
   }
-  if (pLastVisibleDlg!=pdlgCurrent) {
-    if (pLastVisibleDlg!=NULL) {
+  if (pLastVisibleDlg != pdlgCurrent) {
+    if (pLastVisibleDlg != NULL) {
       // hide current dialog
       pLastVisibleDlg->ShowWindow(SW_HIDE);
     }
-    if (pdlgCurrent!=NULL) {
+    if (pdlgCurrent != NULL) {
       // show new dialog
       pdlgCurrent->ShowWindow(SW_SHOW);
     }
@@ -216,14 +216,14 @@ void CDlgBarTreeView::TogleSurfaceSelection(HTREEITEM hItem)
 void CDlgBarTreeView::DeSelectAllSurfaces(HTREEITEM hParent/*=NULL*/)
 {
   INDEX iIcon=11;
-  if (hParent==NULL)
+  if (hParent == NULL)
   {
     hParent = m_TreeCtrl.GetRootItem();
     _aiSelectedMeshSurfaces.PopAll();
   }
 
   HTREEITEM hChild = m_TreeCtrl.GetChildItem(hParent);
-  while (hChild!=NULL)
+  while (hChild != NULL)
   {
     DeSelectAllSurfaces(hChild);
     NodeInfo &ni = GetNodeInfo(hChild);
@@ -253,7 +253,7 @@ void CDlgBarTreeView::SelectAllSurfaces(HTREEITEM hItem)
   MeshLOD *pmlod = (MeshLOD*)niParent.ni_pPtr;
   // get children of mesh lod
   HTREEITEM hChild = m_TreeCtrl.GetChildItem(hParent);
-  while (hChild!=NULL)
+  while (hChild != NULL)
   {
     // select surface
     if (!bSelect) SelectMeshSurface(hChild);
@@ -272,7 +272,7 @@ BOOL CDlgBarTreeView::IsSurfaceSelected(MeshSurface &msrf)
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
+    ASSERT(pmsrf != NULL);
     // check if this is selected surface
     if (pmsrf == &msrf) return TRUE;
   }
@@ -293,8 +293,8 @@ void CDlgBarTreeView::ChangeTextureOnSelectedSurfaces(CTString strControlID,CTSt
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
-    if (pmsrf->msrf_pShader==NULL) continue;
+    ASSERT(pmsrf != NULL);
+    if (pmsrf->msrf_pShader == NULL) continue;
     // get surface description and find witch param has same id as control that was modified
     ShaderDesc shDesc;
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
@@ -324,8 +324,8 @@ void CDlgBarTreeView::ChangeTextureCoordsOnSelectedSurfaces(CTString strControlI
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
-    if (pmsrf->msrf_pShader==NULL) continue;
+    ASSERT(pmsrf != NULL);
+    if (pmsrf->msrf_pShader == NULL) continue;
     // get surface description and find witch param has same id as control that was modified
     ShaderDesc shDesc;
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
@@ -346,7 +346,7 @@ void CDlgBarTreeView::ChangeTextureCoordsOnSelectedSurfaces(CTString strControlI
 // change color on curently selected model instance
 void CDlgBarTreeView::ChangeColorOnSelectedModel(COLOR colNewColor)
 {
-  ASSERT(pmiSelected!=NULL);
+  ASSERT(pmiSelected != NULL);
   pmiSelected->mi_colModelColor = colNewColor;
 }
 
@@ -362,8 +362,8 @@ void CDlgBarTreeView::ChangeColorOnSelectedSurfaces(CTString strControlID,COLOR 
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
-    if (pmsrf->msrf_pShader==NULL) continue;
+    ASSERT(pmsrf != NULL);
+    if (pmsrf->msrf_pShader == NULL) continue;
     // get surface description and find witch param has same id as control that was modified
     ShaderDesc shDesc;
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
@@ -392,8 +392,8 @@ void CDlgBarTreeView::ChangeFloatOnSelectedSurfaces(CTString strControlID,FLOAT 
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
-    if (pmsrf->msrf_pShader==NULL) continue;
+    ASSERT(pmsrf != NULL);
+    if (pmsrf->msrf_pShader == NULL) continue;
     // get surface description and find witch param has same id as control that was modified
     ShaderDesc shDesc;
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
@@ -411,7 +411,7 @@ void CDlgBarTreeView::ChangeFloatOnSelectedSurfaces(CTString strControlID,FLOAT 
 
 void CDlgBarTreeView::ChangeFlagOnSelectedSurfaces(CTString strControlID, BOOL bChecked, INDEX iFlagIndex)
 {
-  ULONG ulNewFlag = (1UL<<iFlagIndex);
+  ULONG ulNewFlag = (1UL << iFlagIndex);
   // get selected surfaces count
   INDEX ctsms = _aiSelectedMeshSurfaces.Count();
   // for each selected mesh surfaces
@@ -420,8 +420,8 @@ void CDlgBarTreeView::ChangeFlagOnSelectedSurfaces(CTString strControlID, BOOL b
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
-    if (pmsrf->msrf_pShader==NULL) continue;
+    ASSERT(pmsrf != NULL);
+    if (pmsrf->msrf_pShader == NULL) continue;
     // get surface description and find witch param has same id as control that was modified
     ShaderDesc shDesc;
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
@@ -448,7 +448,7 @@ void CDlgBarTreeView::ChangeShaderOnSelectedSurfaces(CTString fnNewShader)
 {
   #pragma message(">> Remove: Warning if usage of Double sided shader")
   // TEMP 
-  if (fnNewShader.FindSubstr("DS")!=(-1)) {
+  if (fnNewShader.FindSubstr("DS") != (-1)) {
     theApp.ErrorMessage("Usage of double sided shader");
   }
 
@@ -458,7 +458,7 @@ void CDlgBarTreeView::ChangeShaderOnSelectedSurfaces(CTString fnNewShader)
     NodeInfo &ni = theApp.aNodeInfo[_aiSelectedMeshSurfaces[isms]];
     ASSERT(ni.ni_iType == NT_MESHSURFACE);
     MeshSurface *pmsrf = (MeshSurface*)ni.ni_pPtr;
-    ASSERT(pmsrf!=NULL);
+    ASSERT(pmsrf != NULL);
     try {
       // try to change surface shader
       ChangeSurfaceShader_t(*pmsrf,fnNewShader);
@@ -477,31 +477,31 @@ void CDlgBarTreeView::OnItemClick(HTREEITEM hItem,HTREEITEM hLastSelected)
   NodeInfo &ni = theApp.aNodeInfo[m_TreeCtrl.GetItemData(hItem)];
   if (ni.ni_iType == NT_MESHSURFACE) {
     if (bShift) {
-      if (hLastSelected!=NULL) {
+      if (hLastSelected != NULL) {
         NodeInfo &niLastSelected = GetNodeInfo(hLastSelected);
         if (niLastSelected.ni_iType == NT_MESHSURFACE) {
           HTREEITEM hParent = m_TreeCtrl.GetParentItem(hItem);
           HTREEITEM hLastParent = m_TreeCtrl.GetParentItem(hLastSelected);
-          ASSERT(hParent!=NULL);
-          ASSERT(hLastParent!=NULL);
-          if (hParent==hLastParent)           {
+          ASSERT(hParent != NULL);
+          ASSERT(hLastParent != NULL);
+          if (hParent == hLastParent)           {
             // deselect all items
             if (!bControl) DeSelectAllSurfaces();
             // get first child
             HTREEITEM hChild = m_TreeCtrl.GetChildItem(hParent);
             // find first item or last selected item
-            while ((hChild!=hItem)&&(hChild!=hLastSelected)) {
+            while ((hChild != hItem)&&(hChild != hLastSelected)) {
               hChild = m_TreeCtrl.GetNextSiblingItem(hChild);
-              ASSERT(hChild!=NULL);
+              ASSERT(hChild != NULL);
             }
             // select first item
             SelectMeshSurface(hChild);
-            if (hItem!=hLastSelected) hChild = m_TreeCtrl.GetNextSiblingItem(hChild);
+            if (hItem != hLastSelected) hChild = m_TreeCtrl.GetNextSiblingItem(hChild);
             // select all items until item or last selected item
-            while ((hChild!=hItem)&&(hChild!=hLastSelected)) {
+            while ((hChild != hItem)&&(hChild != hLastSelected)) {
               SelectMeshSurface(hChild);
               hChild = m_TreeCtrl.GetNextSiblingItem(hChild);
-              ASSERT(hChild!=NULL);
+              ASSERT(hChild != NULL);
             }
             SelectMeshSurface(hChild);
           }
@@ -533,9 +533,9 @@ void CDlgBarTreeView::OnItemIconClick(HTREEITEM hItem)
 // show shader for surface
 void CDlgBarTreeView::ShowSurfaceShader(MeshSurface *pmsrf,MeshLOD *pmlod,MeshInstance *pmshi)
 {
-  ASSERT(pmsrf!=NULL);
-  ASSERT(pmlod!=NULL);
-  ASSERT(pmshi!=NULL);
+  ASSERT(pmsrf != NULL);
+  ASSERT(pmlod != NULL);
+  ASSERT(pmshi != NULL);
 
   // remember vertical scroll pos
   INDEX ivScroll = m_dlgShader.GetScrollPos(SB_VERT);
@@ -562,7 +562,7 @@ void CDlgBarTreeView::ShowSurfaceShader(MeshSurface *pmsrf,MeshLOD *pmlod,MeshIn
   INDEX ctFlags  = 0;
 
   // if surface has shader
-  if (pmsrf->msrf_pShader!=NULL) {
+  if (pmsrf->msrf_pShader != NULL) {
     pmsrf->msrf_pShader->GetShaderDesc(shDesc);
     ctTextures = shDesc.sd_astrTextureNames.Count();
     ctTexCoords = shDesc.sd_astrTexCoordNames.Count();
@@ -572,7 +572,7 @@ void CDlgBarTreeView::ShowSurfaceShader(MeshSurface *pmsrf,MeshLOD *pmlod,MeshIn
     // select shader in combo box
     CTFileName fnShader = pmsrf->msrf_pShader->GetName();
     CTString strShader = fnShader.FileName();
-    ASSERT(cbShader!=NULL);
+    ASSERT(cbShader != NULL);
     if (cbShader->SelectString(-1,CString(strShader)) == CB_ERR) {
       // error: shader is not found in list of shaders
       return;
@@ -602,7 +602,7 @@ void CDlgBarTreeView::ShowSurfaceShader(MeshSurface *pmsrf,MeshLOD *pmlod,MeshIn
       INDEX iSelectTexID = mspParams.sp_aiTextureIDs[itx];
       CTString strSelectTexID = ska_GetStringFromTable(iSelectTexID);
       int iItemIndex = txc.txc_Combo.FindStringExact(-1,CString(strSelectTexID));
-      if (iItemIndex!=CB_ERR) txc.txc_Combo.SetCurSel(iItemIndex);
+      if (iItemIndex != CB_ERR) txc.txc_Combo.SetCurSel(iItemIndex);
     }
     // add texcoord controls to shader dialog
     for (INDEX itxc=0;itxc<ctTexCoords;itxc++) {
@@ -710,7 +710,7 @@ void CDlgBarTreeView::SelItemChanged(HTREEITEM hSelected)
   // if selected item is model instance set it to be selected model instance
   if (ni.ni_iType == NT_MODELINSTANCE) pmiSelected = (CModelInstance*)ni.ni_pPtr;
 
-  if (pmiSelected!=NULL) {
+  if (pmiSelected != NULL) {
     CTString strStretch = CTString(0,"%g",pmiSelected->mi_vStretch(1));
     pMainFrame->m_ctrlMIStretch.SetWindowText(CString(strStretch));
   }
@@ -1153,7 +1153,7 @@ void CDlgBarTreeView::AddControlToArray(CWnd *pChild, CDialog *pDlg)
 void CDlgBarTreeView::RemoveDialogControls(CDialog *pDlg)
 {
   CWnd *pChild = pDlg->GetWindow(GW_CHILD);
-  while (pChild!=NULL) {
+  while (pChild != NULL) {
     RemoveControlFromArray(pChild,pDlg);
     pChild = pChild->GetWindow(GW_HWNDNEXT);
   }
@@ -1163,7 +1163,7 @@ void CDlgBarTreeView::RemoveDialogControls(CDialog *pDlg)
 void CDlgBarTreeView::AddDialogControls(CDialog *pDlg)
 {
   CWnd *pChild = pDlg->GetWindow(GW_CHILD);
-  while (pChild!=NULL) {
+  while (pChild != NULL) {
     AddControlToArray(pChild,pDlg);
     pChild = pChild->GetWindow(GW_HWNDNEXT);
   }
@@ -1365,7 +1365,7 @@ void CDlgBarTreeView::AddSurfaces(CModelInstance &mi,MeshLOD &mlod,HTREEITEM hPa
     MeshSurface &msrf = mlod.mlod_aSurfaces[isrf];
     CShader *pShader =  msrf.msrf_pShader;
     CTString strShaderName;
-    if (pShader!=NULL) strShaderName = pShader->GetName().FileName();
+    if (pShader != NULL) strShaderName = pShader->GetName().FileName();
     HTREEITEM hItem = m_TreeCtrl.InsertItem( TVIF_IMAGE | TVIF_SELECTEDIMAGE , L"",  11, 11, TVIS_SELECTED, TVIF_STATE, 0, hParent, 0);
     CTString strSurfName;
     strSurfName.PrintF("%s [%d]-[%d]",(const char*)ska_GetStringFromTable(msrf.msrf_iSurfaceID),
@@ -1501,7 +1501,7 @@ void CDlgBarTreeView::FillParentDropDown(CModelInstance *pmi)
 // find out how many children from root to selected item
 BOOL CDlgBarTreeView::RememberSelectedItem(HTREEITEM hParent,HTREEITEM hSelected)
 {
-  if (hParent==NULL) return FALSE;
+  if (hParent == NULL) return FALSE;
   HTREEITEM hChild = m_TreeCtrl.GetChildItem(hParent);
   INDEX ctLoops = 0;
   while (hChild != NULL)
@@ -1534,7 +1534,7 @@ BOOL CDlgBarTreeView::ReselectItem(HTREEITEM hParent)
   HTREEITEM hChild = hParent;
   // if child is NULL select his parent and return
   // loop filled array of recursion depth for selected item
-  for (INDEX irec=ctrec-1;irec>=0;irec--)
+  for (INDEX irec=ctrec-1;irec >= 0;irec--)
   {
     HTREEITEM hRet = m_TreeCtrl.GetChildItem(hChild);
     if (hRet == NULL)
@@ -1572,7 +1572,7 @@ void CDlgBarTreeView::UpdateModelInstInfo(CModelInstance *pmi)
 
   CTString strRoot;
   // if root item exists
-  if (hRoot!=NULL) {
+  if (hRoot != NULL) {
     // remember its name
     strRoot = CStringA(m_TreeCtrl.GetItemText(hRoot));
   }
@@ -1635,7 +1635,7 @@ void CDlgBarTreeView::OnSelchangeModeSelectTab(NMHDR* pNMHDR, LRESULT* pResult)
 {
 //  CTabCtrl* pTab = (CTabCtrl*)GetDlgItem(IDC_MODE_SELECT_TAB);
 //  ShowControlGroup(pTab->GetCurSel());
-	*pResult = 0;
+  *pResult = 0;
 }
 // expand all model instances in tree view
 void CDlgBarTreeView::ExpandAllModelInstances(HTREEITEM hItem)
@@ -1659,7 +1659,7 @@ void CDlgBarTreeView::ExpandAllModelInstances(HTREEITEM hItem)
       ExpandAllModelInstances(hChild);
       // get next item
       hChild = m_TreeCtrl.GetNextSiblingItem(hChild);
-      if (hChild==NULL)
+      if (hChild == NULL)
       {
         break;
       }
@@ -1748,5 +1748,5 @@ void CDlgBarTreeView::OnSize(UINT nType, int cx, int cy)
     AdjustSplitter();
   }
 */
-	CDlgTemplate::OnSize(nType, cx, cy);
+  CDlgTemplate::OnSize(nType, cx, cy);
 }

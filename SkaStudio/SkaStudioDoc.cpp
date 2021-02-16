@@ -34,8 +34,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CSeriousSkaStudioDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CSeriousSkaStudioDoc, CDocument)
-	//{{AFX_MSG_MAP(CSeriousSkaStudioDoc)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CSeriousSkaStudioDoc)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ void CSeriousSkaStudioDoc::MarkAsChanged()
 void CSeriousSkaStudioDoc::OnIdle(void)
 {
   POSITION pos = GetFirstViewPosition();
-  while ( pos !=NULL)
+  while (pos != NULL)
   {
     CSeriousSkaStudioView *pmvCurrent = (CSeriousSkaStudioView *) GetNextView(pos);
     // if children are maximize
@@ -101,7 +101,7 @@ void CSeriousSkaStudioDoc::SetTimerForDocument()
   if (_pTimer != NULL)
   {
     CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
-    if (m_tvStart.tv_llValue==-1I64) {
+    if (m_tvStart.tv_llValue == -1I64) {
       m_tvStart = tvNow;
     }
     // if paused
@@ -149,22 +149,22 @@ BOOL CSeriousSkaStudioDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 BOOL CSeriousSkaStudioDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument()) return FALSE;
-	return TRUE;
+  if (!CDocument::OnNewDocument()) return FALSE;
+  return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CSeriousSkaStudioDoc serialization
 void CSeriousSkaStudioDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
+  if (ar.IsStoring())
+  {
+    // TODO: add storing code here
+  }
+  else
+  {
+    // TODO: add loading code here
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -172,12 +172,12 @@ void CSeriousSkaStudioDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CSeriousSkaStudioDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+  CDocument::AssertValid();
 }
 
 void CSeriousSkaStudioDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+  CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -222,10 +222,10 @@ void CSeriousSkaStudioDoc::OnCloseDocument()
 
   theApp.m_dlgBarTreeView.UpdateModelInstInfo(NULL);
   theApp.m_dlgBarTreeView.ResetControls();
-  if (m_ModelInstance!=NULL) m_ModelInstance->Clear();
+  if (m_ModelInstance != NULL) m_ModelInstance->Clear();
   m_ModelInstance = NULL;
   // flush stale caches
   _pShell->Execute("FreeUnusedStock();");
   theApp.ReloadRootModelInstance();
-	CDocument::OnCloseDocument();
+  CDocument::OnCloseDocument();
 }

@@ -84,12 +84,12 @@ typedef struct st_LWPixelFilterHandler {
         unsigned int    (*flags)    (LWInstance);
 } LWPixelFilterHandler;
 
-#define LWPFF_BEFOREVOLUME      (1<<30)
-#define LWPFF_RAYTRACE  (1<<31)
+#define LWPFF_BEFOREVOLUME      (1 << 30)
+#define LWPFF_RAYTRACE  (1 << 31)
 
 typedef unsigned int LWFilterContext;
 
-#define LWFCF_PREPROCESS  (1<<0) /* Filter applied in image editor or as pre process */
+#define LWFCF_PREPROCESS  (1 << 0) /* Filter applied in image editor or as pre process */
 
 #endif
 

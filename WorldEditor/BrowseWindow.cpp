@@ -54,35 +54,35 @@ CBrowseWindow::~CBrowseWindow()
 }
 
 BEGIN_MESSAGE_MAP(CBrowseWindow, CWnd)
-	//{{AFX_MSG_MAP(CBrowseWindow)
-	ON_WM_VSCROLL()
-	ON_WM_PAINT()
-	ON_WM_DROPFILES()
-	ON_WM_SIZE()
-	ON_COMMAND(ID_INSERT_ITEMS, OnInsertItems)
-	ON_WM_LBUTTONDOWN()
-	ON_COMMAND(ID_DELETE_ITEMS, OnDeleteItems)
-	ON_COMMAND(ID_BIG_ICONS, OnBigIcons)
-	ON_COMMAND(ID_MEDIUM_ICONS, OnMediumIcons)
-	ON_COMMAND(ID_SMALL_ICONS, OnSmallIcons)
-	ON_COMMAND(ID_SHOW_DESCRIPTION, OnShowDescription)
-	ON_COMMAND(ID_SHOW_FILENAME, OnShowFilename)
-	ON_WM_LBUTTONDBLCLK()
-	ON_COMMAND(ID_RECREATE_TEXTURE, OnRecreateTexture)
-	ON_COMMAND(ID_CREATE_AND_ADD_TEXTURE, OnCreateAndAddTexture)
-	ON_COMMAND(ID_SELECT_BY_TEXTURE_IN_SELECTED_SECTORS, OnSelectByTextureInSelectedSectors)
-	ON_COMMAND(ID_SELECT_BY_TEXTURE_IN_WORLD, OnSelectByTextureInWorld)
-	ON_COMMAND(ID_SELECT_FOR_DROP_MARKER, OnSelectForDropMarker)
-	ON_COMMAND(ID_SET_AS_CURRENT_TEXTURE, OnSetAsCurrentTexture)
-	ON_COMMAND(ID_CONVERT_CLASS, OnConvertClass)
-	ON_WM_MOUSEMOVE()
-	ON_COMMAND(ID_MICRO_ICONS, OnMicroIcons)
-	ON_COMMAND(ID_SELECT_EXCEPT_TEXTURES, OnSelectExceptTextures)
-	ON_COMMAND(ID_ADD_TEXTURES_FROM_WORLD, OnAddTexturesFromWorld)
-	ON_COMMAND(ID_SHOW_TREE_SHORTCUTS, OnShowTreeShortcuts)
-	ON_COMMAND(ID_EXPORT_TEXTURE, OnExportTexture)
-	ON_COMMAND(ID_BROWSER_CONTEXT_HELP, OnBrowserContextHelp)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CBrowseWindow)
+  ON_WM_VSCROLL()
+  ON_WM_PAINT()
+  ON_WM_DROPFILES()
+  ON_WM_SIZE()
+  ON_COMMAND(ID_INSERT_ITEMS, OnInsertItems)
+  ON_WM_LBUTTONDOWN()
+  ON_COMMAND(ID_DELETE_ITEMS, OnDeleteItems)
+  ON_COMMAND(ID_BIG_ICONS, OnBigIcons)
+  ON_COMMAND(ID_MEDIUM_ICONS, OnMediumIcons)
+  ON_COMMAND(ID_SMALL_ICONS, OnSmallIcons)
+  ON_COMMAND(ID_SHOW_DESCRIPTION, OnShowDescription)
+  ON_COMMAND(ID_SHOW_FILENAME, OnShowFilename)
+  ON_WM_LBUTTONDBLCLK()
+  ON_COMMAND(ID_RECREATE_TEXTURE, OnRecreateTexture)
+  ON_COMMAND(ID_CREATE_AND_ADD_TEXTURE, OnCreateAndAddTexture)
+  ON_COMMAND(ID_SELECT_BY_TEXTURE_IN_SELECTED_SECTORS, OnSelectByTextureInSelectedSectors)
+  ON_COMMAND(ID_SELECT_BY_TEXTURE_IN_WORLD, OnSelectByTextureInWorld)
+  ON_COMMAND(ID_SELECT_FOR_DROP_MARKER, OnSelectForDropMarker)
+  ON_COMMAND(ID_SET_AS_CURRENT_TEXTURE, OnSetAsCurrentTexture)
+  ON_COMMAND(ID_CONVERT_CLASS, OnConvertClass)
+  ON_WM_MOUSEMOVE()
+  ON_COMMAND(ID_MICRO_ICONS, OnMicroIcons)
+  ON_COMMAND(ID_SELECT_EXCEPT_TEXTURES, OnSelectExceptTextures)
+  ON_COMMAND(ID_ADD_TEXTURES_FROM_WORLD, OnAddTexturesFromWorld)
+  ON_COMMAND(ID_SHOW_TREE_SHORTCUTS, OnShowTreeShortcuts)
+  ON_COMMAND(ID_EXPORT_TEXTURE, OnExportTexture)
+  ON_COMMAND(ID_BROWSER_CONTEXT_HELP, OnBrowserContextHelp)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -114,7 +114,7 @@ void CBrowseWindow::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
   GetScrollRange( SB_VERT, &intMin, &intMax);
   INDEX iMin = intMin;
   INDEX iMax = intMax;
-	switch (nSBCode )
+  switch (nSBCode )
   {
     case SB_THUMBTRACK:
     case SB_THUMBPOSITION:
@@ -169,7 +169,7 @@ void CBrowseWindow::OnPaint()
   PIXaabbox2D rectPict;
   INDEX i;
 
-  if (m_pDrawPort==NULL || !m_pDrawPort->Lock()) {
+  if (m_pDrawPort == NULL || !m_pDrawPort->Lock()) {
     return;
   }
 
@@ -182,7 +182,7 @@ void CBrowseWindow::OnPaint()
   m_pDrawPort->Fill( C_BLACK | CT_OPAQUE);
   
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
-  if (pVTNDir==NULL) {
+  if (pVTNDir == NULL) {
     m_pDrawPort->Unlock();
     return;
   }
@@ -385,8 +385,8 @@ void CBrowseWindow::OnContextMenu( CPoint point)
   {
     CMenu* pPopup = menu.GetSubMenu(0);
     UINT iRecreateTextureCommandState = MF_DISABLED|MF_GRAYED;
-    if (_fnRightClickedItemFileName.FileExt()==CTString(".tex") ||
-        _fnRightClickedItemFileName.FileExt()==CTString(".tbn") )
+    if (_fnRightClickedItemFileName.FileExt() == CTString(".tex") ||
+        _fnRightClickedItemFileName.FileExt() == CTString(".tbn") )
     {
       iRecreateTextureCommandState = MF_ENABLED;
     }
@@ -396,7 +396,7 @@ void CBrowseWindow::OnContextMenu( CPoint point)
     pPopup->EnableMenuItem(ID_EXPORT_TEXTURE, iRecreateTextureCommandState);
 
     UINT iSelectForDropMarkerCommandState = MF_DISABLED|MF_GRAYED;
-    if (_fnRightClickedItemFileName.FileExt()==CTString(".ecl"))
+    if (_fnRightClickedItemFileName.FileExt() == CTString(".ecl"))
     {
       iSelectForDropMarkerCommandState = MF_ENABLED;
     }
@@ -410,14 +410,14 @@ void CBrowseWindow::OnContextMenu( CPoint point)
 
     // enable select by texture commands only if texture is right-clicked and document exists
     UINT iSelectByTextureCommandState = MF_DISABLED|MF_GRAYED;
-    if ((_fnRightClickedItemFileName.FileExt()==CTString(".tex")) && (pDoc!=NULL))
+    if ((_fnRightClickedItemFileName.FileExt() == CTString(".tex")) && (pDoc != NULL))
     {
       iSelectByTextureCommandState = MF_ENABLED;
     }
 
     UINT iConvertClassCommandState = MF_DISABLED|MF_GRAYED;
-    if ((_fnRightClickedItemFileName.FileExt()==CTString(".ecl")) &&
-        (pDoc!=NULL) &&
+    if ((_fnRightClickedItemFileName.FileExt() == CTString(".ecl")) &&
+        (pDoc != NULL) &&
         (pDoc->m_selEntitySelection.Count() != 0) &&
         (pDoc->m_iMode == ENTITY_MODE) )
     {
@@ -428,14 +428,14 @@ void CBrowseWindow::OnContextMenu( CPoint point)
     pPopup->EnableMenuItem(ID_CONVERT_CLASS, iConvertClassCommandState);
     
     UINT iClassHelp = MF_DISABLED|MF_GRAYED;
-    if (_fnRightClickedItemFileName.FileExt()==CTString(".ecl"))
+    if (_fnRightClickedItemFileName.FileExt() == CTString(".ecl"))
     {
       iClassHelp = MF_ENABLED;
     }
     pPopup->EnableMenuItem(ID_BROWSER_CONTEXT_HELP, iClassHelp);
 
     pPopup->TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
-								 point.x, point.y, this);
+                 point.x, point.y, this);
   }
 }
 
@@ -481,27 +481,27 @@ HGLOBAL CreateHDrop( const CTFileName &fnToDrag, BOOL bAddAppPath/*=TRUE*/)
   }
 
   HGLOBAL hGlobal;
-	// allocate space for DROPFILE structure plus the number of file and one extra byte for final NULL terminator
-	hGlobal = GlobalAlloc(GHND|GMEM_SHARE,(DWORD) (sizeof(DROPFILES)+strlen(fnFullToDrag)+2));
-	if (hGlobal == NULL)
-			return hGlobal;
+  // allocate space for DROPFILE structure plus the number of file and one extra byte for final NULL terminator
+  hGlobal = GlobalAlloc(GHND|GMEM_SHARE,(DWORD) (sizeof(DROPFILES)+strlen(fnFullToDrag)+2));
+  if (hGlobal == NULL)
+      return hGlobal;
 
-	LPDROPFILES pDropFiles;
+  LPDROPFILES pDropFiles;
   char *pchDropFileName;
-	pDropFiles = (LPDROPFILES)GlobalLock(hGlobal);
+  pDropFiles = (LPDROPFILES)GlobalLock(hGlobal);
   pchDropFileName = ((char *)pDropFiles)+sizeof(DROPFILES);
   // set the offset where the starting point of the file start
   pDropFiles->pFiles = sizeof(DROPFILES);
-	// filename does not contain wide characters
+  // filename does not contain wide characters
   pDropFiles->fWide = FALSE;
   // we want drop point's coordinates in client area
   pDropFiles->fNC = FALSE;
 
-	strcpy(pchDropFileName, (const char *)fnFullToDrag);
-	// final null terminator as per CF_HDROP Format specs.
-	pchDropFileName[strlen(pchDropFileName)+1]=0;
-	GlobalUnlock(hGlobal);
- 	return hGlobal;
+  strcpy(pchDropFileName, (const char *)fnFullToDrag);
+  // final null terminator as per CF_HDROP Format specs.
+  pchDropFileName[strlen(pchDropFileName)+1]=0;
+  GlobalUnlock(hGlobal);
+   return hGlobal;
 }
 
 
@@ -588,9 +588,9 @@ void CBrowseWindow::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CBrowseWindow::OnDropFiles(HDROP hDropInfo)
 {
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   INDEX iNoOfFiles = DragQueryFile( hDropInfo, 0xFFFFFFFF, NULL, 0);
-	char chrFile[ 256];
+  char chrFile[ 256];
 
   // get dropped coordinates
   CPoint point;
@@ -912,9 +912,9 @@ void CBrowseWindow::Refresh(void)
 void CBrowseWindow::OpenDirectory( CVirtualTreeNode *pVTNDir)
 {
   CWorldEditorApp *pApp = (CWorldEditorApp *)AfxGetApp();
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 
-  if (m_bDirectoryOpen || pVTNDir==NULL)
+  if (m_bDirectoryOpen || pVTNDir == NULL)
   {
     return;
   }
@@ -943,7 +943,7 @@ void CBrowseWindow::OpenDirectory( CVirtualTreeNode *pVTNDir)
           fnThumbnail = it->vtn_fnItem;
         }
         // if world
-        else if ( it->vtn_fnItem.FileExt() == ".wld")
+        else if (it->vtn_fnItem.FileExt() == ".wld")
         {
           // use file name with extension .tbn for thumbnail
           fnThumbnail = it->vtn_fnItem.FileDir() + it->vtn_fnItem.FileName() + ".tbn";
@@ -951,7 +951,7 @@ void CBrowseWindow::OpenDirectory( CVirtualTreeNode *pVTNDir)
           it->vtn_strName = it->vtn_fnItem.FileName();
         }
         // if class
-        else if ( it->vtn_fnItem.FileExt() == ".ecl")
+        else if (it->vtn_fnItem.FileExt() == ".ecl")
         {
           // obtain class
           CEntityClass *pec = _pEntityClassStock->Obtain_t( it->vtn_fnItem);
@@ -1032,12 +1032,12 @@ void CBrowseWindow::CloseDirectory( CVirtualTreeNode *pVTN)
 
 void CBrowseWindow::OnSize(UINT nType, int cx, int cy)
 {
-	CWnd::OnSize(nType, cx, cy);
+  CWnd::OnSize(nType, cx, cy);
 
   // if window canvas is valid
-  if (m_pViewPort!=NULL)
+  if (m_pViewPort != NULL)
   {
-		// resize it
+    // resize it
     m_pViewPort->Resize();
     Refresh();
   }
@@ -1081,14 +1081,14 @@ void CBrowseWindow::OnInsertItems()
 
 void CBrowseWindow::OnDeleteItems()
 {
-	DeleteSelectedItems();
+  DeleteSelectedItems();
 }
 
 void CBrowseWindow::OnBigIcons()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_ICONS_LARGE;
+  pVTNDir->vtn_bmBrowsingMode = BM_ICONS_LARGE;
   Refresh();
 }
 
@@ -1096,7 +1096,7 @@ void CBrowseWindow::OnMediumIcons()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_ICONS_MEDIUM;
+  pVTNDir->vtn_bmBrowsingMode = BM_ICONS_MEDIUM;
   Refresh();
 }
 
@@ -1104,7 +1104,7 @@ void CBrowseWindow::OnMicroIcons()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_ICONS_MICRO;
+  pVTNDir->vtn_bmBrowsingMode = BM_ICONS_MICRO;
   Refresh();
 }
 
@@ -1112,7 +1112,7 @@ void CBrowseWindow::OnSmallIcons()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_ICONS_SMALL;
+  pVTNDir->vtn_bmBrowsingMode = BM_ICONS_SMALL;
   Refresh();
 }
 
@@ -1120,7 +1120,7 @@ void CBrowseWindow::OnShowDescription()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_DESCRIPTION;
+  pVTNDir->vtn_bmBrowsingMode = BM_DESCRIPTION;
   Refresh();
 }
 
@@ -1128,13 +1128,13 @@ void CBrowseWindow::OnShowFilename()
 {
   CVirtualTreeNode *pVTNDir = m_pBrowser->GetSelectedDirectory();
   ASSERT( pVTNDir != NULL);
-	pVTNDir->vtn_bmBrowsingMode = BM_FILENAME;
+  pVTNDir->vtn_bmBrowsingMode = BM_FILENAME;
   Refresh();
 }
 
 void CBrowseWindow::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   // get hitted item's index
   FLOAT fDummyX, fDummyY;
   INDEX iHittedItem = HitItem( point, fDummyX, fDummyY);
@@ -1154,11 +1154,11 @@ void CBrowseWindow::OnLButtonDblClk(UINT nFlags, CPoint point)
   if (fnItem.FileExt() == ".tex")
   {
     CWorldEditorDoc *pDoc = theApp.GetDocument();
-    if (pDoc!=NULL && pDoc->GetEditingMode()==TERRAIN_MODE)
+    if (pDoc != NULL && pDoc->GetEditingMode() == TERRAIN_MODE)
     {
       CTerrainLayer *ptlLayer=GetLayer();
       CTerrain *ptTerrain=GetTerrain();
-      if (ptlLayer!=NULL && ptTerrain!=NULL)
+      if (ptlLayer != NULL && ptTerrain != NULL)
       {
         try
         {
@@ -1183,7 +1183,7 @@ void CBrowseWindow::OnLButtonDblClk(UINT nFlags, CPoint point)
   // if it is world (template)
   else if (fnItem.FileExt() == ".wld")
   {
-  	// open document with item's file name
+    // open document with item's file name
     theApp.m_pDocTemplate->OpenDocumentFile( CString(_fnmApplicationPath + fnItem));
   }
 }
@@ -1196,13 +1196,13 @@ void CBrowseWindow::OnRecreateTexture()
     ASSERT( pVTNDir != NULL);
     FOREACHINLIST( CVirtualTreeNode, vtn_lnInDirectory, pVTNDir->vtn_lhChildren, it)
     {
-      if (it->vtn_bSelected && it->vtn_fnItem.FileExt()==CTString(".tex") )
+      if (it->vtn_bSelected && it->vtn_fnItem.FileExt() == CTString(".tex") )
       {
         _EngineGUI.CreateTexture( it->vtn_fnItem);
       }
     }
   }
-  else if (_fnRightClickedItemFileName.FileExt()==CTString(".tex"))
+  else if (_fnRightClickedItemFileName.FileExt() == CTString(".tex"))
   {
     _EngineGUI.CreateTexture( _fnRightClickedItemFileName);
   }
@@ -1256,7 +1256,7 @@ void CBrowseWindow::OnSetAsCurrentTexture()
 
 void CBrowseWindow::OnConvertClass()
 {
-  if (_fnRightClickedItemFileName.FileExt()!=CTString(".ecl"))
+  if (_fnRightClickedItemFileName.FileExt() != CTString(".ecl"))
   {
     WarningMessage( "Only classes can be used for converting classe");
     return;
@@ -1273,13 +1273,13 @@ void CBrowseWindow::OnConvertClass()
         iten->GetPlacement(), _fnRightClickedItemFileName);
       // try to copy entity properties
       CDLLEntityClass *pdecDLLClassNew = penNewClass->GetClass()->ec_pdecDLLClass;
-      for (;pdecDLLClassNew!=NULL; pdecDLLClassNew = pdecDLLClassNew->dec_pdecBase)
+      for (;pdecDLLClassNew != NULL; pdecDLLClassNew = pdecDLLClassNew->dec_pdecBase)
       {
         for (INDEX iPropertyNew=0; iPropertyNew<pdecDLLClassNew->dec_ctProperties; iPropertyNew++)
         {
           CEntityProperty &epPropertyNew = pdecDLLClassNew->dec_aepProperties[iPropertyNew];
           CDLLEntityClass *pdecDLLClassOld = iten->GetClass()->ec_pdecDLLClass;
-          for (;pdecDLLClassOld!=NULL; pdecDLLClassOld = pdecDLLClassOld->dec_pdecBase)
+          for (;pdecDLLClassOld != NULL; pdecDLLClassOld = pdecDLLClassOld->dec_pdecBase)
           {
             for (INDEX iPropertyOld=0; iPropertyOld<pdecDLLClassOld->dec_ctProperties; iPropertyOld++)
             {
@@ -1338,7 +1338,7 @@ void CBrowseWindow::OnMouseMove(UINT nFlags, CPoint point)
 {
   theApp.m_cttToolTips.MouseMoveNotify( m_hWnd, 500, &::GetToolTipText, this);
 
-	CWnd::OnMouseMove(nFlags, point);
+  CWnd::OnMouseMove(nFlags, point);
 }
 
 void CBrowseWindow::OnSelectByTextureInWorld()
@@ -1372,8 +1372,8 @@ void CBrowseWindow::SelectByTextures( BOOL bInSelectedSectors, BOOL bExceptSelec
             FOREACHINSTATICARRAY(itbsc->bsc_abpoPolygons, CBrushPolygon, itbpo)
             {
               // if it is not non translucent portal and is not selected and has same texture
-              if ( /*(!(itbpo->bpo_ulFlags&BPOF_PORTAL) || (itbpo->bpo_ulFlags&BPOF_TRANSLUCENT) ||
-                     (itbpo->bpo_bppProperties.bpp_uwPretenderDistance!=0) ) &&*/
+              if (/*(!(itbpo->bpo_ulFlags&BPOF_PORTAL) || (itbpo->bpo_ulFlags&BPOF_TRANSLUCENT) ||
+                     (itbpo->bpo_bppProperties.bpp_uwPretenderDistance != 0) ) &&*/
                   !itbpo->IsSelected(BPOF_SELECTED) &&
                   (itbpo->bpo_abptTextures[pDoc->m_iTexture].bpt_toTexture.GetData() != NULL) )
               {
@@ -1383,7 +1383,7 @@ void CBrowseWindow::SelectByTextures( BOOL bInSelectedSectors, BOOL bExceptSelec
                 {
                   if (_bRightClickedIsSelected)
                   {
-                    if (it->vtn_bSelected && it->vtn_fnItem.FileExt()==CTString(".tex") &&
+                    if (it->vtn_bSelected && it->vtn_fnItem.FileExt() == CTString(".tex") &&
                        fnTexture == it->vtn_fnItem)
                     {
                       bSelect = !bExceptSelected;
@@ -1453,7 +1453,7 @@ void CBrowseWindow::OnAddTexturesFromWorld()
 
 void CBrowseWindow::OnShowTreeShortcuts() 
 {
-	CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   pMainFrame->OnShowTreeShortcuts();
 }
 
@@ -1479,7 +1479,7 @@ void ExportTexture( CTFileName fnTexture)
         fnFrame.PrintF("%s%03d.tga", (const char *)fnTexture.NoExt(), iFrame);
       }
       // if file exists, ask for substitution name
-      if (FileExists( fnFrame) && iFrame==0 )
+      if (FileExists( fnFrame) && iFrame == 0 )
       {
         CTString strDefaultDir = fnFrame.FileDir();
         CTString strDefaultFile = fnFrame.FileName()+fnFrame.FileExt();
@@ -1509,15 +1509,15 @@ void CBrowseWindow::OnExportTexture()
     ASSERT( pVTNDir != NULL);
     FOREACHINLIST( CVirtualTreeNode, vtn_lnInDirectory, pVTNDir->vtn_lhChildren, it)
     {
-      if (it->vtn_bSelected && it->vtn_fnItem.FileExt()==CTString(".tex") ||
-          it->vtn_bSelected && it->vtn_fnItem.FileExt()==CTString(".tbn") )
+      if (it->vtn_bSelected && it->vtn_fnItem.FileExt() == CTString(".tex") ||
+          it->vtn_bSelected && it->vtn_fnItem.FileExt() == CTString(".tbn") )
       {
         ExportTexture( it->vtn_fnItem);
       }
     }
   }
-  else if (_fnRightClickedItemFileName.FileExt()==CTString(".tex") ||
-           _fnRightClickedItemFileName.FileExt()==CTString(".tbn") )
+  else if (_fnRightClickedItemFileName.FileExt() == CTString(".tex") ||
+           _fnRightClickedItemFileName.FileExt() == CTString(".tbn") )
   {
     ExportTexture( _fnRightClickedItemFileName);
   }
@@ -1525,7 +1525,7 @@ void CBrowseWindow::OnExportTexture()
 
 void CBrowseWindow::OnBrowserContextHelp() 
 {
-  if (_fnRightClickedItemFileName.FileExt()==CTString(".ecl"))
+  if (_fnRightClickedItemFileName.FileExt() == CTString(".ecl"))
   {
     theApp.DisplayHelp(_fnRightClickedItemFileName, HH_DISPLAY_TOPIC, NULL);
   }

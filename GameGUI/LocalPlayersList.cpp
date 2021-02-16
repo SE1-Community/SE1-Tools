@@ -38,9 +38,9 @@ CLocalPlayersList::~CLocalPlayersList()
 
 
 BEGIN_MESSAGE_MAP(CLocalPlayersList, CCheckListBox)
-	//{{AFX_MSG_MAP(CLocalPlayersList)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CLocalPlayersList)
+    // NOTE - the ClassWizard will add and remove mapping macros here.
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

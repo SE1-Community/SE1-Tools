@@ -49,11 +49,11 @@ void CPropertyComboBox::SetDialogPtr( CPropertyComboBar *pDialog)
 }
 
 BEGIN_MESSAGE_MAP(CPropertyComboBox, CComboBox)
-	//{{AFX_MSG_MAP(CPropertyComboBox)
-	ON_WM_CONTEXTMENU()
-	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
-	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CPropertyComboBox)
+  ON_WM_CONTEXTMENU()
+  ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
+  ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ END_MESSAGE_MAP()
 
 void CPropertyComboBox::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-	INDEX i=0;
+  INDEX i=0;
 }
 
 void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
@@ -72,7 +72,7 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
     // obtain entity class ptr
     CDLLEntityClass *pdecDLLClass = penEntity->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
       for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
@@ -112,7 +112,7 @@ void CPropertyComboBox::JoinProperties( CEntity *penEntity, BOOL bIntersect)
       // obtain entity class ptr
       CDLLEntityClass *pdecDLLClass = penEntity->GetClass()->ec_pdecDLLClass;
       // for all classes in hierarchy of this entity
-      for (; pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+      for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
       {
         // for all properties
         for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++) 

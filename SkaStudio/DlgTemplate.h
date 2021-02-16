@@ -44,10 +44,10 @@ protected:
   CSplitterFrame dlg_spSlitter;
   INDEX dlg_iSplitterID;
   BOOL dlg_bDockingEnabled;
-	//{{AFX_MSG(CDlgTemplate)
-  	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CDlgTemplate)
+    afx_msg void OnSize(UINT nType, int cx, int cy);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 #endif

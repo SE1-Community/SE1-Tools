@@ -30,8 +30,8 @@ typedef struct st_LWDisplacementHandler {
         unsigned int    (*flags) (LWInstance);
 } LWDisplacementHandler;
 
-#define LWDMF_WORLD             (1<<0)
-#define LWDMF_BEFOREBONES       (1<<1)
+#define LWDMF_WORLD             (1 << 0)
+#define LWDMF_BEFOREBONES       (1 << 1)
 
 
 #endif

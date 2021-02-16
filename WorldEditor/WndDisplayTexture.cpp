@@ -48,10 +48,10 @@ CWndDisplayTexture::~CWndDisplayTexture()
 
 
 BEGIN_MESSAGE_MAP(CWndDisplayTexture, CWnd)
-	//{{AFX_MSG_MAP(CWndDisplayTexture)
-	ON_WM_PAINT()
-	ON_WM_KILLFOCUS()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CWndDisplayTexture)
+  ON_WM_PAINT()
+  ON_WM_KILLFOCUS()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -93,7 +93,7 @@ void CWndDisplayTexture::OnPaint()
     m_pDrawPort->Unlock();
 
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -126,12 +126,12 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
   }
 
   m_boxTexture=PIXaabbox2D( PIX2D(0,0), PIX2D(pixWidth,pixHeight));
-  if (strText1!="")
+  if (strText1 != "")
   {
     pixHeight+=_pfdConsoleFont->fd_pixCharHeight+4;
   }
   m_boxText1=PIXaabbox2D( PIX2D(0,m_boxTexture.Max()(2)), PIX2D(pixWidth,pixHeight));
-  if (strText2!="")
+  if (strText2 != "")
   {
     pixHeight+=_pfdConsoleFont->fd_pixCharHeight+4;
   }
@@ -176,7 +176,7 @@ BOOL CWndDisplayTexture::Initialize(PIX pixX, PIX pixY, CTextureData *ptd,
 void CWndDisplayTexture::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd != pMainFrame->m_pwndToolTip && pNewWnd != this)
   {
     DestroyWindow();
     DeleteTempMap();
@@ -185,11 +185,11 @@ void CWndDisplayTexture::OnKillFocus(CWnd* pNewWnd)
 
 BOOL CWndDisplayTexture::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();
     return TRUE;
   }
-	return CWnd::PreTranslateMessage(pMsg);
+  return CWnd::PreTranslateMessage(pMsg);
 }

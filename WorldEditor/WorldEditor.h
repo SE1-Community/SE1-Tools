@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define WORLDEDITOR_H 1
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+  #error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -185,7 +185,7 @@ public:
     vfp_fMipStep = vfpToCopy.vfp_fMipStep;
   };
 
-  inline BOOL operator==(const CValuesForPrimitive &vfpToCompare);
+  inline BOOL operator == (const CValuesForPrimitive &vfpToCompare);
   inline CValuesForPrimitive operator+(const CValuesForPrimitive &vfpToAdd);
   inline CValuesForPrimitive &operator+=(const CValuesForPrimitive &vfpToAdd);
   inline CValuesForPrimitive operator-(const CValuesForPrimitive &vfpToSub);
@@ -209,7 +209,7 @@ public:
 class CAppPrefs
 {
 public:
-	~CAppPrefs();
+  ~CAppPrefs();
   BOOL ap_CopyExistingWindowPrefs;
   BOOL ap_AutoMaximizeWindow;
   BOOL ap_SetDefaultColors;
@@ -426,7 +426,7 @@ public:
   // view icons texture
   CTextureData *m_pViewIconsTD;
   // window background texture
-	CTFileName m_fnWinBcgTexture;
+  CTFileName m_fnWinBcgTexture;
   // application font
   CFontData *m_pfntSystem;
   // application's windows font
@@ -434,31 +434,31 @@ public:
   CFont m_FixedFont;
   // for holding entity selection marker model
   CTextureData *m_ptdEntityMarkerTexture;
-	CModelData *m_pEntityMarkerModelData;
-	CModelObject *m_pEntityMarkerModelObject;
+  CModelData *m_pEntityMarkerModelData;
+  CModelObject *m_pEntityMarkerModelObject;
   // for holding portal selection marker model
   CTextureData *m_ptdPortalMarkerTexture;
-	CModelData *m_pPortalMarkerModelData;
-	CModelObject *m_pPortalMarkerModelObject;
+  CModelData *m_pPortalMarkerModelData;
+  CModelObject *m_pPortalMarkerModelObject;
   // for holding empty brush model
   CTextureData *m_ptdEmptyBrushTexture;
-	CModelData *m_pEmptyBrushModelData;
-	CModelObject *m_pEmptyBrushModelObject;
+  CModelData *m_pEmptyBrushModelData;
+  CModelObject *m_pEmptyBrushModelObject;
   // for holding range sphere model
   CTextureData *m_ptdRangeSphereTexture;
-	CModelData *m_pRangeSphereModelData;
-	CModelObject *m_pRangeSphereModelObject;
+  CModelData *m_pRangeSphereModelData;
+  CModelObject *m_pRangeSphereModelObject;
   // for holding angle3D model
   CTextureData *m_ptdAngle3DTexture;
-	CModelData *m_pAngle3DModelData;
-	CModelObject *m_pAngle3DModelObject;
+  CModelData *m_pAngle3DModelData;
+  CModelObject *m_pAngle3DModelObject;
   // for holding bounding box model
   CTextureData *m_ptdBoundingBoxTexture;
-	CModelData *m_pBoundingBoxModelData;
-	CModelObject *m_pBoundingBoxModelObject;
+  CModelData *m_pBoundingBoxModelData;
+  CModelObject *m_pBoundingBoxModelObject;
 
   // variables for full screen display mode
-	CDisplayMode m_dmFullScreen;
+  CDisplayMode m_dmFullScreen;
   GfxAPIType   m_gatFullScreen;
 
   // index of color last used for auto primitive colorization
@@ -498,9 +498,9 @@ public:
 
 // Operations
   CWorldEditorApp();
-	~CWorldEditorApp();
-	void MyParseCommandLine(void);
-	BOOL SubInitInstance(void);
+  ~CWorldEditorApp();
+  void MyParseCommandLine(void);
+  BOOL SubInitInstance(void);
   void OnFileNew();
   CEntity *CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning, CPlacement3D pl=CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f),ANGLE3D(0.0f, 0.0f, 0.0f)));
   BOOL Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileName fnFile, BOOL bAdd);
@@ -543,38 +543,38 @@ public:
   void ApplyTerrainEditing(CCastRay &crRayHit);
   
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CWorldEditorApp)
-	public:
-	virtual BOOL InitInstance();
-	virtual BOOL SaveAllModified();
-	virtual int ExitInstance();
-	virtual BOOL OnIdle(LONG lCount);
-	virtual int Run();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CWorldEditorApp)
+  public:
+  virtual BOOL InitInstance();
+  virtual BOOL SaveAllModified();
+  virtual int ExitInstance();
+  virtual BOOL OnIdle(LONG lCount);
+  virtual int Run();
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+  //}}AFX_VIRTUAL
 
 // Implementation
 
-	//{{AFX_MSG(CWorldEditorApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnFilePreferences();
-	afx_msg void OnFileOpen();
-	afx_msg void OnImport3DObject();
-	afx_msg void OnDecadicGrid();
-	afx_msg void OnUpdateDecadicGrid(CCmdUI* pCmdUI);
-	afx_msg void OnConvertWorlds();
-	afx_msg void OnSetAsDefault();
-	afx_msg void OnHelpShowTipOfTheDay();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CWorldEditorApp)
+  afx_msg void OnAppAbout();
+  afx_msg void OnFilePreferences();
+  afx_msg void OnFileOpen();
+  afx_msg void OnImport3DObject();
+  afx_msg void OnDecadicGrid();
+  afx_msg void OnUpdateDecadicGrid(CCmdUI* pCmdUI);
+  afx_msg void OnConvertWorlds();
+  afx_msg void OnSetAsDefault();
+  afx_msg void OnHelpShowTipOfTheDay();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // Inline functions
 
-inline BOOL CValuesForPrimitive::operator==(const CValuesForPrimitive &vfpToCompare)
+inline BOOL CValuesForPrimitive::operator == (const CValuesForPrimitive &vfpToCompare)
 {
   return (
     (vfp_avVerticesOnBaseOfPrimitive.Count() == vfpToCompare.vfp_avVerticesOnBaseOfPrimitive.Count() ) &&

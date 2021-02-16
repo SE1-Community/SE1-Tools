@@ -41,12 +41,12 @@ CActiveTextureWnd::~CActiveTextureWnd()
 
 
 BEGIN_MESSAGE_MAP(CActiveTextureWnd, CWnd)
-	//{{AFX_MSG_MAP(CActiveTextureWnd)
-	ON_WM_PAINT()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_RBUTTONDOWN()
-	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CActiveTextureWnd)
+  ON_WM_PAINT()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_RBUTTONDOWN()
+  ON_WM_DESTROY()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -95,7 +95,7 @@ void CActiveTextureWnd::OnPaint()
     // unlock the drawport
     m_pDrawPort->Unlock();
 
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -113,12 +113,12 @@ void CActiveTextureWnd::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CActiveTextureWnd::OnRButtonDown(UINT nFlags, CPoint point) 
 {
-	CWnd::OnRButtonDown(nFlags, point);
+  CWnd::OnRButtonDown(nFlags, point);
 }
 
 void CActiveTextureWnd::OnDestroy() 
 {
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 
   if (m_pViewPort != NULL)
   {

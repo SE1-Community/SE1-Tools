@@ -28,9 +28,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "SplitterFrame.h"
 class CMainFrame : public CMDIFrameWnd
 {
-	DECLARE_DYNAMIC(CMainFrame)
+  DECLARE_DYNAMIC(CMainFrame)
 public:
-	CMainFrame();
+  CMainFrame();
 
 // Attributes
 public:
@@ -39,17 +39,17 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CMainFrame)
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CMainFrame)
+  virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CMainFrame();
+  virtual ~CMainFrame();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+  virtual void AssertValid() const;
+  virtual void Dump(CDumpContext& dc) const;
 #endif
   CTString CreateTexture();
 
@@ -57,32 +57,32 @@ public:
   // mdi client
   CMDIClientWnd m_wndMDIClient;
   // status bar
-	CStatusBar  m_wndStatusBar;
+  CStatusBar  m_wndStatusBar;
   // toolbars
-	CToolBar    m_wndToolBar;
+  CToolBar    m_wndToolBar;
   CToolBar    m_wndNavigationToolBar;
-	CToolBar    m_wndToolBarManage;
+  CToolBar    m_wndToolBarManage;
   // edit control for model instance stretch
   CEdit m_ctrlMIStretch;
 
 // Generated message map functions
 private:
-	//{{AFX_MSG(CMainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnActivateApp(BOOL bActive, DWORD hTask);
-	afx_msg void OnViewTreeview();
-	afx_msg void OnUpdateViewTreeview(CCmdUI* pCmdUI);
-	afx_msg void OnClose();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnViewToolbar();
-	afx_msg void OnUpdateViewToolbar(CCmdUI* pCmdUI);
-	afx_msg void OnFileCreateTexture();
-	afx_msg void OnBtClose();
-	afx_msg void OnBtClear();
-	afx_msg void OnViewErrorlist();
-	afx_msg void OnUpdateViewErrorlist(CCmdUI* pCmdUI);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CMainFrame)
+  afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+  afx_msg void OnActivateApp(BOOL bActive, DWORD hTask);
+  afx_msg void OnViewTreeview();
+  afx_msg void OnUpdateViewTreeview(CCmdUI* pCmdUI);
+  afx_msg void OnClose();
+  afx_msg void OnSize(UINT nType, int cx, int cy);
+  afx_msg void OnViewToolbar();
+  afx_msg void OnUpdateViewToolbar(CCmdUI* pCmdUI);
+  afx_msg void OnFileCreateTexture();
+  afx_msg void OnBtClose();
+  afx_msg void OnBtClear();
+  afx_msg void OnViewErrorlist();
+  afx_msg void OnUpdateViewErrorlist(CCmdUI* pCmdUI);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

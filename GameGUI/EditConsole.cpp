@@ -38,8 +38,8 @@ CEditConsole::~CEditConsole()
 
 
 BEGIN_MESSAGE_MAP(CEditConsole, CEdit)
-	//{{AFX_MSG_MAP(CEditConsole)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CEditConsole)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -54,8 +54,8 @@ void CEditConsole::SetTextFromConsole(void)
   const char *strString = _pConsole->GetBuffer();
   char *pch = strNew;
   // convert '\n' to '\r''\n'
-  while (*strString!=0) {
-    if (*strString=='\n') {
+  while (*strString != 0) {
+    if (*strString == '\n') {
       *pch++='\r';
       *pch++='\n';
       strString++;
@@ -75,7 +75,7 @@ void CEditConsole::SetTextFromConsole(void)
 BOOL CEditConsole::PreTranslateMessage(MSG* pMsg) 
 {
   BOOL bCtrl = (GetKeyState( VK_CONTROL) & 128) != 0;
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
   {
     // obtain current line index
     INDEX iCurrentLine = LineFromChar(-1);

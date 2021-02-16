@@ -93,21 +93,21 @@ void CCtrlEditFlags::ApplyChange(ULONG &ulOldFlags)
 
 void CCtrlEditFlags::SetPrevEditableBank( void)
 {
-  if (m_iCurrentBank==0 && m_ulEditable&0xff000000) m_iCurrentBank=3;
-  if (m_iCurrentBank==1 && m_ulEditable&0x000000ff) m_iCurrentBank=0;
-  if (m_iCurrentBank==2 && m_ulEditable&0x0000ff00) m_iCurrentBank=1;
-  if (m_iCurrentBank==3 && m_ulEditable&0x00ff0000) m_iCurrentBank=2;
+  if (m_iCurrentBank == 0 && m_ulEditable&0xff000000) m_iCurrentBank=3;
+  if (m_iCurrentBank == 1 && m_ulEditable&0x000000ff) m_iCurrentBank=0;
+  if (m_iCurrentBank == 2 && m_ulEditable&0x0000ff00) m_iCurrentBank=1;
+  if (m_iCurrentBank == 3 && m_ulEditable&0x00ff0000) m_iCurrentBank=2;
 }
 
 void CCtrlEditFlags::SetNextEditableBank( void)
 {
   INDEX iOldCurrentBank=m_iCurrentBank;
-  if (m_iCurrentBank==0 && m_ulEditable&0x0000ff00) m_iCurrentBank=1;
-  if (m_iCurrentBank==1 && m_ulEditable&0x00ff0000) m_iCurrentBank=2;
-  if (m_iCurrentBank==2 && m_ulEditable&0xff000000) m_iCurrentBank=3;
-  if (m_iCurrentBank==3 && m_ulEditable&0x000000ff) m_iCurrentBank=0;
+  if (m_iCurrentBank == 0 && m_ulEditable&0x0000ff00) m_iCurrentBank=1;
+  if (m_iCurrentBank == 1 && m_ulEditable&0x00ff0000) m_iCurrentBank=2;
+  if (m_iCurrentBank == 2 && m_ulEditable&0xff000000) m_iCurrentBank=3;
+  if (m_iCurrentBank == 3 && m_ulEditable&0x000000ff) m_iCurrentBank=0;
   
-  if (iOldCurrentBank==m_iCurrentBank)
+  if (iOldCurrentBank == m_iCurrentBank)
   {
     SetFirstEditableBank();
   }
@@ -124,12 +124,12 @@ void CCtrlEditFlags::SetFirstEditableBank( void)
 }
 
 BEGIN_MESSAGE_MAP(CCtrlEditFlags, CButton)
-	//{{AFX_MSG_MAP(CCtrlEditFlags)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONUP()
-	ON_WM_KILLFOCUS()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CCtrlEditFlags)
+  ON_WM_LBUTTONDOWN()
+  ON_WM_MOUSEMOVE()
+  ON_WM_LBUTTONUP()
+  ON_WM_KILLFOCUS()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -156,10 +156,10 @@ void CCtrlEditFlags::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   m_dx = (m_rectButton.right-m_rectButton.left)/9;
 
   INDEX ix=0;
-  for (INDEX iBit=(m_iCurrentBank+1)*8-1; iBit>=m_iCurrentBank*8; iBit--)
+  for (INDEX iBit=(m_iCurrentBank+1)*8-1; iBit >= m_iCurrentBank*8; iBit--)
   {
     RECT rectToFill=GetRectForArea(ix);
-    ULONG ulBit=(1<<iBit);
+    ULONG ulBit=(1 << iBit);
     COLORREF clrfColor=CLRF_CLR( C_GRAY);
     // if is editable
     if (m_ulEditable&ulBit)
@@ -211,7 +211,7 @@ void CCtrlEditFlags::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 INDEX CCtrlEditFlags::GetAreaUnderMouse( CPoint point) const
 {
   INDEX iResult=-1;
-  for (INDEX iArea=0; iArea<=8; iArea++)
+  for (INDEX iArea=0; iArea <= 8; iArea++)
   {
     RECT rectToTest=GetRectForArea(iArea);
     if (PtInRect( &rectToTest, point))
@@ -226,14 +226,14 @@ INDEX CCtrlEditFlags::GetAreaUnderMouse( CPoint point) const
 CTString CCtrlEditFlags::GetTipForArea(INDEX iArea) const
 {
   CTString strResult;
-  if (iArea==8)
+  if (iArea == 8)
   {
     strResult.PrintF("Bits (%d-%d)", m_iCurrentBank*8, (m_iCurrentBank+1)*8-1);
     return strResult;
   }
-  else if (iArea!=-1)
+  else if (iArea != -1)
   {
-    ULONG ulBit=1<<((7-iArea)+m_iCurrentBank*8);
+    ULONG ulBit=1 << ((7-iArea)+m_iCurrentBank*8);
     if (m_ulEditable&ulBit)
     {
       INDEX iBit=(7-iArea)+m_iCurrentBank*8;
@@ -251,7 +251,7 @@ CTString CCtrlEditFlags::GetTipForArea(INDEX iArea) const
 int CCtrlEditFlags::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 {
   INDEX iArea=GetAreaUnderMouse( point);
-  if (iArea==-1) return 0;
+  if (iArea == -1) return 0;
 
   CTString strToolTip=GetTipForArea(iArea);
   pTI->lpszText = (wchar_t *)malloc( sizeof(wchar_t) * (strlen(strToolTip)+1));
@@ -273,20 +273,20 @@ void CCtrlEditFlags::OnLButtonDown(UINT nFlags, CPoint point)
   INDEX iArea=GetAreaUnderMouse( point);
   m_iMouseDownArea=iArea;
 
-	CButton::OnLButtonDown(nFlags, point);
+  CButton::OnLButtonDown(nFlags, point);
 }
 
 void CCtrlEditFlags::OnLButtonUp(UINT nFlags, CPoint point) 
 {
   INDEX iArea=GetAreaUnderMouse( point);
-  if (m_iMouseDownArea!=iArea) return;
-  if (iArea==8)
+  if (m_iMouseDownArea != iArea) return;
+  if (iArea == 8)
   {
     SetNextEditableBank();
   }
-  else if (iArea>=0 && iArea<=7)
+  else if (iArea >= 0 && iArea <= 7)
   {
-    ULONG ulBit=1<<((7-iArea)+m_iCurrentBank*8);
+    ULONG ulBit=1 << ((7-iArea)+m_iCurrentBank*8);
     // if bit was defined
     if (m_ulDefined&ulBit)
     {
@@ -299,7 +299,7 @@ void CCtrlEditFlags::OnLButtonUp(UINT nFlags, CPoint point)
       m_ulValue|=ulBit;
     }
     // note change
-    if (m_pDialog!=NULL)
+    if (m_pDialog != NULL)
     {
       m_pDialog->UpdateData(TRUE);
     }
@@ -307,16 +307,16 @@ void CCtrlEditFlags::OnLButtonUp(UINT nFlags, CPoint point)
   }
   Invalidate(FALSE);
 
-	CButton::OnLButtonUp(nFlags, point);
+  CButton::OnLButtonUp(nFlags, point);
 }
 
 void CCtrlEditFlags::OnMouseMove(UINT nFlags, CPoint point) 
 {
   m_iLastArea=GetAreaUnderMouse( point);
-	CButton::OnMouseMove(nFlags, point);
+  CButton::OnMouseMove(nFlags, point);
 }
 
 void CCtrlEditFlags::OnKillFocus(CWnd* pNewWnd) 
 {
-	CButton::OnKillFocus(pNewWnd);
+  CButton::OnKillFocus(pNewWnd);
 }

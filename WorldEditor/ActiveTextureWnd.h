@@ -25,7 +25,7 @@ class CActiveTextureWnd : public CWnd
 {
 // Construction
 public:
-	CActiveTextureWnd();
+  CActiveTextureWnd();
 
 // Attributes
 public:
@@ -37,23 +37,23 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CActiveTextureWnd)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CActiveTextureWnd)
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CActiveTextureWnd();
+  virtual ~CActiveTextureWnd();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CActiveTextureWnd)
-	afx_msg void OnPaint();
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnDestroy();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CActiveTextureWnd)
+  afx_msg void OnPaint();
+  afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+  afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+  afx_msg void OnDestroy();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

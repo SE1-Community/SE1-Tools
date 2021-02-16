@@ -33,14 +33,14 @@ IMPLEMENT_DYNCREATE(CDlgPgPosition, CPropertyPage)
 
 CDlgPgPosition::CDlgPgPosition() : CPropertyPage(CDlgPgPosition::IDD)
 {
-	//{{AFX_DATA_INIT(CDlgPgPosition)
-	m_fBanking = 0.0f;
-	m_fHeading = 0.0f;
-	m_fPitch = 0.0f;
-	m_fX = 0.0f;
-	m_fY = 0.0f;
-	m_fZ = 0.0f;
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgPgPosition)
+  m_fBanking = 0.0f;
+  m_fHeading = 0.0f;
+  m_fPitch = 0.0f;
+  m_fX = 0.0f;
+  m_fY = 0.0f;
+  m_fZ = 0.0f;
+  //}}AFX_DATA_INIT
 }
 
 CDlgPgPosition::~CDlgPgPosition()
@@ -65,13 +65,13 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE)
   {
-	  // is CSG on?
+    // is CSG on?
     if (pDoc->m_pwoSecondLayer != NULL)
     {
       // yes, pick up coordinates for editting from second layer
       m_fHeading = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(1));
-	    m_fPitch   = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(2));
-	    m_fBanking = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(3));
+      m_fPitch   = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(2));
+      m_fBanking = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(3));
 
       m_fX = pDoc->m_plSecondLayer.pl_PositionVector(1);
       m_fY = pDoc->m_plSecondLayer.pl_PositionVector(2);
@@ -90,8 +90,8 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
       // get placement of first entity
       CPlacement3D plEntityOnePlacement = penEntityOne->GetPlacement();
       m_fHeading = DegAngle( plEntityOnePlacement.pl_OrientationAngle(1));
-	    m_fPitch   = DegAngle( plEntityOnePlacement.pl_OrientationAngle(2));
-	    m_fBanking = DegAngle( plEntityOnePlacement.pl_OrientationAngle(3));
+      m_fPitch   = DegAngle( plEntityOnePlacement.pl_OrientationAngle(2));
+      m_fBanking = DegAngle( plEntityOnePlacement.pl_OrientationAngle(3));
 
       m_fX = plEntityOnePlacement.pl_PositionVector(1);
       m_fY = plEntityOnePlacement.pl_PositionVector(2);
@@ -100,25 +100,25 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
     m_udSelection.MarkUpdated();
   }
 
-	//{{AFX_DATA_MAP(CDlgPgPosition)
-	DDX_Text(pDX, IDC_EDIT_BANKING, m_fBanking);
-	DDX_Text(pDX, IDC_EDIT_HEADING, m_fHeading);
-	DDX_Text(pDX, IDC_EDIT_PITCH, m_fPitch);
-	DDX_Text(pDX, IDC_EDIT_X, m_fX);
-	DDX_Text(pDX, IDC_EDIT_Y, m_fY);
-	DDX_Text(pDX, IDC_EDIT_Z, m_fZ);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgPgPosition)
+  DDX_Text(pDX, IDC_EDIT_BANKING, m_fBanking);
+  DDX_Text(pDX, IDC_EDIT_HEADING, m_fHeading);
+  DDX_Text(pDX, IDC_EDIT_PITCH, m_fPitch);
+  DDX_Text(pDX, IDC_EDIT_X, m_fX);
+  DDX_Text(pDX, IDC_EDIT_Y, m_fY);
+  DDX_Text(pDX, IDC_EDIT_Z, m_fZ);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
   {
-	  // is CSG on?
+    // is CSG on?
     if (pDoc->m_pwoSecondLayer != NULL)
     {
       // yes, copy coordinates from editting controls into second layer
       pDoc->m_plSecondLayer.pl_OrientationAngle(1) = AngleDeg( m_fHeading);
-	    pDoc->m_plSecondLayer.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
-	    pDoc->m_plSecondLayer.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
       pDoc->m_plSecondLayer.pl_PositionVector(1) = m_fX;
       pDoc->m_plSecondLayer.pl_PositionVector(2) = m_fY;
       pDoc->m_plSecondLayer.pl_PositionVector(3) = m_fZ;
@@ -146,8 +146,8 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
       // get placement of first entity
       CPlacement3D plEntityOnePlacement = penEntityOne->GetPlacement();
       plEntityOnePlacement.pl_OrientationAngle(1) = AngleDeg( m_fHeading);
-	    plEntityOnePlacement.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
-	    plEntityOnePlacement.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
+      plEntityOnePlacement.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
+      plEntityOnePlacement.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
 
       plEntityOnePlacement.pl_PositionVector(1) = m_fX;
       plEntityOnePlacement.pl_PositionVector(2) = m_fY;
@@ -171,9 +171,9 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgPgPosition, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgPgPosition)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgPgPosition)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ BOOL CDlgPgPosition::OnIdle(LONG lCount)
 
 BOOL CDlgPgPosition::PreTranslateMessage(MSG* pMsg) 
 {
-	if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
   {
     // move coordinates from page to entity and snap them
     UpdateData( TRUE);
@@ -206,5 +206,5 @@ BOOL CDlgPgPosition::PreTranslateMessage(MSG* pMsg)
     // the message is handled
     return TRUE;
   }
-	return CPropertyPage::PreTranslateMessage(pMsg);
+  return CPropertyPage::PreTranslateMessage(pMsg);
 }

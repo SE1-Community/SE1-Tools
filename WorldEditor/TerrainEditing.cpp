@@ -89,10 +89,10 @@ FLOAT _afFilterSharpen[5][5]=
 
 FLOAT GetBrushMultiplier(INDEX x, INDEX y)
 {
-  if (_ptdBrush==NULL) return 1.0f;
+  if (_ptdBrush == NULL) return 1.0f;
   {
     COLOR col=_ptdBrush->GetTexel(x,y);
-    FLOAT fResult=FLOAT(col>>24)/255.0f;
+    FLOAT fResult=FLOAT(col >> 24)/255.0f;
     return fResult;
   }
 }
@@ -104,7 +104,7 @@ void ApplyAddPaint(UWORD uwMin, UWORD uwMax)
     for (INDEX x=0; x<_rect.Width(); x++)
     {
       FLOAT fBrushMultiplier=GetBrushMultiplier(x,y);
-      if (fBrushMultiplier==0.0f) continue;
+      if (fBrushMultiplier == 0.0f) continue;
       INDEX iOffset=y*_rect.Width()+x;
       FLOAT fValue=_puwBuffer[iOffset];
       fValue+=fBrushMultiplier*_fStrength*32.0f*theApp.m_fPaintPower;
@@ -117,7 +117,7 @@ void ApplyAddPaint(UWORD uwMin, UWORD uwMax)
 void ApplyRNDNoise(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   FLOAT fMaxNoise=theApp.m_fNoiseAltitude/ptrTerrain->tr_vTerrainSize(2)*65535.0f;
   for (INDEX y=0; y<_rect.Height(); y++)
   {
@@ -162,7 +162,7 @@ FLOAT GetContinousNoise( INDEX x, INDEX y, FLOAT fRandom)
 void ApplyContinousNoise(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   FLOAT fMaxNoise=theApp.m_fNoiseAltitude/ptrTerrain->tr_vTerrainSize(2)*65535.0f;
   for (INDEX y=0; y<_rect.Height(); y++)
   {
@@ -188,14 +188,14 @@ void ApplyContinousNoise(void)
 void ApplyPosterize(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   FLOAT fStepUW=theApp.m_fPosterizeStep/ptrTerrain->tr_vTerrainSize(2)*65535.0f;
   for (INDEX y=0; y<_rect.Height(); y++)
   {
     for (INDEX x=0; x<_rect.Width(); x++)
     {
       FLOAT fBrushMultiplier=GetBrushMultiplier(x,y);
-      if (fBrushMultiplier==0.0f) continue;
+      if (fBrushMultiplier == 0.0f) continue;
       INDEX iPixSrc=y*_rect.Width()+x;
       FLOAT fValue=_puwBuffer[iPixSrc];
       FLOAT fPosterized=(INDEX(fValue/fStepUW))*fStepUW+1.0f;
@@ -247,7 +247,7 @@ static INDEX _iRandomDX=0;
 void SetHMPixel( UWORD pix, INDEX x, INDEX y)
 {
   UWORD *pdest=_puwHeightMap+y*_iTerrainWidth+x;
-  if (*pdest==65535) {
+  if (*pdest == 65535) {
     *pdest=pix;
   }
 }
@@ -311,7 +311,7 @@ Rect GetTerrainRect(void)
   rect.rc_iBottom=0;
 
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return rect;
+  if (ptrTerrain == NULL) return rect;
 
   rect.rc_iLeft=0;
   rect.rc_iRight=ptrTerrain->tr_pixHeightMapWidth;
@@ -329,7 +329,7 @@ FLOAT GetWrappedPixelValue( INDEX x, INDEX y)
 
 void RandomizeWhiteNoise(void)
 {
-  if (_pafWhiteNoise==NULL)
+  if (_pafWhiteNoise == NULL)
   {
     _pafWhiteNoise=(FLOAT *)AllocMemory(WNOISE*WNOISE*sizeof(FLOAT));
   }
@@ -347,7 +347,7 @@ FLOAT *GenerateTerrain_FBMBuffer(PIX pixW, PIX pixH, INDEX ctOctaves, FLOAT fHig
                                  FLOAT fStepFactor, FLOAT fMaxAmplitude, FLOAT fAmplitudeDecreaser,
                                  BOOL bAddNegativeValues, BOOL bRandomOffest, FLOAT &fMin, FLOAT &fMax)
 {
-  if (_pafWhiteNoise==NULL)
+  if (_pafWhiteNoise == NULL)
   {
     RandomizeWhiteNoise();
   }
@@ -361,7 +361,7 @@ FLOAT *GenerateTerrain_FBMBuffer(PIX pixW, PIX pixH, INDEX ctOctaves, FLOAT fHig
   FLOAT fPixStep=fHighFrequencyStep/pow(fStepFactor,ctOctaves);
   fMin=1e6;
   fMax=-1e6;
-  for (INDEX iOctave=ctOctaves-1; iOctave>=0; iOctave--)
+  for (INDEX iOctave=ctOctaves-1; iOctave >= 0; iOctave--)
   {
     FLOAT fOctaveOffset=0.0f;
     if (bRandomOffest)
@@ -406,7 +406,7 @@ void GenerateTerrain_SubdivideAndDisplace(void)
   _iTerrainWidth=_rect.Width();
   _puwHeightMap=_puwBuffer;
   UWORD uwScrollValue=8.0f-Clamp(theApp.m_iRNDSubdivideAndDisplaceItterations, INDEX(0), INDEX(8));
-  _iRandomDX=(_iTerrainWidth-1)<<uwScrollValue;
+  _iRandomDX=(_iTerrainWidth-1) << uwScrollValue;
   
   UWORD uwrnd;
   FLOAT fdMax=65536.0f;
@@ -424,7 +424,7 @@ void GenerateTerrain_SubdivideAndDisplace(void)
 void GenerateTerrain(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   switch (theApp.m_iTerrainGenerationMethod)
   {
@@ -533,15 +533,15 @@ void FreeDistributionNoiseTexture( void)
 
 FLOAT StepUp(FLOAT fCur, FLOAT fMin, FLOAT fMax)
 {
-  if (fCur<=fMin) return 0.0f;
-  if (fCur>=fMax) return 1.0f;
+  if (fCur <= fMin) return 0.0f;
+  if (fCur >= fMax) return 1.0f;
   return (fCur-fMin)/(fMax-fMin);
 }
 
 FLOAT StepDown(FLOAT fCur, FLOAT fMin, FLOAT fMax)
 {
-  if (fCur<=fMin) return 1.0f;
-  if (fCur>=fMax) return 0.0f;
+  if (fCur <= fMin) return 1.0f;
+  if (fCur >= fMax) return 0.0f;
   return (fMax-fCur)/(fMax-fMin);
 }
 
@@ -613,7 +613,7 @@ void GenerateLayerDistribution(INDEX iForLayer, Rect rect)
   if (!SetupDistributionNoiseTexture()) return;
 
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   // obtain buffer
   UWORD *puwAltitude=GetBufferForEditing(ptrTerrain, rect, BT_HEIGHT_MAP, 0);
@@ -633,7 +633,7 @@ void GenerateLayerDistribution(INDEX iForLayer, Rect rect)
   // for each layer
   for (INDEX iLayer=0; iLayer<ptrTerrain->tr_atlLayers.Count(); iLayer++)
   {
-    if (iForLayer!=-1 && iLayer!=iForLayer) continue;
+    if (iForLayer != -1 && iLayer != iForLayer) continue;
     CTerrainLayer *ptlLayer=GetLayer(iLayer);
     if (!ptlLayer->tl_bAutoRegenerated) continue;
     // get layer
@@ -714,7 +714,7 @@ void GenerateLayerDistribution(INDEX iForLayer, Rect rect)
 void GenerateLayerDistribution(INDEX iForLayer)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   Rect rect;
   rect.rc_iLeft=0;
@@ -728,14 +728,14 @@ void GenerateLayerDistribution(INDEX iForLayer)
 void RecalculateShadows(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
   ptrTerrain->UpdateShadowMap();
 }
 
 void OptimizeLayers(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
-  if (ptrTerrain==NULL) return;
+  if (ptrTerrain == NULL) return;
 
   Rect rect;
   rect.rc_iLeft=0;
@@ -763,7 +763,7 @@ void OptimizeLayers(void)
     for (INDEX i=0; i<ctLayers; i++)
     {
       UWORD *puwCurr=apuwLayers[i]+iOffset;
-      if ((*puwCurr)>>8 != 0) ctDrawnBefore++;
+      if ((*puwCurr) >> 8 != 0) ctDrawnBefore++;
     }
   }
 
@@ -771,7 +771,7 @@ void OptimizeLayers(void)
   for (iOffset=0; iOffset<ctPixels; iOffset++)
   {
     BOOL bOptimize=FALSE;
-    for (INDEX i=ctLayers-1; i>=0; i--)
+    for (INDEX i=ctLayers-1; i >= 0; i--)
     {
       UWORD *puwCurr=apuwLayers[i]+iOffset;
       // if should optimize
@@ -782,7 +782,7 @@ void OptimizeLayers(void)
       }
       else
       {
-        if ((*puwCurr)>>8 == 255)
+        if ((*puwCurr) >> 8 == 255)
         {
           // clear mask for all layers beneath current one
           bOptimize=TRUE;
@@ -798,7 +798,7 @@ void OptimizeLayers(void)
     for (INDEX i=0; i<ctLayers; i++)
     {
       UWORD *puwCurr=apuwLayers[i]+iOffset;
-      if ((*puwCurr)>>8 != 0) ctDrawnAfter++;
+      if ((*puwCurr) >> 8 != 0) ctDrawnAfter++;
     }
   }
 
@@ -903,7 +903,7 @@ CEntity *GetEntityForID(ULONG iEntityID)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten)
   {
-    if (iten->en_ulID==iEntityID) return &*iten;
+    if (iten->en_ulID == iEntityID) return &*iten;
   }
   return NULL;
 }
@@ -917,8 +917,8 @@ CTerrainUndo::CTerrainUndo()
 
 void DeleteOneUndo(CTerrainUndo *ptrud)
 {
-  if (ptrud->tu_puwUndoBuffer!=NULL)    FreeMemory(ptrud->tu_puwUndoBuffer);
-  if (ptrud->tu_puwRedoBuffer!=NULL)    FreeMemory(ptrud->tu_puwRedoBuffer);
+  if (ptrud->tu_puwUndoBuffer != NULL)    FreeMemory(ptrud->tu_puwUndoBuffer);
+  if (ptrud->tu_puwRedoBuffer != NULL)    FreeMemory(ptrud->tu_puwRedoBuffer);
   delete ptrud;
 }
 
@@ -936,7 +936,7 @@ CTerrain *GetUndoTerrain(ULONG ulEntityID)
 {
   // obtain terrain entity
   CEntity *penTerrain=GetEntityForID(_iTerrainEntityID);
-  if (penTerrain==NULL)
+  if (penTerrain == NULL)
   {
     return NULL;
    }
@@ -949,14 +949,14 @@ void ApplyTerrainUndo(CTerrainUndo *ptrud)
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   CTerrain *ptrTerrain=GetUndoTerrain(ptrud->tu_ulEntityID);
-  if (ptrTerrain==NULL)
+  if (ptrTerrain == NULL)
   {
     DeleteOneUndo(ptrud);
     return;
   }
 
   // obtain and store redo buffer
-  if (ptrud->tu_puwRedoBuffer==NULL)
+  if (ptrud->tu_puwRedoBuffer == NULL)
   {
     ptrud->tu_puwRedoBuffer=GetBufferForEditing(ptrTerrain, ptrud->tu_rcRect, 
       ptrud->tu_btUndoBufferType, ptrud->tu_iUndoBufferData);
@@ -977,13 +977,13 @@ void ApplyTerrainRedo(CTerrainUndo *ptrud)
 {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   CTerrain *ptrTerrain=GetUndoTerrain(ptrud->tu_ulEntityID);
-  if (ptrTerrain==NULL)
+  if (ptrTerrain == NULL)
   {
     DeleteOneUndo(ptrud);
     return;
   }
 
-  if (ptrud->tu_puwRedoBuffer==NULL) return;
+  if (ptrud->tu_puwRedoBuffer == NULL) return;
 
   // apply buffer change (redo)
   SetBufferForEditing(ptrTerrain, ptrud->tu_puwRedoBuffer, ptrud->tu_rcRect,
@@ -1000,7 +1000,7 @@ UWORD *ExtractUndoRect(PIX pixTerrainWidth)
 {
   INDEX ctBuffBytes=_rectUndo.Width()*_rectUndo.Height()*sizeof(UWORD);
   UWORD *puwBuff=(UWORD*)AllocMemory(ctBuffBytes);
-  if (puwBuff==NULL) return NULL;
+  if (puwBuff == NULL) return NULL;
   UWORD *puwBuffTemp=puwBuff;
   for (INDEX y=_rectUndo.rc_iTop; y<_rectUndo.rc_iBottom; y++)
   {
@@ -1045,11 +1045,11 @@ void LimitMemoryConsumption(INDEX iNewConsumption)
   INDEX ctUndos=pDoc->m_dcTerrainUndo.Count();
   INDEX iLastValid=-1;
   INDEX iSum=iNewConsumption;
-  for (INDEX iUndo=ctUndos-1; iUndo>=0; iUndo--)
+  for (INDEX iUndo=ctUndos-1; iUndo >= 0; iUndo--)
   {
     CTerrainUndo *ptu=&pDoc->m_dcTerrainUndo[iUndo];
     INDEX iMemory=ptu->tu_rcRect.Width()*ptu->tu_rcRect.Height()*sizeof(UWORD);
-    if (ptu->tu_puwRedoBuffer!=NULL)
+    if (ptu->tu_puwRedoBuffer != NULL)
     {
       iSum=iSum+iMemory*2;
     }
@@ -1064,7 +1064,7 @@ void LimitMemoryConsumption(INDEX iNewConsumption)
       break;
     }
   }
-  if (iLastValid!=-1)
+  if (iLastValid != -1)
   {
     CDynamicContainer<CTerrainUndo> dcTemp;
     for (INDEX itu=iLastValid; itu<ctUndos; itu++)
@@ -1076,7 +1076,7 @@ void LimitMemoryConsumption(INDEX iNewConsumption)
       DeleteOneUndo(&pDoc->m_dcTerrainUndo[ituDel]);
     }
     pDoc->m_dcTerrainUndo.MoveContainer(dcTemp);
-    if (pDoc->m_iCurrentTerrainUndo>=iLastValid)
+    if (pDoc->m_iCurrentTerrainUndo >= iLastValid)
     {
       pDoc->m_iCurrentTerrainUndo=pDoc->m_iCurrentTerrainUndo-iLastValid;
     }
@@ -1092,9 +1092,9 @@ void TerrainEditEnd(void)
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   // obtain terrain entity
   CEntity *penTerrain=GetEntityForID(_iTerrainEntityID);
-  if (penTerrain==NULL)
+  if (penTerrain == NULL)
   {
-    if (_puwUndoTerrain!=NULL)
+    if (_puwUndoTerrain != NULL)
     {
       FreeMemory(_puwUndoTerrain);
       _puwUndoTerrain=NULL;
@@ -1103,9 +1103,9 @@ void TerrainEditEnd(void)
   }
   // obtain terrain
   CTerrain *ptrTerrain=penTerrain->GetTerrain();
-  if (ptrTerrain==NULL)
+  if (ptrTerrain == NULL)
   {
-    if (_puwUndoTerrain!=NULL)
+    if (_puwUndoTerrain != NULL)
     {
       FreeMemory(_puwUndoTerrain);
       _puwUndoTerrain=NULL;
@@ -1128,7 +1128,7 @@ void TerrainEditEnd(void)
   ptrud->tu_iUndoBufferData=_iUndoBufferData;
   ptrud->tu_puwUndoBuffer=ExtractUndoRect(ptrTerrain->tr_pixHeightMapWidth);
   
-  if (ptrud->tu_puwUndoBuffer!=NULL)
+  if (ptrud->tu_puwUndoBuffer != NULL)
   {
     pDoc->m_dcTerrainUndo.Add(ptrud);
   }
@@ -1138,7 +1138,7 @@ void TerrainEditEnd(void)
   }
   pDoc->m_iCurrentTerrainUndo=pDoc->m_dcTerrainUndo.Count()-1;
   // release obtained terrain buffer
-  if (_puwUndoTerrain!=NULL)
+  if (_puwUndoTerrain != NULL)
   {
     FreeMemory(_puwUndoTerrain);
     _puwUndoTerrain=NULL;
@@ -1162,12 +1162,12 @@ void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData
   INDEX ctParsedLines=0;
   try
   {
-	  char achrLine[ 256];
+    char achrLine[ 256];
     CTFileStream strm;
-  	strm.Open_t( fnTileInfo);
+    strm.Open_t( fnTileInfo);
 
-	  FOREVER
-	  {
+    FOREVER
+    {
       CDynamicContainer<CTString> dcTokens;
 
       strm.GetLine_t(achrLine, 256);
@@ -1185,11 +1185,11 @@ void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData
       }
 
       // if no tokens parsed
-      if (dcTokens.Count()==0) continue;
+      if (dcTokens.Count() == 0) continue;
 
       INDEX iToken=0;
       // analyze parsed tokens
-      if (dcTokens[iToken]=="TilesPerRow")
+      if (dcTokens[iToken] == "TilesPerRow")
       {
         // there must be at least 1 token for 'TilesPerRow' indentifier
         if (dcTokens.Count()-1-iToken<1)
@@ -1198,13 +1198,13 @@ void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData
         }
         ctTilesPerRow=0;
         INDEX iResultTPR=sscanf(dcTokens[iToken+1], "%d", &ctTilesPerRow);
-        if (iResultTPR<=0)
+        if (iResultTPR <= 0)
         {
           ctTilesPerRow=0;
           throw("Unable to parse count of tiles per row.");
         }
       }
-      else if (dcTokens[iToken]=="Tile")
+      else if (dcTokens[iToken] == "Tile")
       {
         // there must be at least 2 tokens for 'Tile' indentifier
         if (dcTokens.Count()-1-iToken<2)
@@ -1214,16 +1214,16 @@ void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData
         INDEX x,y;
 
         INDEX iResultX=sscanf(dcTokens[iToken+1], "%d", &x);
-        if (iResultX<=0)
+        if (iResultX <= 0)
         {
           throw("Unable to parse x coordinate.");
         }
         INDEX iResultY=sscanf(dcTokens[iToken+2], "%d", &y);
-        if (iResultY<=0)
+        if (iResultY <= 0)
         {
           throw("Unable to parse y coordinate.");
         }
-        if (x<=0 || y<=0)
+        if (x <= 0 || y <= 0)
         {
           throw("Tile coordinates must be greater than 0.");
         }
@@ -1237,19 +1237,19 @@ void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData
 
         for (INDEX iFlagToken=iToken; iFlagToken<dcTokens.Count(); iFlagToken++)
         {
-          if (dcTokens[iFlagToken]=="SwapXY")
+          if (dcTokens[iFlagToken] == "SwapXY")
           {
             pti->ti_bSwapXY=TRUE;
           }
-          else if (dcTokens[iFlagToken]=="FlipX")
+          else if (dcTokens[iFlagToken] == "FlipX")
           {
             pti->ti_bFlipX=TRUE;
           }
-          else if (dcTokens[iFlagToken]==";")
+          else if (dcTokens[iFlagToken] == ";")
           {
             break;
           }
-          else if (dcTokens[iFlagToken]=="FlipY")
+          else if (dcTokens[iFlagToken] == "FlipY")
           {
             pti->ti_bFlipY=TRUE;
           }
@@ -1279,16 +1279,16 @@ void TilePaintTool(void)
 {
   CTerrain *ptrTerrain=GetTerrain();
   CTerrainLayer *ptlLayer=GetLayer();
-  if (ptrTerrain==NULL || ptlLayer==NULL || ptlLayer->tl_ltType!=LT_TILE || ptlLayer->tl_ptdTexture==NULL) return;
+  if (ptrTerrain == NULL || ptlLayer == NULL || ptlLayer->tl_ltType != LT_TILE || ptlLayer->tl_ptdTexture == NULL) return;
   
   CDynamicContainer<CTileInfo> dcTileInfo;
   INDEX ctTilesPerRaw=0;
   ObtainLayerTileInfo( &dcTileInfo, ptlLayer->tl_ptdTexture, ctTilesPerRaw);
   INDEX ctTiles=dcTileInfo.Count();
-  if (ctTilesPerRaw==0 || ctTiles==0) return;
+  if (ctTilesPerRaw == 0 || ctTiles == 0) return;
   ptlLayer->SetTilesPerRow(ctTilesPerRaw);
   ptlLayer->tl_iSelectedTile= Clamp( ptlLayer->tl_iSelectedTile, (INDEX)0, INDEX(ctTiles-1) );
-  if (ptlLayer->tl_iSelectedTile==-1) return;
+  if (ptlLayer->tl_iSelectedTile == -1) return;
   CTileInfo &ti=dcTileInfo[ptlLayer->tl_iSelectedTile];
 
   // _rect holds terrain size
@@ -1301,7 +1301,7 @@ void TilePaintTool(void)
     if (ti.ti_bFlipY) uwValue|=TL_FLIPY;
     if (ti.ti_bSwapXY) uwValue|=TL_SWAPXY;
     uwValue|=TL_VISIBLE;
-    _puwBuffer[0]=uwValue<<8;
+    _puwBuffer[0]=uwValue << 8;
   }
   else
   {
@@ -1337,21 +1337,21 @@ void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ET
   CTerrain *ptrTerrain=GetTerrain();
   CTerrainLayer *ptlLayer=GetLayer();
   INDEX iLayer=GetLayerIndex();
-  if (ptrTerrain==NULL || ptlLayer==NULL) return;
+  if (ptrTerrain == NULL || ptlLayer == NULL) return;
 
   // obtain buffer type
   BufferType btBufferType=BT_INVALID;
   INDEX iBufferData=-1;
   if ((teTool>TE_BRUSH_ALTITUDE_START && teTool<TE_BRUSH_ALTITUDE_END) ||
       (teTool>TE_ALTITUDE_START       && teTool<TE_ALTITUDE_END) ||
-      (teTool==TE_GENERATE_TERRAIN) ||
-      (teTool==TE_ALTITUDE_EQUALIZE) )
+      (teTool == TE_GENERATE_TERRAIN) ||
+      (teTool == TE_ALTITUDE_EQUALIZE) )
   {
     btBufferType=BT_HEIGHT_MAP;
   }
   else if ((teTool>TE_BRUSH_LAYER_START && teTool<TE_BRUSH_LAYER_END) ||
            (teTool>TE_LAYER_START       && teTool<TE_LAYER_END) ||
-            teTool==TE_TILE_PAINT)
+            teTool == TE_TILE_PAINT)
   {
     btBufferType=BT_LAYER_MASK;
     iBufferData=iLayer;
@@ -1369,13 +1369,13 @@ void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ET
   _srcExtraW=0;
   _srcExtraH=0;
 
-  if (teTool==TE_BRUSH_ALTITUDE_SMOOTH ||
-      teTool==TE_BRUSH_ALTITUDE_FILTER ||
-      teTool==TE_BRUSH_LAYER_SMOOTH ||
-      teTool==TE_ALTITUDE_SMOOTH ||
-      teTool==TE_ALTITUDE_FILTER ||
-      teTool==TE_LAYER_SMOOTH ||
-      teTool==TE_LAYER_FILTER)
+  if (teTool == TE_BRUSH_ALTITUDE_SMOOTH ||
+      teTool == TE_BRUSH_ALTITUDE_FILTER ||
+      teTool == TE_BRUSH_LAYER_SMOOTH ||
+      teTool == TE_ALTITUDE_SMOOTH ||
+      teTool == TE_ALTITUDE_FILTER ||
+      teTool == TE_LAYER_SMOOTH ||
+      teTool == TE_LAYER_FILTER)
   {
     _srcExtraW=2;
     _srcExtraH=2;
@@ -1384,14 +1384,14 @@ void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ET
   // extract source rectangle
   Point pt=Calculate2dHitPoint(ptrTerrain, vHitPoint);
   // perform operation on brush rect
-  if (teTool==TE_TILE_PAINT)
+  if (teTool == TE_TILE_PAINT)
   {
     _rect.rc_iLeft=pt.pt_iX;
     _rect.rc_iRight=_rect.rc_iLeft+1;
     _rect.rc_iTop=pt.pt_iY;
     _rect.rc_iBottom=_rect.rc_iTop+1;
   }
-  else if (_ptdBrush!=NULL)
+  else if (_ptdBrush != NULL)
   {
     _rect.rc_iLeft=pt.pt_iX-ptdBrush->GetPixWidth()/2-_srcExtraW;
     _rect.rc_iRight=pt.pt_iX+(ptdBrush->GetPixWidth()-ptdBrush->GetPixWidth()/2)+_srcExtraW;
@@ -1417,8 +1417,8 @@ void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ET
   // if should apply undo for whole terrain
   if ((teTool>TE_ALTITUDE_START && teTool<TE_ALTITUDE_END) ||
       (teTool>TE_LAYER_START    && teTool<TE_LAYER_END) ||
-      (teTool==TE_GENERATE_TERRAIN) ||
-      (teTool==TE_ALTITUDE_EQUALIZE) )
+      (teTool == TE_GENERATE_TERRAIN) ||
+      (teTool == TE_ALTITUDE_EQUALIZE) )
   {
     TerrainEditBegin();
     bAutoRememberUndo=TRUE;
@@ -1581,7 +1581,7 @@ void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ET
   FreeMemory(_puwBuffer);
 
   // mark rect for layer distribution updating
-  if (teTool!=TE_TILE_PAINT)
+  if (teTool != TE_TILE_PAINT)
   {
     DiscardLayerDistribution(_rect);
   }

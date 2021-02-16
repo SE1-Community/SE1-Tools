@@ -60,7 +60,7 @@ void SubMain( int argc, char *argv[])
 
   // alpha channel ignore check
   BOOL bUseAlpha = TRUE;
-  if (argc==6 && (argv[5][1]=='a' || argv[5][1]=='A')) bUseAlpha = FALSE;
+  if (argc == 6 && (argv[5][1] == 'a' || argv[5][1] == 'A')) bUseAlpha = FALSE;
 
   // font generation starts
   printf( "- Generating font table.\n");

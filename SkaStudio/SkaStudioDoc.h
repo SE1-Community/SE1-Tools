@@ -29,8 +29,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CSeriousSkaStudioDoc : public CDocument
 {
 protected: // create from serialization only
-	CSeriousSkaStudioDoc();
-	DECLARE_DYNCREATE(CSeriousSkaStudioDoc)
+  CSeriousSkaStudioDoc();
+  DECLARE_DYNCREATE(CSeriousSkaStudioDoc)
 
 // Attributes
 public:
@@ -59,37 +59,37 @@ public:
 
 // Operations
 public:
-	void OnIdle(void);
+  void OnIdle(void);
   void SetTimerForDocument();
   // set flag that this document has changed and need to be saved
   void MarkAsChanged();
   INDEX BeforeDocumentClose();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CSeriousSkaStudioDoc)
-	public:
-	virtual BOOL OnNewDocument();
-	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CSeriousSkaStudioDoc)
+  public:
+  virtual BOOL OnNewDocument();
+  virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
   virtual void Serialize(CArchive& ar);
-	virtual void OnCloseDocument();
-	//}}AFX_VIRTUAL
+  virtual void OnCloseDocument();
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CSeriousSkaStudioDoc();
+  virtual ~CSeriousSkaStudioDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+  virtual void AssertValid() const;
+  virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(CSeriousSkaStudioDoc)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CSeriousSkaStudioDoc)
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

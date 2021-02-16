@@ -29,7 +29,7 @@ class CMDIClientWnd : public CWnd
 {
 // Construction
 public:
-	CMDIClientWnd();
+  CMDIClientWnd();
 
 // Attributes
 public:
@@ -38,24 +38,24 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CMDIClientWnd)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CMDIClientWnd)
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CMDIClientWnd();
+  virtual ~CMDIClientWnd();
   void GetCurrentRect(CRect &rc);
   void SetCurrentRect(CRect &rc);
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CMDIClientWnd)
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CMDIClientWnd)
+  afx_msg void OnSize(UINT nType, int cx, int cy);
+  afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
+  afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

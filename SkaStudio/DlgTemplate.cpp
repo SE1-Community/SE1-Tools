@@ -26,8 +26,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDlgTemplate, CDialogBar)
-	//{{AFX_MSG_MAP(CDlgBarTreeView)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgBarTreeView)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CDlgTemplate::CDlgTemplate()
@@ -111,10 +111,10 @@ INDEX CDlgTemplate::GetDockingSide()
 {
 
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pMainFrame==NULL) return -1;
+  if (pMainFrame == NULL) return -1;
 
-  CWnd *pParent = GetParent(); ASSERT(pParent!=NULL);
-//CWnd *pParentsParent = pParent->GetParent(); ASSERT(pParentsParent!=NULL);
+  CWnd *pParent = GetParent(); ASSERT(pParent != NULL);
+//CWnd *pParentsParent = pParent->GetParent(); ASSERT(pParentsParent != NULL);
 
   CRect rcParent;
   CRect rcMainFrame;
@@ -160,12 +160,12 @@ INDEX CDlgTemplate::GetDockingSide()
   return AFX_IDW_DOCKBAR_BOTTOM;
 /*
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pMainFrame==NULL) return -1;
+  if (pMainFrame == NULL) return -1;
 
   CWnd *pParent = GetParent();
-  ASSERT(pParent!=NULL);
+  ASSERT(pParent != NULL);
   CWnd *pParentsParent = pParent->GetParent();
-  if (pParentsParent==NULL) {
+  if (pParentsParent == NULL) {
     pParentsParent = pParent;
   }
 
@@ -191,17 +191,17 @@ INDEX CDlgTemplate::GetDockingSide()
 void CDlgTemplate::AdjustSplitter()
 {
   if (!theApp.bAppInitialized) return;
-  if (dlg_iSplitterID==(-1)) return;
+  if (dlg_iSplitterID == (-1)) return;
 
   INDEX iDockSide = GetDockingSide();
   INDEX iSplitterSide = AFX_IDW_DOCKBAR_FLOAT;
-  if (iDockSide==AFX_IDW_DOCKBAR_LEFT) {
+  if (iDockSide == AFX_IDW_DOCKBAR_LEFT) {
     iSplitterSide = AFX_IDW_DOCKBAR_RIGHT;
-  } else if (iDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+  } else if (iDockSide == AFX_IDW_DOCKBAR_RIGHT) {
     iSplitterSide = AFX_IDW_DOCKBAR_LEFT;
-  } else if (iDockSide==AFX_IDW_DOCKBAR_TOP) {
+  } else if (iDockSide == AFX_IDW_DOCKBAR_TOP) {
     iSplitterSide = AFX_IDW_DOCKBAR_BOTTOM;
-  } else if (iDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+  } else if (iDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
     iSplitterSide = AFX_IDW_DOCKBAR_TOP;
   }
   dlg_spSlitter.SetDockingSide(iSplitterSide);
@@ -218,7 +218,7 @@ void CDlgTemplate::DockCtrlBar()
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   pMainFrame->DockControlBar(this);
 
-  ASSERT(dlg_iSplitterID!=(-1));
+  ASSERT(dlg_iSplitterID != (-1));
   dlg_spSlitter.EnableDocking();
   dlg_bDockingEnabled = TRUE;
 }
@@ -238,6 +238,6 @@ void CDlgTemplate::SetSplitterControlID(INDEX iSplitterID)
 void CDlgTemplate::OnSize(UINT nType, int cx, int cy)
 {
   AdjustSplitter();
-	CDialogBar::OnSize(nType, cx, cy);
+  CDialogBar::OnSize(nType, cx, cy);
 }
 

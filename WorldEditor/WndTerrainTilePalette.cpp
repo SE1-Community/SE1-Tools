@@ -59,13 +59,13 @@ CWndTerrainTilePalette::~CWndTerrainTilePalette()
 
 
 BEGIN_MESSAGE_MAP(CWndTerrainTilePalette, CWnd)
-	//{{AFX_MSG_MAP(CWndTerrainTilePalette)
-	ON_WM_PAINT()
-	ON_WM_KILLFOCUS()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_TIMER()
-	ON_WM_LBUTTONUP()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CWndTerrainTilePalette)
+  ON_WM_PAINT()
+  ON_WM_KILLFOCUS()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_TIMER()
+  ON_WM_LBUTTONUP()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -86,7 +86,7 @@ PIXaabbox2D CWndTerrainTilePalette::GetTileBBox( INDEX iTile)
 void CWndTerrainTilePalette::OnPaint() 
 {
   CTerrainLayer *ptlLayer=GetLayer();
-  if (ptlLayer==NULL) return;
+  if (ptlLayer == NULL) return;
 
   {
   CPaintDC dc(this); // device context for painting
@@ -203,7 +203,7 @@ void CWndTerrainTilePalette::OnPaint()
       if ((boxScr & boxPoint) == boxPoint)
       {
         INDEX iRot=((ULONG)(tm*25.0f))&7;
-        ULONG ulLineType=0x0f0f0f0f<<iRot;
+        ULONG ulLineType=0x0f0f0f0f << iRot;
         m_pDrawPort->DrawBorder(boxScr.Min()(1), boxScr.Min()(2), 
                                 boxScr.Size()(1), boxScr.Size()(2),
                                 C_BLUE|CT_OPAQUE, ulLineType);
@@ -215,7 +215,7 @@ void CWndTerrainTilePalette::OnPaint()
     m_pDrawPort->Unlock();
 
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -230,7 +230,7 @@ BOOL CWndTerrainTilePalette::Initialize(PIX pixX, PIX pixY, CTextureData *ptd, B
   ObtainLayerTileInfo( &m_dcTileInfo, ptd, m_ctTilesPerRaw);
 
   INDEX ctTiles=m_dcTileInfo.Count();
-  if (ctTiles==0) return FALSE;
+  if (ctTiles == 0) return FALSE;
   m_ctPaletteTilesH=sqrt((FLOAT)ctTiles);
 
   // calculate window's size
@@ -292,7 +292,7 @@ BOOL CWndTerrainTilePalette::Initialize(PIX pixX, PIX pixY, CTextureData *ptd, B
 void CWndTerrainTilePalette::OnKillFocus(CWnd* pNewWnd) 
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pNewWnd!=pMainFrame->m_pwndToolTip && pNewWnd!=this)
+  if (pNewWnd != pMainFrame->m_pwndToolTip && pNewWnd != this)
   {
     DestroyWindow();
     DeleteTempMap();
@@ -301,13 +301,13 @@ void CWndTerrainTilePalette::OnKillFocus(CWnd* pNewWnd)
 
 BOOL CWndTerrainTilePalette::PreTranslateMessage(MSG* pMsg) 
 {
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_ESCAPE)
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE)
   {
     DestroyWindow();
     DeleteTempMap();
     return TRUE;
   }
-	return CWnd::PreTranslateMessage(pMsg);
+  return CWnd::PreTranslateMessage(pMsg);
 }
 
 void CWndTerrainTilePalette::OnLButtonDown(UINT nFlags, CPoint point) 
@@ -328,8 +328,8 @@ void CWndTerrainTilePalette::OnTimer(UINT nIDEvent)
     return;
   }
 
-  Invalidate(FALSE);	
-	CWnd::OnTimer(nIDEvent);
+  Invalidate(FALSE);  
+  CWnd::OnTimer(nIDEvent);
 }
 
 void CWndTerrainTilePalette::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -341,8 +341,8 @@ void CWndTerrainTilePalette::OnLButtonUp(UINT nFlags, CPoint point)
     if ((GetTileBBox(iTile) & boxPoint) == boxPoint)
     {
       CTerrainLayer *ptlLayer=GetLayer();
-      if (ptlLayer==NULL) return;
-      if (ptlLayer->tl_ltType==LT_TILE)
+      if (ptlLayer == NULL) return;
+      if (ptlLayer->tl_ltType == LT_TILE)
       {
         ptlLayer->tl_iSelectedTile=iTile;
       }

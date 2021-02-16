@@ -25,7 +25,7 @@ class CLocalPlayersList : public CCheckListBox
 {
 // Construction
 public:
-	CLocalPlayersList();
+  CLocalPlayersList();
 
 // Attributes
 public:
@@ -34,21 +34,21 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CLocalPlayersList)
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CLocalPlayersList)
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CLocalPlayersList();
+  virtual ~CLocalPlayersList();
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CLocalPlayersList)
-		// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
+  //{{AFX_MSG(CLocalPlayersList)
+    // NOTE - the ClassWizard will add and remove member functions here.
+  //}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

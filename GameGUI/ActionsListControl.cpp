@@ -38,19 +38,19 @@ CActionsListControl::~CActionsListControl()
 
 
 BEGIN_MESSAGE_MAP(CActionsListControl, CListCtrl)
-	//{{AFX_MSG_MAP(CActionsListControl)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_KEYUP()
-	ON_WM_KEYDOWN()
-	ON_WM_SETFOCUS()
-	ON_WM_KILLFOCUS()
-	ON_WM_CONTEXTMENU()
-	ON_COMMAND(ID_BUTTON_ACTION_ADD, OnButtonActionAdd)
-	ON_COMMAND(ID_BUTTON_ACTION_EDIT, OnButtonActionEdit)
-	ON_COMMAND(ID_BUTTON_ACTION_REMOVE, OnButtonActionRemove)
-	ON_UPDATE_COMMAND_UI(ID_BUTTON_ACTION_EDIT, OnUpdateButtonActionEdit)
-	ON_UPDATE_COMMAND_UI(ID_BUTTON_ACTION_REMOVE, OnUpdateButtonActionRemove)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CActionsListControl)
+  ON_WM_LBUTTONDOWN()
+  ON_WM_KEYUP()
+  ON_WM_KEYDOWN()
+  ON_WM_SETFOCUS()
+  ON_WM_KILLFOCUS()
+  ON_WM_CONTEXTMENU()
+  ON_COMMAND(ID_BUTTON_ACTION_ADD, OnButtonActionAdd)
+  ON_COMMAND(ID_BUTTON_ACTION_EDIT, OnButtonActionEdit)
+  ON_COMMAND(ID_BUTTON_ACTION_REMOVE, OnButtonActionRemove)
+  ON_UPDATE_COMMAND_UI(ID_BUTTON_ACTION_EDIT, OnUpdateButtonActionEdit)
+  ON_UPDATE_COMMAND_UI(ID_BUTTON_ACTION_REMOVE, OnUpdateButtonActionRemove)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -75,19 +75,19 @@ void CActionsListControl::OnLButtonDown(UINT nFlags, CPoint point)
   ((CDlgPlayerControls *)GetParent())->m_listButtonActions.EnsureVisible( iSelectedButton+1, FALSE); 
   ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetFocus();
   */
-	((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
+  ((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
 }
 
 void CActionsListControl::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	CListCtrl::OnKeyUp(nChar, nRepCnt, nFlags);
-	((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
+  CListCtrl::OnKeyUp(nChar, nRepCnt, nFlags);
+  ((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
 }
 
 void CActionsListControl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	CListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
-	((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
+  CListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
+  ((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
 }
 
 
@@ -107,30 +107,30 @@ void CActionsListControl::OnSetFocus(CWnd* pOldWnd)
     SetItemState( iSelectedAction, 0, LVIS_DROPHILITED);
   }
 
-	CListCtrl::OnSetFocus(pOldWnd);
+  CListCtrl::OnSetFocus(pOldWnd);
 }
 
 void CActionsListControl::OnKillFocus(CWnd* pNewWnd) 
 {
-	CListCtrl::OnKillFocus(pNewWnd);
+  CListCtrl::OnKillFocus(pNewWnd);
 
   // get selected action
   INDEX iSelectedAction = GetNextItem( -1, LVNI_SELECTED);
   // set hilighted state
   SetItemState( iSelectedAction, LVIS_DROPHILITED, LVIS_DROPHILITED);
-}	
+}  
 
 
 BOOL CActionsListControl::PreTranslateMessage(MSG* pMsg) 
 {
-	// if return pressed
-  if (pMsg->message==WM_KEYDOWN && pMsg->wParam==VK_RETURN)
+  // if return pressed
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
   {
     ((CDlgPlayerControls *)GetParent())->m_editFirstControl.SetFocus();
     // don't translate messages
     return TRUE;
   }
-	return CListCtrl::PreTranslateMessage(pMsg);
+  return CListCtrl::PreTranslateMessage(pMsg);
 }
 
 void CActionsListControl::OnContextMenu(CWnd* pWnd, CPoint point) 
@@ -138,10 +138,10 @@ void CActionsListControl::OnContextMenu(CWnd* pWnd, CPoint point)
   CMenu menu;
   if (menu.LoadMenu( IDR_BUTTON_ACTION_POPUP))
   {
-		CMenu* pPopup = menu.GetSubMenu(0);
-		ASSERT(pPopup != NULL);
+    CMenu* pPopup = menu.GetSubMenu(0);
+    ASSERT(pPopup != NULL);
     pPopup->TrackPopupMenu( TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN,
-          								  point.x, point.y, this);
+                            point.x, point.y, this);
   }
 }
 

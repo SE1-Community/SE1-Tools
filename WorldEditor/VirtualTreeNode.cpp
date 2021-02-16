@@ -133,8 +133,8 @@ void CVirtualTreeNode::MakeRoot(void)
 
 void CVirtualTreeNode::MoveToDirectory(CVirtualTreeNode *pVTNDst)
 {
-  ASSERT( vnt_pvtnParent!=NULL);
-  if (vnt_pvtnParent==NULL) return;
+  ASSERT( vnt_pvtnParent != NULL);
+  if (vnt_pvtnParent == NULL) return;
 
   vnt_pvtnParent=pVTNDst;
   vtn_lnInDirectory.Remove();

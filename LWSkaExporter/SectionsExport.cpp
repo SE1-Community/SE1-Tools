@@ -60,11 +60,11 @@ static Matrix12 *_pmRootBoneAbs=NULL;
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Create()
 
 Handler callback.  Allocate and initialize instance data.
-====================================================================== */				 
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */         
 XCALL_( static LWInstance )
 Create( void *priv, LWItemID item, LWError *err )
 {
@@ -89,7 +89,7 @@ Create( void *priv, LWItemID item, LWError *err )
   pii->bi_abfFrames = (BoneFrame*)malloc(sizeof(BoneFrame)*_ctFrames);
   
   // if first time here
-/*  if (_pbiFirst==NULL)
+/*  if (_pbiFirst == NULL)
   {
     // allocate space for storing absolute position for root bone
     _pmRootBoneAbs = (Matrix12*)malloc(sizeof(Matrix12)*_ctFrames);
@@ -110,11 +110,11 @@ Create( void *priv, LWItemID item, LWError *err )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Destroy()
 
 Handler callback.  Free resources allocated by Create().
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static void )
 Destroy( BoneInfo *inst)
@@ -125,11 +125,11 @@ Destroy( BoneInfo *inst)
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Copy()
 
 Handler callback.  Copy instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Copy( BoneInfo *to, BoneInfo *from )
@@ -140,11 +140,11 @@ Copy( BoneInfo *to, BoneInfo *from )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Load()
 
 Handler callback.  Read instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Load( BoneInfo *inst, const LWLoadState *ls )
@@ -154,11 +154,11 @@ Load( BoneInfo *inst, const LWLoadState *ls )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Save()
 
 Handler callback.  Write instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Save( BoneInfo *inst, const LWSaveState *ss )
@@ -168,12 +168,12 @@ Save( BoneInfo *inst, const LWSaveState *ss )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Describe()
 
 Handler callback.  Write a short, human-readable string describing
 the instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static const char * )
 Describe( BoneInfo *inst )
@@ -185,11 +185,11 @@ Describe( BoneInfo *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Flags()
 
 Handler callback.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static int )
 Flags( BoneInfo *inst )
@@ -199,19 +199,19 @@ Flags( BoneInfo *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Evaluate()
 
 Handler callback.  This is where we can modify the item's motion.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static void )
 Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 {
   LWItemID parentID,parentparentID;
   double pos[3], rot[3];
- 	double dvParentPos[3] = {0,0,0};
-	double dvParentRot[3] = {0,0,0};
+   double dvParentPos[3] = {0,0,0};
+  double dvParentRot[3] = {0,0,0};
 
 
   access->getParam( LWIP_POSITION, access->time, pos);
@@ -221,8 +221,8 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
 
   LWItemID bone = access->item;
 
-	if (access->item != idMasterObjID) {
-		parentID = _iti->parent(bone);
+  if (access->item != idMasterObjID) {
+    parentID = _iti->parent(bone);
   
     _pmesh = _obi->meshInfo(parentID, 0);
     if (_pmesh != NULL) {
@@ -232,9 +232,9 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
       if (_pmesh == NULL) {
         _iti->param(parentparentID,LWIP_POSITION,0,dvParentPos);     
       } else {
-			  _iti->param(parentID,LWIP_POSITION,0,dvParentPos);
+        _iti->param(parentID,LWIP_POSITION,0,dvParentPos);
       }
-    }  else {
+    } else {
         parentparentID = _iti->parent(parentID);
 
         _pmesh = _obi->meshInfo(parentparentID, 0);
@@ -242,7 +242,7 @@ Evaluate( BoneInfo *pii, const LWItemMotionAccess *access )
           _iti->param(parentID,LWIP_POSITION,0,dvParentPos);        
         }
       }
-	}
+  }
   
   
 
@@ -302,10 +302,10 @@ XCALL_( int )
 SectionAnimation_Handler( long version, GlobalFunc *_global, LWItemMotionHandler *local,
    void *serverData)
 {
-  if ( version != LWITEMMOTION_VERSION ) return AFUNC_BADVERSION;
+  if (version != LWITEMMOTION_VERSION ) return AFUNC_BADVERSION;
 
   _iti = (LWItemInfo *)_global(LWITEMINFO_GLOBAL, GFUSE_TRANSIENT);
-  if (_iti==NULL) {
+  if (_iti == NULL) {
     return AFUNC_BADGLOBAL;
   }
 
@@ -328,23 +328,23 @@ SectionAnimation_Handler( long version, GlobalFunc *_global, LWItemMotionHandler
 
 void AddBoneToCount(LWItemID objectid) 
 {
-	LWItemID childID;
+  LWItemID childID;
 
-	childID = _iti->firstChild(objectid);
-	if (_iti->type(objectid) == LWI_OBJECT)
+  childID = _iti->firstChild(objectid);
+  if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
     if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
-			return;
-		}
+      return;
+    }
 
-		_ctNumBones++;
+    _ctNumBones++;
 
-		while (childID != LWITEM_NULL) {
-			AddBoneToCount(childID);
-			childID = _iti->nextChild(objectid,childID);
-		}
+    while (childID != LWITEM_NULL) {
+      AddBoneToCount(childID);
+      childID = _iti->nextChild(objectid,childID);
+    }
 
   }
 
@@ -354,35 +354,35 @@ void AddBoneToCount(LWItemID objectid)
 
 void WriteBoneInfo(LWItemID objectid) 
 {
-	LWItemID childID,parentID,parentparentID;
-	double dvPos[3],dvRot[3];
-	double dvParentPos[3] = {0,0,0};
-	double dvParentRot[3] = {0,0,0};
-	float  fvPos[3],fvRot[3];
-	Matrix12 bi_mRot;
-	const char *strName, *strParentName;
-	float fLength = 0.5;
+  LWItemID childID,parentID,parentparentID;
+  double dvPos[3],dvRot[3];
+  double dvParentPos[3] = {0,0,0};
+  double dvParentRot[3] = {0,0,0};
+  float  fvPos[3],fvRot[3];
+  Matrix12 bi_mRot;
+  const char *strName, *strParentName;
+  float fLength = 0.5;
 
 
-	childID = _iti->firstChild(objectid);
-	if (_iti->type(objectid) == LWI_OBJECT)
+  childID = _iti->firstChild(objectid);
+  if (_iti->type(objectid) == LWI_OBJECT)
   {
-		
+    
     _pmesh = _obi->meshInfo(objectid, 0);
     if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
-			return;
-		}
+      return;
+    }
 
 
-		_iti->param(objectid,LWIP_POSITION,0,dvPos);
-		_iti->param(objectid,LWIP_ROTATION,0,dvRot);
+    _iti->param(objectid,LWIP_POSITION,0,dvPos);
+    _iti->param(objectid,LWIP_ROTATION,0,dvRot);
 
-		strName = _iti->name(objectid);
-		fprintf(_f, "  NAME \"%s\";\n", strName);
-		if (_ctNumBones > 0) {
+    strName = _iti->name(objectid);
+    fprintf(_f, "  NAME \"%s\";\n", strName);
+    if (_ctNumBones > 0) {
 
-			parentID = _iti->parent(objectid);
+      parentID = _iti->parent(objectid);
   
       _pmesh = _obi->meshInfo(parentID, 0);
       if (_pmesh != NULL) {
@@ -391,11 +391,11 @@ void WriteBoneInfo(LWItemID objectid)
         _pmesh = _obi->meshInfo(parentparentID, 0);
         if (_pmesh == NULL) {
           _iti->param(parentparentID,LWIP_POSITION,0,dvParentPos);
-			    //_iti->param(parentparentID,LWIP_ROTATION,0,dvParentRot);
+          //_iti->param(parentparentID,LWIP_ROTATION,0,dvParentRot);
           
         } else {
-			    _iti->param(parentID,LWIP_POSITION,0,dvParentPos);
-			    //_iti->param(parentID,LWIP_ROTATION,0,dvParentRot);
+          _iti->param(parentID,LWIP_POSITION,0,dvParentPos);
+          //_iti->param(parentID,LWIP_ROTATION,0,dvParentRot);
         }
       } else {
         parentparentID = _iti->parent(parentID);
@@ -403,38 +403,38 @@ void WriteBoneInfo(LWItemID objectid)
         _pmesh = _obi->meshInfo(parentparentID, 0);
         if (_pmesh == NULL) {
           _iti->param(parentID,LWIP_POSITION,0,dvParentPos);
-			   // _iti->param(parentID,LWIP_ROTATION,0,dvParentRot);
+         // _iti->param(parentID,LWIP_ROTATION,0,dvParentRot);
         
         }
       }
 
 
-			strParentName =  _iti->name(parentID);			
-		} else {
-			strParentName = strdup("");
-		}
+      strParentName =  _iti->name(parentID);      
+    } else {
+      strParentName = strdup("");
+    }
 
-    	
-		fprintf(_f, "  PARENT \"%s\";\n", strParentName);
+      
+    fprintf(_f, "  PARENT \"%s\";\n", strParentName);
     fprintf(_f, "  LENGTH %g;\n", fLength);
     fprintf(_f, "  {\n");
 
-		for (int i=0;i<3;i++) {
-			fvPos[i] = (float) (dvPos[i] - dvParentPos[i]);
-			fvRot[i] = 0;//(float) (dvRot[i] - dvParentRot[i]);
-		}
-		fvPos[2] = -fvPos[2];
+    for (int i=0;i<3;i++) {
+      fvPos[i] = (float) (dvPos[i] - dvParentPos[i]);
+      fvRot[i] = 0;//(float) (dvRot[i] - dvParentRot[i]);
+    }
+    fvPos[2] = -fvPos[2];
 
-		MakeRotationAndPosMatrix(bi_mRot,fvPos,fvRot);
+    MakeRotationAndPosMatrix(bi_mRot,fvPos,fvRot);
     PrintMatrix(_f,bi_mRot,4);
     fprintf(_f,"\n  }\n");
 
-		_ctNumBones++;
+    _ctNumBones++;
 
-		 while (childID != LWITEM_NULL) {
-		 	 WriteBoneInfo(childID);
-		 	 childID = _iti->nextChild(objectid,childID);
-		 }
+     while (childID != LWITEM_NULL) {
+        WriteBoneInfo(childID);
+        childID = _iti->nextChild(objectid,childID);
+     }
 
   }
 
@@ -444,34 +444,34 @@ void WriteBoneInfo(LWItemID objectid)
 
 bool AddMotionHandler(LWItemID objectid) 
 {
-	LWItemID childID;
+  LWItemID childID;
 
-	childID = _iti->firstChild(objectid);
-	if (_iti->type(objectid) == LWI_OBJECT)
+  childID = _iti->firstChild(objectid);
+  if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
     if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
-			return false;
-		}
+      return false;
+    }
 
-		if (!ExecCmd("SelectItem %x", objectid)) {
-			_msg->error("ERROR: Item selection\n", NULL);	
-			return false;
-		}
-		if (!ExecCmd("ApplyServer ItemMotionHandler " DEBUGEXT "internal_SESectionAnimExport")) {
-			_msg->error("ERROR: Applying ItemMotionHandler\n", NULL);	
-			return false;
-		}
+    if (!ExecCmd("SelectItem %x", objectid)) {
+      _msg->error("ERROR: Item selection\n", NULL);  
+      return false;
+    }
+    if (!ExecCmd("ApplyServer ItemMotionHandler " DEBUGEXT "internal_SESectionAnimExport")) {
+      _msg->error("ERROR: Applying ItemMotionHandler\n", NULL);  
+      return false;
+    }
 
-		while (childID != LWITEM_NULL) {
-			AddMotionHandler(childID);
-			childID = _iti->nextChild(objectid,childID);
-		}
+    while (childID != LWITEM_NULL) {
+      AddMotionHandler(childID);
+      childID = _iti->nextChild(objectid,childID);
+    }
 
   }
 
-	return true;
+  return true;
 
 };
 
@@ -479,41 +479,41 @@ bool AddMotionHandler(LWItemID objectid)
 
 int RemoveMotionHandler(LWItemID objectid) 
 {
-	LWItemID childID;
+  LWItemID childID;
 
-	childID = _iti->firstChild(objectid);
-	if (_iti->type(objectid) == LWI_OBJECT)
+  childID = _iti->firstChild(objectid);
+  if (_iti->type(objectid) == LWI_OBJECT)
   {
     _pmesh = _obi->meshInfo(objectid, 0);
     if ((_pmesh == NULL) && (childID == LWITEM_NULL))
     {
-			return false;
-		}
+      return false;
+    }
 
-	  if (!ExecCmd("SelectItem %x", objectid)) {
-			_msg->error("ERROR: Item selection\n", NULL);	
-			return false;
-		}
-		for (int iServer=1;;iServer++) {
-			const char *strServer = _iti->server(objectid, "ItemMotionHandler", iServer);
-			if (strServer==NULL) {
-				break;
-			}
-			if (strcmp(strServer, DEBUGEXT "internal_SESectionAnimExport")==0) {
-				if (!ExecCmd("RemoveServer ItemMotionHandler %d", iServer)) {
-					_msg->error("ERROR: Applying ItemMotionHandler\n", NULL);	
-					return false;
-				}
-			}
-		}
+    if (!ExecCmd("SelectItem %x", objectid)) {
+      _msg->error("ERROR: Item selection\n", NULL);  
+      return false;
+    }
+    for (int iServer=1;;iServer++) {
+      const char *strServer = _iti->server(objectid, "ItemMotionHandler", iServer);
+      if (strServer == NULL) {
+        break;
+      }
+      if (strcmp(strServer, DEBUGEXT "internal_SESectionAnimExport") == 0) {
+        if (!ExecCmd("RemoveServer ItemMotionHandler %d", iServer)) {
+          _msg->error("ERROR: Applying ItemMotionHandler\n", NULL);  
+          return false;
+        }
+      }
+    }
 
-		while (childID != LWITEM_NULL) {
-			RemoveMotionHandler(childID);
-			childID = _iti->nextChild(objectid,childID);
-		}
+    while (childID != LWITEM_NULL) {
+      RemoveMotionHandler(childID);
+      childID = _iti->nextChild(objectid,childID);
+    }
   }
 
-	return true;
+  return true;
 
 };
 
@@ -524,10 +524,10 @@ int RemoveMotionHandler(LWItemID objectid)
 
 int ExportBones() 
 {
-	LWItemID idMasterObjID;
-	char strMessage[256];
+  LWItemID idMasterObjID;
+  char strMessage[256];
 
-	if (!_evaluate)
+  if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -544,7 +544,7 @@ int ExportBones()
   int ctSelected = 0;
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
-	idMasterObjID = LWITEM_NULL;
+  idMasterObjID = LWITEM_NULL;
   while (_objid != LWITEM_NULL)
   {
     if (_iti->type(_objid) == LWI_OBJECT)
@@ -552,31 +552,31 @@ int ExportBones()
         if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelected++;
-					idMasterObjID = _objid;
+          idMasterObjID = _objid;
         }
       ctMeshes++;
     }
     _objid = _iti->next(_objid);
   }
 
-	if (idMasterObjID == LWITEM_NULL) 
-	{
+  if (idMasterObjID == LWITEM_NULL) 
+  {
     // lightwave error
     _msg->error("ERROR: Object for top level bone not selected.\n", NULL);
     return AFUNC_BADAPP;
   }
 
-	if (ctSelected > 1) 
-	{
+  if (ctSelected > 1) 
+  {
     // lightwave error
     _msg->error("ERROR: More than one object selected.\n", NULL);
     return AFUNC_BADAPP;
   }
-		
-	_ctNumBones = 0;
-	AddBoneToCount(idMasterObjID);
+    
+  _ctNumBones = 0;
+  AddBoneToCount(idMasterObjID);
 
-	sprintf(strMessage,"Number of bones: %d",_ctNumBones);
+  sprintf(strMessage,"Number of bones: %d",_ctNumBones);
 
 
   // get scene name
@@ -586,28 +586,28 @@ int ExportBones()
   char fnmOut[256];
   strcpy(fnmOut, _strFileName);
   char *pchDot = strrchr(fnmOut, '.');
-  if (pchDot!=NULL) {
+  if (pchDot != NULL) {
     strcpy(pchDot, ".as");
   }
 
   _msg->info(strMessage,fnmOut);
 
-	if ((_f = fopen(fnmOut,"w")) == NULL) {
-		_msg->error("ERROR: File open.\n", NULL);
+  if ((_f = fopen(fnmOut,"w")) == NULL) {
+    _msg->error("ERROR: File open.\n", NULL);
     return AFUNC_BADAPP;
-	}
+  }
 
-	fprintf(_f, "SE_SKELETON %s;\n\n",SE_ANIM_VER);
+  fprintf(_f, "SE_SKELETON %s;\n\n",SE_ANIM_VER);
   fprintf(_f, "BONES %d\n{\n",_ctNumBones);
 
-	_ctNumBones = 0;
-	WriteBoneInfo(idMasterObjID);
+  _ctNumBones = 0;
+  WriteBoneInfo(idMasterObjID);
 
-	fprintf(_f, "}\n\nSE_SKELETON_END;\n");
-	fclose(_f);
+  fprintf(_f, "}\n\nSE_SKELETON_END;\n");
+  fclose(_f);
 
 
-	return AFUNC_OK;
+  return AFUNC_OK;
 };
 
 
@@ -618,9 +618,9 @@ int ExportBones()
 int ExportSecAnim(LWXPanelID pan) 
 {
 
-	LWItemID idMasterObjID;
-	char strMessage[256];
-	Matrix12 bi_mRot;
+  LWItemID idMasterObjID;
+  char strMessage[256];
+  Matrix12 bi_mRot;
 
 
   _iFrame = 0;
@@ -629,7 +629,7 @@ int ExportSecAnim(LWXPanelID pan)
   ctBoneEnvelopes = 0;
   ctMorphEnvelopes = 0;
 
-	if (!_evaluate)
+  if (!_evaluate)
   {
     // lightwave error
     _msg->error("Lightwave process error !\nClose plugins window and try again.\n", NULL);
@@ -639,7 +639,7 @@ int ExportSecAnim(LWXPanelID pan)
   // !!!! make it work with a selected object, not the first one in scene
   ReloadGlobalObjects();
 
-	
+  
   bool bExportOnlySelected = false;
   int ctSkeletonBones=0;
 
@@ -647,7 +647,7 @@ int ExportSecAnim(LWXPanelID pan)
   int ctSelected = 0;
   int ctMeshes=0;
   _objid = _iti->first(LWI_OBJECT,0);
-	idMasterObjID = LWITEM_NULL;
+  idMasterObjID = LWITEM_NULL;
   while (_objid != LWITEM_NULL)
   {
     if (_iti->type(_objid) == LWI_OBJECT)
@@ -655,27 +655,27 @@ int ExportSecAnim(LWXPanelID pan)
         if (_ifi->itemFlags(_objid) & LWITEMF_SELECTED)
         {
           ctSelected++;
-					idMasterObjID = _objid;
+          idMasterObjID = _objid;
         }
       ctMeshes++;
     }
     _objid = _iti->next(_objid);
   }
 
-	if (idMasterObjID == LWITEM_NULL) 
-	{
+  if (idMasterObjID == LWITEM_NULL) 
+  {
     // lightwave error
     _msg->error("ERROR: Object for top level bone not selected.\n", NULL);
     return AFUNC_BADAPP;
   }
 
-	if (ctSelected > 1) 
-	{
+  if (ctSelected > 1) 
+  {
     // lightwave error
     _msg->error("ERROR: More than one object selected.\n", NULL);
     return AFUNC_BADAPP;
   }
-		
+    
   // get scene name
   _strFileName = strdup(_sci->filename);
 
@@ -683,21 +683,21 @@ int ExportSecAnim(LWXPanelID pan)
   char fnmOut[256];
   strcpy(fnmOut, _strFileName);
   char *pchDot = strrchr(fnmOut, '.');
-  if (pchDot!=NULL) {
+  if (pchDot != NULL) {
     strcpy(pchDot, ".aa");
   }
-	_ctNumBones = 0;
-	AddBoneToCount(idMasterObjID);
+  _ctNumBones = 0;
+  AddBoneToCount(idMasterObjID);
 
 
-	if ((_f = fopen(fnmOut,"w")) == NULL) {
-		_msg->error("ERROR: File open.\n", NULL);
+  if ((_f = fopen(fnmOut,"w")) == NULL) {
+    _msg->error("ERROR: File open.\n", NULL);
     return AFUNC_BADAPP;
-	}
-	
+  }
+  
 // calculate number of frames to export
   _ctFrames = ((_ifi->previewEnd-_ifi->previewStart)/_ifi->previewStep)+1;
-  if (_ctFrames<=0) {
+  if (_ctFrames <= 0) {
     _ctFrames = 1;
   }
 
@@ -707,10 +707,10 @@ int ExportSecAnim(LWXPanelID pan)
   FindMorphChannels(NULL);
 
 
-	AddMotionHandler(idMasterObjID);
+  AddMotionHandler(idMasterObjID);
 
   sprintf(strMessage,"ctBoneEnvelopes: %d",_ctBones);
-	_msg->error(strMessage,fnmOut);
+  _msg->error(strMessage,fnmOut);
 
 
   bRecordDefaultFrame = true;
@@ -727,13 +727,13 @@ int ExportSecAnim(LWXPanelID pan)
   // export normal order
   if (!bExportAnimBackward) {
     // for each frame in current preview selection
-    for (int iFrame=_ifi->previewStart; iFrame<=_ifi->previewEnd; iFrame+=_ifi->previewStep) {
+    for (int iFrame=_ifi->previewStart; iFrame <= _ifi->previewEnd; iFrame+=_ifi->previewStep) {
       // go to that frame
       if (!ExecCmd("GoToFrame %d", iFrame)) {
 //        goto end;
       }
   
-      assert(_iFrame>=0 && _iFrame<_ctFrames);
+      assert(_iFrame >= 0 && _iFrame<_ctFrames);
 
       // NOTE: walking all frames implicitly lets the internal itemmotion handler record all bone positions
       // we walk the morph maps manually
@@ -752,14 +752,14 @@ int ExportSecAnim(LWXPanelID pan)
     // get time
     fTime = (float) GetCurrentTime();
     // for each frame in current preview selection going from last to first
-    for (int iFrame=_ifi->previewEnd; iFrame>=_ifi->previewStart; iFrame-=_ifi->previewStep) {
+    for (int iFrame=_ifi->previewEnd; iFrame >= _ifi->previewStart; iFrame-=_ifi->previewStep) {
       // go to that frame
       if (!ExecCmd("GoToFrame %d", iFrame)) {
         //goto end;
         return AFUNC_BADGLOBAL;
       }
   
-      assert(_iFrame>=0 && _iFrame<_ctFrames);
+      assert(_iFrame >= 0 && _iFrame<_ctFrames);
 
       LWTimeInfo *_tmi = (LWTimeInfo *)_global( LWTIMEINFO_GLOBAL, GFUSE_TRANSIENT );
 
@@ -773,30 +773,30 @@ int ExportSecAnim(LWXPanelID pan)
 
   // find the number of morph envelopes
 
-  for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi!=NULL; ptmpmi = ptmpmi->mi_pmiNext)
+  for (MorphInfo *ptmpmi=_pmiFirst;ptmpmi != NULL; ptmpmi = ptmpmi->mi_pmiNext)
     ctMorphEnvelopes++;
 
 
 
    fTime = (float) GetCurrentTime();
-	char strAnimID[256];
-	strcpy(strAnimID,_strFileName);	
-	GetAnimID(strAnimID);
-	
+  char strAnimID[256];
+  strcpy(strAnimID,_strFileName);  
+  GetAnimID(strAnimID);
+  
   fprintf(_f, "SE_ANIM %s;\n\n",SE_ANIM_VER);
   fprintf(_f, "SEC_PER_FRAME %g;\n",fTime / _ifi->previewEnd * _ifi->previewStep);
   fprintf(_f, "FRAMES %d;\n", _ctFrames);
   fprintf(_f, "ANIM_ID \"%s\";\n\n", strAnimID);
 
 
-	fprintf(_f, "BONEENVELOPES %d\n{\n", _ctNumBones);
+  fprintf(_f, "BONEENVELOPES %d\n{\n", _ctNumBones);
 
 
 
 
 
   BoneInfo *pbiLast = NULL;
-  for (BoneInfo *pbi=_pbiFirst; pbi!=NULL; pbi = pbi->bi_pbiNext)
+  for (BoneInfo *pbi=_pbiFirst; pbi != NULL; pbi = pbi->bi_pbiNext)
   {
     bool bRootBone = false;
     
@@ -834,11 +834,11 @@ int ExportSecAnim(LWXPanelID pan)
   }
 
   fprintf(_f,"}\n");
-	
+  
   fprintf(_f, "\nMORPHENVELOPES %d\n{\n", ctMorphEnvelopes);
 
   // for each morph in list
-  {for (MorphInfo *pmi=_pmiFirst; pmi!=NULL; pmi = pmi->mi_pmiNext)
+  {for (MorphInfo *pmi=_pmiFirst; pmi != NULL; pmi = pmi->mi_pmiNext)
   {
     // write its info
     fprintf(_f, "  NAME \"%s\"\n", pmi->mi_strName);
@@ -857,7 +857,7 @@ int ExportSecAnim(LWXPanelID pan)
   { MorphInfo *pmi=_pmiFirst;
     MorphInfo *pmiNext=NULL;
     for (;;) {
-      if (pmi==NULL) {
+      if (pmi == NULL) {
         break;
       }
       pmiNext = pmi->mi_pmiNext;
@@ -872,11 +872,11 @@ int ExportSecAnim(LWXPanelID pan)
 
 
   fprintf(_f, "SE_ANIM_END;\n");
-	fclose(_f);
+  fclose(_f);
 
-	RemoveMotionHandler(idMasterObjID);
+  RemoveMotionHandler(idMasterObjID);
   _pbiFirst = NULL;
 
-	return AFUNC_OK;
+  return AFUNC_OK;
 
 };

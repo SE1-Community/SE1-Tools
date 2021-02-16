@@ -41,9 +41,9 @@ CTextBox::~CTextBox()
 
 
 BEGIN_MESSAGE_MAP(CTextBox, CEdit)
-	//{{AFX_MSG_MAP(CTextBox)
-	ON_CONTROL_REFLECT(EN_CHANGE, OnChange)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CTextBox)
+  ON_CONTROL_REFLECT(EN_CHANGE, OnChange)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLWIDTH:
     {
       // change width of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fWidth = atof(strText);
         FLOAT fPosX = (pcb->Max()(1)+pcb->Min()(1)) / 2;
@@ -195,7 +195,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLHEIGHT:
     {
       // change height of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fHeight = atof(strText);
         FLOAT fPosY = pcb->Min()(2);
@@ -207,7 +207,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLLENGTH:
     {                  
       // change length of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fLength = atof(strText);
         FLOAT fPosZ = (pcb->Max()(3)+pcb->Min()(3)) / 2;
@@ -219,7 +219,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSX:
     {
       // change pos x of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fPosX = atof(strText);
         FLOAT fWidth = (pcb->Max()(1)-pcb->Min()(1));
@@ -231,7 +231,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSY:
     {
       // change pos y of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fPosY = atof(strText);
         FLOAT fHeight = (pcb->Max()(2)-pcb->Min()(2));
@@ -244,7 +244,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLPOSZ:
     {
       // change pos z of colision box
-      if (pcb!=NULL)
+      if (pcb != NULL)
       {
         FLOAT fPosZ = atof(strText);
         FLOAT fLength = (pcb->Max()(3)-pcb->Min()(3));
@@ -256,7 +256,7 @@ void CTextBox::ValueChanged()
     case IDC_TB_COLNAME:
     {
       // change name of colision box
-      if (pcb!=NULL) {
+      if (pcb != NULL) {
         pcb->SetName(strText);
         m_TreeCtrl.SetItemText(hSelected, CString(strText));
       }
@@ -323,14 +323,14 @@ void CTextBox::ValueChanged()
 
 BOOL CTextBox::PreTranslateMessage(MSG* pMsg) 
 {
-  if ((pMsg->message==WM_KEYDOWN) && ((int)pMsg->wParam==VK_RETURN))
+  if ((pMsg->message == WM_KEYDOWN) && ((int)pMsg->wParam == VK_RETURN))
   {
     ValueChanged();
     //SetSel(0,-1);
     return TRUE;
   }
-	
-	return CEdit::PreTranslateMessage(pMsg);
+  
+  return CEdit::PreTranslateMessage(pMsg);
 }
 
 void CTextBox::SetDataPtr(FLOAT *pFloat)
@@ -342,11 +342,11 @@ void CTextBox::SetDataPtr(FLOAT *pFloat)
 void CTextBox::OnChange() 
 {
   #pragma message(">> Fix textbox editing")
-	// TODO: If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CEdit::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-	
-	// TODO: Add your control notification handler code here
-	
+  // TODO: If this is a RICHEDIT control, the control will not
+  // send this notification unless you override the CEdit::OnInitDialog()
+  // function and call CRichEditCtrl().SetEventMask()
+  // with the ENM_CHANGE flag ORed into the mask.
+  
+  // TODO: Add your control notification handler code here
+  
 }

@@ -83,30 +83,30 @@ class CDlgClient : public CDialog
 {
 // Construction
 public:
-	CDlgClient(CWnd* pParent = NULL);   // standard constructor
+  CDlgClient(CWnd* pParent = NULL);   // standard constructor
 
 // Implementation
 public:
 
-	// Generated message map functions
-	//{{AFX_MSG(CDlgClient)
-	afx_msg void OnCbCompresion();
-	afx_msg void OnCbSecperframe();
-	afx_msg void OnSelendokCbParentbone();
-	afx_msg void OnSelendokCbParentmodel();
-	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
-	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnSelendokCbShader();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnBtConvert();
-	afx_msg void OnBtReloadTexture();
-	afx_msg void OnBtRecreateTexture();
-	afx_msg void OnBtBrowseTexture();
-	afx_msg void OnBtResetColision();
-	afx_msg void OnBtResetOffset();
-	afx_msg void OnBtCalcAllframesBbox();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  // Generated message map functions
+  //{{AFX_MSG(CDlgClient)
+  afx_msg void OnCbCompresion();
+  afx_msg void OnCbSecperframe();
+  afx_msg void OnSelendokCbParentbone();
+  afx_msg void OnSelendokCbParentmodel();
+  afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+  afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+  afx_msg void OnSelendokCbShader();
+  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  afx_msg void OnBtConvert();
+  afx_msg void OnBtReloadTexture();
+  afx_msg void OnBtRecreateTexture();
+  afx_msg void OnBtBrowseTexture();
+  afx_msg void OnBtResetColision();
+  afx_msg void OnBtResetOffset();
+  afx_msg void OnBtCalcAllframesBbox();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

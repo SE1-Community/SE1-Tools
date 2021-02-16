@@ -24,8 +24,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CScriptDoc : public CDocument
 {
 protected:
-	CScriptDoc();           // protected constructor used by dynamic creation
-	DECLARE_DYNCREATE(CScriptDoc)
+  CScriptDoc();           // protected constructor used by dynamic creation
+  DECLARE_DYNCREATE(CScriptDoc)
 
 // Attributes
 public:
@@ -34,28 +34,28 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CScriptDoc)
-	public:
-	virtual void Serialize(CArchive& ar);   // overridden for document i/o
-	protected:
-	virtual BOOL OnNewDocument();
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CScriptDoc)
+  public:
+  virtual void Serialize(CArchive& ar);   // overridden for document i/o
+  protected:
+  virtual BOOL OnNewDocument();
+  //}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CScriptDoc();
+  virtual ~CScriptDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+  virtual void AssertValid() const;
+  virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// Generated message map functions
+  // Generated message map functions
 protected:
-	//{{AFX_MSG(CScriptDoc)
-		// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CScriptDoc)
+    // NOTE - the ClassWizard will add and remove member functions here.
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 #endif // SCRIPTDOC_H

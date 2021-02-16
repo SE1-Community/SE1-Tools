@@ -30,21 +30,21 @@ static char THIS_FILE[] = __FILE__;
 
 
 CDlgSelectPlayer::CDlgSelectPlayer(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgSelectPlayer::IDD, pParent)
+  : CDialog(CDlgSelectPlayer::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgSelectPlayer)
-		// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgSelectPlayer)
+    // NOTE: the ClassWizard will add member initialization here
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgSelectPlayer::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgSelectPlayer)
-	DDX_Control(pDX, IDC_COMBO_AVAILABLE_CONTROLS, m_comboAvailableControls);
-	DDX_Control(pDX, IDC_COMBO_AVAILABLE_PLAYERS, m_comboAvailablePlayers);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CDlgSelectPlayer)
+  DDX_Control(pDX, IDC_COMBO_AVAILABLE_CONTROLS, m_comboAvailableControls);
+  DDX_Control(pDX, IDC_COMBO_AVAILABLE_PLAYERS, m_comboAvailablePlayers);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -67,10 +67,10 @@ void CDlgSelectPlayer::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgSelectPlayer, CDialog)
-	//{{AFX_MSG_MAP(CDlgSelectPlayer)
-	ON_CBN_SELCHANGE(IDC_COMBO_AVAILABLE_PLAYERS, OnSelchangeComboAvailablePlayers)
-	ON_CBN_SELCHANGE(IDC_COMBO_AVAILABLE_CONTROLS, OnSelchangeComboAvailableControls)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgSelectPlayer)
+  ON_CBN_SELCHANGE(IDC_COMBO_AVAILABLE_PLAYERS, OnSelchangeComboAvailablePlayers)
+  ON_CBN_SELCHANGE(IDC_COMBO_AVAILABLE_CONTROLS, OnSelchangeComboAvailableControls)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,8 +78,8 @@ END_MESSAGE_MAP()
 
 BOOL CDlgSelectPlayer::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
-	
+  CDialog::OnInitDialog();
+  
   // fill players and controls combo boxes
   for (INDEX iPC=0; iPC<8; iPC++)
   {
@@ -91,7 +91,7 @@ BOOL CDlgSelectPlayer::OnInitDialog()
   m_comboAvailablePlayers.SetCurSel( _pGame->gm_iWEDSinglePlayer);
   m_comboAvailableControls.SetCurSel( _pGame->gm_iWEDSinglePlayer);
 
-	return TRUE;
+  return TRUE;
 }
 
 void CDlgSelectPlayer::OnSelchangeComboAvailablePlayers() 

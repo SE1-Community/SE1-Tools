@@ -17,7 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+  #error include 'stdafx.h' before including this file for PCH
 #endif
 
 #include "resource.h"       // main symbols
@@ -53,7 +53,7 @@ public:
 class CAppPrefs
 {
 public:
-	~CAppPrefs();
+  ~CAppPrefs();
   BOOL ap_CopyExistingWindowPrefs;
   BOOL ap_bIsBcgVisibleByDefault;
   BOOL ap_bIsFloorVisibleByDefault;
@@ -87,7 +87,7 @@ class CModelerApp : public CWinApp
 {
 private:
 public:
-	BOOL SubInitInstance(void);
+  BOOL SubInitInstance(void);
   BOOL m_bRefreshPatchPalette;
   BOOL m_bFirstTimeStarted;
   BOOL m_OnIdlePaused;
@@ -101,18 +101,18 @@ public:
 
   INDEX m_iApi;
   BOOL m_bChangeDisplayModeInProgress;
-	// for lamp model
+  // for lamp model
   CModelData *m_pLampModelData;
-	CModelObject *m_LampModelObject;
+  CModelObject *m_LampModelObject;
   CTextureData *m_ptdLamp;
   // for collision box
   CTextureData *m_ptdCollisionBoxTexture;
-	CModelData *m_pCollisionBoxModelData;
-	CModelObject *m_pCollisionBoxModelObject;
+  CModelData *m_pCollisionBoxModelData;
+  CModelObject *m_pCollisionBoxModelObject;
   // for floor
   CTextureData *m_ptdFloorTexture;
-	CModelData *m_pFloorModelData;
-	CModelObject *m_pFloorModelObject;
+  CModelData *m_pFloorModelData;
+  CModelObject *m_pFloorModelObject;
   CDocTemplate *m_pdtModelDocTemplate;
   CDocTemplate *m_pdtScriptTemplate;
   // List head for holding working textures
@@ -125,43 +125,43 @@ public:
   CFontData *m_pfntFont;
 
   // ptrs to property pages
-	class CDlgInfoPgNone *m_pPgInfoNone;
+  class CDlgInfoPgNone *m_pPgInfoNone;
   class CDlgInfoPgRendering *m_pPgInfoRendering;
-	class CDlgInfoPgGlobal *m_pPgInfoGlobal;
-	class CDlgInfoPgMip *m_pPgInfoMip;
-	class CDlgInfoPgPos *m_pPgInfoPos;
-	class CDlgInfoPgAnim *m_pPgInfoAnim;
-	class CDlgPgCollision *m_pPgInfoCollision;
-	class CDlgPgInfoAttachingPlacement *m_pPgAttachingPlacement;
-	class CDlgInfoPgSurf *m_pPgInfoSurf;
-	class CDlgInfoPgColorizingSurface *m_pPgInfoColorizingSurface;
+  class CDlgInfoPgGlobal *m_pPgInfoGlobal;
+  class CDlgInfoPgMip *m_pPgInfoMip;
+  class CDlgInfoPgPos *m_pPgInfoPos;
+  class CDlgInfoPgAnim *m_pPgInfoAnim;
+  class CDlgPgCollision *m_pPgInfoCollision;
+  class CDlgPgInfoAttachingPlacement *m_pPgAttachingPlacement;
+  class CDlgInfoPgSurf *m_pPgInfoSurf;
+  class CDlgInfoPgColorizingSurface *m_pPgInfoColorizingSurface;
 
   // variables for display modes for different modes
-	CChangeable m_chPlacement;
-	CChangeable m_chGlobal;
+  CChangeable m_chPlacement;
+  CChangeable m_chGlobal;
 
   CModelerApp();
   ~CModelerApp();
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CModelerApp)
-	public:
-	virtual BOOL InitInstance();
-	virtual BOOL OnIdle(LONG lCount);
-	virtual int ExitInstance();
-	virtual int Run();
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CModelerApp)
+  public:
+  virtual BOOL InitInstance();
+  virtual BOOL OnIdle(LONG lCount);
+  virtual int ExitInstance();
+  virtual int Run();
+  //}}AFX_VIRTUAL
 
 // Implementation
 
-	//{{AFX_MSG(CModelerApp)
-	afx_msg void OnAppAbout();
-	afx_msg void OnFileNew();
-	afx_msg void OnFileOpen();
-	afx_msg void OnFilePreferences();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CModelerApp)
+  afx_msg void OnAppAbout();
+  afx_msg void OnFileNew();
+  afx_msg void OnFileOpen();
+  afx_msg void OnFilePreferences();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 extern CModelerApp theApp;
@@ -175,12 +175,12 @@ void SetColorToProfile( CTString strVarName, COLOR colValue);
 
 //--------------------------------------------------------------------------------------------
 #define CLRF_CLR(clr) ( ((clr & 0xff000000) >> 24) | \
-                        ((clr & 0x00ff0000) >>  8) | \
-                        ((clr & 0x0000ff00) <<  8))
+                        ((clr & 0x00ff0000) >> 8) | \
+                        ((clr & 0x0000ff00) << 8))
 
 #define CLR_CLRF(clrref) ( ((clrref & 0x000000ff) << 24) | \
-                           ((clrref & 0x0000ff00) <<  8) | \
-                           ((clrref & 0x00ff0000) >>  8))
+                           ((clrref & 0x0000ff00) << 8) | \
+                           ((clrref & 0x00ff0000) >> 8))
 
 #define TOOLS_INIT_TOP 100
 

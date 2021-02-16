@@ -39,7 +39,7 @@ static char THIS_FILE[] = __FILE__;
 void CDlgCreateAnimatedTexture::ReleaseCreatedTexture(void)
 {
   // if there is texture obtained, release it
-  if (m_ptdCreated!= NULL)
+  if (m_ptdCreated != NULL)
   {
     // free obtained texture
     _pTextureStock->Release( m_ptdCreated);
@@ -109,8 +109,8 @@ void CDlgCreateAnimatedTexture::RefreshTexture(void)
 
     char achrSize[64];
     sprintf( achrSize, "%d x %d", 
-      m_ptdCreated->td_mexWidth>>m_ptdCreated->td_iFirstMipLevel,
-      m_ptdCreated->td_mexHeight>>m_ptdCreated->td_iFirstMipLevel);
+      m_ptdCreated->td_mexWidth >> m_ptdCreated->td_iFirstMipLevel,
+      m_ptdCreated->td_mexHeight >> m_ptdCreated->td_iFirstMipLevel);
     m_strSizeInPixels = achrSize;
     UpdateData( FALSE);
 
@@ -125,13 +125,13 @@ void CDlgCreateAnimatedTexture::RefreshTexture(void)
 
 CDlgCreateAnimatedTexture::CDlgCreateAnimatedTexture(
   CDynamicArray<CTFileName> &afnPictures, CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgCreateAnimatedTexture::IDD, pParent)
+  : CDialog(CDlgCreateAnimatedTexture::IDD, pParent)
 {
   //{{AFX_DATA_INIT(CDlgCreateAnimatedTexture)
-	m_strEditScript = _T("");
-	m_strSizeInPixels = _T("");
-	m_strCreatedTextureName = _T("");
-	//}}AFX_DATA_INIT
+  m_strEditScript = _T("");
+  m_strSizeInPixels = _T("");
+  m_strCreatedTextureName = _T("");
+  //}}AFX_DATA_INIT
 
   // remember array of selected frames
   m_pafnPictures = &afnPictures;
@@ -155,7 +155,7 @@ CDlgCreateAnimatedTexture::CDlgCreateAnimatedTexture(
   m_pixSourceWidth = -1;  
   m_pixSourceHeight = -1;  
 
-	// remember source and destination file names
+  // remember source and destination file names
   m_fnSourceFileName = fnInputFile;
   m_fnCreatedFileName = fnInputFile.FileDir()+fnInputFile.FileName()+".tex";
 }
@@ -167,20 +167,20 @@ CDlgCreateAnimatedTexture::~CDlgCreateAnimatedTexture()
 
 void CDlgCreateAnimatedTexture::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE)
   {
   }
 
-	//{{AFX_DATA_MAP(CDlgCreateAnimatedTexture)
-	DDX_Control(pDX, IDC_CHEQUERED_ALPHA, m_ctrlCheckButton);
-	DDX_Control(pDX, IDC_TEXTURE_ANIMATIONS, m_ctrlAnimationsCombo);
-	DDX_Text(pDX, IDC_EDIT_SCRIPT, m_strEditScript);
-	DDX_Text(pDX, IDC_SIZE_IN_PIXELS, m_strSizeInPixels);
-	DDX_Text(pDX, IDC_TEXTURE_NAME, m_strCreatedTextureName);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgCreateAnimatedTexture)
+  DDX_Control(pDX, IDC_CHEQUERED_ALPHA, m_ctrlCheckButton);
+  DDX_Control(pDX, IDC_TEXTURE_ANIMATIONS, m_ctrlAnimationsCombo);
+  DDX_Text(pDX, IDC_EDIT_SCRIPT, m_strEditScript);
+  DDX_Text(pDX, IDC_SIZE_IN_PIXELS, m_strSizeInPixels);
+  DDX_Text(pDX, IDC_TEXTURE_NAME, m_strCreatedTextureName);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -190,13 +190,13 @@ void CDlgCreateAnimatedTexture::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgCreateAnimatedTexture, CDialog)
-	//{{AFX_MSG_MAP(CDlgCreateAnimatedTexture)
-	ON_WM_PAINT()
-	ON_BN_CLICKED(IDC_CHEQUERED_ALPHA, OnChequeredAlpha)
-	ON_BN_CLICKED(ID_CREATE_TEXTURE, OnCreateTexture)
-	ON_BN_CLICKED(ID_REFRESH_TEXTURE, OnRefreshTexture)
-	ON_CBN_SELCHANGE(IDC_TEXTURE_ANIMATIONS, OnSelchangeTextureAnimations)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgCreateAnimatedTexture)
+  ON_WM_PAINT()
+  ON_BN_CLICKED(IDC_CHEQUERED_ALPHA, OnChequeredAlpha)
+  ON_BN_CLICKED(ID_CREATE_TEXTURE, OnCreateTexture)
+  ON_BN_CLICKED(ID_REFRESH_TEXTURE, OnRefreshTexture)
+  ON_CBN_SELCHANGE(IDC_TEXTURE_ANIMATIONS, OnSelchangeTextureAnimations)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -204,8 +204,8 @@ END_MESSAGE_MAP()
 
 void CDlgCreateAnimatedTexture::OnPaint() 
 {
-	CPaintDC dc(this); // device context for painting
-	
+  CPaintDC dc(this); // device context for painting
+  
   // if texture preview windows are not yet created
   if (!m_bPreviewWindowsCreated)
   {
@@ -281,8 +281,8 @@ void CDlgCreateAnimatedTexture::OnCreateTexture()
 
 BOOL CDlgCreateAnimatedTexture::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
-	
+  CDialog::OnInitDialog();
+  
   // if we received script as input
   if (m_fnSourceFileName.FileExt() == ".scr")
   {
@@ -315,7 +315,7 @@ BOOL CDlgCreateAnimatedTexture::OnInitDialog()
     {
       // if can't get picture file information
       CImageInfo iiImageInfo;
-      if (iiImageInfo.GetGfxFileInfo_t(m_fnSourceFileName)==UNSUPPORTED_FILE)
+      if (iiImageInfo.GetGfxFileInfo_t(m_fnSourceFileName) == UNSUPPORTED_FILE)
       {
         // throw error
         ThrowF_t("File '%s' has unsupported file format", 
@@ -384,5 +384,5 @@ BOOL CDlgCreateAnimatedTexture::OnInitDialog()
   UpdateData( FALSE);
   // and refresh (recreate) texture in temporary directory
   RefreshTexture();
-	return TRUE;
+  return TRUE;
 }

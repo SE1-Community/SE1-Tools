@@ -39,7 +39,7 @@ CCheckBox::~CCheckBox()
 }
 void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags)
 {
-  if (ulFlags&((1UL<<iFlagIndex))) {
+  if (ulFlags&((1UL << iFlagIndex))) {
     SetCheck(1);
   } else {
     SetCheck(0);
@@ -49,9 +49,9 @@ void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags)
 
 
 BEGIN_MESSAGE_MAP(CCheckBox, CButton)
-	//{{AFX_MSG_MAP(CCheckBox)
-	ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CCheckBox)
+  ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

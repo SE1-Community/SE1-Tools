@@ -22,7 +22,7 @@ CDrawPort *_pDrawPort = NULL;
 CViewPort *_pViewPort = NULL;
 static INDEX gui_bEnableRequesterThumbnails=TRUE;
 
-UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARAM lParam)
+UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,  LPARAM lParam)
 {
   _pShell->DeclareSymbol("persistent user INDEX gui_bEnableRequesterThumbnails;", &gui_bEnableRequesterThumbnails);
   if (!gui_bEnableRequesterThumbnails)
@@ -101,8 +101,8 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
         CImageInfo iiImageInfo;
         iiImageInfo.LoadAnyGfxFormat_t( fnSelectedFileFullPath);
         // both dimension must be potentions of 2
-        if ((iiImageInfo.ii_Width  == 1<<((int)Log2( iiImageInfo.ii_Width))) &&
-            (iiImageInfo.ii_Height == 1<<((int)Log2( iiImageInfo.ii_Height))) )
+        if ((iiImageInfo.ii_Width  == 1 << ((int)Log2( iiImageInfo.ii_Width))) &&
+            (iiImageInfo.ii_Height == 1 << ((int)Log2( iiImageInfo.ii_Height))) )
         {
           fnThumbnail = CTString( "Temp\\Temp.tex");
           // creates new texture with one frame
@@ -165,7 +165,7 @@ UINT APIENTRY FileOpenRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,	LPARA
       }
 
       // if there is a valid viewport
-      if (_pViewPort!=NULL)
+      if (_pViewPort != NULL)
       {
         // swap it
         _pViewPort->SwapBuffers();

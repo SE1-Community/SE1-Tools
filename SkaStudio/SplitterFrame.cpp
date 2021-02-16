@@ -34,8 +34,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CSplitterFrame, CWnd)
 
 #define SET_BAR_SIZE( bar, dx, dy)   \
-	bar.m_Size.cx = dx;                 \
-	bar.m_Size.cy = dy;                 
+  bar.m_Size.cx = dx;                 \
+  bar.m_Size.cy = dy;                 
   //bar.CalcDynamicLayout(0, LM_HORZDOCK)
 
 CSplitterFrame::CSplitterFrame()
@@ -49,13 +49,13 @@ CSplitterFrame::~CSplitterFrame()
 }
 
 BEGIN_MESSAGE_MAP(CSplitterFrame, CWnd)
-	//{{AFX_MSG_MAP(CSplitterFrame)
-	ON_WM_SETCURSOR()
-	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CSplitterFrame)
+  ON_WM_SETCURSOR()
+  ON_WM_MOUSEMOVE()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_LBUTTONUP()
+  ON_WM_SIZE()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ void CSplitterFrame::SetSize(INDEX iWidth,INDEX iHeight)
 void CSplitterFrame::SetAbsPosition(CPoint pt)
 {
   CWnd *pParent = GetParent();
-  ASSERT(pParent!=NULL);
+  ASSERT(pParent != NULL);
 
   pParent->ScreenToClient(&pt);
   SetWindowPos(&wndTop,pt.x,pt.y,0,0,SWP_NOSIZE);
@@ -182,16 +182,16 @@ void CSplitterFrame::UpdateParent()
     // Chose docking side
     INDEX iDockSide = 0;
     // is splitter attached on left side
-    if (sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT) {
+    if (sp_uiDockSide == AFX_IDW_DOCKBAR_LEFT) {
       iDockSide = AFX_IDW_DOCKBAR_RIGHT;
     // is splitter attached on right side
-    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
       iDockSide = AFX_IDW_DOCKBAR_LEFT;
     // is splitter attached on top side
-    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_TOP) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_TOP) {
       iDockSide = AFX_IDW_DOCKBAR_BOTTOM;
     // is splitter attached on bottom side
-    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
       iDockSide = AFX_IDW_DOCKBAR_TOP;
     }
     pMainFrame->DockControlBar(&wndParent,iDockSide);
@@ -217,15 +217,15 @@ void CSplitterFrame::OnLButtonDown(UINT nFlags, CPoint point)
     ctParentLevels = 1;
   }
   CRect rc;
-  ASSERT(GetParent()!=NULL);
+  ASSERT(GetParent() != NULL);
   
   pDockedParent = GetParent();
   pFloatingParent = pDockedParent->GetParent();
-  ASSERT(pFloatingParent!=NULL);
+  ASSERT(pFloatingParent != NULL);
 
   for (INDEX ipar=0;ipar<ctParentLevels;ipar++) {
     pFloatingParent = pFloatingParent->GetParent();
-    ASSERT(pFloatingParent!=NULL);
+    ASSERT(pFloatingParent != NULL);
   }
 
   /*
@@ -236,36 +236,36 @@ void CSplitterFrame::OnLButtonDown(UINT nFlags, CPoint point)
   SetCapture();
   sp_ptStartPoint = GetAbsPosition();
   ChangeParent(pFloatingParent);
-	CWnd::OnLButtonDown(nFlags, point);
+  CWnd::OnLButtonDown(nFlags, point);
 }
 
 // on left mouse button up
 void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-  if (GetCapture()==this) {
+  if (GetCapture() == this) {
     ReleaseCapture();
     ChangeParent(pDockedParent);
     UpdateParent();
     // SetOrientation(uiOrientation);
   }
-	CWnd::OnLButtonUp(nFlags, point);
+  CWnd::OnLButtonUp(nFlags, point);
 }
 
 // on mouse move
 void CSplitterFrame::OnMouseMove(UINT nFlags, CPoint point) 
 {
-  if (GetCapture()==this) {
+  if (GetCapture() == this) {
     CPoint ptCursor;
     GetCursorPos(&ptCursor);
     CPoint pt = GetAbsPosition();
-    if (sp_uiDockSide==AFX_IDW_DOCKBAR_LEFT || sp_uiDockSide==AFX_IDW_DOCKBAR_RIGHT) {
+    if (sp_uiDockSide == AFX_IDW_DOCKBAR_LEFT || sp_uiDockSide == AFX_IDW_DOCKBAR_RIGHT) {
       pt.x = ptCursor.x;
-    } else if (sp_uiDockSide==AFX_IDW_DOCKBAR_TOP || sp_uiDockSide==AFX_IDW_DOCKBAR_BOTTOM) {
+    } else if (sp_uiDockSide == AFX_IDW_DOCKBAR_TOP || sp_uiDockSide == AFX_IDW_DOCKBAR_BOTTOM) {
       pt.y = ptCursor.y;
     }
     SetAbsPosition(pt);
   }
-	CWnd::OnMouseMove(nFlags, point);
+  CWnd::OnMouseMove(nFlags, point);
 }
 
 
@@ -310,7 +310,7 @@ void CSplitterFrame::OnLButtonUp(UINT nFlags, CPoint point)
     theApp.m_dlgBarTreeView.ShowWindow(SW_SHOW);
   }
 
-	CWnd::OnLButtonUp(nFlags, point);
+  CWnd::OnLButtonUp(nFlags, point);
 }
 */
 
@@ -323,5 +323,5 @@ BOOL CSplitterFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CSplitterFrame::OnSize(UINT nType, int cx, int cy) 
 {
-	CWnd::OnSize(nType, cx, cy);
+  CWnd::OnSize(nType, cx, cy);
 }

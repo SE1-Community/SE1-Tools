@@ -48,7 +48,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 extern SurfaceInstance *_psiFirst = NULL;  // linked list of surface instances
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Create()
 
 Handler callback.  Allocate and initialize instance data.
@@ -58,7 +58,7 @@ as the instance.  Note that "Blotch *" is used throughout instead of
 "LWInstance".  This works since a LWInstance type is a generic pointer
 and can safely be replaced with any specific pointer type.  Instance
 variables are initialized to some default values.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWInstance )
 Create( void *priv, LWSurfaceID surf, LWError *err )
@@ -66,7 +66,7 @@ Create( void *priv, LWSurfaceID surf, LWError *err )
   SurfaceInstance *psi;
 
   psi = (SurfaceInstance*)calloc( 1, sizeof( SurfaceInstance ));
-  if ( !psi ) {
+  if (!psi ) {
    *err = "Couldn't allocate memory for instance.";
    return NULL;
   }
@@ -81,18 +81,18 @@ Create( void *priv, LWSurfaceID surf, LWError *err )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Destroy()
 
 Handler callback.  Free resources allocated by Create().
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static void )
 Destroy( SurfaceInstance *inst )
 {
   SurfaceInstance **ppsi = &_psiFirst;
 
-  while (*ppsi!=NULL) {
+  while (*ppsi != NULL) {
     if (*ppsi == inst) {
       *ppsi = (*ppsi)->si_psiNext;
       break;
@@ -105,11 +105,11 @@ Destroy( SurfaceInstance *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Copy()
 
 Handler callback.  Copy instance data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Copy( SurfaceInstance *to, SurfaceInstance *from )
@@ -122,13 +122,13 @@ Copy( SurfaceInstance *to, SurfaceInstance *from )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Load()
 
 Handler callback.  Read instance data.  Shader instance data is stored
 in the SURF chunks of object files, but it isn't necessary to know
 that to read and write the data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Load( SurfaceInstance *inst, const LWLoadState *ls )
@@ -150,14 +150,14 @@ Load( SurfaceInstance *inst, const LWLoadState *ls )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Save()
 
 Handler callback.  Write instance data.  The I/O functions in lwio.h
 include one for reading and writing floats, but not doubles.  We just
 transfer our double-precision data to a float variable before calling
 the LWSAVE_FP() macro.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static LWError )
 Save( SurfaceInstance *inst, const LWSaveState *ss )
@@ -178,13 +178,13 @@ Save( SurfaceInstance *inst, const LWSaveState *ss )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 DescLn()
 
 Handler callback.  Write a one-line text description of the instance
 data.  Since the string must persist after this is called, it's part
 of the instance.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_( static const char * )
 DescLn( SurfaceInstance *inst )
@@ -222,16 +222,16 @@ Evaluate( SurfaceInstance *inst, LWShaderAccess *sa )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Handler()
 
 Handler activation function.  Check the version and fill in the
 callback fields of the handler structure.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_(int) Handler_SurfaceParameters( long version, GlobalFunc *global, LWShaderHandler *local, void *serverData)
 {
-   if ( version != LWSHADER_VERSION ) return AFUNC_BADVERSION;
+   if (version != LWSHADER_VERSION ) return AFUNC_BADVERSION;
 
    (void*&)local->inst->create   = Create;
    (void*&)local->inst->destroy  = Destroy;
@@ -265,12 +265,12 @@ enum {
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 handle_color()
 
 Event callback for the color button.  Called by LWXPanels.  Opens the
 user's installed color picker.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 static void handle_color( LWXPanelID panel, int cid )
 {
@@ -289,7 +289,7 @@ static void handle_color( LWXPanelID panel, int cid )
    local.hotFunc = NULL;
 
    result = colorpick( LWCOLORPICK_VERSION, &local );
-   if ( result == AFUNC_OK && local.result > 0 ) {
+   if (result == AFUNC_OK && local.result > 0 ) {
       inst->color[ 0 ] = local.red;
       inst->color[ 1 ] = local.green;
       inst->color[ 2 ] = local.blue;
@@ -299,20 +299,20 @@ static void handle_color( LWXPanelID panel, int cid )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 ui_get()
 
 Xpanels callback for LWXP_VIEW panels.  Returns a pointer to the data
 for a given control value.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 void *ui_get( SurfaceInstance *inst, unsigned long vid )
 {
   if (vid == ID_SHADER) {
     return inst->si_strShader;
-  } else if (vid>=ID_COLOR0 && vid<=ID_COLOR7) {
+  } else if (vid >= ID_COLOR0 && vid <= ID_COLOR7) {
     return &inst->si_adColors[vid-ID_COLOR0];
-  } else if (vid>=ID_TEXTURE0 && vid<=ID_TEXTURE7) {
+  } else if (vid >= ID_TEXTURE0 && vid <= ID_TEXTURE7) {
     return inst->si_astrTextures[vid-ID_TEXTURE0];
   } else {
     return NULL;
@@ -321,22 +321,22 @@ void *ui_get( SurfaceInstance *inst, unsigned long vid )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 ui_set()
 
 Xpanels callback for LWXP_VIEW panels.  Store a value in our instance
 data.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 int ui_set( SurfaceInstance *inst, unsigned long vid, void *value )
 {
   if (vid == ID_SHADER) {
     strcpy(inst->si_strShader, (char*)value);
     return 1;
-  } else if (vid>=ID_TEXTURE0 && vid<=ID_TEXTURE7) {
+  } else if (vid >= ID_TEXTURE0 && vid <= ID_TEXTURE7) {
     strcpy(inst->si_astrTextures[vid - ID_TEXTURE0], (char*)value);
     return 1;
-  } else if (vid>=ID_COLOR0 && vid<=ID_COLOR7) {
+  } else if (vid >= ID_COLOR0 && vid <= ID_COLOR7) {
     double *ad = (double *)value;
     inst->si_adColors[vid - ID_COLOR0][0] = ad[0];
     inst->si_adColors[vid - ID_COLOR0][1] = ad[1];
@@ -349,31 +349,31 @@ int ui_set( SurfaceInstance *inst, unsigned long vid, void *value )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 ui_chgnotify()
 
 XPanel callback.  XPanels calls this when an event occurs that affects
 the value of one of your controls.  We use the instance update global
 to tell Layout that our instance data has changed.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 void ui_chgnotify( LWXPanelID panel, unsigned long cid, unsigned long vid,
    int event )
 {
    void *dat;
 
-   if ( event == LWXPEVENT_VALUE )
-      if ( dat = xpanf->getData( panel, 0 ))
+   if (event == LWXPEVENT_VALUE )
+      if (dat = xpanf->getData( panel, 0 ))
          lwupdate( LWSHADER_HCLASS, dat );
 }
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 get_panel()
 
 Create and initialize an LWXP_VIEW panel.  Called by Interface().
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 LWXPanelID get_panel( SurfaceInstance *inst )
 {
@@ -418,7 +418,7 @@ LWXPanelID get_panel( SurfaceInstance *inst )
 
    LWXPanelID panel;
 
-   if ( panel = xpanf->create( LWXP_VIEW, xctl )) {
+   if (panel = xpanf->create( LWXP_VIEW, xctl )) {
       xpanf->hint( panel, 0, xhint );
       xpanf->describe( panel, xdata, (void *(__cdecl *)(void *,unsigned long))ui_get, (enum en_LWXPRefreshCodes (__cdecl *)(void *,unsigned long,void *))ui_set );
       xpanf->viewInst( panel, inst );
@@ -430,23 +430,23 @@ LWXPanelID get_panel( SurfaceInstance *inst )
 
 
 /*
-======================================================================
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == 
 Interface()
 
 The interface activation function.
-====================================================================== */
+ == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == */
 
 XCALL_(int) Interface_SurfaceParameters( long version, GlobalFunc *global, LWInterface *local, void *serverData)
 {
   _global     = global    ;
   _serverData = serverData;
 
-  if ( version != LWINTERFACE_VERSION ) return AFUNC_BADVERSION;
+  if (version != LWINTERFACE_VERSION ) return AFUNC_BADVERSION;
 
  (void*&)colorpick = global( LWCOLORACTIVATEFUNC_GLOBAL, GFUSE_TRANSIENT );
  (void*&)lwupdate  = global( LWINSTUPDATE_GLOBAL,        GFUSE_TRANSIENT );
  (void*&)xpanf     = global( LWXPANELFUNCS_GLOBAL,       GFUSE_TRANSIENT );
- if ( !colorpick || !lwupdate || !xpanf ) return AFUNC_BADGLOBAL;
+ if (!colorpick || !lwupdate || !xpanf ) return AFUNC_BADGLOBAL;
 
  local->panel   = get_panel( (SurfaceInstance*)local->inst );
  local->options = NULL;

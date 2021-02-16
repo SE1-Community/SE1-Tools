@@ -29,23 +29,23 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConsole dialog
 
 CDlgConsole::CDlgConsole(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgConsole::IDD, pParent)
+  : CDialog(CDlgConsole::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgConsole)
-	m_strConsoleOutput = _T("");
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgConsole)
+  m_strConsoleOutput = _T("");
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgConsole::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CDlgConsole)
-	DDX_Control(pDX, IDC_CONSOLE_SYMBOLS, m_ctrConsoleSymbolsCombo);
-	DDX_Control(pDX, IDC_CONSOLE_INPUT, m_ctrlEditConsole);
-	DDX_Text(pDX, IDC_CONSOLE_OUTPUT, m_strConsoleOutput);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgConsole)
+  DDX_Control(pDX, IDC_CONSOLE_SYMBOLS, m_ctrConsoleSymbolsCombo);
+  DDX_Control(pDX, IDC_CONSOLE_INPUT, m_ctrlEditConsole);
+  DDX_Text(pDX, IDC_CONSOLE_OUTPUT, m_strConsoleOutput);
+  //}}AFX_DATA_MAP
 
   // if dialog is reciving data
   if (pDX->m_bSaveAndValidate == FALSE)
@@ -58,8 +58,8 @@ void CDlgConsole::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgConsole, CDialog)
-	//{{AFX_MSG_MAP(CDlgConsole)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgConsole)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgConsole::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+  CDialog::OnInitDialog();
 
   // set default console text
   //m_ctrlEditConsole.SetWindowText( "Default input string");
@@ -75,29 +75,29 @@ BOOL CDlgConsole::OnInitDialog()
 
   /*
   //  create application windows font for console
-	LOGFONT logFont;
+  LOGFONT logFont;
   CFont fntFont;
-	memset(&logFont, 0, sizeof(logFont));
-	if (!::GetSystemMetrics(SM_DBCSENABLED))
-	{
-		logFont.lfHeight = -11;
-		logFont.lfWeight = FW_REGULAR;
-		logFont.lfPitchAndFamily = FF_ROMAN|FIXED_PITCH;
+  memset(&logFont, 0, sizeof(logFont));
+  if (!::GetSystemMetrics(SM_DBCSENABLED))
+  {
+    logFont.lfHeight = -11;
+    logFont.lfWeight = FW_REGULAR;
+    logFont.lfPitchAndFamily = FF_ROMAN|FIXED_PITCH;
     logFont.lfOrientation = 10;
     logFont.lfQuality = PROOF_QUALITY;
     logFont.lfItalic = TRUE;
-		// prepare default font name
+    // prepare default font name
     CString strDefaultFont;
-		strDefaultFont.LoadString(IDS_DEFAULT_ARIAL);
-		lstrcpy(logFont.lfFaceName, strDefaultFont);
+    strDefaultFont.LoadString(IDS_DEFAULT_ARIAL);
+    lstrcpy(logFont.lfFaceName, strDefaultFont);
     // try to create font
     if (!fntFont.CreateFontIndirect(&logFont))
-			TRACE0("Could Not create font for console\n");
-	}
-	else
-	{
+      TRACE0("Could Not create font for console\n");
+  }
+  else
+  {
     fntFont.Attach(::GetStockObject(SYSTEM_FONT));
-	}
+  }
   m_ctrlEditConsole.SetFont( &fntFont);
   */
   
@@ -121,6 +121,6 @@ BOOL CDlgConsole::OnInitDialog()
 
   m_ctrlEditConsole.SetSel( -1, 60000);
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+  return TRUE;  // return TRUE unless you set the focus to a control
+                // EXCEPTION: OCX Property Pages should return FALSE
 }

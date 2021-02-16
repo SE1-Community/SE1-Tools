@@ -67,11 +67,11 @@ BOOL AreAllEntitiesOfTheSameClass(CDynamicContainer<class CEntity> *penContainer
   {
     // obtain this entity's class ptr
     CEntityClass *pdecCurrentClass = iten->GetClass();
-    if (pdecClass==NULL)
+    if (pdecClass == NULL)
     {
       pdecClass=pdecCurrentClass;
     }
-    if (pdecClass!=pdecCurrentClass)
+    if (pdecClass != pdecCurrentClass)
     {
       return FALSE;
     }
@@ -100,7 +100,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
     BOOL bEnumFound=FALSE;
     for (INDEX iEnumItem=0; iEnumItem<epEnum->epet_ctValues; iEnumItem++)
     {
-      if (iEnum==epEnum->epet_aepevValues[ iEnumItem].epev_iValue)
+      if (iEnum == epEnum->epet_aepevValues[ iEnumItem].epev_iValue)
       {
         strResult=epEnum->epet_aepevValues[ iEnumItem].epev_strName;
         bEnumFound=TRUE;
@@ -129,7 +129,7 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
   case CEntityProperty::EPT_PARENT:
   {
     CEntity *penPtr = ENTITYPROPERTY( pen, pepProperty->ep_slOffset, CEntityPointer);
-    if (penPtr!=NULL)
+    if (penPtr != NULL)
     {
       strResult="->"+penPtr->GetName();
     }
@@ -222,8 +222,8 @@ CTString GetPropertyValue(CEntity *pen, CEntityProperty *pepProperty, INDEX &iFo
 
 CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
 {
-  ASSERT(pen!=NULL);
-  if (pen==NULL) return CTString("");
+  ASSERT(pen != NULL);
+  if (pen == NULL) return CTString("");
   CEntityClass *pecEntityClass = pen->GetClass();
   CDLLEntityClass *pdllecDllEntityClass = pecEntityClass->ec_pdecDLLClass;
   FLOAT3D vOrigin = pen->GetPlacement().pl_PositionVector;
@@ -258,7 +258,7 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
   case COLUMN_SECTOR_NAME:
   {
     CBrushSector *pbsc = pen->GetFirstSectorWithName();
-    if (pbsc!=NULL)
+    if (pbsc != NULL)
     {
       strResult=pbsc->bsc_strName;
     }
@@ -322,15 +322,15 @@ CTString GetItemValue(CEntity *pen, INDEX iColumn, INDEX &iFormat)
     CDLLEntityClass *pdecDLLClass = pen->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
     INDEX iPropertyOrder=0;
-    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
       for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-        if (pepProperty->ep_strName!=CTString(""))
+        if (pepProperty->ep_strName != CTString(""))
         {
-          if (iPropertyOrder==iColumn-COLUMN_PROPERTY_START)
+          if (iPropertyOrder == iColumn-COLUMN_PROPERTY_START)
           {
             strResult=GetPropertyValue(pen, pepProperty, iFormat);
             return strResult;
@@ -354,11 +354,11 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
   CTString strEn1=GetItemValue(pen1, lParamSort, iFormat);
   CTString strEn2=GetItemValue(pen2, lParamSort, iFormat);
 
-  if (iFormat==PDF_STRING)
+  if (iFormat == PDF_STRING)
   {
     iResult = stricmp( strEn1, strEn2);
   }
-  else if (iFormat==PDF_COLOR)
+  else if (iFormat == PDF_COLOR)
   {
     INDEX ubR, ubG, ubB;
     INDEX ubH, ubS, ubV;
@@ -371,7 +371,7 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
   }
   else
   {
-    if (iFormat==PDF_FLOAT)
+    if (iFormat == PDF_FLOAT)
     {
       FLOAT fEn1=0;
       FLOAT fEn2=0;
@@ -379,7 +379,7 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
       strEn2.ScanF("%g", &fEn2);
       if (fEn1>fEn2) iResult=1; else iResult=-1;
     }
-    else if (iFormat==PDF_INDEX)
+    else if (iFormat == PDF_INDEX)
     {
       INDEX iEn1=0;
       INDEX iEn2=0;
@@ -393,13 +393,13 @@ int CALLBACK SortEntities(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 }
 
 CDlgBrowseByClass::CDlgBrowseByClass(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgBrowseByClass::IDD, pParent)
+  : CDialog(CDlgBrowseByClass::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDlgBrowseByClass)
-	m_strEntitiesInVolume = _T("");
-	m_bShowVolume = FALSE;
-	m_bShowImportants = FALSE;
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CDlgBrowseByClass)
+  m_strEntitiesInVolume = _T("");
+  m_bShowVolume = FALSE;
+  m_bShowImportants = FALSE;
+  //}}AFX_DATA_INIT
 
   m_bCenterSelected = FALSE;
 }
@@ -411,7 +411,7 @@ CDlgBrowseByClass::~CDlgBrowseByClass()
 
 void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
 
   CWorldEditorDoc *pDoc = theApp.GetDocument();
 
@@ -428,13 +428,13 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
     if (iSelectedItem != -1) m_listEntities.EnsureVisible( iSelectedItem, FALSE);
   }
 
-	//{{AFX_DATA_MAP(CDlgBrowseByClass)
-	DDX_Control(pDX, IDC_PLUGGINS, m_ctrlPluggins);
-	DDX_Control(pDX, IDC_ENTITY_LIST, m_listEntities);
-	DDX_Text(pDX, IDC_ENTITIES_IN_VOLUME_T, m_strEntitiesInVolume);
-	DDX_Check(pDX, IDC_DISPLAY_VOLUME, m_bShowVolume);
-	DDX_Check(pDX, IDC_DISPLAY_IMPORTANTS, m_bShowImportants);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgBrowseByClass)
+  DDX_Control(pDX, IDC_PLUGGINS, m_ctrlPluggins);
+  DDX_Control(pDX, IDC_ENTITY_LIST, m_listEntities);
+  DDX_Text(pDX, IDC_ENTITIES_IN_VOLUME_T, m_strEntitiesInVolume);
+  DDX_Check(pDX, IDC_DISPLAY_VOLUME, m_bShowVolume);
+  DDX_Check(pDX, IDC_DISPLAY_IMPORTANTS, m_bShowImportants);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -469,22 +469,22 @@ void CDlgBrowseByClass::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgBrowseByClass, CDialog)
-	//{{AFX_MSG_MAP(CDlgBrowseByClass)
-	ON_NOTIFY(NM_DBLCLK, IDC_ENTITY_LIST, OnDblclkEntityList)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_ENTITY_LIST, OnColumnclickEntityList)
-	ON_NOTIFY(NM_RCLICK, IDC_ENTITY_LIST, OnRclickEntityList)
-	ON_NOTIFY(NM_CLICK, IDC_ENTITY_LIST, OnClickEntityList)
-	ON_BN_CLICKED(ID_REMOVE, OnRemove)
-	ON_BN_CLICKED(ID_LEAVE, OnLeave)
-	ON_BN_CLICKED(ID_SELECT_ALL, OnSelectAll)
-	ON_BN_CLICKED(ID_FEED_VOLUME, OnFeedVolume)
-	ON_BN_CLICKED(ID_REVERT, OnRevert)
-	ON_BN_CLICKED(ID_SELECT_SECTORS, OnSelectSectors)
-	ON_BN_CLICKED(ID_DELETE_BROWSE_BY_CLASS, OnDeleteBrowseByClass)
-	ON_BN_CLICKED(IDC_DISPLAY_VOLUME, OnDisplayVolume)
-	ON_CBN_SELENDOK(IDC_PLUGGINS, OnSelendokPluggins)
-	ON_BN_CLICKED(IDC_DISPLAY_IMPORTANTS, OnDisplayImportants)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgBrowseByClass)
+  ON_NOTIFY(NM_DBLCLK, IDC_ENTITY_LIST, OnDblclkEntityList)
+  ON_NOTIFY(LVN_COLUMNCLICK, IDC_ENTITY_LIST, OnColumnclickEntityList)
+  ON_NOTIFY(NM_RCLICK, IDC_ENTITY_LIST, OnRclickEntityList)
+  ON_NOTIFY(NM_CLICK, IDC_ENTITY_LIST, OnClickEntityList)
+  ON_BN_CLICKED(ID_REMOVE, OnRemove)
+  ON_BN_CLICKED(ID_LEAVE, OnLeave)
+  ON_BN_CLICKED(ID_SELECT_ALL, OnSelectAll)
+  ON_BN_CLICKED(ID_FEED_VOLUME, OnFeedVolume)
+  ON_BN_CLICKED(ID_REVERT, OnRevert)
+  ON_BN_CLICKED(ID_SELECT_SECTORS, OnSelectSectors)
+  ON_BN_CLICKED(ID_DELETE_BROWSE_BY_CLASS, OnDeleteBrowseByClass)
+  ON_BN_CLICKED(IDC_DISPLAY_VOLUME, OnDisplayVolume)
+  ON_CBN_SELENDOK(IDC_PLUGGINS, OnSelendokPluggins)
+  ON_BN_CLICKED(IDC_DISPLAY_IMPORTANTS, OnDisplayImportants)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -650,19 +650,19 @@ void CDlgBrowseByClass::InitializeListColumns(void)
   // add properties if of the same class and not empty selection
   CDynamicContainer<class CEntity> *penContainer=GetCurrentContainer();
   _bOfSameClass=AreAllEntitiesOfTheSameClass(penContainer);
-  if (_bOfSameClass && penContainer->Count()!=0)
+  if (_bOfSameClass && penContainer->Count() != 0)
   {
     _ctProperties=0;
     CEntity *pen = &penContainer->GetFirst();
     CDLLEntityClass *pdecDLLClass = pen->GetClass()->ec_pdecDLLClass;
     // for all classes in hierarchy of this entity
-    for (;pdecDLLClass!=NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
+    for (;pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase)
     {
       // for all properties
       for (INDEX iProperty=0; iProperty<pdecDLLClass->dec_ctProperties; iProperty++)
       {
         CEntityProperty *pepProperty = &pdecDLLClass->dec_aepProperties[iProperty];
-        if (pepProperty->ep_strName!=CTString(""))
+        if (pepProperty->ep_strName != CTString(""))
         {
           CSize szText=GetDC()->GetTextExtent(pepProperty->ep_strName);
           PIX pixProperty=szText.cx+8;
@@ -678,8 +678,8 @@ BOOL CDlgBrowseByClass::OnInitDialog()
 {
   CDialog::OnInitDialog();
 
-  int iScreenX = ::GetSystemMetrics(SM_CXSCREEN);	// screen size
-	int iScreenY = ::GetSystemMetrics(SM_CYSCREEN) - 32;
+  int iScreenX = ::GetSystemMetrics(SM_CXSCREEN);  // screen size
+  int iScreenY = ::GetSystemMetrics(SM_CYSCREEN) - 32;
   
   PIX pixSX = 8;
   PIX pixSY = 16;
@@ -725,7 +725,7 @@ BOOL CDlgBrowseByClass::OnInitDialog()
 
   FillListWithEntities();
   InitializePluggins();
-	return TRUE;
+  return TRUE;
 }
 
 void CDlgBrowseByClass::OnDblclkEntityList(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -756,7 +756,7 @@ void CDlgBrowseByClass::OnOK()
 
 void CDlgBrowseByClass::OnColumnclickEntityList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+  NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
   if (theApp.m_iLastClassSortAplied == pNMListView->iSubItem) theApp.m_bInvertClassSort = !theApp.m_bInvertClassSort;
   else                                                        theApp.m_bInvertClassSort = FALSE;
 
@@ -796,7 +796,7 @@ void CDlgBrowseByClass::OnRclickEntityList(NMHDR* pNMHDR, LRESULT* pResult)
 {
   BOOL bShift = (GetKeyState( VK_SHIFT)&0x8000) != 0;
 
-	*pResult = 0;
+  *pResult = 0;
   
   CRect rcItem;
   POINT ptMouse;
@@ -847,7 +847,7 @@ void CDlgBrowseByClass::OnClickEntityList(NMHDR* pNMHDR, LRESULT* pResult)
     m_listEntities.SetItemState( htInfo.iItem, LVIS_SELECTED, LVIS_SELECTED);
   }
   UpdateData( FALSE);
-	*pResult = 0;
+  *pResult = 0;
 }
 
 void CDlgBrowseByClass::OnRemove() 
@@ -965,12 +965,12 @@ void CDlgBrowseByClass::OnSelectSectors()
 BOOL CDlgBrowseByClass::PreTranslateMessage(MSG* pMsg) 
 {
   BOOL bCtrl = (GetKeyState( VK_CONTROL)&0x8000) != 0;
-  if (((pMsg->message==WM_KEYDOWN) || (pMsg->message==WM_SYSKEYDOWN)) && 
-      ((int)pMsg->wParam=='A') && bCtrl)
+  if (((pMsg->message == WM_KEYDOWN) || (pMsg->message == WM_SYSKEYDOWN)) && 
+      ((int)pMsg->wParam == 'A') && bCtrl)
   {
     OnSelectAll();
   }
-	return CDialog::PreTranslateMessage(pMsg);
+  return CDialog::PreTranslateMessage(pMsg);
 }
 
 void CDlgBrowseByClass::OnDeleteBrowseByClass() 
@@ -1001,10 +1001,10 @@ void CDlgBrowseByClass::OnDeleteBrowseByClass()
   {
     CEntity &en=*iten;
     // if it is terrain
-    if (en.GetRenderType()==CEntity::RT_TERRAIN)
+    if (en.GetRenderType() == CEntity::RT_TERRAIN)
     {
       // if it is selected terrain
-      if (pDoc->m_ptrSelectedTerrain==en.GetTerrain())
+      if (pDoc->m_ptrSelectedTerrain == en.GetTerrain())
       {
         pDoc->m_ptrSelectedTerrain=NULL;
         theApp.m_ctTerrainPage.MarkChanged();

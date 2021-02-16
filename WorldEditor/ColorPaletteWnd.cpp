@@ -65,12 +65,12 @@ CColorPaletteWnd::~CColorPaletteWnd()
 
 
 BEGIN_MESSAGE_MAP(CColorPaletteWnd, CWnd)
-	//{{AFX_MSG_MAP(CColorPaletteWnd)
-	ON_WM_PAINT()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_KILLFOCUS()
-	ON_WM_RBUTTONDOWN()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CColorPaletteWnd)
+  ON_WM_PAINT()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_KILLFOCUS()
+  ON_WM_RBUTTONDOWN()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -141,7 +141,7 @@ void CColorPaletteWnd::OnPaint()
     m_pDrawPort->Unlock();
 
     // if there is a valid viewport
-    if (m_pViewPort!=NULL)
+    if (m_pViewPort != NULL)
     {
       m_pViewPort->SwapBuffers();
     }
@@ -232,7 +232,7 @@ void CColorPaletteWnd::OnRButtonDown(UINT nFlags, CPoint point)
       _bCanBeDestroyed = TRUE;
     }
   }
-	CWnd::OnRButtonDown(nFlags, point);
+  CWnd::OnRButtonDown(nFlags, point);
   // destroy color palette
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   pMainFrame->m_pColorPalette = NULL;

@@ -60,7 +60,7 @@ BOOL CBrowser::Create( CWnd* pParentWnd, UINT nIDTemplate,
   
   m_IconsImageList.Create( IDB_DIRECTORY_ICONS, 16, 1, CLR_NONE);
   m_TreeCtrl.SetImageList( &m_IconsImageList, TVSIL_NORMAL);
-	
+  
   return TRUE;
 }
  
@@ -136,19 +136,19 @@ CSize CBrowser::CalcDynamicLayout(int nLength, DWORD nMode)
  
 BEGIN_MESSAGE_MAP(CBrowser, CDialogBar)
   //{{AFX_MSG_MAP(CBrowser)
-	ON_COMMAND(ID_CREATE_DIRECTORY, OnCreateDirectory)
-	ON_COMMAND(ID_DELETE_DIRECTORY, OnDeleteDirectory)
-	ON_COMMAND(ID_SAVE_VIRTUAL_TREE, OnSaveVirtualTree)
-	ON_COMMAND(ID_LOAD_VIRTUAL_TREE, OnLoadVirtualTree)
-	ON_COMMAND(ID_RENAME_DIRECTORY, OnRenameDirectory)
-	ON_WM_CONTEXTMENU()
-	ON_COMMAND(ID_SAVE_AS_VIRTUAL_TREE, OnSaveAsVirtualTree)
-	ON_COMMAND(ID_IMPORT_VIRTUAL_TREE, OnImportVirtualTree)
-	ON_COMMAND(ID_EXPORT_VIRTUAL_TREE, OnExportVirtualTree)
-	ON_UPDATE_COMMAND_UI(ID_IMPORT_VIRTUAL_TREE, OnUpdateImportVirtualTree)
-	ON_UPDATE_COMMAND_UI(ID_EXPORT_VIRTUAL_TREE, OnUpdateExportVirtualTree)
-	ON_COMMAND(ID_DUMP_VT, OnDumpVt)
-	//}}AFX_MSG_MAP
+  ON_COMMAND(ID_CREATE_DIRECTORY, OnCreateDirectory)
+  ON_COMMAND(ID_DELETE_DIRECTORY, OnDeleteDirectory)
+  ON_COMMAND(ID_SAVE_VIRTUAL_TREE, OnSaveVirtualTree)
+  ON_COMMAND(ID_LOAD_VIRTUAL_TREE, OnLoadVirtualTree)
+  ON_COMMAND(ID_RENAME_DIRECTORY, OnRenameDirectory)
+  ON_WM_CONTEXTMENU()
+  ON_COMMAND(ID_SAVE_AS_VIRTUAL_TREE, OnSaveAsVirtualTree)
+  ON_COMMAND(ID_IMPORT_VIRTUAL_TREE, OnImportVirtualTree)
+  ON_COMMAND(ID_EXPORT_VIRTUAL_TREE, OnExportVirtualTree)
+  ON_UPDATE_COMMAND_UI(ID_IMPORT_VIRTUAL_TREE, OnUpdateImportVirtualTree)
+  ON_UPDATE_COMMAND_UI(ID_EXPORT_VIRTUAL_TREE, OnUpdateExportVirtualTree)
+  ON_COMMAND(ID_DUMP_VT, OnDumpVt)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
  
 /////////////////////////////////////////////////////////////////////
@@ -366,7 +366,7 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
   HTREEITEM pRootItem = m_TreeCtrl.GetRootItem();
   HTREEITEM pItem = pRootItem;
   // loop all directories starting from root and search for selected subdirectory name 
-  for (j=iSubDirsCt-1; j>=0; j--)
+  for (j=iSubDirsCt-1; j >= 0; j--)
   {
     BOOL bSucess;
     HTREEITEM pStartItem = pItem;
@@ -383,12 +383,12 @@ HTREEITEM CBrowser::GetVirtualDirectoryItem( CTString strArray[], INDEX iSubDirs
       if (strArray[ j] == strItemName)
       {
         // subdirectory found, if it has children or selected subdirectories counter reached 0
-        if (m_TreeCtrl.ItemHasChildren( pItem) || (j==0) )
+        if (m_TreeCtrl.ItemHasChildren( pItem) || (j == 0) )
         {
           // mark that we found current subdirectory
           bSucess = TRUE;
           // if counter didn't reached 0
-          if (j!=0)
+          if (j != 0)
           {
             // it becomes current and we will try to find his selected subdirectory
             pItem = m_TreeCtrl.GetChildItem( pItem);
@@ -446,7 +446,7 @@ void CBrowser::SelectVirtualDirectory( CTString strArray[], INDEX iSubDirsCt)
 CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave) 
 {
   // You can't save with no directories
-  if (bSave && m_TreeCtrl.GetCount()==0)
+  if (bSave && m_TreeCtrl.GetCount() == 0)
     return CTString("");
 
   CWorldEditorApp *pApp = (CWorldEditorApp *)AfxGetApp();
@@ -502,8 +502,8 @@ CTFileName CBrowser::GetIOFileName(CTString strTitle, BOOL bSave)
 
 void CBrowser::SaveVirtualTree(CTFileName fnSave, CVirtualTreeNode *pvtn)
 {
-  ASSERT(pvtn!=NULL);
-  if (pvtn==NULL) return;
+  ASSERT(pvtn != NULL);
+  if (pvtn == NULL) return;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileStream File;
   try
@@ -571,7 +571,7 @@ void CBrowser::OnSaveAsVirtualTree()
 {
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileName fnSave=GetIOFileName("Save virtual tree to file", TRUE);
-  if (fnSave!="")
+  if (fnSave != "")
   {
     // remember choosed file name as last used
     pMainFrame->m_fnLastVirtualTree = fnSave;
@@ -595,7 +595,7 @@ void CBrowser::OnLoadVirtualTree()
   }
 
   CTFileName fnOpen=GetIOFileName("Load virtual tree", FALSE);  
-  if (fnOpen!="")
+  if (fnOpen != "")
   {
     // remember choosed file name as last used
     pMainFrame->m_fnLastVirtualTree = fnOpen;
@@ -607,7 +607,7 @@ void CBrowser::OnLoadVirtualTree()
 void CBrowser::OnImportVirtualTree() 
 {
   CTFileName fnImport=GetIOFileName("Import virtual tree", FALSE);  
-  if (fnImport!="")
+  if (fnImport != "")
   {
     HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
     if (pSelectedItem == NULL) return;
@@ -623,7 +623,7 @@ void CBrowser::OnExportVirtualTree()
   if (pSelectedItem == NULL) return;
   CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
   CTFileName fnExport=GetIOFileName("Export virtual tree", TRUE);
-  if (fnExport!="")
+  if (fnExport != "")
   {
     CVirtualTreeNode *pVTN = (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
     // save virtual tree branch
@@ -666,7 +666,7 @@ void CBrowser::OnLoadVirtualTreeInternal(CTFileName fnVirtulTree, CVirtualTreeNo
 
 void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvtnRoot)
 {
-  if (pvtnRoot==NULL)
+  if (pvtnRoot == NULL)
   {
     // If current tree is not empty, delete it
     if (m_TreeCtrl.GetCount() != 0)
@@ -691,7 +691,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
     throw( "Invalid version of virtual tree file.");
   }
 
-  if (pvtnRoot==NULL)
+  if (pvtnRoot == NULL)
   {
     m_VirtualTree.Read_t( &File, NULL);
   }
@@ -705,7 +705,7 @@ void CBrowser::LoadVirtualTree_t( CTFileName fnVirtulTree, CVirtualTreeNode *pvt
   m_TreeCtrl.DeleteAllItems();
   AddDirectoryRecursiv( &m_VirtualTree, TVI_ROOT);   // Fill CTreeCtrl using recursion
 
-  if (pvtnRoot!=NULL)
+  if (pvtnRoot != NULL)
   {
     // don't read rest of data
     File.Close();
@@ -782,7 +782,7 @@ void CBrowser::OnRenameDirectory()
 
 void CBrowser::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
-	CRect rectBrowser;
+  CRect rectBrowser;
   
   GetWindowRect( &rectBrowser);
   CPoint ptInBrowser = CPoint( point.x - rectBrowser.TopLeft().x, 
@@ -792,11 +792,11 @@ void CBrowser::OnContextMenu(CWnd* pWnd, CPoint point)
   if ((m_boxBrowseWnd & boxPoint) == boxPoint)
   {
     m_BrowseWindow.OnContextMenu( point);
-  }	
+  }  
   else if ((m_boxTreeWnd & boxPoint) == boxPoint)
   {
     m_TreeCtrl.OnContextMenu( point);
-  }	
+  }  
 }
 
 CVirtualTreeNode *CBrowser::GetSelectedDirectory(void)
@@ -804,7 +804,7 @@ CVirtualTreeNode *CBrowser::GetSelectedDirectory(void)
   if (m_TreeCtrl.GetCount() != 0)
   {
     HTREEITEM pSelectedItem = m_TreeCtrl.GetSelectedItem();
-    if (pSelectedItem!=NULL)
+    if (pSelectedItem != NULL)
     {
       return (CVirtualTreeNode *)m_TreeCtrl.GetItemData( pSelectedItem);
     }

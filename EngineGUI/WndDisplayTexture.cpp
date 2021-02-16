@@ -51,15 +51,15 @@ CWndDisplayTexture::~CWndDisplayTexture()
 
 
 BEGIN_MESSAGE_MAP(CWndDisplayTexture, CWnd)
-	//{{AFX_MSG_MAP(CWndDisplayTexture)
-	ON_WM_DESTROY()
-	ON_WM_PAINT()
-	ON_WM_TIMER()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_RBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_MOUSEMOVE()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CWndDisplayTexture)
+  ON_WM_DESTROY()
+  ON_WM_PAINT()
+  ON_WM_TIMER()
+  ON_WM_LBUTTONDOWN()
+  ON_WM_RBUTTONDOWN()
+  ON_WM_LBUTTONUP()
+  ON_WM_MOUSEMOVE()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -75,10 +75,10 @@ static void ConvertCoords( CTextureData *pTD, PIX &pixU, PIX &pixV)
 void CWndDisplayTexture::OnPaint() 
 {
   { CPaintDC dc(this); } // device context for painting
-	
-  if (m_iTimerID==-1) m_iTimerID = (int)SetTimer( 1, 50, NULL);
+  
+  if (m_iTimerID == -1) m_iTimerID = (int)SetTimer( 1, 50, NULL);
 
-  if (m_pViewPort==NULL && m_pDrawPort==NULL)
+  if (m_pViewPort == NULL && m_pDrawPort == NULL)
   { // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
@@ -87,9 +87,9 @@ void CWndDisplayTexture::OnPaint()
   CTextureData *pTD = (CTextureData*)m_toTexture.GetData();
   BOOL bAlphaChannel = FALSE;
   // if there is a valid drawport, and the drawport can be locked
-  if (m_pDrawPort!=NULL && m_pDrawPort->Lock())
+  if (m_pDrawPort != NULL && m_pDrawPort->Lock())
   { // if it has any texture
-    if (pTD!=NULL) {
+    if (pTD != NULL) {
       PIX pixWidth  = pTD->GetPixWidth();
       PIX pixHeight = pTD->GetPixHeight();
       // adjust for effect texture
@@ -140,7 +140,7 @@ void CWndDisplayTexture::OnPaint()
     }
 
     // if it has any texture
-    if (pTD!=NULL) {
+    if (pTD != NULL) {
       // create rectangle proportional with texture ratio covering whole draw port
       PIXaabbox2D rectPict = PIXaabbox2D( PIX2D( m_pixWinOffsetU, m_pixWinOffsetV),
                                           PIX2D( m_pixWinOffsetU+m_pixWinWidth, m_pixWinOffsetV+m_pixWinHeight));
@@ -159,11 +159,11 @@ void CWndDisplayTexture::OnPaint()
     // unlock the drawport
     m_pDrawPort->Unlock();
     // swap if there is a valid viewport
-    if (m_pViewPort!=NULL) m_pViewPort->SwapBuffers();
+    if (m_pViewPort != NULL) m_pViewPort->SwapBuffers();
   }
 
   // if this is effect texture
-  if (pTD!=NULL && pTD->td_ptegEffect!=NULL)
+  if (pTD != NULL && pTD->td_ptegEffect != NULL)
   { // display rendering speed
     DOUBLE dMS = pTD->td_ptegEffect->GetRenderingTime() * 1000.0;
     // only if valid
@@ -182,7 +182,7 @@ void CWndDisplayTexture::OnPaint()
 
 void CWndDisplayTexture::OnTimer(UINT nIDEvent) 
 {
-	// on our timer discard test animation window
+  // on our timer discard test animation window
   if (nIDEvent == 1)
   {
     TICK llCurrentTick = _pTimer->GetTimeTick();
@@ -191,10 +191,10 @@ void CWndDisplayTexture::OnTimer(UINT nIDEvent)
       _pTimer->SetGameTick(llCurrentTick);
       _llLastTick = llCurrentTick;
     }
-    Invalidate(FALSE);	
+    Invalidate(FALSE);  
   }
 
-	CWnd::OnTimer(nIDEvent);
+  CWnd::OnTimer(nIDEvent);
 }
 
 
@@ -208,7 +208,7 @@ void CWndDisplayTexture::OnDestroy()
 
   KillTimer( m_iTimerID);
   _pTimer->SetGameTick(0);
-	CWnd::OnDestroy();
+  CWnd::OnDestroy();
 }
 
 
@@ -237,7 +237,7 @@ void CWndDisplayTexture::OnLButtonDown(UINT nFlags, CPoint point)
     m_pLeftMouseButtonClicked(pixU, pixV);
   }
 
-	CWnd::OnLButtonDown(nFlags, point);
+  CWnd::OnLButtonDown(nFlags, point);
 }
 
 void CWndDisplayTexture::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -260,7 +260,7 @@ void CWndDisplayTexture::OnLButtonUp(UINT nFlags, CPoint point)
     m_pLeftMouseButtonReleased(pixU, pixV);
   }
 
-	CWnd::OnLButtonUp(nFlags, point);
+  CWnd::OnLButtonUp(nFlags, point);
 }
 
 void CWndDisplayTexture::OnRButtonDown(UINT nFlags, CPoint point) 
@@ -280,7 +280,7 @@ void CWndDisplayTexture::OnRButtonDown(UINT nFlags, CPoint point)
     m_pRightMouseButtonClicked(pixU, pixV);
   }
 
-	CWnd::OnRButtonDown(nFlags, point);
+  CWnd::OnRButtonDown(nFlags, point);
 }
 
 void CWndDisplayTexture::OnMouseMove(UINT nFlags, CPoint point) 
@@ -307,6 +307,6 @@ void CWndDisplayTexture::OnMouseMove(UINT nFlags, CPoint point)
     m_pixLineStopU = point.x;
     m_pixLineStopV = point.y;
   }
-	
-	CWnd::OnMouseMove(nFlags, point);
+  
+  CWnd::OnMouseMove(nFlags, point);
 }

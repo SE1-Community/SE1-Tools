@@ -31,22 +31,22 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgEditButtonAction::CDlgEditButtonAction(CButtonAction *pbaButtonAction, 
                                            CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgEditButtonAction::IDD, pParent)
+  : CDialog(CDlgEditButtonAction::IDD, pParent)
 {
   // remember button action that is edited
   m_pbaButtonAction = pbaButtonAction;
 
   //{{AFX_DATA_INIT(CDlgEditButtonAction)
-	m_strButtonActionName = _T("");
-	m_strButtonDownCommand = _T("");
-	m_strButtonUpCommand = _T("");
-	//}}AFX_DATA_INIT
+  m_strButtonActionName = _T("");
+  m_strButtonDownCommand = _T("");
+  m_strButtonUpCommand = _T("");
+  //}}AFX_DATA_INIT
 }
 
 
 void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+  CDialog::DoDataExchange(pDX);
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE)
   {
@@ -55,11 +55,11 @@ void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
     m_strButtonUpCommand = m_pbaButtonAction->ba_strCommandLineWhenReleased;
   }
 
-	//{{AFX_DATA_MAP(CDlgEditButtonAction)
-	DDX_Text(pDX, IDC_BUTTON_ACTION_NAME, m_strButtonActionName);
-	DDX_Text(pDX, IDC_BUTTON_DOWN_COMMAND, m_strButtonDownCommand);
-	DDX_Text(pDX, IDC_BUTTON_UP_COMMAND, m_strButtonUpCommand);
-	//}}AFX_DATA_MAP
+  //{{AFX_DATA_MAP(CDlgEditButtonAction)
+  DDX_Text(pDX, IDC_BUTTON_ACTION_NAME, m_strButtonActionName);
+  DDX_Text(pDX, IDC_BUTTON_DOWN_COMMAND, m_strButtonDownCommand);
+  DDX_Text(pDX, IDC_BUTTON_UP_COMMAND, m_strButtonUpCommand);
+  //}}AFX_DATA_MAP
 
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE)
@@ -72,9 +72,9 @@ void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgEditButtonAction, CDialog)
-	//{{AFX_MSG_MAP(CDlgEditButtonAction)
-		// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDlgEditButtonAction)
+    // NOTE: the ClassWizard will add message map macros here
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

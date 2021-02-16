@@ -52,9 +52,9 @@ void CDropDown::RememberIDs()
 }
 
 BEGIN_MESSAGE_MAP(CDropDown, CComboBox)
-	//{{AFX_MSG_MAP(CDropDown)
-	ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendok)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CDropDown)
+  ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendok)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

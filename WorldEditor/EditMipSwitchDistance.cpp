@@ -41,8 +41,8 @@ CEditMipSwitchDistance::~CEditMipSwitchDistance()
 
 
 BEGIN_MESSAGE_MAP(CEditMipSwitchDistance, CEdit)
-	//{{AFX_MSG_MAP(CEditMipSwitchDistance)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CEditMipSwitchDistance)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,10 +84,10 @@ BOOL IsEditingEnabled(void)
 
 BOOL CEditMipSwitchDistance::PreTranslateMessage(MSG* pMsg) 
 {
-	// if we caught key down message
-  if (pMsg->message==WM_KEYDOWN)
+  // if we caught key down message
+  if (pMsg->message == WM_KEYDOWN)
   {
-    if (((int)pMsg->wParam==VK_RETURN) && IsEditingEnabled() )
+    if (((int)pMsg->wParam == VK_RETURN) && IsEditingEnabled() )
     {
       // set new mip switch distance
       CString strWindowText;
@@ -115,8 +115,8 @@ BOOL CEditMipSwitchDistance::PreTranslateMessage(MSG* pMsg)
 
     return TRUE;
   }
-	
-	return CEdit::PreTranslateMessage(pMsg);
+  
+  return CEdit::PreTranslateMessage(pMsg);
 }
 
 BOOL CEditMipSwitchDistance::OnIdle(LONG lCount)
