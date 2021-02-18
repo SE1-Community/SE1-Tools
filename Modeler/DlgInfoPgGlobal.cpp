@@ -62,28 +62,28 @@ void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView* pModelerView)
   char value[20];
   ASSERT( pModelerView != NULL);
   
-  /* Get current model's info */
+  // Get current model's info
   pModelerView->m_ModelObject.GetModelInfo( miModelInfo);
   INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel( pModelerView->m_fCurrentMipFactor);
   
-  /* Texture size */
+  // Texture size
   sprintf( value, "%.2f x %.2f m", METERS_MEX( miModelInfo.mi_Width),
                                    METERS_MEX( miModelInfo.mi_Height) );
   m_strTextureSize = value;
 
-  /* Flat (YES/NO) */
+  // Flat (YES/NO)
   if (miModelInfo.mi_Flags & MF_FACE_FORWARD) m_strFlat = "Yes";
   else                                        m_strFlat = "No";
 
-  /* High quality (YES/NO) */
+  // High quality (YES/NO)
   if (miModelInfo.mi_Flags & MF_COMPRESSED_16BIT) m_strHighQuality = "Yes";
   else                                            m_strHighQuality = "No";
 
-  /* Set max shadow */
+  // Set max shadow
   sprintf( value, "%d", pDoc->m_emEditModel.edm_md.md_ShadowQuality);
   m_strMaxShadow = value;
 
-  /* Set window size */
+  // Set window size
   sprintf( value, "%d x %d", pModelerView->m_pDrawPort->GetWidth(),
                              pModelerView->m_pDrawPort->GetHeight());
   m_strWndSize = value;

@@ -144,7 +144,7 @@ public:
   void FastZoomIn( CPoint point);
   void FastZoomOut( void);
   BOOL AssureValidTDI();
-  /* gets pointer to MDIFrameWnd main frame of application */
+  // gets pointer to MDIFrameWnd main frame of application
   CMainFrame *GetMainFrame();
   CModelerDoc *GetDocument(void);
   BOOL UpdateAnimations(void);

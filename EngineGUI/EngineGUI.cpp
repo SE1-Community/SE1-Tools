@@ -255,7 +255,7 @@ CTFileName CEngineGUI::CreateTexture(CTFileName fnTexFileToRecreate/*=CTString("
 
 
 
-/* Functions used by application for getting and setting registry keys concerning modes */
+// Functions used by application for getting and setting registry keys concerning modes
 
 void CEngineGUI::GetFullScreenModeFromRegistry( CTString strSectionName, CDisplayMode &dm, GfxAPIType &gat)
 {

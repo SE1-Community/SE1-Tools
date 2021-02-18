@@ -249,7 +249,7 @@ XCALL_(int) Handler_SurfaceParameters( long version, GlobalFunc *global, LWShade
 }
 
 
-/* interface stuff ----- */
+// interface stuff -----
 
 static LWXPanelFuncs *xpanf;
 static LWColorActivateFunc *colorpick;

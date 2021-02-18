@@ -189,23 +189,23 @@ public:
   // Fills status line's editing data info pane
   void SetEditingDataPaneInfo(BOOL bImidiateRepainting);
   CWorldEditorDoc* GetDocument(void);
-  /* gets pointer to MDIFrameWnd main frame of application */
+  // gets pointer to MDIFrameWnd main frame of application
   CMainFrame *GetMainFrame(void);
-  /* set parameters for projection depending on current rendering preferences. */
+  // set parameters for projection depending on current rendering preferences.
   void SetProjection(CDrawPort *pDP);
-  /* called by document at the beginning of CSG */
+  // called by document at the beginning of CSG
   void AtStartCSG(void);
-  /* called by document at the end of CSG */
+  // called by document at the end of CSG
   void AtStopCSG(void);
-  /* get pointer to the child frame of this view */
+  // get pointer to the child frame of this view
   CChildFrame *GetChildFrame(void);
-  /* if delete entity operation is allowed returns true */
+  // if delete entity operation is allowed returns true
   BOOL IsDeleteEntityEnabled(void);
   // remove given entity from linked chain
   void RemoveFromLinkedChain(CEntity *pen);
-  /* Returns curently active mip factor (auto or manual one) */
+  // Returns curently active mip factor (auto or manual one)
   FLOAT GetCurrentlyActiveMipFactor(void);
-  /* obtain point in the world where mouse pointed last time it was moved */
+  // obtain point in the world where mouse pointed last time it was moved
   CPlacement3D GetMouseInWorldPlacement(void);
 
   void CreatePrimitiveCalledFromPopup();

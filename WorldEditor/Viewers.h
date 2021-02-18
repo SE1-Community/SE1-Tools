@@ -79,9 +79,9 @@ public:
   inline BOOL IsIsometric(void) const { ASSERT( sv_ProjectionType != PT_ILLEGAL);
                                  return sv_ProjectionType != PT_PERSPECTIVE; };
                                  
-  /* Get zoom factor for the viewer. */
+  // Get zoom factor for the viewer.
   FLOAT GetZoomFactor(void);
-  /* Get distance for requested zoom factor for the viewer. */
+  // Get distance for requested zoom factor for the viewer.
   FLOAT GetDistanceForZoom(FLOAT fZoom);
 
   // get target distance

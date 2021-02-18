@@ -34,17 +34,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class CEngineGUI
 {
 public:
-  /* Functions used by application for getting and setting registry keys concerning modes */
+  // Functions used by application for getting and setting registry keys concerning modes
   ENGINEGUI_API void GetFullScreenModeFromRegistry( CTString strSectionName, CDisplayMode &dm, GfxAPIType &gat);
   ENGINEGUI_API void SetFullScreenModeToRegistry(   CTString strSectionName, CDisplayMode  dm, GfxAPIType  gat);
-  /* Call select mode dialog */
+  // Call select mode dialog
   ENGINEGUI_API void SelectMode( CDisplayMode &dm, GfxAPIType &gat);
 
-  /* Call create texture dialog */
+  // Call create texture dialog
   ENGINEGUI_API CTFileName CreateTexture( CTFileName fnTexFileToRecreate = CTString(""),
                                           CDynamicArray<CTFileName> *pafnCreatedTextures=NULL);
 
-/* Predefined registry key names */
+// Predefined registry key names
 #define KEY_NAME_REQUEST_FILE_DIR "Request file directory"
 #define KEY_NAME_DETAIL_TEXTURE_DIR "Detail texture directory"
 #define KEY_NAME_BASE_TEXTURE_DIR   "Base texture directory"
@@ -55,7 +55,7 @@ public:
 #define KEY_NAME_REPLACE_TEXTURE_DIR "Replace texture directory"
 #define KEY_NAME_SCREEN_SHOT_DIR "Screen shots directory"
 
-/* Predefined file filters for file requester */
+// Predefined file filters for file requester
 #define FILTER_ALL            "All files (*.*)\0*.*\0"
 #define FILTER_PICTURES       "Pictures (*.pcx;*.tga)\0*.pcx;*.tga\0"
 #define FILTER_3DOBJ          "3D object\0*.lwo;*.obj;*.3ds\0"
@@ -76,7 +76,7 @@ public:
 #define FILTER_TGA            "TGA files (*.tga)\0*.tga\0"
 #define FILTER_SMC            "SMC files (*.smc)\0*.smc\0"
 #define FILTER_END            "\0"
-  /* File requester with thumbnail display */
+  // File requester with thumbnail display
   ENGINEGUI_API CTFileName FileRequester( char *pchrTitle="Choose file",
                             char *pchrFilters=FILTER_ALL FILTER_END,
                             char *pchrRegistry=KEY_NAME_REQUEST_FILE_DIR,
@@ -84,7 +84,7 @@ public:
                             CDynamicArray<CTFileName> *pafnCreatedTextures=NULL,
                             BOOL bIfOpen=TRUE);
 
-  /* Call browse texture requester */
+  // Call browse texture requester
   ENGINEGUI_API CTFileName BrowseTexture(CTFileName fnDefaultSelected=CTString(""),
     char *pchrIniKeyName=KEY_NAME_REQUEST_FILE_DIR,
     char *pchrWindowTitle="Choose texture",

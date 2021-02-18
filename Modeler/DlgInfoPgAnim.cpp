@@ -59,11 +59,11 @@ void CDlgInfoPgAnim::SetAnimPageFromView(CModelerView* pModelerView)
 
   ASSERT( pModelerView != NULL);
   
-  /* Get current model's info */
+  // Get current model's info
   pModelerView->m_ModelObject.GetModelInfo( miModelInfo);
   INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel( pModelerView->m_fCurrentMipFactor);
 
-  /* Number of animations in model */
+  // Number of animations in model
   sprintf( value, "%d", pModelerView->m_ModelObject.GetAnimsCt());
   m_strNoOfAnimations = value;
   sprintf( value, "%d", miModelInfo.mi_FramesCt);
@@ -76,7 +76,7 @@ void CDlgInfoPgAnim::SetAnimPageFromView(CModelerView* pModelerView)
   INDEX iCurrentFrame = pModelerView->m_ModelObject.GetFrame();
   BOOL bIsPaused = pModelerView->m_ModelObject.IsPaused();
 
-  /* Now we will fill animation page variables ...*/
+  // Now we will fill animation page variables ...
   m_strAnimName = aiInfo.ai_AnimName;
   
   sprintf( value, "%d", aiInfo.ai_NumberOfFrames);

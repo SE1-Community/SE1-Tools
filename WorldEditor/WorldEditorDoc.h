@@ -65,9 +65,9 @@ class CUndo
 public:  
   CListNode m_lnListNode;
   CTFileName m_fnmUndoFile;     // name of temporary file used for undo/redo
-  /* Constructor. */
+  // Constructor.
   CUndo(void);    // throw char * 
-  /* Destructor. */
+  // Destructor.
   ~CUndo(void);
 };
 

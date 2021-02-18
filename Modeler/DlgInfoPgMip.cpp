@@ -53,7 +53,7 @@ void CDlgInfoPgMip::SetMipPageFromView(CModelerView* pModelerView)
   ASSERT( pModelerView != NULL);
   CModelerDoc *pDoc = pModelerView->GetDocument();
 
-  /* Get current model's info */
+  // Get current model's info
   pModelerView->m_ModelObject.GetModelInfo( miModelInfo);
   INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel( pModelerView->m_fCurrentMipFactor);
 

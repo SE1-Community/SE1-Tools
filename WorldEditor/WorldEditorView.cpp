@@ -5713,7 +5713,7 @@ void CWorldEditorView::OnTakeSs()
     return;
   }
   CImageInfo iiImageInfo;
-  /* First remember current screen-shot in memory. */
+  // First remember current screen-shot in memory.
   if (pdpValidDrawPort->Lock())
   {
     RenderView( pdpValidDrawPort);
