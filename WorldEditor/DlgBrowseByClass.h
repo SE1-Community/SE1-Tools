@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,44 +25,42 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgBrowseByClass dialog
 
-class CDlgBrowseByClass : public CDialog 
-{
-// Construction
-public:
-  CDlgBrowseByClass(CWnd* pParent = NULL);   // standard constructor
+class CDlgBrowseByClass : public CDialog {
+  // Construction
+  public:
+  CDlgBrowseByClass(CWnd* pParent = NULL); // standard constructor
   ~CDlgBrowseByClass();
-  void AddEntity( CEntity *pen);
+  void AddEntity(CEntity* pen);
   void FillListWithEntities(void);
   void InitializePluggins(void);
   void InitializeListColumns(void);
-  CTString GetItemValue(CEntity *pen, INDEX iColumn, BOOL &bNumber);
-  CDynamicContainer<class CEntity> *GetCurrentContainer(void);
+  CTString GetItemValue(CEntity* pen, INDEX iColumn, BOOL& bNumber);
+  CDynamicContainer<class CEntity>* GetCurrentContainer(void);
 
   BOOL m_bCenterSelected;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgBrowseByClass)
   enum { IDD = IDD_BROWSE_BY_CLASS };
-  CComboBox  m_ctrlPluggins;
-  CListCtrl  m_listEntities;
-  CString  m_strEntitiesInVolume;
-  BOOL  m_bShowVolume;
-  BOOL  m_bShowImportants;
+  CComboBox m_ctrlPluggins;
+  CListCtrl m_listEntities;
+  CString m_strEntitiesInVolume;
+  BOOL m_bShowVolume;
+  BOOL m_bShowImportants;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgBrowseByClass)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgBrowseByClass)
   virtual BOOL OnInitDialog();

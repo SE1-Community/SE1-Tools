@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,35 +25,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CTexView window
 
-class CTexView : public CWnd
-{
-// Construction
-public:
+class CTexView : public CWnd {
+  // Construction
+  public:
   CTexView();
 
-// Attributes
-public:
-
-// Operations
-public:
-  CDrawPort *m_pDrawPort;
-  CViewPort *m_pViewPort;
+  // Attributes
+  public:
+  // Operations
+  public:
+  CDrawPort* m_pDrawPort;
+  CViewPort* m_pViewPort;
   CTextureObject m_ptoPreview;
   void ChangeTexture(CTString strNewTexObject);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CTexView)
   public:
-  virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
+  virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID,
+                      CCreateContext* pContext = NULL);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CTexView();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CTexView)
   afx_msg void OnPaint();
   afx_msg void OnSize(UINT nType, int cx, int cy);

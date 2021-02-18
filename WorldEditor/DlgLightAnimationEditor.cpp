@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -33,26 +33,21 @@ static char THIS_FILE[] = __FILE__;
 
 #define DEFAULT_ANIMATION_FILE "Temp\\DefaultAnimation.ani"
 
-INDEX CDlgLightAnimationEditor::GetSelectedLightAnimation(void)
-{
+INDEX CDlgLightAnimationEditor::GetSelectedLightAnimation(void) {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if (iLightAnimation == CB_ERR)
-  {
+  if (iLightAnimation == CB_ERR) {
     return 0;
   }
   return iLightAnimation;
 }
 
-CDlgLightAnimationEditor::CDlgLightAnimationEditor(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgLightAnimationEditor::IDD, pParent)
-{
+CDlgLightAnimationEditor::CDlgLightAnimationEditor(CWnd *pParent /*=NULL*/) : CDialog(CDlgLightAnimationEditor::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgLightAnimationEditor)
   m_fLightAnimationSpeed = 0.0f;
   m_iAnimationFrames = 0;
   m_strLightAnimationName = _T("");
   //}}AFX_DATA_INIT
-
 
   m_bCustomWindowsCreated = FALSE;
   m_fnSaveName = CTString("");
@@ -60,53 +55,45 @@ CDlgLightAnimationEditor::CDlgLightAnimationEditor(CWnd* pParent /*=NULL*/)
   // save default animation into temporary directory
   CAnimData adDefault;
   adDefault.DefaultAnimation();
-  CTFileName fnDefaultAnimation = CTString( DEFAULT_ANIMATION_FILE);
+  CTFileName fnDefaultAnimation = CTString(DEFAULT_ANIMATION_FILE);
   try {
-    adDefault.Save_t( fnDefaultAnimation);
-  } catch( char *pError) {
-    FatalError( "Unable to save default animation: \"%s\", %s", (CTString&)fnDefaultAnimation, pError);
+    adDefault.Save_t(fnDefaultAnimation);
+  } catch (char *pError) {
+    FatalError("Unable to save default animation: \"%s\", %s", (CTString &)fnDefaultAnimation, pError);
   }
 
   // try to load animation that was last edited
-  try
-  {
-    CTFileName fnLastEditted = CTString( CStringA(theApp.GetProfileString(L"World editor", L"Last edited light animation", CString(DEFAULT_ANIMATION_FILE))));
-    m_padAnimData = _pAnimStock->Obtain_t( fnLastEditted);
+  try {
+    CTFileName fnLastEditted = CTString(
+      CStringA(theApp.GetProfileString(L"World editor", L"Last edited light animation", CString(DEFAULT_ANIMATION_FILE))));
+    m_padAnimData = _pAnimStock->Obtain_t(fnLastEditted);
     m_fnSaveName = fnLastEditted;
-  }
-  catch( char *pError)
-  {
-    (void) pError;
+  } catch (char *pError) {
+    (void)pError;
     // try to load default animation
-    try
-    {
-      m_padAnimData = _pAnimStock->Obtain_t( fnDefaultAnimation);
-    }
-    catch( char *pError2)
-    {
-      FatalError( "Unable to save and obtain default animation: \"%s\", %s", (CTString&)fnDefaultAnimation, pError2);
+    try {
+      m_padAnimData = _pAnimStock->Obtain_t(fnDefaultAnimation);
+    } catch (char *pError2) {
+      FatalError("Unable to save and obtain default animation: \"%s\", %s", (CTString &)fnDefaultAnimation, pError2);
     }
   }
 
   // set animation data
-  m_wndTestAnimation.m_aoAnimObject.SetData( m_padAnimData);
+  m_wndTestAnimation.m_aoAnimObject.SetData(m_padAnimData);
   m_bChanged = FALSE;
 }
 
-CDlgLightAnimationEditor::~CDlgLightAnimationEditor()
-{
+CDlgLightAnimationEditor::~CDlgLightAnimationEditor() {
   theApp.WriteProfileString(L"World editor", L"Last edited light animation", CString(m_padAnimData->GetName()));
-  m_wndTestAnimation.m_aoAnimObject.SetData( NULL);
-  _pAnimStock->Release( m_padAnimData);
+  m_wndTestAnimation.m_aoAnimObject.SetData(NULL);
+  _pAnimStock->Release(m_padAnimData);
 }
 
-void CDlgLightAnimationEditor::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgLightAnimationEditor::DoDataExchange(CDataExchange *pDX) {
   CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
+  if (pDX->m_bSaveAndValidate == FALSE) {
     InitializeData();
   }
 
@@ -121,55 +108,51 @@ void CDlgLightAnimationEditor::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE )
-  {
+  if (pDX->m_bSaveAndValidate != FALSE) {
     StoreData();
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgLightAnimationEditor, CDialog)
-  //{{AFX_MSG_MAP(CDlgLightAnimationEditor)
-  ON_WM_PAINT()
-  ON_BN_CLICKED(IDC_DELETE_MARKER, OnDeleteMarker)
-  ON_EN_CHANGE(IDC_LIGHT_ANIMATION_FRAMES, OnChangeLightAnimationFrames)
-  ON_CBN_SELCHANGE(IDC_LIGHT_ANIMATION_NAME_COMBO, OnSelchangeLightAnimationNameCombo)
-  ON_EN_CHANGE(IDC_LIGHT_ANIMATION_SPEED, OnChangeLightAnimationSpeed)
-  ON_BN_CLICKED(IDC_SCROLL_LEFT, OnScrollLeft)
-  ON_BN_CLICKED(IDC_SCROLL_RIGHT, OnScrollRight)
-  ON_BN_CLICKED(IDC_SCROLL_PG_LEFT, OnScrollPgLeft)
-  ON_BN_CLICKED(IDC_SCROLL_PG_RIGHT, OnScrollPgRight)
-  ON_BN_CLICKED(ID_DELETE_ANIMATION, OnDeleteAnimation)
-  ON_BN_CLICKED(ID_ADD_ANIMATION, OnAddAnimation)
-  ON_EN_CHANGE(IDC_LIGHT_ANIMATION_NAME, OnChangeLightAnimationName)
-  ON_BN_CLICKED(ID_LOAD_ANIMATION, OnLoadAnimation)
-  ON_BN_CLICKED(ID_SAVE_ANIMATION, OnSaveAnimation)
-  ON_BN_CLICKED(ID_SAVE_AS_ANIMATION, OnSaveAsAnimation)
-  ON_BN_CLICKED(ID_CLOSE, OnButtonClose)
-  ON_BN_CLICKED(IDCANCEL, OnCancel)
-  ON_WM_CLOSE()
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgLightAnimationEditor)
+ON_WM_PAINT()
+ON_BN_CLICKED(IDC_DELETE_MARKER, OnDeleteMarker)
+ON_EN_CHANGE(IDC_LIGHT_ANIMATION_FRAMES, OnChangeLightAnimationFrames)
+ON_CBN_SELCHANGE(IDC_LIGHT_ANIMATION_NAME_COMBO, OnSelchangeLightAnimationNameCombo)
+ON_EN_CHANGE(IDC_LIGHT_ANIMATION_SPEED, OnChangeLightAnimationSpeed)
+ON_BN_CLICKED(IDC_SCROLL_LEFT, OnScrollLeft)
+ON_BN_CLICKED(IDC_SCROLL_RIGHT, OnScrollRight)
+ON_BN_CLICKED(IDC_SCROLL_PG_LEFT, OnScrollPgLeft)
+ON_BN_CLICKED(IDC_SCROLL_PG_RIGHT, OnScrollPgRight)
+ON_BN_CLICKED(ID_DELETE_ANIMATION, OnDeleteAnimation)
+ON_BN_CLICKED(ID_ADD_ANIMATION, OnAddAnimation)
+ON_EN_CHANGE(IDC_LIGHT_ANIMATION_NAME, OnChangeLightAnimationName)
+ON_BN_CLICKED(ID_LOAD_ANIMATION, OnLoadAnimation)
+ON_BN_CLICKED(ID_SAVE_ANIMATION, OnSaveAnimation)
+ON_BN_CLICKED(ID_SAVE_AS_ANIMATION, OnSaveAsAnimation)
+ON_BN_CLICKED(ID_CLOSE, OnButtonClose)
+ON_BN_CLICKED(IDCANCEL, OnCancel)
+ON_WM_CLOSE()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgLightAnimationEditor message handlers
 
-void CDlgLightAnimationEditor::InitializeData(void)
-{
-  if (!IsWindow( m_LightAnimationCombo.m_hWnd)) return;
+void CDlgLightAnimationEditor::InitializeData(void) {
+  if (!IsWindow(m_LightAnimationCombo.m_hWnd))
+    return;
   // set dialog window title
   CTString strTitle = m_padAnimData->GetName();
-  if ((strTitle == "") || (strTitle == DEFAULT_ANIMATION_FILE) )
-  {
+  if ((strTitle == "") || (strTitle == DEFAULT_ANIMATION_FILE)) {
     strTitle = "<unnamed>";
   }
-  SetWindowText( CString(CTString("Editing animation: ") + strTitle));
+  SetWindowText(CString(CTString("Editing animation: ") + strTitle));
 
   // get currently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if (iLightAnimation != CB_ERR)
-  {
-    m_wndTestAnimation.m_aoAnimObject.StartAnim( iLightAnimation);
+  if (iLightAnimation != CB_ERR) {
+    m_wndTestAnimation.m_aoAnimObject.StartAnim(iLightAnimation);
     // obtain information about animation
     CAnimInfo aiInfo;
     m_padAnimData->GetAnimInfo(iLightAnimation, aiInfo);
@@ -179,31 +162,27 @@ void CDlgLightAnimationEditor::InitializeData(void)
     m_strLightAnimationName = aiInfo.ai_AnimName;
 
     // set current frame text
-    char achrFrame[ 64];
-    sprintf( achrFrame, "Frame: %d", m_wndAnimationFrames.m_iSelectedFrame);
+    char achrFrame[64];
+    sprintf(achrFrame, "Frame: %d", m_wndAnimationFrames.m_iSelectedFrame);
     m_strCurrentFrame = achrFrame;
     // redraw frames
-    if (IsWindow(m_wndAnimationFrames.m_hWnd))
-    {
+    if (IsWindow(m_wndAnimationFrames.m_hWnd)) {
       // enable/disable delete key-frame button
-      GetDlgItem(IDC_DELETE_MARKER)->EnableWindow(
-        m_wndAnimationFrames.IsSelectedFrameKeyFrame() );
-      m_wndAnimationFrames.Invalidate( FALSE);
+      GetDlgItem(IDC_DELETE_MARKER)->EnableWindow(m_wndAnimationFrames.IsSelectedFrameKeyFrame());
+      m_wndAnimationFrames.Invalidate(FALSE);
     }
   }
 }
 
-void CDlgLightAnimationEditor::StoreData(void)
-{
+void CDlgLightAnimationEditor::StoreData(void) {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if (iLightAnimation == CB_ERR)
-  {
+  if (iLightAnimation == CB_ERR) {
     return;
   }
 
   // and set new name to anim data
-  m_padAnimData->SetName( iLightAnimation, CTString(CStringA(m_strLightAnimationName)));
+  m_padAnimData->SetName(iLightAnimation, CTString(CStringA(m_strLightAnimationName)));
   //------------ Prepare new array of frames for current animation (key frames changing is
   // not applied here but in control LMB down handler)
   CAnimData *pAD = m_padAnimData;
@@ -213,38 +192,34 @@ void CDlgLightAnimationEditor::StoreData(void)
   // get count of old frames
   INDEX ctOldFrames = aiInfo.ai_NumberOfFrames;
   // create array for new frames
-  INDEX *piNewFrames = new INDEX[ m_iAnimationFrames];
+  INDEX *piNewFrames = new INDEX[m_iAnimationFrames];
   // now copy old array over new one but if new one is longer than old one, added
   // frames will be filled with last value (RGBA format)
-  for (INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
-  {
+  for (INDEX iFrame = 0; iFrame < m_iAnimationFrames; iFrame++) {
     // if we are copying old frames
-    if (iFrame<ctOldFrames)
-    {
-      piNewFrames[iFrame]=pAD->GetFrame(iLightAnimation, iFrame);
+    if (iFrame < ctOldFrames) {
+      piNewFrames[iFrame] = pAD->GetFrame(iLightAnimation, iFrame);
       // if we are adding last frame, delete its key-frame marker
-      if ((m_iAnimationFrames>ctOldFrames) && (iFrame == (ctOldFrames-1)) && (iFrame != 0) )
-      {
+      if ((m_iAnimationFrames > ctOldFrames) && (iFrame == (ctOldFrames - 1)) && (iFrame != 0)) {
         piNewFrames[iFrame] &= 0xFFFFFF00;
       }
     }
     // if we are adding new frames
-    else
-    {
+    else {
       // obtain last frame in old animation
-      INDEX iLastFrame = pAD->GetFrame(iLightAnimation, ctOldFrames-1);
+      INDEX iLastFrame = pAD->GetFrame(iLightAnimation, ctOldFrames - 1);
       // clear alpha chanell (we don't want added frames to be key frames)
       iLastFrame &= 0xFFFFFF00;
       // clone last frame from ole animation as added frames in new animation
-      piNewFrames[iFrame]=iLastFrame;
+      piNewFrames[iFrame] = iLastFrame;
     }
   }
   // set alpha to 0xFF to mark key frame for last frame (first and last frames must be keys)
-  piNewFrames[m_iAnimationFrames-1] |= 0x000000FF;
+  piNewFrames[m_iAnimationFrames - 1] |= 0x000000FF;
   // set new speed
-  pAD->SetSpeed( iLightAnimation, m_fLightAnimationSpeed);
+  pAD->SetSpeed(iLightAnimation, m_fLightAnimationSpeed);
   // set new frames
-  pAD->SetFrames( iLightAnimation, m_iAnimationFrames, piNewFrames);
+  pAD->SetFrames(iLightAnimation, m_iAnimationFrames, piNewFrames);
   // spread frames
   SpreadFrames();
   // delete allocated array
@@ -252,12 +227,10 @@ void CDlgLightAnimationEditor::StoreData(void)
   m_bChanged = TRUE;
 }
 
-void CDlgLightAnimationEditor::SpreadFrames(void)
-{
+void CDlgLightAnimationEditor::SpreadFrames(void) {
   // get curently selected light animation combo member
   INDEX iLightAnimation = m_LightAnimationCombo.GetCurSel();
-  if (iLightAnimation == CB_ERR)
-  {
+  if (iLightAnimation == CB_ERR) {
     return;
   }
 
@@ -268,76 +241,67 @@ void CDlgLightAnimationEditor::SpreadFrames(void)
   // get count of frames
   INDEX ctFrames = aiInfo.ai_NumberOfFrames;
   // create array to be copy of current frames array
-  INDEX *piFrames = new INDEX[ ctFrames];
+  INDEX *piFrames = new INDEX[ctFrames];
   // now copy old array over new one
-  for (INDEX iFrame=0; iFrame<m_iAnimationFrames; iFrame++)
-  {
-    piFrames[iFrame]=pAD->GetFrame(iLightAnimation, iFrame);
+  for (INDEX iFrame = 0; iFrame < m_iAnimationFrames; iFrame++) {
+    piFrames[iFrame] = pAD->GetFrame(iLightAnimation, iFrame);
   }
   // we will start spreading from first frame
-  INDEX iStart=0;
+  INDEX iStart = 0;
   // now spread frames beetween key-frames
-  do
-  {
+  do {
     // find first next key frame
-    INDEX iKeySearcher=iStart+1;
-    for (; iKeySearcher<ctFrames; iKeySearcher++)
-    {
+    INDEX iKeySearcher = iStart + 1;
+    for (; iKeySearcher < ctFrames; iKeySearcher++) {
       // is this gradient key frame?
-      if ((piFrames[iKeySearcher] & 0x000000FF) != 0)
-      {
+      if ((piFrames[iKeySearcher] & 0x000000FF) != 0) {
         // yes it is, stop searching
         break;
       }
     }
     // get starting R, G, B values
-    FLOAT fStartR = (FLOAT) ((piFrames[iStart] >> 24) & 0x000000FF);
-    FLOAT fStartG = (FLOAT) ((piFrames[iStart] >> 16) & 0x000000FF);
-    FLOAT fStartB = (FLOAT) ((piFrames[iStart] >> 8 ) & 0x000000FF);
+    FLOAT fStartR = (FLOAT)((piFrames[iStart] >> 24) & 0x000000FF);
+    FLOAT fStartG = (FLOAT)((piFrames[iStart] >> 16) & 0x000000FF);
+    FLOAT fStartB = (FLOAT)((piFrames[iStart] >> 8) & 0x000000FF);
 
     // calculate R, G and B deltas
-    FLOAT fdR = ( (FLOAT)((piFrames[iKeySearcher] >> 24) & 0x000000FF)-
-                  ((piFrames[iStart] >> 24)       & 0x000000FF) )/(iKeySearcher-iStart);
-    FLOAT fdG = ( (FLOAT)((piFrames[iKeySearcher] >> 16) & 0x000000FF)-
-                  ((piFrames[iStart] >> 16)       & 0x000000FF) )/(iKeySearcher-iStart);
-    FLOAT fdB = ( (FLOAT)((piFrames[iKeySearcher] >> 8)  & 0x000000FF)-
-                  ((piFrames[iStart] >> 8)        & 0x000000FF) )/(iKeySearcher-iStart);
-    INDEX iDeltaTimes=1;
+    FLOAT fdR = ((FLOAT)((piFrames[iKeySearcher] >> 24) & 0x000000FF) - ((piFrames[iStart] >> 24) & 0x000000FF))
+                / (iKeySearcher - iStart);
+    FLOAT fdG = ((FLOAT)((piFrames[iKeySearcher] >> 16) & 0x000000FF) - ((piFrames[iStart] >> 16) & 0x000000FF))
+                / (iKeySearcher - iStart);
+    FLOAT fdB
+      = ((FLOAT)((piFrames[iKeySearcher] >> 8) & 0x000000FF) - ((piFrames[iStart] >> 8) & 0x000000FF)) / (iKeySearcher - iStart);
+    INDEX iDeltaTimes = 1;
     // create gradients beetween  iStart and iKeySearcher
-    for (INDEX iGradient=iStart+1; iGradient<iKeySearcher; iGradient++)
-    {
-      FLOAT fCurrentR = fStartR+fdR*iDeltaTimes;
-      FLOAT fCurrentG = fStartG+fdG*iDeltaTimes;
-      FLOAT fCurrentB = fStartB+fdB*iDeltaTimes;
-      COLOR colNR = (COLOR) fCurrentR;
-      COLOR colNG = (COLOR) fCurrentG;
-      COLOR colNB = (COLOR) fCurrentB;
-      piFrames[iGradient]= (colNR << 24) | (colNG << 16) | (colNB << 8);
+    for (INDEX iGradient = iStart + 1; iGradient < iKeySearcher; iGradient++) {
+      FLOAT fCurrentR = fStartR + fdR * iDeltaTimes;
+      FLOAT fCurrentG = fStartG + fdG * iDeltaTimes;
+      FLOAT fCurrentB = fStartB + fdB * iDeltaTimes;
+      COLOR colNR = (COLOR)fCurrentR;
+      COLOR colNG = (COLOR)fCurrentG;
+      COLOR colNB = (COLOR)fCurrentB;
+      piFrames[iGradient] = (colNR << 24) | (colNG << 16) | (colNB << 8);
       // next delta
-      iDeltaTimes ++;
+      iDeltaTimes++;
     }
     // next gradient will start at last key frame
     iStart = iKeySearcher;
-  }
-  while (iStart < ctFrames);
+  } while (iStart < ctFrames);
   // set new frames
-  pAD->SetFrames( iLightAnimation, ctFrames, piFrames);
+  pAD->SetFrames(iLightAnimation, ctFrames, piFrames);
   // delete allocated array
   delete piFrames;
   // redraw frames
-  if (IsWindow(m_wndAnimationFrames.m_hWnd))
-  {
-    m_wndAnimationFrames.Invalidate( FALSE);
+  if (IsWindow(m_wndAnimationFrames.m_hWnd)) {
+    m_wndAnimationFrames.Invalidate(FALSE);
   }
 }
-void CDlgLightAnimationEditor::OnPaint()
-{
+void CDlgLightAnimationEditor::OnPaint() {
   {
-  CPaintDC dc(this); // device context for painting
+    CPaintDC dc(this); // device context for painting
   }
 
-  if (!m_bCustomWindowsCreated)
-  {
+  if (!m_bCustomWindowsCreated) {
     // ---------------- Create custom window that will hold graphical representation of frames
     // obtain frames area window
     CWnd *pWndFramesArea = GetDlgItem(IDC_FRAMES_AREA);
@@ -347,9 +311,8 @@ void CDlgLightAnimationEditor::OnPaint()
     pWndFramesArea->GetWindowRect(&rectFramesArea);
     ScreenToClient(&rectFramesArea);
     // create window for area to contain frames
-    m_wndAnimationFrames.Create( NULL, NULL, WS_BORDER|WS_VISIBLE, rectFramesArea,
-                                 this, IDW_ANIMATION_FRAMES);
-    m_wndAnimationFrames.SetParentDlg( this);
+    m_wndAnimationFrames.Create(NULL, NULL, WS_BORDER | WS_VISIBLE, rectFramesArea, this, IDW_ANIMATION_FRAMES);
+    m_wndAnimationFrames.SetParentDlg(this);
     // ---------------- Create custom window that show how light animation looks like
     CWnd *pWndTestArea = GetDlgItem(IDC_TEST_AREA);
     ASSERT(pWndTestArea != NULL);
@@ -357,16 +320,14 @@ void CDlgLightAnimationEditor::OnPaint()
     pWndTestArea->GetWindowRect(&rectTestArea);
     ScreenToClient(&rectTestArea);
     // create window for for animation testing
-    m_wndTestAnimation.Create( NULL, NULL, WS_BORDER|WS_VISIBLE, rectTestArea,
-                               this, IDW_ANIMATION_FRAMES);
-    m_wndTestAnimation.SetParentDlg( this);
+    m_wndTestAnimation.Create(NULL, NULL, WS_BORDER | WS_VISIBLE, rectTestArea, this, IDW_ANIMATION_FRAMES);
+    m_wndTestAnimation.SetParentDlg(this);
     // mark that custom windows are created
     m_bCustomWindowsCreated = TRUE;
   }
 }
 
-BOOL CDlgLightAnimationEditor::OnInitDialog()
-{
+BOOL CDlgLightAnimationEditor::OnInitDialog() {
   CDialog::OnInitDialog();
 
   // initialize light animation combo
@@ -374,220 +335,183 @@ BOOL CDlgLightAnimationEditor::OnInitDialog()
   m_LightAnimationCombo.SetCurSel(0);
 
   // initialize
-  UpdateData( FALSE);
+  UpdateData(FALSE);
   return TRUE;
 }
 
-void CDlgLightAnimationEditor::OnDeleteMarker()
-{
+void CDlgLightAnimationEditor::OnDeleteMarker() {
   // delete selected frame
   m_wndAnimationFrames.DeleteSelectedFrame();
 }
 
-void CDlgLightAnimationEditor::OnChangeLightAnimationFrames()
-{
+void CDlgLightAnimationEditor::OnChangeLightAnimationFrames() {
   // store data state from dialog into animation data
-  if (IsWindow(m_LightAnimationCombo.m_hWnd))
-  {
+  if (IsWindow(m_LightAnimationCombo.m_hWnd)) {
     // reset starting and selected frames
     m_wndAnimationFrames.m_iStartingFrame = 0;
     m_wndAnimationFrames.m_iSelectedFrame = 0;
-    UpdateData( TRUE);
+    UpdateData(TRUE);
   }
 }
 
-void CDlgLightAnimationEditor::InitLightAnimationCombo(void)
-{
+void CDlgLightAnimationEditor::InitLightAnimationCombo(void) {
   // clear combo box
   m_LightAnimationCombo.ResetContent();
   // limit animation lenght
   m_LightAnimationCombo.LimitText(NAME_SIZE);
   // initialize light animations combo box
-  for (INDEX iAnimation=0;iAnimation<m_padAnimData->GetAnimsCt(); iAnimation++)
-  {
+  for (INDEX iAnimation = 0; iAnimation < m_padAnimData->GetAnimsCt(); iAnimation++) {
     // obtain information about animation
     CAnimInfo aiInfo;
     m_padAnimData->GetAnimInfo(iAnimation, aiInfo);
     // add animation name
-    m_LightAnimationCombo.AddString( CString(aiInfo.ai_AnimName));
+    m_LightAnimationCombo.AddString(CString(aiInfo.ai_AnimName));
   }
 }
 
-void CDlgLightAnimationEditor::OnScrollLeft()
-{
+void CDlgLightAnimationEditor::OnScrollLeft() {
   m_wndAnimationFrames.ScrollLeft();
 }
 
-void CDlgLightAnimationEditor::OnScrollRight()
-{
+void CDlgLightAnimationEditor::OnScrollRight() {
   m_wndAnimationFrames.ScrollRight();
 }
 
-void CDlgLightAnimationEditor::OnScrollPgLeft()
-{
+void CDlgLightAnimationEditor::OnScrollPgLeft() {
   m_wndAnimationFrames.ScrollPgLeft();
 }
 
-void CDlgLightAnimationEditor::OnScrollPgRight()
-{
+void CDlgLightAnimationEditor::OnScrollPgRight() {
   m_wndAnimationFrames.ScrollPgRight();
 }
 
-void CDlgLightAnimationEditor::OnSelchangeLightAnimationNameCombo()
-{
+void CDlgLightAnimationEditor::OnSelchangeLightAnimationNameCombo() {
   // reset starting and selected frames
   m_wndAnimationFrames.m_iStartingFrame = 0;
   m_wndAnimationFrames.m_iSelectedFrame = 0;
-  UpdateData( FALSE);
+  UpdateData(FALSE);
 }
 
-void CDlgLightAnimationEditor::OnChangeLightAnimationSpeed()
-{
+void CDlgLightAnimationEditor::OnChangeLightAnimationSpeed() {
   // store data state from dialog into animation data
-  if (IsWindow(m_LightAnimationCombo.m_hWnd))
-  {
-    UpdateData( TRUE);
+  if (IsWindow(m_LightAnimationCombo.m_hWnd)) {
+    UpdateData(TRUE);
   }
 }
 
-void CDlgLightAnimationEditor::OnDeleteAnimation()
-{
+void CDlgLightAnimationEditor::OnDeleteAnimation() {
   // get newly selected animation
   INDEX iAnimation = m_LightAnimationCombo.GetCurSel();
-  m_padAnimData->DeleteAnimation( iAnimation);
+  m_padAnimData->DeleteAnimation(iAnimation);
   InitLightAnimationCombo();
-  m_LightAnimationCombo.SetCurSel( 0);
-  UpdateData( FALSE);
+  m_LightAnimationCombo.SetCurSel(0);
+  UpdateData(FALSE);
 }
 
-void CDlgLightAnimationEditor::OnAddAnimation()
-{
+void CDlgLightAnimationEditor::OnAddAnimation() {
   m_padAnimData->AddAnimation();
   // select newly added animation
   InitLightAnimationCombo();
-  m_LightAnimationCombo.SetCurSel(m_padAnimData->GetAnimsCt()-1);
+  m_LightAnimationCombo.SetCurSel(m_padAnimData->GetAnimsCt() - 1);
   // reset starting and selected frames
   m_wndAnimationFrames.m_iStartingFrame = 0;
   m_wndAnimationFrames.m_iSelectedFrame = 0;
-  UpdateData( FALSE);
+  UpdateData(FALSE);
 }
 
-void CDlgLightAnimationEditor::OnChangeLightAnimationName()
-{
-  UpdateData( TRUE);
+void CDlgLightAnimationEditor::OnChangeLightAnimationName() {
+  UpdateData(TRUE);
 
   INDEX iAnimation = m_LightAnimationCombo.GetCurSel();
   InitLightAnimationCombo();
-  m_LightAnimationCombo.SetCurSel( iAnimation);
+  m_LightAnimationCombo.SetCurSel(iAnimation);
 }
 
-void CDlgLightAnimationEditor::OnLoadAnimation()
-{
+void CDlgLightAnimationEditor::OnLoadAnimation() {
   CTFileName fnAnimation = _EngineGUI.FileRequester(
-    "Load animation file",
-    "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END,
-    "Animation directory", "");
-  if (fnAnimation == "") return;
+    "Load animation file", "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END, "Animation directory", "");
+  if (fnAnimation == "")
+    return;
 
-  try
-  {
-    _pAnimStock->Release( m_padAnimData);
-    m_padAnimData = _pAnimStock->Obtain_t( fnAnimation);
+  try {
+    _pAnimStock->Release(m_padAnimData);
+    m_padAnimData = _pAnimStock->Obtain_t(fnAnimation);
     m_fnSaveName = fnAnimation;
-  }
-  catch( char *strError)
-  {
-    WarningMessage( strError);
-    try
-    {
-      CTFileName fnDefaultAnimation = CTString( DEFAULT_ANIMATION_FILE);
-      m_padAnimData = _pAnimStock->Obtain_t( fnDefaultAnimation);
-    }
-    catch( char *strError2)
-    {
-      FatalError( strError2);
+  } catch (char *strError) {
+    WarningMessage(strError);
+    try {
+      CTFileName fnDefaultAnimation = CTString(DEFAULT_ANIMATION_FILE);
+      m_padAnimData = _pAnimStock->Obtain_t(fnDefaultAnimation);
+    } catch (char *strError2) {
+      FatalError(strError2);
     }
   }
   // initialize light animation combo
   InitLightAnimationCombo();
   // set animation data
-  m_wndTestAnimation.m_aoAnimObject.SetData( m_padAnimData);
+  m_wndTestAnimation.m_aoAnimObject.SetData(m_padAnimData);
   m_LightAnimationCombo.SetCurSel(0);
-  UpdateData( FALSE);
+  UpdateData(FALSE);
 }
 
-void CDlgLightAnimationEditor::OnSaveAnimation()
-{
-  if (m_fnSaveName == "")
-  {
+void CDlgLightAnimationEditor::OnSaveAnimation() {
+  if (m_fnSaveName == "") {
     OnSaveAsAnimation();
-  }
-  else
-  {
-    try
-    {
+  } else {
+    try {
       CTFileStream strmFile;
-      strmFile.Create_t( m_fnSaveName);
+      strmFile.Create_t(m_fnSaveName);
       // write animation from file
-      m_padAnimData->Write_t( &strmFile);
+      m_padAnimData->Write_t(&strmFile);
       strmFile.Close();
       // refresh animation
       CAnimData *pad = _pAnimStock->Obtain_t(m_fnSaveName);
       pad->Reload();
       _pAnimStock->Release(pad);
-    }
-    catch( char *strError)
-    {
-      WarningMessage( strError);
+    } catch (char *strError) {
+      WarningMessage(strError);
     }
   }
 }
 
-void CDlgLightAnimationEditor::OnSaveAsAnimation()
-{
+void CDlgLightAnimationEditor::OnSaveAsAnimation() {
   CTFileName fnAnimation = _EngineGUI.FileRequester(
-    "Save animation file",
-    "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END,
-    "Animation directory", "", "", NULL, FALSE);
-  if (fnAnimation == "") return;
+    "Save animation file", "Animation file (*.ani)\0*.ani\0" FILTER_ALL FILTER_END, "Animation directory", "", "", NULL, FALSE);
+  if (fnAnimation == "")
+    return;
 
-  try
-  {
+  try {
     CTFileStream strmFile;
-    strmFile.Create_t( fnAnimation);
+    strmFile.Create_t(fnAnimation);
     // write animation into file
-    m_padAnimData->Write_t( &strmFile);
+    m_padAnimData->Write_t(&strmFile);
     m_fnSaveName = fnAnimation;
     strmFile.Close();
     // refresh animation
     CAnimData *pad = _pAnimStock->Obtain_t(m_fnSaveName);
     pad->Reload();
     _pAnimStock->Release(pad);
-  }
-  catch( char *strError)
-  {
-    WarningMessage( strError);
+  } catch (char *strError) {
+    WarningMessage(strError);
   }
 }
 
-void CDlgLightAnimationEditor::OnButtonClose()
-{
-  if (m_bChanged) OnSaveAnimation();
-  EndDialog( 0);
+void CDlgLightAnimationEditor::OnButtonClose() {
+  if (m_bChanged)
+    OnSaveAnimation();
+  EndDialog(0);
 }
 
-void CDlgLightAnimationEditor::OnCancel()
-{
-  if (m_bChanged) OnSaveAnimation();
-  EndDialog( 0);
+void CDlgLightAnimationEditor::OnCancel() {
+  if (m_bChanged)
+    OnSaveAnimation();
+  EndDialog(0);
 }
 
-void CDlgLightAnimationEditor::OnClose()
-{
-  if (m_bChanged) OnSaveAnimation();
+void CDlgLightAnimationEditor::OnClose() {
+  if (m_bChanged)
+    OnSaveAnimation();
   CDialog::OnClose();
 }
 
-void CDlgLightAnimationEditor::OnOK()
-{
-}
+void CDlgLightAnimationEditor::OnOK() {}

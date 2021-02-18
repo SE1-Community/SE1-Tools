@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -26,46 +26,45 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <Engine/Base/Serial.h>
 
-class CSeriousSkaStudioDoc : public CDocument
-{
-protected: // create from serialization only
+class CSeriousSkaStudioDoc : public CDocument {
+  protected: // create from serialization only
   CSeriousSkaStudioDoc();
   DECLARE_DYNCREATE(CSeriousSkaStudioDoc)
 
-// Attributes
-public:
-  CModelInstance  *m_ModelInstance;
-  BOOL  m_bModelInstanceChanged;
+  // Attributes
+  public:
+  CModelInstance* m_ModelInstance;
+  BOOL m_bModelInstanceChanged;
 
-  FLOAT m_fSpeedZ;// speed Z
+  FLOAT m_fSpeedZ;      // speed Z
   FLOAT m_fLoopSecends; // how long to loop moving by z
   FLOAT fCustomMeshLodDist;
   FLOAT fCustomSkeletonLodDist;
-  BOOL  bAutoMiping;    
-  BOOL  bShowGround;
-  BOOL  bShowLights;
-  BOOL  bAnimLoop;  // will played anims be looping
-  BOOL  bShowColisionBox;
+  BOOL bAutoMiping;
+  BOOL bShowGround;
+  BOOL bShowLights;
+  BOOL bAnimLoop; // will played anims be looping
+  BOOL bShowColisionBox;
   BOOL bShowAllFramesBBox;
-  
-  COLOR m_colAmbient; // Ambient color
-  COLOR m_colLight;   // Light color
-  FLOAT3D m_vLightDir;// Light direction
+
+  COLOR m_colAmbient;  // Ambient color
+  COLOR m_colLight;    // Light color
+  FLOAT3D m_vLightDir; // Light direction
 
   CTimerValue m_tvStart;      // each view has its own timing so it can be pause
   CTimerValue m_tvPauseStart; // time when pause accured
   CTimerValue m_tvPauseTime;  // how much time was this paused
-  BOOL  m_bViewPaused;        // is this view paused
+  BOOL m_bViewPaused;         // is this view paused
 
-// Operations
-public:
+  // Operations
+  public:
   void OnIdle(void);
   void SetTimerForDocument();
   // set flag that this document has changed and need to be saved
   void MarkAsChanged();
   INDEX BeforeDocumentClose();
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CSeriousSkaStudioDoc)
   public:
@@ -75,18 +74,17 @@ public:
   virtual void OnCloseDocument();
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CSeriousSkaStudioDoc();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-protected:
+  protected:
+  // Generated message map functions
+  protected:
   //{{AFX_MSG(CSeriousSkaStudioDoc)
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,35 +25,33 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTreeShortcuts dialog
 
-class CDlgTreeShortcuts : public CDialog
-{
-// Construction
-public:
+class CDlgTreeShortcuts : public CDialog {
+  // Construction
+  public:
   INDEX m_iPressedShortcut;
-  CDlgTreeShortcuts(CWnd* pParent = NULL);   // standard constructor
+  CDlgTreeShortcuts(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgTreeShortcuts)
   enum { IDD = IDD_TREE_SHORTCUTS };
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgTreeShortcuts)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
   afx_msg void OnTreeShortcut(UINT nID);
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgTreeShortcuts)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

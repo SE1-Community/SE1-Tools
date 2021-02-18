@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,19 +25,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CPrimitiveHistoryCombo window
 
-class CPrimitiveHistoryCombo : public CComboBox
-{  
-// Construction
-public:
+class CPrimitiveHistoryCombo : public CComboBox {
+  // Construction
+  public:
   CPrimitiveHistoryCombo();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CPrimitiveHistoryCombo)
   public:
@@ -45,14 +42,14 @@ public:
   virtual void MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CPrimitiveHistoryCombo();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CPrimitiveHistoryCombo)
-    // NOTE - the ClassWizard will add and remove member functions here.
+  // NOTE - the ClassWizard will add and remove member functions here.
   //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP()

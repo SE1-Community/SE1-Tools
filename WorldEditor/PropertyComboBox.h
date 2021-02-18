@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -26,18 +26,18 @@ class CWorldEditorDoc;
 /*
  * Class used for creating property intersection of selected entities
  */
-class CPropertyID
-{
-public:
-  inline CPropertyID( CTString strName, CEntityProperty::PropertyType eptType,
-                      CEntityProperty *penpProperty, CAnimData *padAnimData)
-  {
+class CPropertyID {
+  public:
+  inline CPropertyID(CTString strName, CEntityProperty::PropertyType eptType, CEntityProperty *penpProperty,
+                     CAnimData *padAnimData) {
     pid_strName = strName;
     pid_eptType = eptType;
     pid_penpProperty = penpProperty;
-    if (eptType == CEntityProperty::EPT_ANIMATION) pid_padAnimData = padAnimData;
-    else                                           pid_padAnimData = NULL;
-    if (penpProperty != NULL) 
+    if (eptType == CEntityProperty::EPT_ANIMATION)
+      pid_padAnimData = padAnimData;
+    else
+      pid_padAnimData = NULL;
+    if (penpProperty != NULL)
       pid_chrShortcutKey = penpProperty->ep_chShortcut;
     else
       pid_chrShortcutKey = 0;
@@ -56,16 +56,15 @@ public:
   CEntityProperty *pid_penpProperty;
 };
 
-class CPropertyComboBox : public CComboBox
-{
-// Construction
-public:
+class CPropertyComboBox : public CComboBox {
+  // Construction
+  public:
   CPropertyComboBox();
   BOOL OnIdle(LONG lCount);
   void DisableCombo();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // name of last edited property
   CTString m_strLastPropertyName;
   // ptr to parent dialog
@@ -76,27 +75,27 @@ public:
   INDEX m_iLastMode;
   CWorldEditorDoc *m_pLastDoc;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
   // adds intersecting properties of given entity into m_lhProperties list
-  void JoinProperties( CEntity *penEntity, BOOL bIntersect);
+  void JoinProperties(CEntity *penEntity, BOOL bIntersect);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CPropertyComboBox)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CPropertyComboBox();
   void SelectProperty(void);
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CPropertyComboBox)
-  afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+  afx_msg void OnContextMenu(CWnd *pWnd, CPoint point);
   afx_msg void OnSelchange();
   afx_msg void OnDropdown();
   //}}AFX_MSG

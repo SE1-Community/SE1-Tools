@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,8 +30,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CDlgInfoPgGlobal, CPropertyPage)
 
-CDlgInfoPgGlobal::CDlgInfoPgGlobal() : CPropertyPage(CDlgInfoPgGlobal::IDD)
-{
+CDlgInfoPgGlobal::CDlgInfoPgGlobal() : CPropertyPage(CDlgInfoPgGlobal::IDD) {
   //{{AFX_DATA_INIT(CDlgInfoPgGlobal)
   m_strFlat = _T("");
   m_strTextureSize = _T("");
@@ -51,41 +50,40 @@ CDlgInfoPgGlobal::CDlgInfoPgGlobal() : CPropertyPage(CDlgInfoPgGlobal::IDD)
   m_colorReflection.m_pwndParentDialog = this;
 }
 
-CDlgInfoPgGlobal::~CDlgInfoPgGlobal()
-{
-}
+CDlgInfoPgGlobal::~CDlgInfoPgGlobal() {}
 
-void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView* pModelerView)
-{
+void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView *pModelerView) {
   CModelerDoc *pDoc = pModelerView->GetDocument();
   CModelInfo miModelInfo;
   char value[20];
-  ASSERT( pModelerView != NULL);
-  
+  ASSERT(pModelerView != NULL);
+
   // Get current model's info
-  pModelerView->m_ModelObject.GetModelInfo( miModelInfo);
-  INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel( pModelerView->m_fCurrentMipFactor);
-  
+  pModelerView->m_ModelObject.GetModelInfo(miModelInfo);
+  INDEX iMipModel = pModelerView->m_ModelObject.GetMipModel(pModelerView->m_fCurrentMipFactor);
+
   // Texture size
-  sprintf( value, "%.2f x %.2f m", METERS_MEX( miModelInfo.mi_Width),
-                                   METERS_MEX( miModelInfo.mi_Height) );
+  sprintf(value, "%.2f x %.2f m", METERS_MEX(miModelInfo.mi_Width), METERS_MEX(miModelInfo.mi_Height));
   m_strTextureSize = value;
 
   // Flat (YES/NO)
-  if (miModelInfo.mi_Flags & MF_FACE_FORWARD) m_strFlat = "Yes";
-  else                                        m_strFlat = "No";
+  if (miModelInfo.mi_Flags & MF_FACE_FORWARD)
+    m_strFlat = "Yes";
+  else
+    m_strFlat = "No";
 
   // High quality (YES/NO)
-  if (miModelInfo.mi_Flags & MF_COMPRESSED_16BIT) m_strHighQuality = "Yes";
-  else                                            m_strHighQuality = "No";
+  if (miModelInfo.mi_Flags & MF_COMPRESSED_16BIT)
+    m_strHighQuality = "Yes";
+  else
+    m_strHighQuality = "No";
 
   // Set max shadow
-  sprintf( value, "%d", pDoc->m_emEditModel.edm_md.md_ShadowQuality);
+  sprintf(value, "%d", pDoc->m_emEditModel.edm_md.md_ShadowQuality);
   m_strMaxShadow = value;
 
   // Set window size
-  sprintf( value, "%d x %d", pModelerView->m_pDrawPort->GetWidth(),
-                             pModelerView->m_pDrawPort->GetHeight());
+  sprintf(value, "%d x %d", pModelerView->m_pDrawPort->GetWidth(), pModelerView->m_pDrawPort->GetHeight());
   m_strWndSize = value;
 
   m_colorDiffuse.SetColor(pDoc->m_emEditModel.edm_md.md_colDiffuse);
@@ -98,31 +96,34 @@ void CDlgInfoPgGlobal::SetGlobalPageFromView(CModelerView* pModelerView)
   m_strSpecular = pModelerView->m_ModelObject.mo_toSpecular.GetName();
   m_strBump = pModelerView->m_ModelObject.mo_toBump.GetName();
 
-  if (m_strDifuse == "") m_strDifuse = "<none>";
-  if (m_strReflections == "") m_strReflections = "<none>";
-  if (m_strSpecular == "") m_strSpecular = "<none>";
-  if (m_strBump == "") m_strBump = "<none>";
+  if (m_strDifuse == "")
+    m_strDifuse = "<none>";
+  if (m_strReflections == "")
+    m_strReflections = "<none>";
+  if (m_strSpecular == "")
+    m_strSpecular = "<none>";
+  if (m_strBump == "")
+    m_strBump = "<none>";
 }
 
-void CDlgInfoPgGlobal::SetViewFromGlobalPage(CModelerView* pModelerView)
-{
+void CDlgInfoPgGlobal::SetViewFromGlobalPage(CModelerView *pModelerView) {
   CModelerDoc *pDoc = pModelerView->GetDocument();
   pDoc->m_emEditModel.edm_md.md_colDiffuse = m_colorDiffuse.GetColor();
   pDoc->m_emEditModel.edm_md.md_colReflections = m_colorReflection.GetColor();
   pDoc->m_emEditModel.edm_md.md_colSpecular = m_colorSpecular.GetColor();
   pDoc->m_emEditModel.edm_md.md_colBump = m_colorBump.GetColor();
-  pDoc->SetModifiedFlag( TRUE);
+  pDoc->SetModifiedFlag(TRUE);
 }
 
-void CDlgInfoPgGlobal::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgInfoPgGlobal::DoDataExchange(CDataExchange *pDX) {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if (pModelerView == NULL) return;
+  if (pModelerView == NULL)
+    return;
 
-  //if (!::IsWindow( m_colorSpecular.m_hWnd)) return;
-  if (!pDX->m_bSaveAndValidate)  // if zero, model sets property sheet's data
+  // if (!::IsWindow( m_colorSpecular.m_hWnd)) return;
+  if (!pDX->m_bSaveAndValidate) // if zero, model sets property sheet's data
   {
-    SetGlobalPageFromView( pModelerView);
+    SetGlobalPageFromView(pModelerView);
     // mark that the values have been updated to reflect the state of the view
     m_udAllValues.MarkUpdated();
   }
@@ -145,33 +146,29 @@ void CDlgInfoPgGlobal::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   if (pDX->m_bSaveAndValidate) {
-    SetViewFromGlobalPage( pModelerView);
+    SetViewFromGlobalPage(pModelerView);
   }
 }
 
 BEGIN_MESSAGE_MAP(CDlgInfoPgGlobal, CPropertyPage)
-  //{{AFX_MSG_MAP(CDlgInfoPgGlobal)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgInfoPgGlobal)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgGlobal message handlers
 
-BOOL CDlgInfoPgGlobal::OnIdle(LONG lCount)
-{
+BOOL CDlgInfoPgGlobal::OnIdle(LONG lCount) {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
   ASSERT(pModelerView != NULL);
 
-  if (!theApp.m_chGlobal.IsUpToDate(m_udAllValues) ||
-      !pModelerView->m_ModelObject.IsUpToDate(m_udAllValues)) {
+  if (!theApp.m_chGlobal.IsUpToDate(m_udAllValues) || !pModelerView->m_ModelObject.IsUpToDate(m_udAllValues)) {
     UpdateData(FALSE);
   }
   return TRUE;
 }
 
-BOOL CDlgInfoPgGlobal::OnSetActive() 
-{
+BOOL CDlgInfoPgGlobal::OnSetActive() {
   // mark that all values should be updated
   return CPropertyPage::OnSetActive();
 }
-

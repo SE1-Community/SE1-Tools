@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,31 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CAnimComboBox window
 
-class CAnimComboBox : public CComboBox
-{
-// Construction
-public:
+class CAnimComboBox : public CComboBox {
+  // Construction
+  public:
   BOOL OnIdle(LONG lCount);
   CModelerView *m_pvLastUpdatedView;
   CAnimComboBox();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CAnimComboBox)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CAnimComboBox();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CAnimComboBox)
   afx_msg void OnSelchange();
   afx_msg void OnDropdown();

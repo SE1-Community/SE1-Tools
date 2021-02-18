@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,22 +30,17 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgMirrorAndStretch dialog
 
-
-CDlgMirrorAndStretch::CDlgMirrorAndStretch(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgMirrorAndStretch::IDD, pParent)
-{
+CDlgMirrorAndStretch::CDlgMirrorAndStretch(CWnd* pParent /*=NULL*/) : CDialog(CDlgMirrorAndStretch::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgMirrorAndStretch)
   m_fStretch = 0.0f;
   m_iMirror = -1;
   //}}AFX_DATA_INIT
-  
+
   m_fStretch = 1.0f;
   m_iMirror = 0;
 }
 
-
-void CDlgMirrorAndStretch::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgMirrorAndStretch::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgMirrorAndStretch)
   DDX_Text(pDX, IDC_STRETCH, m_fStretch);
@@ -56,10 +51,9 @@ void CDlgMirrorAndStretch::DoDataExchange(CDataExchange* pDX)
   SetWindowText(CString(m_strName));
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgMirrorAndStretch, CDialog)
-  //{{AFX_MSG_MAP(CDlgMirrorAndStretch)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgMirrorAndStretch)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

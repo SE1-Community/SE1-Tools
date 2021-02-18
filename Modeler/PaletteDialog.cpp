@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,10 +28,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CPaletteDialog dialog
 
-
-CPaletteDialog::CPaletteDialog(CWnd* pParent /*=NULL*/)
-  : CDialog(CPaletteDialog::IDD, pParent)
-{
+CPaletteDialog::CPaletteDialog(CWnd* pParent /*=NULL*/) : CDialog(CPaletteDialog::IDD, pParent) {
   //{{AFX_DATA_INIT(CPaletteDialog)
   m_ColorName = _T("");
   m_ModeString = _T("");
@@ -39,28 +36,20 @@ CPaletteDialog::CPaletteDialog(CWnd* pParent /*=NULL*/)
   m_LastViewUpdated = NULL;
 }
 
-void CPaletteDialog::DoDataExchange(CDataExchange* pDX)
-{
+void CPaletteDialog::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
-  
-  CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (!pDX->m_bSaveAndValidate)
-  {
-    if (pModelerView != NULL)
-    {
-      if (pModelerView->m_bOnColorMode)
-      {
+
+  CModelerView* pModelerView = CModelerView::GetActiveView();
+  if (!pDX->m_bSaveAndValidate) {
+    if (pModelerView != NULL) {
+      if (pModelerView->m_bOnColorMode) {
         m_ModeString = "Mode: On";
-      }
-      else
-      {
+      } else {
         m_ModeString = "Mode: Off";
       }
 
-      m_ColorName = pModelerView->m_ModelObject.GetColorName( pModelerView->m_iChoosedColor);
-    }
-    else
-    {
+      m_ColorName = pModelerView->m_ModelObject.GetColorName(pModelerView->m_iChoosedColor);
+    } else {
       m_ColorName = "";
     }
   }
@@ -105,64 +94,53 @@ void CPaletteDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_MODE, m_ModeString);
   //}}AFX_DATA_MAP
 
-  if (pDX->m_bSaveAndValidate)
-  {
-    if (pModelerView != NULL)
-    {
-      pModelerView->m_ModelObject.SetColorName( pModelerView->m_iChoosedColor, 
-                                                CTString(CStringA(m_ColorName)));
+  if (pDX->m_bSaveAndValidate) {
+    if (pModelerView != NULL) {
+      pModelerView->m_ModelObject.SetColorName(pModelerView->m_iChoosedColor, CTString(CStringA(m_ColorName)));
       pModelerView->GetDocument()->SetModifiedFlag();
     }
   }
 }
 
 BEGIN_MESSAGE_MAP(CPaletteDialog, CDialog)
-  //{{AFX_MSG_MAP(CPaletteDialog)
-  ON_EN_CHANGE(IDC_EDIT_COLOR_NAME, OnChangeEditColorName)
-  //}}AFX_MSG_MAP
-  ON_COMMAND_RANGE(IDC_COLOR_PALETTE_BUTTON_BASE, IDC_COLOR_PALETTE_BUTTON_END, OnColorPalleteButton)
+//{{AFX_MSG_MAP(CPaletteDialog)
+ON_EN_CHANGE(IDC_EDIT_COLOR_NAME, OnChangeEditColorName)
+//}}AFX_MSG_MAP
+ON_COMMAND_RANGE(IDC_COLOR_PALETTE_BUTTON_BASE, IDC_COLOR_PALETTE_BUTTON_END, OnColorPalleteButton)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPaletteDialog message handlers
 
-BOOL CPaletteDialog::OnInitDialog() 
-{
+BOOL CPaletteDialog::OnInitDialog() {
   CDialog::OnInitDialog();
-  
+
   HICON hIcon = AfxGetApp()->LoadIcon(IDI_PICK);
-  ASSERT( hIcon != NULL);
-  m_PickColor.SetIcon( hIcon);
-  
-  return TRUE;  // return TRUE unless you set the focus to a control
-                // EXCEPTION: OCX Property Pages should return FALSE
+  ASSERT(hIcon != NULL);
+  m_PickColor.SetIcon(hIcon);
+
+  return TRUE; // return TRUE unless you set the focus to a control
+               // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CPaletteDialog::OnColorPalleteButton(UINT nID)
-{
+void CPaletteDialog::OnColorPalleteButton(UINT nID) {
   INDEX m_iChoosedColor = nID - IDC_COLOR_PALETTE_BUTTON_BASE;
 }
 
-BOOL CPaletteDialog::OnIdle(LONG lCount)
-{
-  CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (pModelerView != m_LastViewUpdated)
-  {
-    if ((pModelerView == NULL) || (m_LastViewUpdated == NULL) )
-    {
-      UpdateData( FALSE);
-      Invalidate( FALSE);
-    }
-    else
-    {
-      UpdateData( FALSE);
+BOOL CPaletteDialog::OnIdle(LONG lCount) {
+  CModelerView* pModelerView = CModelerView::GetActiveView();
+  if (pModelerView != m_LastViewUpdated) {
+    if ((pModelerView == NULL) || (m_LastViewUpdated == NULL)) {
+      UpdateData(FALSE);
+      Invalidate(FALSE);
+    } else {
+      UpdateData(FALSE);
     }
     m_LastViewUpdated = pModelerView;
   }
   return TRUE;
 }
 
-void CPaletteDialog::OnChangeEditColorName() 
-{
-  UpdateData(TRUE);  
+void CPaletteDialog::OnChangeEditColorName() {
+  UpdateData(TRUE);
 }

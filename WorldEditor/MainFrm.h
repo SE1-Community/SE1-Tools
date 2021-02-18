@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -19,36 +19,37 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef MAINFRAME_H
 #define MAINFRAME_H 1
 
-#define STATUS_LINE_PANE 0
+#define STATUS_LINE_PANE       0
 #define EDITING_MODE_ICON_PANE 1
-#define EDITING_MODE_PANE 2
-#define GRID_PANE 3
-#define POSITION_PANE 4
+#define EDITING_MODE_PANE      2
+#define GRID_PANE              3
+#define POSITION_PANE          4
 
-#define DOCK_UP 0
-#define DOCK_DOWN 1
-#define DOCK_LEFT 2
+#define DOCK_UP    0
+#define DOCK_DOWN  1
+#define DOCK_LEFT  2
 #define DOCK_RIGHT 3
 
 // get pressed key buffer (keys 0-9)
 extern INDEX TestKeyBuffers(void);
 
 // macro used for writing text into status line
-#define STATUS_LINE_MESASGE( message) if (theApp.m_bShowStatusInfo) {\
-  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd()); \
-  ASSERT( pMainFrame != NULL); \
-  pMainFrame->m_wndStatusBar.SetPaneText( STATUS_LINE_PANE, message, TRUE);};
+#define STATUS_LINE_MESASGE(message) \
+  if (theApp.m_bShowStatusInfo) { \
+    CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd()); \
+    ASSERT(pMainFrame != NULL); \
+    pMainFrame->m_wndStatusBar.SetPaneText(STATUS_LINE_PANE, message, TRUE); \
+  };
 
-class CMainFrame : public CMDIFrameWnd
-{
+class CMainFrame : public CMDIFrameWnd {
   DECLARE_DYNAMIC(CMainFrame)
-public:
+  public:
   CMainFrame();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // old window position and styles before full screen mode
-  
+
   WINDOWPLACEMENT m_OldPlacement;
   LONG m_OldStyleEx;
   LONG m_OldStyle;
@@ -64,10 +65,10 @@ public:
   CToolBar m_wndProjections;
   CToolBar m_wndSettingsAndUtility;
   CToolBar m_wndShadowsAndTexture;
-  CToolBar m_wndSelectEntity; 
+  CToolBar m_wndSelectEntity;
   CToolBar m_wndViewTools;
   CToolBar m_wndViewTools2;
-  
+
   // CSG destination combo box
   CCSGDesitnationCombo m_CSGDesitnationCombo;
   // Triangularisation type combo box
@@ -79,15 +80,14 @@ public:
   CBrowser m_Browser;
   CPropertyComboBar m_PropertyComboBar;
   // mini frame used to hold property sheet with dialog pages
-  CInfoFrame *m_pInfoFrame;
+  CInfoFrame* m_pInfoFrame;
   CTFileName m_fnLastVirtualTree;
   // color palette
-  CColorPaletteWnd *m_pColorPalette;
-  CToolTipWnd *m_pwndToolTip;
-// Operations
-public:
-  void DockControlBarRelativeTo(CControlBar* Bar,CControlBar* LeftOf,
-                                ULONG ulDockDirection = DOCK_RIGHT);
+  CColorPaletteWnd* m_pColorPalette;
+  CToolTipWnd* m_pwndToolTip;
+  // Operations
+  public:
+  void DockControlBarRelativeTo(CControlBar* Bar, CControlBar* LeftOf, ULONG ulDockDirection = DOCK_RIGHT);
   BOOL OnIdle(LONG lCount);
   // toggle info window
   void ToggleInfoWindow();
@@ -98,36 +98,37 @@ public:
   // hides info window
   void HideInfoWindow();
   // startes application
-  void StartApplication( CTString strApplicationToRun);
+  void StartApplication(CTString strApplicationToRun);
   // store or restore given virtual shortcut
-  void ApplyTreeShortcut( INDEX iVDirBuffer, BOOL bCtrl);
+  void ApplyTreeShortcut(INDEX iVDirBuffer, BOOL bCtrl);
   // call custom color picker at given coordinates
-  void CustomColorPicker( PIX pixX, PIX pixY);
-  void ManualToolTipOn( PIX pixManualX, PIX pixManualY);
-  void ManualToolTipUpdate( void);
-  void SetStatusBarMessage( CTString strMessage, INDEX iPane, FLOAT fTime);
+  void CustomColorPicker(PIX pixX, PIX pixY);
+  void ManualToolTipOn(PIX pixManualX, PIX pixManualY);
+  void ManualToolTipUpdate(void);
+  void SetStatusBarMessage(CTString strMessage, INDEX iPane, FLOAT fTime);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CMainFrame)
   public:
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
   virtual BOOL DestroyWindow();
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
   virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CMainFrame();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
-public:
+  // Generated message map functions
+  public:
   //{{AFX_MSG(CMainFrame)
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
   afx_msg void OnVirtualTree();

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,38 +25,35 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgExportForSkinning dialog
 
-class CDlgExportForSkinning : public CDialog
-{
-// Construction
-public:
+class CDlgExportForSkinning : public CDialog {
+  // Construction
+  public:
   INDEX m_iTextureWidth;
 
-  CDlgExportForSkinning(CTFileName fnExportFile, CWnd* pParent = NULL);   // standard constructor
+  CDlgExportForSkinning(CTFileName fnExportFile, CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgExportForSkinning)
   enum { IDD = IDD_EXPORT_FOR_SKINNIG };
-  CColoredButton  m_ctrlWireColor;
-  CColoredButton  m_ctrlPaperColor;
-  CComboBox  m_ctrlExportPictureSize;
-  BOOL  m_bColoredSurfaces;
-  BOOL  m_bSurfaceNumbers;
-  BOOL  m_bWireFrame;
-  CString  m_strExportedFileName;
-  CString  m_strSurfaceListFile;
+  CColoredButton m_ctrlWireColor;
+  CColoredButton m_ctrlPaperColor;
+  CComboBox m_ctrlExportPictureSize;
+  BOOL m_bColoredSurfaces;
+  BOOL m_bSurfaceNumbers;
+  BOOL m_bWireFrame;
+  CString m_strExportedFileName;
+  CString m_strSurfaceListFile;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgExportForSkinning)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgExportForSkinning)
   virtual BOOL OnInitDialog();

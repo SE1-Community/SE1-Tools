@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,17 +25,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgLightAnimationEditor dialog
 
-class CDlgLightAnimationEditor : public CDialog
-{
-// Construction
-public:
+class CDlgLightAnimationEditor : public CDialog {
+  // Construction
+  public:
   CTFileName m_fnSaveName;
-  CDlgLightAnimationEditor(CWnd* pParent = NULL);   // standard constructor
+  CDlgLightAnimationEditor(CWnd* pParent = NULL); // standard constructor
   ~CDlgLightAnimationEditor();
 
   BOOL m_bChanged;
   BOOL m_bCustomWindowsCreated;
-  CAnimData *m_padAnimData;
+  CAnimData* m_padAnimData;
   CWndAnimationFrames m_wndAnimationFrames;
   CWndTestAnimation m_wndTestAnimation;
   void InitLightAnimationCombo(void);
@@ -45,29 +44,26 @@ public:
   // obtain index of curently selected light animation
   INDEX GetSelectedLightAnimation(void);
 
-
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgLightAnimationEditor)
   enum { IDD = IDD_LIGHT_ANIMATION_EDITOR };
-  CComboBox  m_LightAnimationCombo;
-  CString  m_strCurrentFrame;
-  float  m_fLightAnimationSpeed;
-  int    m_iAnimationFrames;
-  CString  m_strLightAnimationName;
+  CComboBox m_LightAnimationCombo;
+  CString m_strCurrentFrame;
+  float m_fLightAnimationSpeed;
+  int m_iAnimationFrames;
+  CString m_strLightAnimationName;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgLightAnimationEditor)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   virtual void OnOK();
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgLightAnimationEditor)
   afx_msg void OnPaint();

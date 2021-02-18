@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,43 +25,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgFilterPolygonSelection dialog
 
-class CDlgFilterPolygonSelection : public CDialog
-{
-// Construction
-public:
-  CDlgFilterPolygonSelection(CWnd* pParent = NULL);   // standard constructor
+class CDlgFilterPolygonSelection : public CDialog {
+  // Construction
+  public:
+  CDlgFilterPolygonSelection(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgFilterPolygonSelection)
   enum { IDD = IDD_FILTER_POLYGON_SELECTION };
-  CColoredButton  m_ctrlMultiplyColor;
-  CComboBox  m_ctrlFilterPolygonMirror;
-  CComboBox  m_ctrFilterPolygonSurface;
-  CComboBox  m_ctrlClusterMemoryCombo;
-  CComboBox  m_ctrlClusterSizeCombo;
-  float  m_fMinH;
-  float  m_fMinP;
-  float  m_fMaxH;
-  float  m_fMaxP;
-  float  m_fMinX;
-  float  m_fMinY;
-  float  m_fMinZ;
-  float  m_fMaxX;
-  float  m_fMaxY;
-  float  m_fMaxZ;
+  CColoredButton m_ctrlMultiplyColor;
+  CComboBox m_ctrlFilterPolygonMirror;
+  CComboBox m_ctrFilterPolygonSurface;
+  CComboBox m_ctrlClusterMemoryCombo;
+  CComboBox m_ctrlClusterSizeCombo;
+  float m_fMinH;
+  float m_fMinP;
+  float m_fMaxH;
+  float m_fMaxP;
+  float m_fMinX;
+  float m_fMinY;
+  float m_fMinZ;
+  float m_fMaxX;
+  float m_fMaxY;
+  float m_fMaxZ;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgFilterPolygonSelection)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgFilterPolygonSelection)
   virtual BOOL OnInitDialog();

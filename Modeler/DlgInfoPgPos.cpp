@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,14 +25,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgPos property page
 
 IMPLEMENT_DYNCREATE(CDlgInfoPgPos, CPropertyPage)
 
-CDlgInfoPgPos::CDlgInfoPgPos() : CPropertyPage(CDlgInfoPgPos::IDD)
-{
+CDlgInfoPgPos::CDlgInfoPgPos() : CPropertyPage(CDlgInfoPgPos::IDD) {
   //{{AFX_DATA_INIT(CDlgInfoPgPos)
   m_fLightDist = 0.0f;
   m_fHeading = 0.0f;
@@ -47,24 +45,22 @@ CDlgInfoPgPos::CDlgInfoPgPos() : CPropertyPage(CDlgInfoPgPos::IDD)
   theApp.m_pPgInfoPos = this;
 }
 
-CDlgInfoPgPos::~CDlgInfoPgPos()
-{
-}
+CDlgInfoPgPos::~CDlgInfoPgPos() {}
 
-void CDlgInfoPgPos::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgInfoPgPos::DoDataExchange(CDataExchange *pDX) {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (pModelerView == NULL) return;
-  
+  if (pModelerView == NULL)
+    return;
+
   if (!pDX->m_bSaveAndValidate) {
     m_fHeading = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(1));
-    m_fPitch   = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(2));
+    m_fPitch = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(2));
     m_fBanking = DegAngle(pModelerView->m_plModelPlacement.pl_OrientationAngle(3));
 
     m_fX = (FLOAT)(pModelerView->m_plModelPlacement.pl_PositionVector(1));
     m_fY = (FLOAT)(pModelerView->m_plModelPlacement.pl_PositionVector(2));
     m_fZ = -(FLOAT)(pModelerView->m_plModelPlacement.pl_PositionVector(3));
-    
+
     m_fLightDist = pModelerView->m_LightDistance;
     m_fFOW = pModelerView->m_fFOW;
     // mark that the values have been updated to reflect the state of the view
@@ -86,88 +82,77 @@ void CDlgInfoPgPos::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   if (pDX->m_bSaveAndValidate) {
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(1) = AngleDeg( (FLOAT)m_fHeading);
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(2) = AngleDeg( (FLOAT)m_fPitch);
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(3) = AngleDeg( (FLOAT)m_fBanking);
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(1) = AngleDeg((FLOAT)m_fHeading);
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(2) = AngleDeg((FLOAT)m_fPitch);
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(3) = AngleDeg((FLOAT)m_fBanking);
     pModelerView->m_plModelPlacement.pl_PositionVector(1) = (FLOAT)m_fX;
     pModelerView->m_plModelPlacement.pl_PositionVector(2) = (FLOAT)m_fY;
     pModelerView->m_plModelPlacement.pl_PositionVector(3) = -(FLOAT)m_fZ;
     pModelerView->m_LightDistance = m_fLightDist;
     pModelerView->m_fFOW = m_fFOW;
     pModelerView->m_plModelPlacement.pl_PositionVector(3) = -(FLOAT)m_fZ;
-    pModelerView->Invalidate( FALSE);
+    pModelerView->Invalidate(FALSE);
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgInfoPgPos, CPropertyPage)
-  //{{AFX_MSG_MAP(CDlgInfoPgPos)
-  ON_EN_CHANGE(IDC_EDIT_HEADING, OnChangeEditHeading)
-  ON_EN_CHANGE(IDC_EDIT_BANKING, OnChangeEditBanking)
-  ON_EN_CHANGE(IDC_EDIT_PITCH, OnChangeEditPitch)
-  ON_EN_CHANGE(IDC_EDIT_X, OnChangeEditX)
-  ON_EN_CHANGE(IDC_EDIT_Y, OnChangeEditY)
-  ON_EN_CHANGE(IDC_EDIT_Z, OnChangeEditZ)
-  ON_EN_CHANGE(IDC_EDIT_LIGHT_DISTANCE, OnChangeEditLightDistance)
-  ON_EN_CHANGE(IDC_EDIT_FOW, OnChangeEditFow)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgInfoPgPos)
+ON_EN_CHANGE(IDC_EDIT_HEADING, OnChangeEditHeading)
+ON_EN_CHANGE(IDC_EDIT_BANKING, OnChangeEditBanking)
+ON_EN_CHANGE(IDC_EDIT_PITCH, OnChangeEditPitch)
+ON_EN_CHANGE(IDC_EDIT_X, OnChangeEditX)
+ON_EN_CHANGE(IDC_EDIT_Y, OnChangeEditY)
+ON_EN_CHANGE(IDC_EDIT_Z, OnChangeEditZ)
+ON_EN_CHANGE(IDC_EDIT_LIGHT_DISTANCE, OnChangeEditLightDistance)
+ON_EN_CHANGE(IDC_EDIT_FOW, OnChangeEditFow)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgPos message handlers
 
-BOOL CDlgInfoPgPos::OnIdle(LONG lCount)
-{
+BOOL CDlgInfoPgPos::OnIdle(LONG lCount) {
   CModelerView *pModelerView = CModelerView::GetActiveView();
   ASSERT(pModelerView != NULL);
 
-  if (!theApp.m_chGlobal.IsUpToDate(m_udAllValues) ||
-      !theApp.m_chPlacement.IsUpToDate(m_udAllValues) ||
-      !pModelerView->m_ModelObject.IsUpToDate(m_udAllValues)) {
+  if (!theApp.m_chGlobal.IsUpToDate(m_udAllValues) || !theApp.m_chPlacement.IsUpToDate(m_udAllValues)
+      || !pModelerView->m_ModelObject.IsUpToDate(m_udAllValues)) {
     UpdateData(FALSE);
   }
 
   // refresh info frame size
-  ((CMainFrame *)( theApp.m_pMainWnd))->m_pInfoFrame->SetSizes();
-  return TRUE;   
+  ((CMainFrame *)(theApp.m_pMainWnd))->m_pInfoFrame->SetSizes();
+  return TRUE;
 }
 
-void CDlgInfoPgPos::OnChangeEditHeading() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditHeading() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditBanking() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditBanking() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditPitch() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditPitch() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditX() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditX() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditY() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditY() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditZ() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditZ() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditLightDistance() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditLightDistance() {
+  UpdateData(TRUE);
 }
 
-void CDlgInfoPgPos::OnChangeEditFow() 
-{
-  UpdateData(TRUE);  
+void CDlgInfoPgPos::OnChangeEditFow() {
+  UpdateData(TRUE);
 }

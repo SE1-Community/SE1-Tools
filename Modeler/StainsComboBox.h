@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,30 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CStainsComboBox window
 
-class CStainsComboBox : public CComboBox
-{
-// Construction
-public:
+class CStainsComboBox : public CComboBox {
+  // Construction
+  public:
   CStainsComboBox();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CStainsComboBox)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CStainsComboBox();
   void Refresh();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CStainsComboBox)
   afx_msg void OnDropdown();
   //}}AFX_MSG

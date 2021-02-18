@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,29 +25,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CWndDisplayTexture window
 
-class CWndDisplayTexture : public CWnd
-{
-// Construction
-public:
+class CWndDisplayTexture : public CWnd {
+  // Construction
+  public:
   CWndDisplayTexture();
 
   // function that is called when lmb is clicked
-  inline void SetLeftMouseButtonClicked( void(*pLeftMouseButtonClicked)( PIX pixX, PIX pixY))
-    {m_pLeftMouseButtonClicked=pLeftMouseButtonClicked;};
+  inline void SetLeftMouseButtonClicked(void (*pLeftMouseButtonClicked)(PIX pixX, PIX pixY)) {
+    m_pLeftMouseButtonClicked = pLeftMouseButtonClicked;
+  };
   // function that is called when lmb is released
-  inline void SetLeftMouseButtonReleased( void(*pLeftMouseButtonReleased)( PIX pixX, PIX pixY))
-    {m_pLeftMouseButtonReleased=pLeftMouseButtonReleased;};
+  inline void SetLeftMouseButtonReleased(void (*pLeftMouseButtonReleased)(PIX pixX, PIX pixY)) {
+    m_pLeftMouseButtonReleased = pLeftMouseButtonReleased;
+  };
   // function that is called when rmb is clicked
-  inline void SetRightMouseButtonClicked( void(*pRightMouseButtonClicked)( PIX pixX, PIX pixY))
-    {m_pRightMouseButtonClicked=pRightMouseButtonClicked;};
+  inline void SetRightMouseButtonClicked(void (*pRightMouseButtonClicked)(PIX pixX, PIX pixY)) {
+    m_pRightMouseButtonClicked = pRightMouseButtonClicked;
+  };
   // function that is called when rmb is moved
-  inline void SetRightMouseButtonMoved( void(*pRightMouseButtonMoved)( PIX pixX, PIX pixY))
-    {m_pRightMouseButtonMoved=pRightMouseButtonMoved;};
+  inline void SetRightMouseButtonMoved(void (*pRightMouseButtonMoved)(PIX pixX, PIX pixY)) {
+    m_pRightMouseButtonMoved = pRightMouseButtonMoved;
+  };
 
-  void (*m_pLeftMouseButtonClicked)( PIX pixX, PIX pixY);
-  void (*m_pLeftMouseButtonReleased)( PIX pixX, PIX pixY);
-  void (*m_pRightMouseButtonClicked)( PIX pixX, PIX pixY);
-  void (*m_pRightMouseButtonMoved)( PIX pixX, PIX pixY);
+  void (*m_pLeftMouseButtonClicked)(PIX pixX, PIX pixY);
+  void (*m_pLeftMouseButtonReleased)(PIX pixX, PIX pixY);
+  void (*m_pRightMouseButtonClicked)(PIX pixX, PIX pixY);
+  void (*m_pRightMouseButtonMoved)(PIX pixX, PIX pixY);
   CTextureObject m_toTexture;
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
@@ -55,31 +58,31 @@ public:
   BOOL m_bChequeredAlpha;
   BOOL m_bForce32;
   FLOAT m_fWndTexRatio;
-  PIX m_pixWinWidth; 
+  PIX m_pixWinWidth;
   PIX m_pixWinHeight;
-  PIX m_pixWinOffsetU; 
+  PIX m_pixWinOffsetU;
   PIX m_pixWinOffsetV;
-public:
+
+  public:
   BOOL m_bDrawLine;
   PIX m_pixLineStartU;
   PIX m_pixLineStartV;
   PIX m_pixLineStopU;
   PIX m_pixLineStopV;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWndDisplayTexture)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CWndDisplayTexture();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CWndDisplayTexture)
   afx_msg void OnDestroy();
   afx_msg void OnPaint();

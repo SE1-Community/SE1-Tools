@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,27 +25,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDropDown window
 
-class CDropDown : public CComboBox
-{
-// Construction
-public:
+class CDropDown : public CComboBox {
+  // Construction
+  public:
   CDropDown();
   virtual ~CDropDown();
 
   void SetDataPtr(INDEX *pID);
   CTString m_strID; // ID of control (base texture)
   void RememberIDs();
-  INDEX *m_pInt;  // pointing to index to change
-  BOOL m_bSetID;  // is pointer pointion to ID or index in list
+  INDEX *m_pInt; // pointing to index to change
+  BOOL m_bSetID; // is pointer pointion to ID or index in list
 
-
-  
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDropDown)
   //}}AFX_VIRTUAL
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CDropDown)
   afx_msg void OnSelendok();
   //}}AFX_MSG

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,17 +25,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCreateEffectTexture dialog
 
-class CDlgCreateEffectTexture : public CDialog
-{
-// Construction
-public:
-  CDlgCreateEffectTexture(CTFileName fnInputFile=CTString(""),CWnd* pParent = NULL);   // standard constructor
-  ~CDlgCreateEffectTexture();   // standard destructor
-  void SetNewBaseTexture( CTFileName fnNewBase);
+class CDlgCreateEffectTexture : public CDialog {
+  // Construction
+  public:
+  CDlgCreateEffectTexture(CTFileName fnInputFile = CTString(""), CWnd* pParent = NULL); // standard constructor
+  ~CDlgCreateEffectTexture();                                                           // standard destructor
+  void SetNewBaseTexture(CTFileName fnNewBase);
   void SelectPixSizeCombo(void);
   void InitializeSizeCombo(void);
   void InitializeEffectTypeCombo(void);
-  void CreateTexture( void);
+  void CreateTexture(void);
 
   BOOL m_bPreviewWindowsCreated;
   MEX m_mexInitialCreatedWidth;
@@ -45,31 +44,29 @@ public:
   CWndDisplayTexture m_wndViewCreatedTexture;
   CTextureData m_tdCreated;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgCreateEffectTexture)
   enum { IDD = IDD_CREATE_EFFECT_TEXTURE };
-  CButton  m_ctrlCheckButton;
-  CComboBox  m_ctrlMexSizeCombo;
-  CComboBox  m_ctrlPixWidthCombo;
-  CComboBox  m_ctrlPixHeightCombo;
-  CComboBox  m_ctrlEffectClassCombo;
-  CComboBox  m_ctrlEffectTypeCombo;
-  CString  m_strCreatedTextureName;
-  CString  m_strBaseTextureName;
-  CString  m_strRendSpeed;
+  CButton m_ctrlCheckButton;
+  CComboBox m_ctrlMexSizeCombo;
+  CComboBox m_ctrlPixWidthCombo;
+  CComboBox m_ctrlPixHeightCombo;
+  CComboBox m_ctrlEffectClassCombo;
+  CComboBox m_ctrlEffectTypeCombo;
+  CString m_strCreatedTextureName;
+  CString m_strBaseTextureName;
+  CString m_strRendSpeed;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgCreateEffectTexture)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgCreateEffectTexture)
   afx_msg void OnPaint();

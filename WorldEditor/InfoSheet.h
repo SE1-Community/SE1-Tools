@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -33,12 +33,11 @@ enum ModeID {
   INFO_MODE_TERRAIN,
 };
 
-class CInfoSheet : public CPropertySheet
-{
+class CInfoSheet : public CPropertySheet {
   DECLARE_DYNAMIC(CInfoSheet)
 
-// Construction
-public:
+  // Construction
+  public:
   CInfoSheet(CWnd* pWndParent);
   BOOL OnIdle(LONG lCount);
   // functions for dealing with pages
@@ -49,9 +48,9 @@ public:
   void SetInfoModePolygon(void);
   void SetInfoModeSector(void);
   void SetInfoModeTerrain(void);
-  void SoftSetActivePage( INDEX iActivePage);
-// Attributes
-public:
+  void SoftSetActivePage(INDEX iActivePage);
+  // Attributes
+  public:
   ModeID m_ModeID;
   CDlgPgGlobal m_PgGlobal;
   CDlgPgTerrain m_PgTerrain;
@@ -63,25 +62,25 @@ public:
   CDlgPgSector m_PgSector;
   CDlgPgTexture m_PgTexture;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CInfoSheet)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void PostNcDestroy();
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CInfoSheet();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CInfoSheet)
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()

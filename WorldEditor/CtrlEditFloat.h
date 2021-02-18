@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,35 +21,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlEditFloat window
 
-class CCtrlEditFloat : public CEdit
-{
-// Construction
-public:
+class CCtrlEditFloat : public CEdit {
+  // Construction
+  public:
   CCtrlEditFloat();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlEditFloat)
   public:
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlEditFloat();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlEditFloat)
   afx_msg void OnChange();
   //}}AFX_MSG
@@ -58,4 +57,4 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-#endif  // CTRLEDITFLOAT_H
+#endif // CTRLEDITFLOAT_H

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,35 +23,34 @@ class CWorldEditorDoc;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlBrowseFile window
 
-class CCtrlBrowseFile : public CButton
-{
-// Construction
-public:
+class CCtrlBrowseFile : public CButton {
+  // Construction
+  public:
   CCtrlBrowseFile();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
   BOOL m_bFileNameNoDep;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
   CTFileName GetIntersectingFile();
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlBrowseFile)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlBrowseFile();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlBrowseFile)
   afx_msg void OnClicked();
   //}}AFX_MSG

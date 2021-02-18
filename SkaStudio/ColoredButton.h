@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,10 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CColoredButton window
 
-class CColoredButton : public CButton
-{
-// Construction
-public:
+class CColoredButton : public CButton {
+  // Construction
+  public:
   enum PickerType {
     PT_CUSTOM = 0,
     PT_MFC,
@@ -32,14 +31,14 @@ public:
 
   CColoredButton();
 
-// Attributes
-public:
+  // Attributes
+  public:
   COLOR m_colColor;
   COLOR m_colLastColor;
   UBYTE m_ubComponents[2][4];
   BOOL m_bMixedColor;
   enum PickerType m_ptPickerType;
-  CWnd *m_pwndParentDialog;
+  CWnd* m_pwndParentDialog;
   RECT m_rectButton;
   PIX m_dx;
   PIX m_dy;
@@ -49,36 +48,46 @@ public:
   CPoint m_ptCenter;
   CTString m_strID; // ID of control (base color)
 
-// Operations
-public:
+  // Operations
+  public:
   void SetColor(COLOR clrNew);
-  inline void SetDialogPtr(CWnd *pwndParentDialog) { m_pwndParentDialog = pwndParentDialog;};
-  inline void SetMixedColor(void) { m_bMixedColor = TRUE;};
-  inline void SetPickerType( enum PickerType ptPickerType) { m_ptPickerType = ptPickerType;};
-  inline COLOR GetColor(void) { return m_colColor;};
-  inline BOOL IsColorValid(void) { return !m_bMixedColor;};
-  void SetOverButtonInfo( CPoint point);
+  inline void SetDialogPtr(CWnd* pwndParentDialog) {
+    m_pwndParentDialog = pwndParentDialog;
+  };
+  inline void SetMixedColor(void) {
+    m_bMixedColor = TRUE;
+  };
+  inline void SetPickerType(enum PickerType ptPickerType) {
+    m_ptPickerType = ptPickerType;
+  };
+  inline COLOR GetColor(void) {
+    return m_colColor;
+  };
+  inline BOOL IsColorValid(void) {
+    return !m_bMixedColor;
+  };
+  void SetOverButtonInfo(CPoint point);
   void ColorToComponents(void);
-  int OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
+  int OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
   void OnColorChange();
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CColoredButton)
   public:
   virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CColoredButton();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CColoredButton)
   afx_msg void OnClicked();
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-  afx_msg void OnLButtonDown(UINT nFlags, CPoint point); 
+  afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
   afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
   afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
   afx_msg void OnCopyColor();

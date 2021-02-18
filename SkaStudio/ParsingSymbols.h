@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,7 +21,7 @@ extern void yyrestart(FILE *f);
 extern FILE *yyin;
 
 #define YY_NEVER_INTERACTIVE 1
-#define MAX_INCLUDE_DEPTH 32
+#define MAX_INCLUDE_DEPTH    32
 
 // temporary values for parsing
 extern INDEX _yy_iLine;

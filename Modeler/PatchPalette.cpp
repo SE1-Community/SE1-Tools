@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,10 +28,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CPatchPalette dialog
 
-
-CPatchPalette::CPatchPalette(CWnd* pParent /*=NULL*/)
-  : CDialog(CPatchPalette::IDD, pParent)
-{
+CPatchPalette::CPatchPalette(CWnd *pParent /*=NULL*/) : CDialog(CPatchPalette::IDD, pParent) {
   //{{AFX_DATA_INIT(CPatchPalette)
   m_PatchName = _T("");
   m_fStretch = 0.0f;
@@ -40,32 +37,27 @@ CPatchPalette::CPatchPalette(CWnd* pParent /*=NULL*/)
   m_LastViewUpdated = NULL;
 }
 
-
-void CPatchPalette::DoDataExchange(CDataExchange* pDX)
-{
+void CPatchPalette::DoDataExchange(CDataExchange *pDX) {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  
+
   m_PatchName = "";
   m_strPatchFile = "";
   m_fStretch = 1.0f;
-  if (pModelerView != NULL)
-  {
-    CModelerDoc* pDoc = (CModelerDoc *) pModelerView->GetDocument();
-    if (!pDX->m_bSaveAndValidate && 
-        (pDoc->m_emEditModel.CountPatches() != 0) )
-    {
-      GetDlgItem( IDC_EDIT_PATCH_NAME)->EnableWindow( TRUE);
-      GetDlgItem( IDC_EDIT_PATCH_STRETCH)->EnableWindow( TRUE);
-      GetDlgItem( IDC_PATCH_FILE_T)->EnableWindow( TRUE);
-      GetDlgItem( IDC_PATCH_NAME_T)->EnableWindow( TRUE);
-      GetDlgItem( IDC_PATCH_STRETCH_T)->EnableWindow( TRUE);
-      CModelPatch &mp = pDoc->m_emEditModel.edm_md.md_mpPatches[ pModelerView->m_iActivePatchBitIndex];
-      m_strPatchFile = mp.mp_toTexture.GetName().FileName();      
+  if (pModelerView != NULL) {
+    CModelerDoc *pDoc = (CModelerDoc *)pModelerView->GetDocument();
+    if (!pDX->m_bSaveAndValidate && (pDoc->m_emEditModel.CountPatches() != 0)) {
+      GetDlgItem(IDC_EDIT_PATCH_NAME)->EnableWindow(TRUE);
+      GetDlgItem(IDC_EDIT_PATCH_STRETCH)->EnableWindow(TRUE);
+      GetDlgItem(IDC_PATCH_FILE_T)->EnableWindow(TRUE);
+      GetDlgItem(IDC_PATCH_NAME_T)->EnableWindow(TRUE);
+      GetDlgItem(IDC_PATCH_STRETCH_T)->EnableWindow(TRUE);
+      CModelPatch &mp = pDoc->m_emEditModel.edm_md.md_mpPatches[pModelerView->m_iActivePatchBitIndex];
+      m_strPatchFile = mp.mp_toTexture.GetName().FileName();
       m_PatchName = mp.mp_strName;
       m_fStretch = mp.mp_fStretch;
     }
   }
-  
+
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CPatchPalette)
   DDX_Control(pDX, IDC_PATCH_BUTTON9, m_PatchButton9);
@@ -104,12 +96,10 @@ void CPatchPalette::DoDataExchange(CDataExchange* pDX)
   DDX_SkyFloat(pDX, IDC_EDIT_PATCH_STRETCH, m_fStretch);
   DDX_Text(pDX, IDC_PATCH_FILE_T, m_strPatchFile);
   //}}AFX_DATA_MAP
-  if ((pDX->m_bSaveAndValidate) && ( pModelerView != NULL) )
-  {
-    CModelerDoc* pDoc = (CModelerDoc *) pModelerView->GetDocument();
-    if (pDoc->m_emEditModel.CountPatches() != 0)
-    {
-      CModelPatch &mp = pDoc->m_emEditModel.edm_md.md_mpPatches[ pModelerView->m_iActivePatchBitIndex];
+  if ((pDX->m_bSaveAndValidate) && (pModelerView != NULL)) {
+    CModelerDoc *pDoc = (CModelerDoc *)pModelerView->GetDocument();
+    if (pDoc->m_emEditModel.CountPatches() != 0) {
+      CModelPatch &mp = pDoc->m_emEditModel.edm_md.md_mpPatches[pModelerView->m_iActivePatchBitIndex];
       pDoc->m_emEditModel.SetPatchStretch(pModelerView->m_iActivePatchBitIndex, m_fStretch);
       mp.mp_strName = CStringA(m_PatchName);
       pDoc->m_emEditModel.edm_md.md_bPreparedForRendering = FALSE;
@@ -118,60 +108,53 @@ void CPatchPalette::DoDataExchange(CDataExchange* pDX)
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CPatchPalette, CDialog)
-  //{{AFX_MSG_MAP(CPatchPalette)
-  ON_EN_CHANGE(IDC_EDIT_PATCH_NAME, OnChangeEditPatchName)
-  ON_EN_CHANGE(IDC_EDIT_PATCH_STRETCH, OnChangeEditPatchStretch)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPatchPalette)
+ON_EN_CHANGE(IDC_EDIT_PATCH_NAME, OnChangeEditPatchName)
+ON_EN_CHANGE(IDC_EDIT_PATCH_STRETCH, OnChangeEditPatchStretch)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPatchPalette message handlers
 
-BOOL CPatchPalette::OnInitDialog() 
-{
+BOOL CPatchPalette::OnInitDialog() {
   CDialog::OnInitDialog();
-  
+
   m_PatchExistIcon = AfxGetApp()->LoadIcon(IDI_PATCH_EXIST);
   m_PatchActiveIcon = AfxGetApp()->LoadIcon(IDI_PATCH_ACTIVE);
   m_PatchInactiveIcon = AfxGetApp()->LoadIcon(IDI_PATCH_INACTIVE);
-  ASSERT( m_PatchExistIcon != NULL);
-  ASSERT( m_PatchActiveIcon != NULL);
-  ASSERT( m_PatchInactiveIcon != NULL);
-  
+  ASSERT(m_PatchExistIcon != NULL);
+  ASSERT(m_PatchActiveIcon != NULL);
+  ASSERT(m_PatchInactiveIcon != NULL);
+
   return TRUE;
 }
 
-BOOL CPatchPalette::OnIdle(LONG lCount)
-{
+BOOL CPatchPalette::OnIdle(LONG lCount) {
   CModelerView *pModelerView = CModelerView::GetActiveMappingNormalView();
-  if ((pModelerView != m_LastViewUpdated) || theApp.m_bRefreshPatchPalette)
-  {
+  if ((pModelerView != m_LastViewUpdated) || theApp.m_bRefreshPatchPalette) {
     theApp.m_bRefreshPatchPalette = FALSE;
-    UpdateData( FALSE);
-    Invalidate( FALSE);
+    UpdateData(FALSE);
+    Invalidate(FALSE);
     m_LastViewUpdated = pModelerView;
-    if (pModelerView == NULL)
-    {
+    if (pModelerView == NULL) {
       m_LastViewUpdated = NULL;
-      GetDlgItem( IDC_EDIT_PATCH_NAME)->EnableWindow( FALSE);
-      GetDlgItem( IDC_EDIT_PATCH_STRETCH)->EnableWindow( FALSE);
-      GetDlgItem( IDC_PATCH_NAME_T)->EnableWindow( FALSE);
-      GetDlgItem( IDC_PATCH_STRETCH_T)->EnableWindow( FALSE);
-      GetDlgItem( IDC_PATCH_FILE_T)->EnableWindow( FALSE);
+      GetDlgItem(IDC_EDIT_PATCH_NAME)->EnableWindow(FALSE);
+      GetDlgItem(IDC_EDIT_PATCH_STRETCH)->EnableWindow(FALSE);
+      GetDlgItem(IDC_PATCH_NAME_T)->EnableWindow(FALSE);
+      GetDlgItem(IDC_PATCH_STRETCH_T)->EnableWindow(FALSE);
+      GetDlgItem(IDC_PATCH_FILE_T)->EnableWindow(FALSE);
     }
   }
 
   return TRUE;
 }
 
-void CPatchPalette::OnChangeEditPatchName() 
-{
-  UpdateData(TRUE);  
+void CPatchPalette::OnChangeEditPatchName() {
+  UpdateData(TRUE);
 }
 
-void CPatchPalette::OnChangeEditPatchStretch() 
-{
-  UpdateData(TRUE);  
+void CPatchPalette::OnChangeEditPatchStretch() {
+  UpdateData(TRUE);
 }

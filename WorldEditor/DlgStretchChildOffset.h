@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,32 +25,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgStretchChildOffset dialog
 
-class CDlgStretchChildOffset : public CDialog
-{
-// Construction
-public:
-  CDlgStretchChildOffset(CWnd* pParent = NULL);   // standard constructor
+class CDlgStretchChildOffset : public CDialog {
+  // Construction
+  public:
+  CDlgStretchChildOffset(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgStretchChildOffset)
   enum { IDD = IDD_STRETCH_CHILD_OFFSET };
-  float  m_fStretchValue;
+  float m_fStretchValue;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgStretchChildOffset)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgStretchChildOffset)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

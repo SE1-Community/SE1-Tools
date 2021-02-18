@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,29 +21,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CScriptDoc document
 
-class CScriptDoc : public CDocument
-{
-protected:
-  CScriptDoc();           // protected constructor used by dynamic creation
+class CScriptDoc : public CDocument {
+  protected:
+  CScriptDoc(); // protected constructor used by dynamic creation
   DECLARE_DYNCREATE(CScriptDoc)
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CScriptDoc)
   public:
-  virtual void Serialize(CArchive& ar);   // overridden for document i/o
+  virtual void Serialize(CArchive& ar); // overridden for document i/o
   protected:
   virtual BOOL OnNewDocument();
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CScriptDoc();
 #ifdef _DEBUG
   virtual void AssertValid() const;
@@ -51,9 +48,9 @@ public:
 #endif
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CScriptDoc)
-    // NOTE - the ClassWizard will add and remove member functions here.
+  // NOTE - the ClassWizard will add and remove member functions here.
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

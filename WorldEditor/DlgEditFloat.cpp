@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,25 +30,18 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEditFloat dialog
 
-
-CDlgEditFloat::CDlgEditFloat(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgEditFloat::IDD, pParent)
-{
+CDlgEditFloat::CDlgEditFloat(CWnd* pParent /*=NULL*/) : CDialog(CDlgEditFloat::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgEditFloat)
   m_fEditFloat = 0.0f;
   m_strVarName = _T("");
   //}}AFX_DATA_INIT
-  m_strTitle="Type new value";
+  m_strTitle = "Type new value";
 }
 
-
-void CDlgEditFloat::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgEditFloat::DoDataExchange(CDataExchange* pDX) {
   // if dialog is receiving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
-    if (IsWindow(m_hWnd)) 
-    {
+  if (pDX->m_bSaveAndValidate == FALSE) {
+    if (IsWindow(m_hWnd)) {
       SetWindowText(CString(m_strTitle));
     }
   }
@@ -60,11 +53,10 @@ void CDlgEditFloat::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgEditFloat, CDialog)
-  //{{AFX_MSG_MAP(CDlgEditFloat)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgEditFloat)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

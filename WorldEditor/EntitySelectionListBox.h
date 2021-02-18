@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,31 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CEntitySelectionListBox window
 
-class CEntitySelectionListBox : public CCheckListBox
-{
-// Construction
-public:
+class CEntitySelectionListBox : public CCheckListBox {
+  // Construction
+  public:
   CEntitySelectionListBox();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CEntitySelectionListBox)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CEntitySelectionListBox();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CEntitySelectionListBox)
-    // NOTE - the ClassWizard will add and remove member functions here.
+  // NOTE - the ClassWizard will add and remove member functions here.
   //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP()

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,30 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDChooseAnim dialog
 
-class CDChooseAnim : public CDialog
-{
-// Construction
-public:
-  CAnimObject *m_pAnimObject;
-  CDChooseAnim(CAnimObject *pAO, CWnd* pParent = NULL);   // standard constructor
+class CDChooseAnim : public CDialog {
+  // Construction
+  public:
+  CAnimObject* m_pAnimObject;
+  CDChooseAnim(CAnimObject* pAO, CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDChooseAnim)
   enum { IDD = IDD_CHOOSEANIMATION };
-  CListBox  m_ListBox;
+  CListBox m_ListBox;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDChooseAnim)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDChooseAnim)
   afx_msg void OnDblclkList1();

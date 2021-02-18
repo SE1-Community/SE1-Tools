@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,10 +30,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgPreferences dialog
 #define PREF_COMBO_HEIGHT 100
 
-
-CDlgPreferences::CDlgPreferences( CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgPreferences::IDD, pParent)
-{
+CDlgPreferences::CDlgPreferences(CWnd* pParent /*=NULL*/) : CDialog(CDlgPreferences::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgPreferences)
   m_PrefsCopy = FALSE;
   m_AutoMaximize = FALSE;
@@ -55,24 +52,18 @@ CDlgPreferences::CDlgPreferences( CWnd* pParent /*=NULL*/)
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgPreferences::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
 
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
-    GetDlgItem(IDC_STATIC_SOURCE_SAFE_BORDER)->EnableWindow( FALSE);
-    GetDlgItem(IDC_STATIC_SOURCE_SAFE_PROJECT)->EnableWindow( FALSE);
-    GetDlgItem(IDC_EDIT_SS_PROJECT)->EnableWindow( FALSE);
+  if (pDX->m_bSaveAndValidate == FALSE) {
+    GetDlgItem(IDC_STATIC_SOURCE_SAFE_BORDER)->EnableWindow(FALSE);
+    GetDlgItem(IDC_STATIC_SOURCE_SAFE_PROJECT)->EnableWindow(FALSE);
+    GetDlgItem(IDC_EDIT_SS_PROJECT)->EnableWindow(FALSE);
     // select current api
-    if (IsWindow(m_ctrGfxApi.m_hWnd))
-    {
-      for (INDEX iItem=0; iItem<m_ctrGfxApi.GetCount(); iItem++)
-      {
-        if (theApp.m_iApi == m_ctrGfxApi.GetItemData(iItem))
-        {
+    if (IsWindow(m_ctrGfxApi.m_hWnd)) {
+      for (INDEX iItem = 0; iItem < m_ctrGfxApi.GetCount(); iItem++) {
+        if (theApp.m_iApi == m_ctrGfxApi.GetItemData(iItem)) {
           m_ctrGfxApi.SetCurSel(theApp.m_iApi);
           break;
         }
@@ -90,41 +81,34 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     m_bShowAllOnOpen = theApp.m_Preferences.ap_bShowAllOnOpen;
     m_bHideShadowsOnStart = theApp.m_Preferences.ap_bHideShadowsOnOpen;
     m_bAutoUpdateDisplaceMap = theApp.m_Preferences.ap_bAutoUpdateDisplaceMap;
-    m_fFlyModeSpeed=theApp.m_Preferences.ap_fDefaultFlyModeSpeed;
-    
-    if (IsWindow(m_ctrlCSGPrecission.m_hWnd))
-    {
+    m_fFlyModeSpeed = theApp.m_Preferences.ap_fDefaultFlyModeSpeed;
+
+    if (IsWindow(m_ctrlCSGPrecission.m_hWnd)) {
       m_ctrlTerrainSelectionVisible.SetCurSel(theApp.m_Preferences.ap_iTerrainSelectionVisible);
       m_ctrlTerrainSelectionHidden.SetCurSel(theApp.m_Preferences.ap_iTerrainSelectionHidden);
-      m_iMemoryForTerrainUndo=theApp.m_Preferences.ap_iMemoryForTerrainUndo;
-      m_bAutoUpdateTerrainDistribution=theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution;
+      m_iMemoryForTerrainUndo = theApp.m_Preferences.ap_iMemoryForTerrainUndo;
+      m_bAutoUpdateTerrainDistribution = theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution;
 
-      INDEX iCSGPrecission=0;
-      for (INDEX iExp=-5; iExp <= 5; iExp+=1)
-      {
-        FLOAT fPow=pow(2.0f ,iExp*2);
-        FLOAT fEpsilon=_pShell->GetFLOAT("mth_fCSGEpsilon");
-        if (fEpsilon == fPow)
-        {
-          iCSGPrecission=iExp;
+      INDEX iCSGPrecission = 0;
+      for (INDEX iExp = -5; iExp <= 5; iExp += 1) {
+        FLOAT fPow = pow(2.0f, iExp * 2);
+        FLOAT fEpsilon = _pShell->GetFLOAT("mth_fCSGEpsilon");
+        if (fEpsilon == fPow) {
+          iCSGPrecission = iExp;
           break;
         }
       }
-      m_ctrlCSGPrecission.SetPos( iCSGPrecission+5);
+      m_ctrlCSGPrecission.SetPos(iCSGPrecission + 5);
       CTString strCSGPrecission;
-      if (_pShell->GetFLOAT("mth_fCSGEpsilon") == 1.0f)
-      {
+      if (_pShell->GetFLOAT("mth_fCSGEpsilon") == 1.0f) {
         strCSGPrecission.PrintF("CSG Precission: 1 (default)");
-      }
-      else
-      {
+      } else {
         strCSGPrecission.PrintF("CSG Precission: %g", _pShell->GetFLOAT("mth_fCSGEpsilon"));
       }
-      m_strCSGPrecission=strCSGPrecission;
+      m_strCSGPrecission = strCSGPrecission;
     }
-    if (IsWindow(m_UndoLevels.m_hWnd))
-    {
-      m_UndoLevels.SetPos( theApp.m_Preferences.ap_iUndoLevels);
+    if (IsWindow(m_UndoLevels.m_hWnd)) {
+      m_UndoLevels.SetPos(theApp.m_Preferences.ap_iUndoLevels);
     }
     m_iWndStartupCfg = theApp.m_Preferences.ap_iStartupWindowSetup;
   }
@@ -158,12 +142,11 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
-    theApp.m_Preferences.ap_iTerrainSelectionVisible=m_ctrlTerrainSelectionVisible.GetCurSel();
-    theApp.m_Preferences.ap_iTerrainSelectionHidden=m_ctrlTerrainSelectionHidden.GetCurSel();
-    theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution=m_bAutoUpdateTerrainDistribution;
-    theApp.m_Preferences.ap_iMemoryForTerrainUndo=m_iMemoryForTerrainUndo;
+  if (pDX->m_bSaveAndValidate != FALSE) {
+    theApp.m_Preferences.ap_iTerrainSelectionVisible = m_ctrlTerrainSelectionVisible.GetCurSel();
+    theApp.m_Preferences.ap_iTerrainSelectionHidden = m_ctrlTerrainSelectionHidden.GetCurSel();
+    theApp.m_Preferences.ap_bAutoUpdateTerrainDistribution = m_bAutoUpdateTerrainDistribution;
+    theApp.m_Preferences.ap_iMemoryForTerrainUndo = m_iMemoryForTerrainUndo;
 
     theApp.m_Preferences.ap_CopyExistingWindowPrefs = m_PrefsCopy;
     theApp.m_Preferences.ap_AutoMaximizeWindow = m_AutoMaximize;
@@ -177,57 +160,51 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     theApp.m_Preferences.ap_bHideShadowsOnOpen = m_bHideShadowsOnStart;
     theApp.m_Preferences.ap_bAutoUpdateDisplaceMap = m_bAutoUpdateDisplaceMap;
     theApp.m_Preferences.ap_iUndoLevels = m_UndoLevels.GetPos();
-    _pShell->SetFLOAT("mth_fCSGEpsilon", pow(2.0f, (m_ctrlCSGPrecission.GetPos()-5)*2)); 
+    _pShell->SetFLOAT("mth_fCSGEpsilon", pow(2.0f, (m_ctrlCSGPrecission.GetPos() - 5) * 2));
     theApp.m_Preferences.ap_iStartupWindowSetup = m_iWndStartupCfg;
     theApp.m_Preferences.ap_strSourceSafeProject = CStringA(m_strSSProject);
-    theApp.m_Preferences.ap_fDefaultFlyModeSpeed=m_fFlyModeSpeed;
+    theApp.m_Preferences.ap_fDefaultFlyModeSpeed = m_fFlyModeSpeed;
     // and write all data that can be written to INI file multiple times
     theApp.WriteToIniFile();
-    INDEX iCurSel=m_ctrGfxApi.GetCurSel();
-    INDEX iOldGfxApi=theApp.m_iApi;
-    if (iCurSel != CB_ERR)
-    {
-      theApp.m_iApi=m_ctrGfxApi.GetItemData(iCurSel);
-      if (iOldGfxApi != theApp.m_iApi)
-      {
-        _pGfx->ResetDisplayMode((enum GfxAPIType) theApp.m_iApi);
+    INDEX iCurSel = m_ctrGfxApi.GetCurSel();
+    INDEX iOldGfxApi = theApp.m_iApi;
+    if (iCurSel != CB_ERR) {
+      theApp.m_iApi = m_ctrGfxApi.GetItemData(iCurSel);
+      if (iOldGfxApi != theApp.m_iApi) {
+        _pGfx->ResetDisplayMode((enum GfxAPIType)theApp.m_iApi);
       }
     }
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPreferences, CDialog)
-  //{{AFX_MSG_MAP(CDlgPreferences)
-  ON_BN_CLICKED(ID_SAVE_PREFERENCES, OnSavePreferences)
-  ON_BN_CLICKED(ID_LOAD_PREFERENCES, OnLoadPreferences)
-  ON_BN_CLICKED(IDC_CHANGE_FULL_SCREEN_DISPLAY_MODE, OnChangeFullScreenDisplayMode)
-  ON_NOTIFY(NM_RELEASEDCAPTURE, IDC_CSG_PRECISSION, OnReleasedcaptureCsgPrecission)
-  //}}AFX_MSG_MAP
-  ON_COMMAND_RANGE(IDC_RENDERING_PREFS01, IDC_RENDERING_PREFS10, OnChangePreferences)
+//{{AFX_MSG_MAP(CDlgPreferences)
+ON_BN_CLICKED(ID_SAVE_PREFERENCES, OnSavePreferences)
+ON_BN_CLICKED(ID_LOAD_PREFERENCES, OnLoadPreferences)
+ON_BN_CLICKED(IDC_CHANGE_FULL_SCREEN_DISPLAY_MODE, OnChangeFullScreenDisplayMode)
+ON_NOTIFY(NM_RELEASEDCAPTURE, IDC_CSG_PRECISSION, OnReleasedcaptureCsgPrecission)
+//}}AFX_MSG_MAP
+ON_COMMAND_RANGE(IDC_RENDERING_PREFS01, IDC_RENDERING_PREFS10, OnChangePreferences)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPreferences message handlers
 
-BOOL CDlgPreferences::OnInitDialog()
-{
+BOOL CDlgPreferences::OnInitDialog() {
   CDialog::OnInitDialog();
 
   m_ctrlCSGPrecission.SetRange(0, 10);
-  m_UndoLevels.SetRange( 0, 10);
+  m_UndoLevels.SetRange(0, 10);
 
   m_ctrGfxApi.ResetContent();
-  
-  if (_pGfx->HasAPI( GAT_OGL))
-  {
-    INDEX iAddedAs=m_ctrGfxApi.AddString(L"OpenGL");
+
+  if (_pGfx->HasAPI(GAT_OGL)) {
+    INDEX iAddedAs = m_ctrGfxApi.AddString(L"OpenGL");
     m_ctrGfxApi.SetItemData(iAddedAs, GAT_OGL);
   }
 #ifdef SE1_D3D
-  if (_pGfx->HasAPI( GAT_D3D))
-  {
-    INDEX iAddedAs=m_ctrGfxApi.AddString(L"Direct3D");
+  if (_pGfx->HasAPI(GAT_D3D)) {
+    INDEX iAddedAs = m_ctrGfxApi.AddString(L"Direct3D");
     m_ctrGfxApi.SetItemData(iAddedAs, GAT_D3D);
   }
 #endif // SE1_D3D
@@ -244,39 +221,34 @@ BOOL CDlgPreferences::OnInitDialog()
   m_ctrlTerrainSelectionHidden.AddString(L"Vertices");
   m_ctrlTerrainSelectionHidden.AddString(L"None");
 
-  UpdateData( FALSE);
+  UpdateData(FALSE);
   return TRUE;
 }
 
-void CDlgPreferences::OnChangePreferences(UINT nID)
-{
+void CDlgPreferences::OnChangePreferences(UINT nID) {
   INDEX iPreferencesBuffer = nID - IDC_RENDERING_PREFS01;
-  CDlgRenderingPreferences dlg( iPreferencesBuffer);
+  CDlgRenderingPreferences dlg(iPreferencesBuffer);
   dlg.DoModal();
 }
 
-void CDlgPreferences::OnSavePreferences()
-{
-  UpdateData( TRUE);
+void CDlgPreferences::OnSavePreferences() {
+  UpdateData(TRUE);
   // and write all data that can be written to ini file multiple times
   theApp.WriteToIniFile();
 }
 
-void CDlgPreferences::OnLoadPreferences()
-{
+void CDlgPreferences::OnLoadPreferences() {
   // this will load all data that can be readen from ini file multiple times
   theApp.ReadFromIniFile();
-  UpdateData( FALSE);
+  UpdateData(FALSE);
 }
 
-void CDlgPreferences::OnChangeFullScreenDisplayMode()
-{
+void CDlgPreferences::OnChangeFullScreenDisplayMode() {
   // pass old and get new full screen mode and driver
-  _EngineGUI.SelectMode( m_dmFullScreen, m_gatFullScreen);
+  _EngineGUI.SelectMode(m_dmFullScreen, m_gatFullScreen);
 }
 
-void CDlgPreferences::OnReleasedcaptureCsgPrecission(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CDlgPreferences::OnReleasedcaptureCsgPrecission(NMHDR* pNMHDR, LRESULT* pResult) {
   *pResult = 0;
   /*
   CTString strCSGPrecission;

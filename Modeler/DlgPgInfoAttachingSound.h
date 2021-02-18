@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,12 +25,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgInfoAttachingSound dialog
 
-class CDlgPgInfoAttachingSound : public CPropertyPage
-{
+class CDlgPgInfoAttachingSound : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgInfoAttachingSound)
 
-// Construction
-public:
+  // Construction
+  public:
   CUpdateable m_udAllValues;
 
   BOOL OnIdle(LONG lCount);
@@ -38,25 +37,24 @@ public:
   CDlgPgInfoAttachingSound();
   ~CDlgPgInfoAttachingSound();
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgInfoAttachingSound)
   enum { IDD = IDD_INFO_ATTACHING_SOUND };
-  CString  m_strAttachedSound;
-  BOOL  m_bLooping;
-  BOOL  m_bPlaying;
-  float  m_fDelay;
+  CString m_strAttachedSound;
+  BOOL m_bLooping;
+  BOOL m_bPlaying;
+  float m_fDelay;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgInfoAttachingSound)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgInfoAttachingSound)
   virtual BOOL OnInitDialog();
@@ -67,7 +65,6 @@ protected:
   afx_msg void OnChangeSoundStartDelay();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

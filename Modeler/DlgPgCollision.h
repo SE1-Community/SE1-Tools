@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,42 +21,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgCollision dialog
 
-class CDlgPgCollision : public CPropertyPage
-{
+class CDlgPgCollision : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgCollision)
 
-// Construction
-public:
+  // Construction
+  public:
   CUpdateable m_udAllValues;
   CDlgPgCollision();
   ~CDlgPgCollision();
   BOOL OnIdle(LONG lCount);
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgCollision)
   enum { IDD = IDD_INFO_COLLISION };
-  float  m_fWidth;
-  float  m_fHeight;
-  float  m_fLenght;
-  float  m_fXCenter;
-  float  m_fYDown;
-  float  m_fZCenter;
-  int    m_EqualityRadio;
-  CString  m_strCollisionBoxName;
-  CString  m_strCollisionBoxIndex;
-  BOOL  m_bCollideAsBox;
+  float m_fWidth;
+  float m_fHeight;
+  float m_fLenght;
+  float m_fXCenter;
+  float m_fYDown;
+  float m_fZCenter;
+  int m_EqualityRadio;
+  CString m_strCollisionBoxName;
+  CString m_strCollisionBoxIndex;
+  BOOL m_bCollideAsBox;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgCollision)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgCollision)
   afx_msg void OnChangeEditWidth();
@@ -77,6 +75,5 @@ protected:
   afx_msg void OnAllignToSize();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 #endif // DLGPGCOLLISION_H

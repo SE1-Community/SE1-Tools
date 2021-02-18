@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,32 +22,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CActionsListControl window
 
-class CActionsListControl : public CListCtrl
-{
-// Construction
-public:
+class CActionsListControl : public CListCtrl {
+  // Construction
+  public:
   CActionsListControl();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CActionsListControl)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CActionsListControl();
 
   // Generated message map functions
-//protected:
-public:
+  // protected:
+  public:
   //{{AFX_MSG(CActionsListControl)
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
   afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);

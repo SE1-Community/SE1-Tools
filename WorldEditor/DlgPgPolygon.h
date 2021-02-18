@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,12 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgPolygon dialog
 
-class CDlgPgPolygon : public CPropertyPage
-{
+class CDlgPgPolygon : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgPolygon)
 
-// Construction
-public:
+  // Construction
+  public:
   CDlgPgPolygon();
   ~CDlgPgPolygon();
   BOOL OnIdle(LONG lCount);
@@ -36,36 +35,36 @@ public:
 
   CUpdateableRT m_udPolygonSelection;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgPolygon)
   enum { IDD = IDD_PG_POLYGON };
-  CCtrlEditBoolean  m_IsDoubleSided;
-  CCtrlEditBoolean  m_bShootThru;
-  CCtrlEditBoolean  m_IsTransparent;
-  CCtrlEditBoolean  m_bStairs;
-  CCtrlEditBoolean  m_IsOccluder;
-  CComboBox  m_ComboMirror;
-  CCtrlEditBoolean  m_IsOldPortal;
-  CCtrlEditBoolean  m_bIsDetail;
-  CCtrlEditBoolean  m_IsInvisible;
-  CCtrlEditBoolean  m_IsTranslucent;
-  CCtrlEditBoolean  m_IsPassable;
-  CCtrlEditBoolean  m_IsPortal;
-  CComboBox  m_ComboFriction;
+  CCtrlEditBoolean m_IsDoubleSided;
+  CCtrlEditBoolean m_bShootThru;
+  CCtrlEditBoolean m_IsTransparent;
+  CCtrlEditBoolean m_bStairs;
+  CCtrlEditBoolean m_IsOccluder;
+  CComboBox m_ComboMirror;
+  CCtrlEditBoolean m_IsOldPortal;
+  CCtrlEditBoolean m_bIsDetail;
+  CCtrlEditBoolean m_IsInvisible;
+  CCtrlEditBoolean m_IsTranslucent;
+  CCtrlEditBoolean m_IsPassable;
+  CCtrlEditBoolean m_IsPortal;
+  CComboBox m_ComboFriction;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgPolygon)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgPolygon)
   virtual BOOL OnInitDialog();
@@ -76,6 +75,5 @@ protected:
   afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 #endif // DLGPGPOLYGON_H

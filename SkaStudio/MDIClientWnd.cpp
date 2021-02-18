@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -32,47 +32,36 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CMDIClientWnd
 
-CMDIClientWnd::CMDIClientWnd()
-{
-}
+CMDIClientWnd::CMDIClientWnd() {}
 
-CMDIClientWnd::~CMDIClientWnd()
-{
-}
-
+CMDIClientWnd::~CMDIClientWnd() {}
 
 BEGIN_MESSAGE_MAP(CMDIClientWnd, CWnd)
-  //{{AFX_MSG_MAP(CMDIClientWnd)
-  ON_WM_SIZE()
-  ON_WM_SIZING()
-  ON_WM_LBUTTONDOWN()
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CMDIClientWnd)
+ON_WM_SIZE()
+ON_WM_SIZING()
+ON_WM_LBUTTONDOWN()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CMDIClientWnd message handlers
-void CMDIClientWnd::GetCurrentRect(CRect &rc)
-{
+void CMDIClientWnd::GetCurrentRect(CRect &rc) {
   rc = ClientRect;
 }
 
-void CMDIClientWnd::SetCurrentRect(CRect &rc)
-{
+void CMDIClientWnd::SetCurrentRect(CRect &rc) {
   ClientRect = rc;
 }
 
-
-void CMDIClientWnd::OnSize(UINT nType, int cx, int cy) 
-{
+void CMDIClientWnd::OnSize(UINT nType, int cx, int cy) {
   CPoint pt;
   CRect rc;
 
-
   const int iLogRightSpace = 90;
 
-  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  SetCurrentRect(CRect(0,0,cx,cy));
+  CMainFrame *pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  SetCurrentRect(CRect(0, 0, cx, cy));
   theApp.m_dlgBarTreeView.GetWindowRect(rc);
   pt.x = rc.left;
   pt.y = rc.top;
@@ -82,8 +71,8 @@ void CMDIClientWnd::OnSize(UINT nType, int cx, int cy)
     if (!theApp.m_dlgBarTreeView.IsFloating()) {
       theApp.m_dlgBarTreeView.ShowWindow(SW_HIDE);
       INDEX iDockSide = theApp.m_dlgBarTreeView.GetDockingSide();
-      pMainFrame->FloatControlBar(&theApp.m_dlgBarTreeView,pt);
-      pMainFrame->DockControlBar(&theApp.m_dlgBarTreeView,iDockSide);
+      pMainFrame->FloatControlBar(&theApp.m_dlgBarTreeView, pt);
+      pMainFrame->DockControlBar(&theApp.m_dlgBarTreeView, iDockSide);
       theApp.m_dlgBarTreeView.UpdateWindow();
       theApp.m_dlgBarTreeView.ShowWindow(SW_SHOW);
     }
@@ -99,38 +88,35 @@ void CMDIClientWnd::OnSize(UINT nType, int cx, int cy)
       theApp.m_dlgErrorList.ShowWindow(SW_SHOW);
     }
   }*/
-  
+
   // set position of error list
-  CListCtrl *plcErrList = (CListCtrl*)theApp.m_dlgErrorList.GetDlgItem(IDC_LC_ERROR_LIST);
-  CButton   *pcbClose = (CButton*)theApp.m_dlgErrorList.GetDlgItem(IDC_BT_CLOSE);
-  CButton   *pcbClear = (CButton*)theApp.m_dlgErrorList.GetDlgItem(IDC_BT_CLEAR);
+  CListCtrl *plcErrList = (CListCtrl *)theApp.m_dlgErrorList.GetDlgItem(IDC_LC_ERROR_LIST);
+  CButton *pcbClose = (CButton *)theApp.m_dlgErrorList.GetDlgItem(IDC_BT_CLOSE);
+  CButton *pcbClear = (CButton *)theApp.m_dlgErrorList.GetDlgItem(IDC_BT_CLEAR);
   SIZE szLogDlg = theApp.GetLogDlgSize();
-  plcErrList->SetWindowPos(&wndTopMost,5,5,szLogDlg.cx - iLogRightSpace,szLogDlg.cy-10,SWP_NOZORDER);
-  pcbClose->SetWindowPos(&wndTopMost,cx - 80,15,70,22,SWP_NOZORDER);
-  pcbClear->SetWindowPos(&wndTopMost,cx - 80,40,70,22,SWP_NOZORDER);
-  plcErrList->SetColumnWidth(0,szLogDlg.cx-iLogRightSpace-25);
-  
+  plcErrList->SetWindowPos(&wndTopMost, 5, 5, szLogDlg.cx - iLogRightSpace, szLogDlg.cy - 10, SWP_NOZORDER);
+  pcbClose->SetWindowPos(&wndTopMost, cx - 80, 15, 70, 22, SWP_NOZORDER);
+  pcbClear->SetWindowPos(&wndTopMost, cx - 80, 40, 70, 22, SWP_NOZORDER);
+  plcErrList->SetColumnWidth(0, szLogDlg.cx - iLogRightSpace - 25);
 
   CWnd::OnSize(nType, cx, cy);
 }
 
-void CMDIClientWnd::OnSizing(UINT fwSide, LPRECT pRect) 
-{
+void CMDIClientWnd::OnSizing(UINT fwSide, LPRECT pRect) {
   CWnd::OnSizing(fwSide, pRect);
 }
 
-void CMDIClientWnd::OnLButtonDown(UINT nFlags, CPoint point) 
-{
+void CMDIClientWnd::OnLButtonDown(UINT nFlags, CPoint point) {
   static CTimerValue tvLast;
   static CPoint ptLast;
   CPoint ptNow;
-  GetCursorPos( &ptNow);
+  GetCursorPos(&ptNow);
   CTimerValue tvNow = _pTimer->GetHighPrecisionTimer();
-  FLOAT tmDelta = (tvNow-tvLast).GetSeconds();
-  if (tmDelta<0.5f && abs(ptNow.x-ptLast.x)<5 && abs(ptNow.y-ptLast.y)<5) {
+  FLOAT tmDelta = (tvNow - tvLast).GetSeconds();
+  if (tmDelta < 0.5f && abs(ptNow.x - ptLast.x) < 5 && abs(ptNow.y - ptLast.y) < 5) {
     theApp.OnFileOpen();
   }
-  tvLast=tvNow;
+  tvLast = tvNow;
   ptLast = ptNow;
   CWnd::OnLButtonDown(nFlags, point);
 }

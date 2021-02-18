@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -191,13 +191,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define ID_VIEW_DLG_PREFS               61217
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        153
-#define _APS_NEXT_COMMAND_VALUE         32854
-#define _APS_NEXT_CONTROL_VALUE         1087
-#define _APS_NEXT_SYMED_VALUE           104
+#define _APS_3D_CONTROLS         1
+#define _APS_NEXT_RESOURCE_VALUE 153
+#define _APS_NEXT_COMMAND_VALUE  32854
+#define _APS_NEXT_CONTROL_VALUE  1087
+#define _APS_NEXT_SYMED_VALUE    104
 #endif
 #endif

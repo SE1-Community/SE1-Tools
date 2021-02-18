@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -27,56 +27,46 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CDropDown
 
-CDropDown::CDropDown()
-{
+CDropDown::CDropDown() {
   m_pInt = NULL;
   m_bSetID = FALSE;
 }
 
-CDropDown::~CDropDown()
-{
-}
+CDropDown::~CDropDown() {}
 
-void CDropDown::SetDataPtr(INDEX *pInt)
-{
+void CDropDown::SetDataPtr(INDEX *pInt) {
   m_pInt = pInt;
 }
 
-void CDropDown::RememberIDs()
-{
+void CDropDown::RememberIDs() {
   m_bSetID = TRUE;
 }
 
 BEGIN_MESSAGE_MAP(CDropDown, CComboBox)
-  //{{AFX_MSG_MAP(CDropDown)
-  ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendok)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDropDown)
+ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendok)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDropDown message handlers
 
-void CDropDown::OnSelendok() 
-{
+void CDropDown::OnSelendok() {
   theApp.NotificationMessage(m_strID);
   wchar_t str[MAX_PATH];
-  GetWindowText(str,MAX_PATH);
+  GetWindowText(str, MAX_PATH);
   CSeriousSkaStudioDoc *pDoc = theApp.GetDocument();
   // set ID of selected item
-  if (m_bSetID)
-  {
-    theApp.m_dlgBarTreeView.ChangeTextureOnSelectedSurfaces(m_strID,CTString(CStringA(str)));
+  if (m_bSetID) {
+    theApp.m_dlgBarTreeView.ChangeTextureOnSelectedSurfaces(m_strID, CTString(CStringA(str)));
     pDoc->MarkAsChanged();
     return;
-  }
-  else
-  {
+  } else {
     INDEX iIndex = GetCurSel();
     pDoc->MarkAsChanged();
-    theApp.m_dlgBarTreeView.ChangeTextureCoordsOnSelectedSurfaces(m_strID,iIndex);
+    theApp.m_dlgBarTreeView.ChangeTextureCoordsOnSelectedSurfaces(m_strID, iIndex);
   }
 }

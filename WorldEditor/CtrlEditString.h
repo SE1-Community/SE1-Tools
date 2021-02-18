@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,35 +22,34 @@ class CPropertyComboBar;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlEditString window
 
-class CCtrlEditString : public CEdit
-{
-// Construction
-public:
+class CCtrlEditString : public CEdit {
+  // Construction
+  public:
   CCtrlEditString();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlEditString)
   public:
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlEditString();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlEditString)
   afx_msg void OnChange();
   //}}AFX_MSG
@@ -59,4 +58,4 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-#endif  // CTRLEDITSTRING_H
+#endif // CTRLEDITSTRING_H

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -19,17 +19,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define WORLDEDITOR_H 1
 
 #ifndef __AFXWIN_H__
-  #error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"       // main symbols
+#include "resource.h" // main symbols
 #include "Viewers.h"
 
-
 #define CHILD_CONFIGURATION_VER "V012"
-#define VIEW_PREFERENCES_VER "V012"
+#define VIEW_PREFERENCES_VER    "V012"
 
-#define VIEW_PREFERENCES_CT 10
+#define VIEW_PREFERENCES_CT     10
 #define CHILD_CONFIGURATIONS_CT 10
 
 extern TICK _llLastMipBrushingOptionUsed;
@@ -59,7 +58,7 @@ extern CTerrainLayer *GetLayer(INDEX iLayer);
 //
 
 enum PrimitiveType {
-  PT_NONE =0,
+  PT_NONE = 0,
   PT_CONUS,
   PT_TORUS,
   PT_STAIRCASES,
@@ -68,7 +67,7 @@ enum PrimitiveType {
 };
 
 enum TriangularisationType {
-  TT_NONE=0,
+  TT_NONE = 0,
   TT_CENTER_VERTEX,
   TT_FROM_VTX00,
   TT_FROM_VTX01,
@@ -91,9 +90,8 @@ enum TriangularisationType {
 #define VALUES_FOR_PRIMITIVE_VERSION2 "VFP2"
 #define VALUES_FOR_PRIMITIVE_VERSION3 "VFP3"
 // values for primitive
-class CValuesForPrimitive
-{
-public:  
+class CValuesForPrimitive {
+  public:
   enum CSGType vfp_csgtCSGOperation;
   // global parameters
   enum PrimitiveType vfp_ptPrimitiveType;
@@ -130,18 +128,17 @@ public:
 
   INDEX vfp_iSlicesPerWidth;
   INDEX vfp_iSlicesPerHeight;
-  
+
   INDEX vfp_iTopShape;
   INDEX vfp_iBottomShape;
-  
+
   FLOAT vfp_fAmplitude;
   FLOAT vfp_fMipStart;
   FLOAT vfp_fMipStep;
   CTFileName vfp_fnDisplacement;
 
   CValuesForPrimitive();
-  inline CValuesForPrimitive (CValuesForPrimitive &vfpToCopy)
-  {
+  inline CValuesForPrimitive(CValuesForPrimitive &vfpToCopy) {
     vfp_avVerticesOnBaseOfPrimitive = vfpToCopy.vfp_avVerticesOnBaseOfPrimitive;
     vfp_ptPrimitiveType = vfpToCopy.vfp_ptPrimitiveType;
     vfp_o3dPrimitive = vfpToCopy.vfp_o3dPrimitive;
@@ -175,7 +172,7 @@ public:
 
     vfp_iSlicesPerWidth = vfpToCopy.vfp_iSlicesPerWidth;
     vfp_iSlicesPerHeight = vfpToCopy.vfp_iSlicesPerHeight;
-  
+
     vfp_iTopShape = vfpToCopy.vfp_iTopShape;
     vfp_iBottomShape = vfpToCopy.vfp_iBottomShape;
 
@@ -185,7 +182,7 @@ public:
     vfp_fMipStep = vfpToCopy.vfp_fMipStep;
   };
 
-  inline BOOL operator == (const CValuesForPrimitive &vfpToCompare);
+  inline BOOL operator==(const CValuesForPrimitive &vfpToCompare);
   inline CValuesForPrimitive operator+(const CValuesForPrimitive &vfpToAdd);
   inline CValuesForPrimitive &operator+=(const CValuesForPrimitive &vfpToAdd);
   inline CValuesForPrimitive operator-(const CValuesForPrimitive &vfpToSub);
@@ -200,15 +197,14 @@ public:
 
 // for linking of primitive into primitive history list
 class CPrimitiveInHistoryBuffer {
-public:
+  public:
   CListNode pihb_lnNode;
   CValuesForPrimitive pihb_vfpPrimitive;
 };
 
 // Class used for holding global modeler's preferences
-class CAppPrefs
-{
-public:
+class CAppPrefs {
+  public:
   ~CAppPrefs();
   BOOL ap_CopyExistingWindowPrefs;
   BOOL ap_AutoMaximizeWindow;
@@ -221,7 +217,7 @@ public:
   BOOL ap_bShowAllOnOpen;
   BOOL ap_bHideShadowsOnOpen;
   BOOL ap_bAutoUpdateDisplaceMap;
-  
+
   INDEX ap_iUndoLevels;
   INDEX ap_iStartupWindowSetup;
 
@@ -244,9 +240,8 @@ public:
 };
 
 // Class for holding view preferences
-class CViewPrefs
-{
-public:
+class CViewPrefs {
+  public:
   // default constructor
   CViewPrefs(void);
   // set default values
@@ -273,9 +268,8 @@ public:
 };
 
 // Class for holding view configurations
-class CChildConfiguration
-{
-public:
+class CChildConfiguration {
+  public:
   // set default values
   void SetDefaultValues(void);
   void ClearInvalidConfigPointers(void);
@@ -292,7 +286,7 @@ public:
   // view prefs
   CViewPrefs m_vpViewPrefs[4];
   // type of projection
-  enum CSlaveViewer::ProjectionType m_ptProjectionType[ 4];
+  enum CSlaveViewer::ProjectionType m_ptProjectionType[4];
 };
 
 enum CopyType {
@@ -301,29 +295,28 @@ enum CopyType {
   CT_POLYGON_PROPERTIES_ALTERNATIVE,
   CT_ENTITY,
   CT_SECTOR,
-  CT_WORLD,    
+  CT_WORLD,
 };
 
 typedef void TTCFunction_type(void *pView, char *pToolTipText);
 
 class CCustomToolTip {
-public:
+  public:
   HWND cct_hwndCaller;
   TTCFunction_type *cct_pCallback;
   void *cct_pThis;
   void ManualUpdate(void);
-  void ManualOn( PIX pixManualX, PIX pixManualY, 
-    TTCFunction_type *pCallBack, void *pThis);
-  void ManualOff( void);
-  void MouseMoveNotify( HWND hwndCaller, ULONG ulTime, TTCFunction_type *pCallBack, void *pThis);
+  void ManualOn(PIX pixManualX, PIX pixManualY, TTCFunction_type *pCallBack, void *pThis);
+  void ManualOff(void);
+  void MouseMoveNotify(HWND hwndCaller, ULONG ulTime, TTCFunction_type *pCallBack, void *pThis);
 };
 
-class CWorldEditorApp : public CWinApp
-{
-private:
+class CWorldEditorApp : public CWinApp {
+  private:
   CWorldEditorDoc *m_pLastActivatedDocument;
-public:
-// Atributes
+
+  public:
+  // Atributes
   FLOAT3D m_vLastTerrainHit;
   CEntity *m_penLastTerrainHit;
   FLOAT m_fCurrentTerrainBrush;
@@ -360,7 +353,7 @@ public:
 
   CPlacement3D m_plClipboard1;
   CPlacement3D m_plClipboard2;
-  
+
   CBrushPolygon *m_pbpoClipboardPolygon;
   CBrushPolygon *m_pbpoPolygonWithDeafultValues;
   CTFileName m_fnClassForDropMarker;
@@ -405,13 +398,13 @@ public:
   BOOL m_bShowTipOfTheDay;
   INDEX m_iCurrentTipOfTheDay;
   // rendering preferences for single view
-  CViewPrefs m_vpViewPrefs[ VIEW_PREFERENCES_CT+1];
+  CViewPrefs m_vpViewPrefs[VIEW_PREFERENCES_CT + 1];
   // child-view configurations remembered
   // pre-last buffer is for full screen
   // last buffer is for maximizing view
-  CChildConfiguration m_ccChildConfigurations[ CHILD_CONFIGURATIONS_CT+2];
+  CChildConfiguration m_ccChildConfigurations[CHILD_CONFIGURATIONS_CT + 2];
   // object to hold our document template
-  CMultiDocTemplate* m_pDocTemplate;
+  CMultiDocTemplate *m_pDocTemplate;
   // Only instance of CAppPrefs holding preferences
   class CAppPrefs m_Preferences;
   // List head for holding available modes/resolutions
@@ -459,10 +452,10 @@ public:
 
   // variables for full screen display mode
   CDisplayMode m_dmFullScreen;
-  GfxAPIType   m_gatFullScreen;
+  GfxAPIType m_gatFullScreen;
 
   // index of color last used for auto primitive colorization
-  INDEX m_iLastAutoColorizeColor; 
+  INDEX m_iLastAutoColorizeColor;
 
   // flag telling function GetActiveDocument() to return NULL (during document chg situation)
   BOOL m_bDocumentChangeOn;
@@ -487,7 +480,7 @@ public:
   // default values for terrain primitives
   CValuesForPrimitive m_vfpTerrain;
   // for linking primitives
-  CListHead m_lhPrimitiveHistory;  
+  CListHead m_lhPrimitiveHistory;
   // obtain currently active view
   CWorldEditorDoc *GetActiveDocument(void);
   // obtain currently active view
@@ -496,19 +489,20 @@ public:
   CChangeableRT m_ctTerrainPage;
   CChangeableRT m_ctTerrainPageCanvas;
 
-// Operations
+  // Operations
   CWorldEditorApp();
   ~CWorldEditorApp();
   void MyParseCommandLine(void);
   BOOL SubInitInstance(void);
   void OnFileNew();
-  CEntity *CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning, CPlacement3D pl=CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f),ANGLE3D(0.0f, 0.0f, 0.0f)));
+  CEntity *CreateWorldBaseEntity(CWorld &woWorld, BOOL bZoning,
+                                 CPlacement3D pl = CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f)));
   BOOL Add3DObject(CWorldEditorDoc *pDoc, CEntity *penwb, CTFileName fnFile, BOOL bAdd);
   INDEX Insert3DObjects(CWorldEditorDoc *pDoc);
-  CDisplayMode *GetStartModePtr( CTString strStartMode);
+  CDisplayMode *GetStartModePtr(CTString strStartMode);
   CWorldEditorDoc *GetLastActivatedDocument(void);
   void ActivateDocument(CWorldEditorDoc *pDocToActivate);
-  void RefreshAllDocuments( void);
+  void RefreshAllDocuments(void);
   // load world and model rendering preferences
   BOOL LoadRenderingPreferences(void);
   // save world and model rendering preferences
@@ -527,22 +521,22 @@ public:
   void WriteToIniFileOnEnd(void);
   void ReadFromIniFileOnInit(void);
   // store/restore default polygon properties
-  void WriteDefaultPolygonValues(void); 
+  void WriteDefaultPolygonValues(void);
   void ReadDefaultPolygonValues(void);
   // sets new active texture for primitive's default material
-  void SetNewActiveTexture( CTFileName fnFullTexName);
+  void SetNewActiveTexture(CTFileName fnFullTexName);
   // tries to find given item in browser
-  void FindItemInBrowser( CTFileName fnItemFileName);
+  void FindItemInBrowser(CTFileName fnItemFileName);
   // texturize selection
   void TexturizeSelection(void);
   // gets curently active document ptr
   CWorldEditorDoc *GetDocument();
   // gets name for given virtual tree node
-  CTString GetNameForVirtualTreeNode( CVirtualTreeNode *pvtnNode);
+  CTString GetNameForVirtualTreeNode(CVirtualTreeNode *pvtnNode);
   void DisplayHelp(const CTFileName &fnHlk, UINT uCommand, DWORD dwData);
   void ApplyTerrainEditing(CCastRay &crRayHit);
-  
-// Overrides
+
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWorldEditorApp)
   public:
@@ -551,11 +545,11 @@ public:
   virtual int ExitInstance();
   virtual BOOL OnIdle(LONG lCount);
   virtual int Run();
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   virtual void WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
   //}}AFX_VIRTUAL
 
-// Implementation
+  // Implementation
 
   //{{AFX_MSG(CWorldEditorApp)
   afx_msg void OnAppAbout();
@@ -563,7 +557,7 @@ public:
   afx_msg void OnFileOpen();
   afx_msg void OnImport3DObject();
   afx_msg void OnDecadicGrid();
-  afx_msg void OnUpdateDecadicGrid(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateDecadicGrid(CCmdUI *pCmdUI);
   afx_msg void OnConvertWorlds();
   afx_msg void OnSetAsDefault();
   afx_msg void OnHelpShowTipOfTheDay();
@@ -574,48 +568,27 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // Inline functions
 
-inline BOOL CValuesForPrimitive::operator == (const CValuesForPrimitive &vfpToCompare)
-{
+inline BOOL CValuesForPrimitive::operator==(const CValuesForPrimitive &vfpToCompare) {
   return (
-    (vfp_avVerticesOnBaseOfPrimitive.Count() == vfpToCompare.vfp_avVerticesOnBaseOfPrimitive.Count() ) &&
-    (vfp_ptPrimitiveType == vfpToCompare.vfp_ptPrimitiveType) &&
-    (vfp_plPrimitive == vfpToCompare.vfp_plPrimitive) &&
-    (vfp_ttTriangularisationType == vfpToCompare.vfp_ttTriangularisationType) &&
-    (vfp_bDummy == vfpToCompare.vfp_bDummy) &&
-    (vfp_bAutoCreateMipBrushes == vfpToCompare.vfp_bAutoCreateMipBrushes) &&
-    (vfp_colSectorsColor == vfpToCompare.vfp_colSectorsColor) &&
-    (vfp_colPolygonsColor == vfpToCompare.vfp_colPolygonsColor) &&
-    (vfp_fXMin == vfpToCompare.vfp_fXMin) &&
-    (vfp_fXMax == vfpToCompare.vfp_fXMax) &&
-    (vfp_fYMin == vfpToCompare.vfp_fYMin) &&
-    (vfp_fYMax == vfpToCompare.vfp_fYMax) &&
-    (vfp_fZMin == vfpToCompare.vfp_fZMin) &&
-    (vfp_fZMax == vfpToCompare.vfp_fZMax) &&
-    (vfp_fShearX == vfpToCompare.vfp_fShearX) &&
-    (vfp_fShearZ == vfpToCompare.vfp_fShearZ) &&
-    (vfp_fStretchX == vfpToCompare.vfp_fStretchX) &&
-    (vfp_fStretchY == vfpToCompare.vfp_fStretchY) &&
-    (vfp_bClosed == vfpToCompare.vfp_bClosed) &&
-    (vfp_bLinearStaircases == vfpToCompare.vfp_bLinearStaircases) &&
-    (vfp_bOuter == vfpToCompare.vfp_bOuter) &&
-    (vfp_iSlicesIn360 == vfpToCompare.vfp_iSlicesIn360) &&
-    (vfp_iNoOfSlices == vfpToCompare.vfp_iNoOfSlices) &&
-    (vfp_fRadius == vfpToCompare.vfp_fRadius) &&
-    (vfp_iMeridians == vfpToCompare.vfp_iMeridians) &&
-    (vfp_iParalels == vfpToCompare.vfp_iParalels) &&
-    (vfp_iSlicesPerWidth == vfpToCompare.vfp_iSlicesPerWidth) &&
-    (vfp_iSlicesPerHeight == vfpToCompare.vfp_iSlicesPerHeight) &&
-    (vfp_iTopShape == vfpToCompare.vfp_iTopShape) &&
-    (vfp_iBottomShape == vfpToCompare.vfp_iBottomShape) &&
-    (vfp_fAmplitude == vfpToCompare.vfp_fAmplitude) &&
-    (vfp_fMipStart == vfpToCompare.vfp_fMipStart) &&
-    (vfp_fMipStep == vfpToCompare.vfp_fMipStep) &&
-    (vfp_fnDisplacement == vfpToCompare.vfp_fnDisplacement)
-  );
+    (vfp_avVerticesOnBaseOfPrimitive.Count() == vfpToCompare.vfp_avVerticesOnBaseOfPrimitive.Count())
+    && (vfp_ptPrimitiveType == vfpToCompare.vfp_ptPrimitiveType) && (vfp_plPrimitive == vfpToCompare.vfp_plPrimitive)
+    && (vfp_ttTriangularisationType == vfpToCompare.vfp_ttTriangularisationType) && (vfp_bDummy == vfpToCompare.vfp_bDummy)
+    && (vfp_bAutoCreateMipBrushes == vfpToCompare.vfp_bAutoCreateMipBrushes)
+    && (vfp_colSectorsColor == vfpToCompare.vfp_colSectorsColor) && (vfp_colPolygonsColor == vfpToCompare.vfp_colPolygonsColor)
+    && (vfp_fXMin == vfpToCompare.vfp_fXMin) && (vfp_fXMax == vfpToCompare.vfp_fXMax) && (vfp_fYMin == vfpToCompare.vfp_fYMin)
+    && (vfp_fYMax == vfpToCompare.vfp_fYMax) && (vfp_fZMin == vfpToCompare.vfp_fZMin) && (vfp_fZMax == vfpToCompare.vfp_fZMax)
+    && (vfp_fShearX == vfpToCompare.vfp_fShearX) && (vfp_fShearZ == vfpToCompare.vfp_fShearZ)
+    && (vfp_fStretchX == vfpToCompare.vfp_fStretchX) && (vfp_fStretchY == vfpToCompare.vfp_fStretchY)
+    && (vfp_bClosed == vfpToCompare.vfp_bClosed) && (vfp_bLinearStaircases == vfpToCompare.vfp_bLinearStaircases)
+    && (vfp_bOuter == vfpToCompare.vfp_bOuter) && (vfp_iSlicesIn360 == vfpToCompare.vfp_iSlicesIn360)
+    && (vfp_iNoOfSlices == vfpToCompare.vfp_iNoOfSlices) && (vfp_fRadius == vfpToCompare.vfp_fRadius)
+    && (vfp_iMeridians == vfpToCompare.vfp_iMeridians) && (vfp_iParalels == vfpToCompare.vfp_iParalels)
+    && (vfp_iSlicesPerWidth == vfpToCompare.vfp_iSlicesPerWidth) && (vfp_iSlicesPerHeight == vfpToCompare.vfp_iSlicesPerHeight)
+    && (vfp_iTopShape == vfpToCompare.vfp_iTopShape) && (vfp_iBottomShape == vfpToCompare.vfp_iBottomShape)
+    && (vfp_fAmplitude == vfpToCompare.vfp_fAmplitude) && (vfp_fMipStart == vfpToCompare.vfp_fMipStart)
+    && (vfp_fMipStep == vfpToCompare.vfp_fMipStep) && (vfp_fnDisplacement == vfpToCompare.vfp_fnDisplacement));
 }
-inline CValuesForPrimitive &CValuesForPrimitive::operator+=(const
-                                                            CValuesForPrimitive &vfpToAdd)
-{
+inline CValuesForPrimitive &CValuesForPrimitive::operator+=(const CValuesForPrimitive &vfpToAdd) {
   // add member by member
   vfp_fXMin += vfpToAdd.vfp_fXMin;
   vfp_fXMax += vfpToAdd.vfp_fXMax;
@@ -629,15 +602,11 @@ inline CValuesForPrimitive &CValuesForPrimitive::operator+=(const
   vfp_fStretchY += vfpToAdd.vfp_fStretchY;
   return *this;
 }
-inline CValuesForPrimitive CValuesForPrimitive::operator+(const
-                                                          CValuesForPrimitive &vfpToAdd)
-{
+inline CValuesForPrimitive CValuesForPrimitive::operator+(const CValuesForPrimitive &vfpToAdd) {
   return CValuesForPrimitive(*this) += vfpToAdd;
 }
 
-inline CValuesForPrimitive &CValuesForPrimitive::operator-=(const
-                                                            CValuesForPrimitive &vfpToSub)
-{
+inline CValuesForPrimitive &CValuesForPrimitive::operator-=(const CValuesForPrimitive &vfpToSub) {
   // sub member by member
   vfp_fXMin -= vfpToSub.vfp_fXMin;
   vfp_fXMax -= vfpToSub.vfp_fXMax;
@@ -651,19 +620,19 @@ inline CValuesForPrimitive &CValuesForPrimitive::operator-=(const
   vfp_fStretchY -= vfpToSub.vfp_fStretchY;
   return *this;
 }
-inline CValuesForPrimitive CValuesForPrimitive::operator-(const
-                                                          CValuesForPrimitive &vfpToSub)
-{
+inline CValuesForPrimitive CValuesForPrimitive::operator-(const CValuesForPrimitive &vfpToSub) {
   return CValuesForPrimitive(*this) -= vfpToSub;
 }
 
 #define SNAP_FLOAT_GRID 0.25f
-inline void CValuesForPrimitive::CorrectInvalidValues(void)
-{
+inline void CValuesForPrimitive::CorrectInvalidValues(void) {
   // some values must be valid, so if they are not, coorect them
-  if (vfp_fXMax < vfp_fXMin) vfp_fXMax = vfp_fXMin+SNAP_FLOAT_GRID;
-  if (vfp_fYMax < vfp_fYMin) vfp_fYMax = vfp_fYMin+SNAP_FLOAT_GRID;
-  if (vfp_fZMax < vfp_fZMin) vfp_fZMax = vfp_fZMin+SNAP_FLOAT_GRID;
+  if (vfp_fXMax < vfp_fXMin)
+    vfp_fXMax = vfp_fXMin + SNAP_FLOAT_GRID;
+  if (vfp_fYMax < vfp_fYMin)
+    vfp_fYMax = vfp_fYMin + SNAP_FLOAT_GRID;
+  if (vfp_fZMax < vfp_fZMin)
+    vfp_fZMax = vfp_fZMin + SNAP_FLOAT_GRID;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -745,4 +714,3 @@ extern CWorldEditorApp theApp;
 
 #include "SkyFloat.h"
 #endif // WORLDEDITOR_H
-

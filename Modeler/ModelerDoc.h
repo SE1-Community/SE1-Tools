@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -17,27 +17,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 /////////////////////////////////////////////////////////////////////////////
 
-class CModelerDoc : public CDocument
-{
-protected: // create from serialization only
+class CModelerDoc : public CDocument {
+  protected: // create from serialization only
   CModelerDoc();
   DECLARE_DYNCREATE(CModelerDoc)
 
-// Attributes
-public:
+  // Attributes
+  public:
   CSoundObject m_soSoundObject;
-  BOOL CreateModelFromScriptFile( CTFileName fnScrFileName, char *strError);
-  CTString GetModelDirectory( void);
-  CTString GetModelName( void);
-  void SelectMipModel( INDEX iMipToSelect);
-  void ClearAttachments( void);
-  void SetupAttachments( void);
-  CAttachmentModelObject *GetAttachmentModelObject( INDEX iAttachment);
+  BOOL CreateModelFromScriptFile(CTFileName fnScrFileName, char* strError);
+  CTString GetModelDirectory(void);
+  CTString GetModelName(void);
+  void SelectMipModel(INDEX iMipToSelect);
+  void ClearAttachments(void);
+  void SetupAttachments(void);
+  CAttachmentModelObject* GetAttachmentModelObject(INDEX iAttachment);
   void OnIdle(void);
   CEditModel m_emEditModel;
 
   // overridden from mfc to discard rendering precalculations
-  void SetModifiedFlag( BOOL bModified = TRUE );
+  void SetModifiedFlag(BOOL bModified = TRUE);
 
   void ClearSurfaceSelection(void);
   void SelectAllSurfaces(void);
@@ -46,11 +45,11 @@ public:
   void SelectSurface(INDEX iSurface, BOOL bClearRest);
   void SelectPreviousSurface(void);
   void SelectNextSurface(void);
-  void ToggleSurfaceSelection( INDEX iSurfaceToToggle);
-  void SpreadSurfaceSelection( void);
+  void ToggleSurfaceSelection(INDEX iSurfaceToToggle);
+  void SpreadSurfaceSelection(void);
 
-// Operations
-public:
+  // Operations
+  public:
   // Clipboard variables used for storing copy/paste data
   FLOAT3D m_f3ClipboardCenter;
   FLOAT m_fClipboardZoom;
@@ -60,7 +59,7 @@ public:
   // ARGH!! To be able to see right open doc messages
   BOOL m_bDocLoadedOk;
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CModelerDoc)
   public:
@@ -69,18 +68,17 @@ public:
   virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CModelerDoc();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-public:
+  protected:
+  // Generated message map functions
+  public:
   //{{AFX_MSG(CModelerDoc)
   afx_msg void OnFileAddTexture();
   afx_msg void OnUpdateFileAddTexture(CCmdUI* pCmdUI);

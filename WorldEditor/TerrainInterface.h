@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -27,7 +27,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #define CT_EDIT_MODES 2
 
-
 #define TBM_PAINT           0
 #define TBM_SMOOTH          1
 #define TBM_FILTER          2
@@ -39,7 +38,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define TBM_CONTINOUS_NOISE 8
 #define TBM_ERASE           9
 
-#define CT_BRUSH_MODES  10
+#define CT_BRUSH_MODES 10
 
 struct CTerrainEditBrush {
   FLOAT teb_fHotSpot;
@@ -49,21 +48,21 @@ struct CTerrainEditBrush {
 extern CTFileName GetBrushTextureName(INDEX iBrush);
 extern CTerrainEditBrush atebDefaultEditBrushValues[];
 extern CTerrainEditBrush atebCustomEditBrushes[];
-extern void InvokeTerrainTilePalette( PIX pixX, PIX pixY);
-extern void InvokeTerrainBrushPalette( PIX pixX, PIX pixY);
-extern void RenderBrushShape( INDEX iBrush, PIXaabbox2D rect, CDrawPort *pdp);
+extern void InvokeTerrainTilePalette(PIX pixX, PIX pixY);
+extern void InvokeTerrainBrushPalette(PIX pixX, PIX pixY);
+extern void RenderBrushShape(INDEX iBrush, PIXaabbox2D rect, CDrawPort *pdp);
 extern void GetEditingModeInfo(INDEX iMode, INDEX &iIcon, CTString &strText);
 extern CBrushPaletteWnd *_pBrushPalette;
-extern void GenerateTerrainBrushTexture( INDEX iBrush, FLOAT fHotSpot, FLOAT fFallOff);
+extern void GenerateTerrainBrushTexture(INDEX iBrush, FLOAT fHotSpot, FLOAT fFallOff);
 extern void GenerateNonExistingTerrainEditBrushes(void);
 extern void ApplyImportExport(INDEX iSelectedItem);
 extern void DisplayHeightMapWindow(CPoint pt);
 void GetBrushModeInfo(INDEX iMode, INDEX &iIcon, CTString &strText);
-#define CT_BRUSHES 32
-#define BRUSH_PALETTE_WIDTH (128-1)
-#define BRUSH_PALETTE_HEIGHT (256-1)
-#define TILE_PALETTE_WIDTH (256-1)
-#define TILE_PALETTE_HEIGHT (256-1)
+#define CT_BRUSHES           32
+#define BRUSH_PALETTE_WIDTH  (128 - 1)
+#define BRUSH_PALETTE_HEIGHT (256 - 1)
+#define TILE_PALETTE_WIDTH   (256 - 1)
+#define TILE_PALETTE_HEIGHT  (256 - 1)
 
 /////////////////////////////////////////////////////////////////////////////
 // CTerrainInterface window
@@ -91,7 +90,7 @@ struct CTIButton {
   void (*tib_pOnLeftClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp);
   void (*tib_pOnRightClick)(CTIButton *ptib, CPoint pt, CDrawPort *pdp);
   void (*tib_pOnRightClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp);
-  void (*tib_pPreRender)(CTIButton *ptib, CDrawPort *pdp); 
+  void (*tib_pPreRender)(CTIButton *ptib, CDrawPort *pdp);
   // misc functions
   void (*tib_pOnDropFiles)(CTIButton *ptib, CPoint pt, CDrawPort *pdp, CTFileName fnFile);
   CTString (*tib_pGetClickMoveData)(CTIButton *ptib, CPoint pt, CDrawPort *pdp, BOOL bLmb);
@@ -100,22 +99,19 @@ struct CTIButton {
   // construction
   CTIButton();
 
-  void SetData( FLOAT fDataMin, FLOAT fDataMax, FLOAT fDataDelta, 
-    BOOL bWrap=FALSE, FLOAT *pfData1=NULL, FLOAT *pfData2=NULL);
-  void SetFunctions(
-    void (*pOnRender)(CTIButton *ptib, CDrawPort *pdp)=NULL,
-    void (*pOnLeftClick)(CTIButton *ptib, CPoint pt, CDrawPort *pdp)=NULL,
-    void (*pOnLeftClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)=NULL,
-    void (*pOnRightClick)(CTIButton *ptib, CPoint pt, CDrawPort *pdp)=NULL,
-    void (*pOnRighClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp)=NULL,
-    void (*pPreRender)(CTIButton *ptib, CDrawPort *pdp)=NULL);
+  void SetData(FLOAT fDataMin, FLOAT fDataMax, FLOAT fDataDelta, BOOL bWrap = FALSE, FLOAT *pfData1 = NULL,
+               FLOAT *pfData2 = NULL);
+  void SetFunctions(void (*pOnRender)(CTIButton *ptib, CDrawPort *pdp) = NULL,
+                    void (*pOnLeftClick)(CTIButton *ptib, CPoint pt, CDrawPort *pdp) = NULL,
+                    void (*pOnLeftClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp) = NULL,
+                    void (*pOnRightClick)(CTIButton *ptib, CPoint pt, CDrawPort *pdp) = NULL,
+                    void (*pOnRighClickMove)(CTIButton *ptib, FLOAT fdx, FLOAT fdy, CDrawPort *pdp) = NULL,
+                    void (*pPreRender)(CTIButton *ptib, CDrawPort *pdp) = NULL);
 };
 
-
-class CTerrainInterface : public CWnd 
-{ 
-// Construction
-public:
+class CTerrainInterface : public CWnd {
+  // Construction
+  public:
   CTerrainInterface();
   void InitializeInterface(CDrawPort *pdp);
 
@@ -136,32 +132,32 @@ public:
 
   CUpdateableRT m_udTerrainPage;
   CUpdateableRT m_udTerrainPageCanvas;
-// Attributes
-public:
-
-// Operations
-public:
+  // Attributes
+  public:
+  // Operations
+  public:
   void OnIdle(void);
-  int OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
+  int OnToolHitTest(CPoint point, TOOLINFO *pTI) const;
   void HideCursor(void);
   void UnhideCursor(void);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CTerrainInterface)
   public:
-  virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT &rect, CWnd *pParentWnd, UINT nID,
+                      CCreateContext *pContext = NULL);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CTerrainInterface();
   void RenderInterface(CDrawPort *pDP);
   BOOL IsClicked(CTIButton &tib, CPoint pt) const;
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CTerrainInterface)
   afx_msg void OnPaint();
   afx_msg void OnDestroy();

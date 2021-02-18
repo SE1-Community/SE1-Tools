@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,30 +25,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCtlTipOfTheDayText window
 
-class CCtlTipOfTheDayText : public CStatic
-{
-// Construction
-public:
+class CCtlTipOfTheDayText : public CStatic {
+  // Construction
+  public:
   CCtlTipOfTheDayText();
 
-// Attributes
-public:
+  // Attributes
+  public:
   CString m_strTipText;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtlTipOfTheDayText)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtlTipOfTheDayText();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtlTipOfTheDayText)
   afx_msg void OnPaint();
   //}}AFX_MSG

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -20,17 +20,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #pragma once
 #endif // _MSC_VER > 1000
 // DlgPgTexture.h : header file
-// 
+//
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgTexture dialog
 
-class CDlgPgTexture : public CPropertyPage
-{
+class CDlgPgTexture : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgTexture)
 
-// Construction
-public:
+  // Construction
+  public:
   CDlgPgTexture();
   ~CDlgPgTexture();
 
@@ -39,28 +38,28 @@ public:
   CViewTexture m_wndViewTexture;
   CUpdateableRT m_udTextureData;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgTexture)
   enum { IDD = IDD_PG_TEXTURE };
-  CCtrlEditBoolean  m_checkAfterShadow;
-  CColoredButton  m_ctrlCombineColor;
-  CComboBox  m_comboBlend;
-  CCtrlEditBoolean  m_checkReflective;
-  CCtrlEditBoolean  m_checkClampV;
-  CCtrlEditBoolean  m_checkClampU;
-  CComboBox  m_comboScroll;
-  CString  m_strTextureFile;
-  float  m_fOffsetV;
-  float  m_fOffsetU;
-  int    m_radioTexture;
-  float  m_fRotationU;
-  float  m_fRotationV;
-  float  m_fStrength;
-  float  m_fStretchU;
-  float  m_fStretchV;
-  CString  m_strTextureDim;
+  CCtrlEditBoolean m_checkAfterShadow;
+  CColoredButton m_ctrlCombineColor;
+  CComboBox m_comboBlend;
+  CCtrlEditBoolean m_checkReflective;
+  CCtrlEditBoolean m_checkClampV;
+  CCtrlEditBoolean m_checkClampU;
+  CComboBox m_comboScroll;
+  CString m_strTextureFile;
+  float m_fOffsetV;
+  float m_fOffsetU;
+  int m_radioTexture;
+  float m_fRotationU;
+  float m_fRotationV;
+  float m_fStrength;
+  float m_fStretchU;
+  float m_fStretchV;
+  CString m_strTextureDim;
   //}}AFX_DATA
-  
+
   BOOL m_bOffsetV;
   BOOL m_bOffsetU;
   BOOL m_bRotationU;
@@ -69,18 +68,18 @@ public:
   BOOL m_bStretchU;
   BOOL m_bStretchV;
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgTexture)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgTexture)
   afx_msg void OnBrowseTexture();
@@ -96,7 +95,6 @@ protected:
   afx_msg void OnDropdownBlendType();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

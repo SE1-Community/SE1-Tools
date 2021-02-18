@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -26,51 +26,49 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 // CSplitterFrame frame
 #define SPLITTER_WITDH 6
 
-class CSplitterFrame : public CWnd
-{
+class CSplitterFrame : public CWnd {
   DECLARE_DYNCREATE(CSplitterFrame)
-public:
-  CSplitterFrame();           // protected constructor used by dynamic creation
-/*
-  int GetPosX();
-  int iStartPosX;
-*/
+  public:
+  CSplitterFrame(); // protected constructor used by dynamic creation
+                    /*
+                      int GetPosX();
+                      int iStartPosX;
+                    */
 
   void ChangeParent(CWnd *pNewParent);
   void SetAbsPosition(CPoint pt);
   CPoint GetAbsPosition();
   void SetDockingSide(UINT uiDockSide);
   void SetSpliterSize(INDEX iNewSize);
-  void SetSize(INDEX iWidth,INDEX iHeight);
+  void SetSize(INDEX iWidth, INDEX iHeight);
   void UpdateParent();
   void EnableDocking();
 
-
-// Attributes
-protected:
+  // Attributes
+  protected:
   wchar_t *pchCursor;
   CWnd *pDockedParent;
   CWnd *pFloatingParent;
   CPoint sp_ptStartPoint;
   INDEX iSplitterSize;
-  UINT  sp_uiDockSide;
-  BOOL  sp_bDockingEnabled;
-// Operations
-public:
-//  virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+  UINT sp_uiDockSide;
+  BOOL sp_bDockingEnabled;
+  // Operations
+  public:
+  //  virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CSplitterFrame)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CSplitterFrame();
 
   // Generated message map functions
   //{{AFX_MSG(CSplitterFrame)
-  afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+  afx_msg BOOL OnSetCursor(CWnd *pWnd, UINT nHitTest, UINT message);
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
   afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

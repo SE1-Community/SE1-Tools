@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -26,67 +26,64 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "ChildFrm.h"
 
-class CSeriousSkaStudioView : public CView
-{
-protected: // create from serialization only
+class CSeriousSkaStudioView : public CView {
+  protected: // create from serialization only
   CSeriousSkaStudioView();
   DECLARE_DYNCREATE(CSeriousSkaStudioView)
 
-// Attributes
-public:
+  // Attributes
+  public:
   CSeriousSkaStudioDoc* GetDocument();
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CSeriousSkaStudioView)
   public:
-  virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+  virtual void OnDraw(CDC* pDC); // overridden to draw this view
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
   virtual void OnInitialUpdate();
+
   protected:
   virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CSeriousSkaStudioView();
-  void RenderView(CDrawPort *pdp);
-  void RenderLightModels(CDrawPort *pdp,CPlacement3D &pl);
-  INDEX TestRayCastHit(CPoint &pt);
-  void SetProjectionData( CPerspectiveProjection3D &prProjection, CDrawPort *pDP);
+  void RenderView(CDrawPort* pdp);
+  void RenderLightModels(CDrawPort* pdp, CPlacement3D& pl);
+  INDEX TestRayCastHit(CPoint& pt);
+  void SetProjectionData(CPerspectiveProjection3D& prProjection, CDrawPort* pDP);
   void FastZoomIn();
   void FastZoomOut();
-  void AddTexture(CTFileName &fnFull);
+  void AddTexture(CTFileName& fnFull);
   void BrowseTexture(CTString strTextureDir);
 
-
-public:
+  public:
   void OnIdle(void);
-  CDrawPort *m_pdpDrawPort;
-  CViewPort *m_pvpViewPort;
+  CDrawPort* m_pdpDrawPort;
+  CViewPort* m_pvpViewPort;
   CPoint m_pntLastMouse;
   FLOAT m_fFOV;
   ANGLE3D m_angViewerOrientation;
-  FLOAT   m_fTargetDistance;
+  FLOAT m_fTargetDistance;
   FLOAT3D m_vTarget;
   ANGLE3D m_angModelAngle;
-  FLOAT   m_fLightDistance;
+  FLOAT m_fLightDistance;
   CPlacement3D m_plLightPlacement;
 
-  INDEX   m_iViewSize;
-  
+  INDEX m_iViewSize;
+
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-private:
+  protected:
+  // Generated message map functions
+  private:
   //{{AFX_MSG(CSeriousSkaStudioView)
   afx_msg void OnSize(UINT nType, int cx, int cy);
   afx_msg void OnDestroy();
@@ -165,9 +162,10 @@ private:
   DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in SeriousSkaStudioView.cpp
-inline CSeriousSkaStudioDoc* CSeriousSkaStudioView::GetDocument()
-   { return (CSeriousSkaStudioDoc*)m_pDocument; }
+#ifndef _DEBUG // debug version in SeriousSkaStudioView.cpp
+inline CSeriousSkaStudioDoc* CSeriousSkaStudioView::GetDocument() {
+  return (CSeriousSkaStudioDoc*)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

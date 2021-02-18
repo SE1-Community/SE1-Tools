@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,31 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CInfoFrame frame
 
-class CInfoFrame : public CMiniFrameWnd
-{
+class CInfoFrame : public CMiniFrameWnd {
   DECLARE_DYNCREATE(CInfoFrame)
-protected:
-
-// Attributes
-public:
+  protected:
+  // Attributes
+  public:
   CInfoSheet *m_pInfoSheet;
   int m_PageWidth;
   int m_PageHeight;
 
-// Operations
-public:
-  CInfoFrame();           // protected constructor used by dynamic creation
+  // Operations
+  public:
+  CInfoFrame(); // protected constructor used by dynamic creation
   virtual ~CInfoFrame();
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CInfoFrame)
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-public:
-
+  // Implementation
+  protected:
+  public:
   // Generated message map functions
   //{{AFX_MSG(CInfoFrame)
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

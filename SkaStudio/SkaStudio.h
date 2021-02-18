@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -24,10 +24,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-  #error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"       // main symbols
+#include "resource.h" // main symbols
 
 #include "DlgClient.h"
 #include "SkaStudioDoc.h"
@@ -49,24 +49,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #define STRETCH_BUTTON_INDEX 22
 
-#define NT_MODELINSTANCE    0
-#define NT_MESHLODLIST      1
-#define NT_MESHLOD          2
-#define NT_TEXINSTANCE      3
-#define NT_SKELETONLODLIST  4
-#define NT_SKELETONLOD      5
-#define NT_BONE             6
-#define NT_ANIMSET          7
-#define NT_ANIMATION        8
-#define NT_ANIM_BONEENV     9
+#define NT_MODELINSTANCE   0
+#define NT_MESHLODLIST     1
+#define NT_MESHLOD         2
+#define NT_TEXINSTANCE     3
+#define NT_SKELETONLODLIST 4
+#define NT_SKELETONLOD     5
+#define NT_BONE            6
+#define NT_ANIMSET         7
+#define NT_ANIMATION       8
+#define NT_ANIM_BONEENV    9
 #define NT_COLISIONBOX     10
 #define NT_ALLFRAMESBBOX   11
 #define NT_MESHSURFACE     12
 
-class CSeriousSkaStudioApp : public CWinApp
-{
-public:
-  CMultiDocTemplate* m_pdtDocTemplate;
+class CSeriousSkaStudioApp : public CWinApp {
+  public:
+  CMultiDocTemplate *m_pdtDocTemplate;
   CSeriousSkaStudioApp();
   BOOL SubInitInstance();
   CSeriousSkaStudioDoc *GetDocument();
@@ -93,18 +92,18 @@ public:
   void SaveModel(CModelInstance &mi);
   BOOL SaveModelAs(CModelInstance *pmi);
 
-  void SaveSmcFile(CModelInstance &mi,BOOL bSaveChildren);
+  void SaveSmcFile(CModelInstance &mi, BOOL bSaveChildren);
   BOOL SaveMeshListFile(MeshInstance &mshi, BOOL bConvert);
   BOOL SaveSkeletonListFile(CSkeleton &skl, BOOL bConvert);
   BOOL SaveAnimSetFile(CAnimSet &as, BOOL bConvert);
 
-  void SaveShaderParams_t(MeshLOD *pmlod,CTFileName fnShaderParams);
-  void SaveModelInstance_t(CModelInstance *pmi,CModelInstance *pmiParent,CTFileStream &ostrFile,BOOL bSaveChildren);
-  void SaveMeshInstance_t(MeshInstance &mshi,CTFileStream &ostrFile);
-  void SaveSkeletonList_t(CSkeleton &skl,CTFileStream &ostrFile);
-  void SaveAnimSet_t(CAnimSet &as,CTFileStream &ostrFile);
-  BOOL ConvertAnimationInAnimSet(CAnimSet *pas,Animation *pan);
-  
+  void SaveShaderParams_t(MeshLOD *pmlod, CTFileName fnShaderParams);
+  void SaveModelInstance_t(CModelInstance *pmi, CModelInstance *pmiParent, CTFileStream &ostrFile, BOOL bSaveChildren);
+  void SaveMeshInstance_t(MeshInstance &mshi, CTFileStream &ostrFile);
+  void SaveSkeletonList_t(CSkeleton &skl, CTFileStream &ostrFile);
+  void SaveAnimSet_t(CAnimSet &as, CTFileStream &ostrFile);
+  BOOL ConvertAnimationInAnimSet(CAnimSet *pas, Animation *pan);
+
   BOOL ConvertMesh(CTFileName fnMesh);
   BOOL ConvertSkeleton(CTFileName fnSkeleton);
   BOOL ConvertAnimSet(CTFileName fnAnimSet);
@@ -118,9 +117,8 @@ public:
 
   // dockable dialog that with tree
   CDlgBarTreeView m_dlgBarTreeView;
-//  CDlgTemplate m_dlgErrorList;
+  //  CDlgTemplate m_dlgErrorList;
   CDialogBar m_dlgErrorList;
-  
 
   BOOL bAppInitialized;
   // array that holds info about every node in tree view
@@ -137,10 +135,9 @@ public:
 
   CModelInstance *pmiLight;
 
-private:
+  private:
   INDEX ctNoRenderRequests;
 
-  
   // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CSeriousSkaStudioApp)
@@ -151,7 +148,7 @@ private:
   virtual int ExitInstance();
   //}}AFX_VIRTUAL
 
-// Implementation
+  // Implementation
   //{{AFX_MSG(CSeriousSkaStudioApp)
   afx_msg void OnAppAbout();
   afx_msg void OnFileOpen();
@@ -166,7 +163,6 @@ extern BOOL StartParser(CTString fnParseFile);
 
 // selected model instance in tree view
 extern CModelInstance *pmiSelected;
-
 
 /////////////////////////////////////////////////////////////////////////////
 

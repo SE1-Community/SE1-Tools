@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -41,45 +41,42 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <lwcmdseq.h>
 
 #include "vecmat.h"
-    
+
 #ifndef NDEBUG
 #define DEBUGEXT "Debug:"
-#else  
+#else
 #define DEBUGEXT ""
 #endif
-      
 
 #define SE_ANIM_VER "0.1"
 
-#define ML_HALF_FACE_FORWARD (1UL << 0)  // front face forward
-#define ML_FULL_FACE_FORWARD (1UL << 1)  // half face fprward
+#define ML_HALF_FACE_FORWARD (1UL << 0) // front face forward
+#define ML_FULL_FACE_FORWARD (1UL << 1) // half face fprward
 
 struct SurfaceInstance {
   SurfaceInstance *si_psiNext;
   LWSurfaceID si_idSurface;
 
-  char si_strShader[256];   // the shader filename
+  char si_strShader[256]; // the shader filename
 
   char si_astrTextures[8][64];
   double si_adColors[8][3];
   char desc[80];
 };
 
-extern SurfaceInstance *_psiFirst;  // linked list of surface instances
+extern SurfaceInstance *_psiFirst; // linked list of surface instances
 
 struct MCData {
   int mc_iFaceForward;
   int mc_iAnimOrder;
 };
 
-extern MCData *_pmcMaster;  // the master settings for the scene
-
+extern MCData *_pmcMaster; // the master settings for the scene
 
 struct PolPnt {
   LWPntID pp_idPnt;
   LWPolID pp_idPol;
 };
-
 
 struct MorphInfo {
   char *mi_strName;
@@ -91,7 +88,6 @@ struct MorphInfo {
 struct BoneFrame {
   float fi_vPos[3];
   float fi_vRot[3];
-
 };
 
 struct BoneInfo {
@@ -105,28 +101,36 @@ struct BoneInfo {
   float fRestLength;
 };
 
-typedef float  Matrix12[12];
+typedef float Matrix12[12];
 typedef double Matrixd12[12];
 
-enum { ID_EXPORTMESH = 0x8001, ID_EXPORTSKELETON, ID_EXPORTANIM, ID_FACEFORWARD, ID_EXPORTBONES, ID_EXPORTSECANIM, ID_ANIM_ORDER, ID_ABSPOSITIONS};
-
+enum {
+  ID_EXPORTMESH = 0x8001,
+  ID_EXPORTSKELETON,
+  ID_EXPORTANIM,
+  ID_FACEFORWARD,
+  ID_EXPORTBONES,
+  ID_EXPORTSECANIM,
+  ID_ANIM_ORDER,
+  ID_ABSPOSITIONS
+};
 
 extern int ExportMesh(LWXPanelID pan);
 extern int ExportAnim(LWXPanelID pan);
 extern int ExportSkeleton(void);
 
 extern int ExportBones(void);
-extern int ExportSecAnim(LWXPanelID pan) ;
+extern int ExportSecAnim(LWXPanelID pan);
 
-extern void    MakeIdentityMatrix(Matrix12 &mat);
-extern void    MatrixTranspose(Matrix12 &r, const Matrix12 &m);
-extern void    MatrixMultiply(Matrix12 &c,const Matrix12 &m, const Matrix12 &n);
-extern void    MatrixCopy(Matrix12 &c, const Matrix12 &m);
-extern void    MakeRotationAndPosMatrix(Matrix12 &mrm_f, float *pmrm_vPos, float *pmrm_vRot);
-extern void    PrintMatrix(FILE *_f, Matrix12 &mat, int ctSpaces);
+extern void MakeIdentityMatrix(Matrix12 &mat);
+extern void MatrixTranspose(Matrix12 &r, const Matrix12 &m);
+extern void MatrixMultiply(Matrix12 &c, const Matrix12 &m, const Matrix12 &n);
+extern void MatrixCopy(Matrix12 &c, const Matrix12 &m);
+extern void MakeRotationAndPosMatrix(Matrix12 &mrm_f, float *pmrm_vPos, float *pmrm_vRot);
+extern void PrintMatrix(FILE *_f, Matrix12 &mat, int ctSpaces);
 extern double GetCurrentTime();
-extern void    GetAnimID(char *fnAnimFile);
-extern bool    ExecCmd(const char *strFormat, ...);
+extern void GetAnimID(char *fnAnimFile);
+extern bool ExecCmd(const char *strFormat, ...);
 extern void FindMorphChannels(LWChanGroupID idParentGroup);
 
 extern void ExportMesh_modeler(int iFaceForward);
@@ -153,13 +157,11 @@ extern MeshEditOp *_meshEditOperations;
 extern LWObjectFuncs *_objfunc;
 extern LWStateQueryFuncs *_statequery;
 
-
 extern const LWMasterAccess *_local;
 extern void *_serverData;
-extern int (*_evaluate) (void *, const char *command);
+extern int (*_evaluate)(void *, const char *command);
 
-
-extern EDError CopyWeightMaps (void *strSurf, const EDPointInfo *ppliPolyInfo);
+extern EDError CopyWeightMaps(void *strSurf, const EDPointInfo *ppliPolyInfo);
 extern void ListWeightMaps();
 extern void ScanBackground();
 extern void FreeMem();

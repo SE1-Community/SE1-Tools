@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -34,28 +34,23 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
-  //{{AFX_MSG_MAP(CChildFrame)
-    // NOTE - the ClassWizard will add and remove mapping macros here.
-    //    DO NOT EDIT what you see in these blocks of generated code !
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CChildFrame)
+// NOTE - the ClassWizard will add and remove mapping macros here.
+//    DO NOT EDIT what you see in these blocks of generated code !
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame construction/destruction
 
-CChildFrame::CChildFrame()
-{
+CChildFrame::CChildFrame() {
   // TODO: add member initialization code here
-  
 }
 
-CChildFrame::~CChildFrame()
-{
-}
+CChildFrame::~CChildFrame() {}
 
-BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
-  //if (!CMDIChildWnd::PreCreateWindow(cs) )
+BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs) {
+  // if (!CMDIChildWnd::PreCreateWindow(cs) )
   //  return FALSE;
 
   cs.style |= WS_VISIBLE | WS_MAXIMIZE;
@@ -63,19 +58,15 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
   return CMDIChildWnd::PreCreateWindow(cs);
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame diagnostics
 
 #ifdef _DEBUG
-void CChildFrame::AssertValid() const
-{
+void CChildFrame::AssertValid() const {
   CMDIChildWnd::AssertValid();
 }
 
-void CChildFrame::Dump(CDumpContext& dc) const
-{
+void CChildFrame::Dump(CDumpContext& dc) const {
   CMDIChildWnd::Dump(dc);
 }
 

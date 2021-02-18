@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,16 +30,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCheckBox
 
-CCheckBox::CCheckBox()
-{
-}
+CCheckBox::CCheckBox() {}
 
-CCheckBox::~CCheckBox()
-{
-}
-void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags)
-{
-  if (ulFlags&((1UL << iFlagIndex))) {
+CCheckBox::~CCheckBox() {}
+void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags) {
+  if (ulFlags & ((1UL << iFlagIndex))) {
     SetCheck(1);
   } else {
     SetCheck(0);
@@ -47,33 +42,27 @@ void CCheckBox::SetIndex(INDEX iFlagIndex, ULONG ulFlags)
   m_iIndex = iFlagIndex;
 }
 
-
 BEGIN_MESSAGE_MAP(CCheckBox, CButton)
-  //{{AFX_MSG_MAP(CCheckBox)
-  ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CCheckBox)
+ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CCheckBox message handlers
 
-void CCheckBox::OnClicked() 
-{
+void CCheckBox::OnClicked() {
   BOOL bCheched = FALSE;
-  
+
   switch (GetCheck()) {
-    case 0:
-      bCheched = FALSE;
-    break;
-    case 1:
-      bCheched = TRUE;
-    break;
+    case 0: bCheched = FALSE; break;
+    case 1: bCheched = TRUE; break;
     default:
       ASSERTALWAYS("Unknown state");
       return;
-    break;
+      break;
   }
 
   // control is in shader dialog
-  theApp.m_dlgBarTreeView.ChangeFlagOnSelectedSurfaces(m_strID,bCheched,m_iIndex);
+  theApp.m_dlgBarTreeView.ChangeFlagOnSelectedSurfaces(m_strID, bCheched, m_iIndex);
 }

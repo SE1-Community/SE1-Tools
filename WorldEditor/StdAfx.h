@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -18,15 +18,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //      are changed infrequently
 //
 
-#define VC_EXTRALEAN    // Exclude rarely-used stuff from Windows headers
+#define VC_EXTRALEAN // Exclude rarely-used stuff from Windows headers
 
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
+#include <afxwin.h> // MFC core and standard components
+#include <afxext.h> // MFC extensions
 #include <afxadv.h>
 #include <afxole.h>
 #ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>      // MFC support for Windows Common Controls
-#endif // _AFX_NO_AFXCMN_SUPPORT
+#include <afxcmn.h> // MFC support for Windows Common Controls
+#endif              // _AFX_NO_AFXCMN_SUPPORT
 #include <htmlhelp.h>
 
 #define ENGINE_INTERNAL 1
@@ -39,4 +39,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "WorldEditor.h"
 
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#pragma comment( \
+  linker, \
+  "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")

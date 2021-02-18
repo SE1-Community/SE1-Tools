@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,43 +30,37 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CTexView
 
-CTexView::CTexView()
-{
-  m_pDrawPort=NULL;
-  m_pViewPort=NULL;
+CTexView::CTexView() {
+  m_pDrawPort = NULL;
+  m_pViewPort = NULL;
 }
 
-CTexView::~CTexView()
-{
-}
-
+CTexView::~CTexView() {}
 
 BEGIN_MESSAGE_MAP(CTexView, CWnd)
-  //{{AFX_MSG_MAP(CTexView)
-  ON_WM_PAINT()
-  ON_WM_SIZE()
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CTexView)
+ON_WM_PAINT()
+ON_WM_SIZE()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CTexView message handlers
 
-void CTexView::OnPaint() 
-{
-  {CPaintDC dc(this);}
+void CTexView::OnPaint() {
+  { CPaintDC dc(this); }
 
   if (m_pDrawPort == NULL || !m_pDrawPort->Lock()) {
     return;
   }
 
   // clear browsing window
-  m_pDrawPort->FillZBuffer( ZBUF_BACK);
-  m_pDrawPort->Fill( C_BLACK | CT_OPAQUE);
+  m_pDrawPort->FillZBuffer(ZBUF_BACK);
+  m_pDrawPort->Fill(C_BLACK | CT_OPAQUE);
   if (m_ptoPreview.GetData() != NULL) {
     PIXaabbox2D rectPict;
-    rectPict = PIXaabbox2D( PIX2D(0, 0), PIX2D(m_pDrawPort->GetWidth(), m_pDrawPort->GetHeight()));
-    m_pDrawPort->PutTexture(&m_ptoPreview,rectPict);
+    rectPict = PIXaabbox2D(PIX2D(0, 0), PIX2D(m_pDrawPort->GetWidth(), m_pDrawPort->GetHeight()));
+    m_pDrawPort->PutTexture(&m_ptoPreview, rectPict);
   }
   m_pDrawPort->Unlock();
   if (m_pViewPort != NULL) {
@@ -75,28 +69,26 @@ void CTexView::OnPaint()
   }
 }
 
-BOOL CTexView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
-{
-  _pGfx->CreateWindowCanvas( pParentWnd->m_hWnd, &m_pViewPort, &m_pDrawPort);
+BOOL CTexView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID,
+                      CCreateContext* pContext) {
+  _pGfx->CreateWindowCanvas(pParentWnd->m_hWnd, &m_pViewPort, &m_pDrawPort);
   return TRUE;
 }
 
-void CTexView::ChangeTexture(CTString strNewTexObject)
-{
+void CTexView::ChangeTexture(CTString strNewTexObject) {
   m_ptoPreview.SetData_t(strNewTexObject);
   Invalidate(TRUE);
 }
 
-void CTexView::OnSize(UINT nType, int cx, int cy) 
-{
+void CTexView::OnSize(UINT nType, int cx, int cy) {
   CRect rc;
   GetParent()->GetClientRect(&rc);
   INDEX iWidth = cx;
-  if (cy<cx) iWidth=cy;
-  INDEX iX = rc.right/2-cx/2;
-  if (iX != 0 && iWidth>0)
-  {
-    ::SetWindowPos(m_pViewPort->vp_hWndParent,wndTop,iX,55,iWidth,cy,SWP_NOZORDER);
+  if (cy < cx)
+    iWidth = cy;
+  INDEX iX = rc.right / 2 - cx / 2;
+  if (iX != 0 && iWidth > 0) {
+    ::SetWindowPos(m_pViewPort->vp_hWndParent, wndTop, iX, 55, iWidth, cy, SWP_NOZORDER);
     m_pViewPort->Resize();
   }
 }

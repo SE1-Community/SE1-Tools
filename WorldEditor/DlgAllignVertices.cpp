@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,111 +30,98 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAllignVertices dialog
 
-
-CDlgAllignVertices::CDlgAllignVertices(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgAllignVertices::IDD, pParent)
-{
+CDlgAllignVertices::CDlgAllignVertices(CWnd* pParent /*=NULL*/) : CDialog(CDlgAllignVertices::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgAllignVertices)
-    // NOTE: the ClassWizard will add member initialization here
+  // NOTE: the ClassWizard will add member initialization here
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgAllignVertices::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgAllignVertices::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgAllignVertices)
-    // NOTE: the ClassWizard will add DDX and DDV calls here
+  // NOTE: the ClassWizard will add DDX and DDV calls here
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgAllignVertices, CDialog)
-  //{{AFX_MSG_MAP(CDlgAllignVertices)
-  ON_BN_CLICKED(IDC_ALLIGN_X, OnAllignX)
-  ON_BN_CLICKED(IDC_ALLIGN_Y, OnAllignY)
-  ON_BN_CLICKED(IDC_ALLIGN_Z, OnAllignZ)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgAllignVertices)
+ON_BN_CLICKED(IDC_ALLIGN_X, OnAllignX)
+ON_BN_CLICKED(IDC_ALLIGN_Y, OnAllignY)
+ON_BN_CLICKED(IDC_ALLIGN_Z, OnAllignZ)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAllignVertices message handlers
 
-DOUBLE3D CDlgAllignVertices::GetLastSelectedVertex(void)
-{
+DOUBLE3D CDlgAllignVertices::GetLastSelectedVertex(void) {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
-  DOUBLE3D vNew=DOUBLE3D(0,0,0);
-  FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
-  {
-    vNew=FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
+  DOUBLE3D vNew = DOUBLE3D(0, 0, 0);
+  FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+    vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
   }
   return vNew;
 }
 
-void CDlgAllignVertices::OnAllignX() 
-{
+void CDlgAllignVertices::OnAllignX() {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   pDoc->RememberUndo();
-  pDoc->m_woWorld.TriangularizeForVertices( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
 
-  DOUBLE3D vVtx=GetLastSelectedVertex();
-  FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
-  {
-    DOUBLE3D vNew=FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
-    vNew(1)=vVtx(1);
+  DOUBLE3D vVtx = GetLastSelectedVertex();
+  FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+    DOUBLE3D vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
+    vNew(1) = vVtx(1);
     itvtx->SetAbsolutePosition(vNew);
   }
-  pDoc->m_woWorld.UpdateSectorsDuringVertexChange( pDoc->m_selVertexSelection);
-  pDoc->m_woWorld.UpdateSectorsAfterVertexChange( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
   pDoc->SetModifiedFlag();
   EndDialog(IDOK);
 }
 
-void CDlgAllignVertices::OnAllignY() 
-{
+void CDlgAllignVertices::OnAllignY() {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   pDoc->RememberUndo();
-  pDoc->m_woWorld.TriangularizeForVertices( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
 
-  DOUBLE3D vVtx=GetLastSelectedVertex();
-  FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
-  {
-    DOUBLE3D vNew=FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
-    vNew(2)=vVtx(2);
+  DOUBLE3D vVtx = GetLastSelectedVertex();
+  FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+    DOUBLE3D vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
+    vNew(2) = vVtx(2);
     itvtx->SetAbsolutePosition(vNew);
   }
-  pDoc->m_woWorld.UpdateSectorsDuringVertexChange( pDoc->m_selVertexSelection);
-  pDoc->m_woWorld.UpdateSectorsAfterVertexChange( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
   pDoc->SetModifiedFlag();
   EndDialog(IDOK);
 }
 
-void CDlgAllignVertices::OnAllignZ() 
-{
+void CDlgAllignVertices::OnAllignZ() {
   CWorldEditorDoc* pDoc = theApp.GetActiveDocument();
   pDoc->RememberUndo();
-  pDoc->m_woWorld.TriangularizeForVertices( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
 
-  DOUBLE3D vVtx=GetLastSelectedVertex();
-  FOREACHINDYNAMICCONTAINER( pDoc->m_selVertexSelection, CBrushVertex, itvtx)
-  {
-    DOUBLE3D vNew=FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
-    vNew(3)=vVtx(3);
+  DOUBLE3D vVtx = GetLastSelectedVertex();
+  FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+    DOUBLE3D vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
+    vNew(3) = vVtx(3);
     itvtx->SetAbsolutePosition(vNew);
   }
-  pDoc->m_woWorld.UpdateSectorsDuringVertexChange( pDoc->m_selVertexSelection);
-  pDoc->m_woWorld.UpdateSectorsAfterVertexChange( pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
   pDoc->SetModifiedFlag();
   EndDialog(IDOK);
 }
 
-BOOL CDlgAllignVertices::PreTranslateMessage(MSG* pMsg) 
-{
-  if (pMsg->message == WM_KEYDOWN)
-  {
-    if (pMsg->wParam == 'X') OnAllignX();
-    if (pMsg->wParam == 'Y') OnAllignY();
-    if (pMsg->wParam == 'Z') OnAllignZ();
+BOOL CDlgAllignVertices::PreTranslateMessage(MSG* pMsg) {
+  if (pMsg->message == WM_KEYDOWN) {
+    if (pMsg->wParam == 'X')
+      OnAllignX();
+    if (pMsg->wParam == 'Y')
+      OnAllignY();
+    if (pMsg->wParam == 'Z')
+      OnAllignZ();
   }
   return CDialog::PreTranslateMessage(pMsg);
 }

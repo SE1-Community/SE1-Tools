@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,34 +25,31 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CEditMipSwitchDistance window
 
-class CEditMipSwitchDistance : public CEdit
-{
-// Construction
-public:
+class CEditMipSwitchDistance : public CEdit {
+  // Construction
+  public:
   BOOL OnIdle(LONG lCount);
   CEditMipSwitchDistance();
-  CBrushMip *m_pbrmBrushMipSelected;
+  CBrushMip* m_pbrmBrushMipSelected;
   FLOAT m_fLastValue;
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CEditMipSwitchDistance)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CEditMipSwitchDistance();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CEditMipSwitchDistance)
   //}}AFX_MSG
 

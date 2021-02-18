@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,32 +28,26 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPlayerAppearance dialog
 
-
-CDlgPlayerAppearance::CDlgPlayerAppearance(CPlayerCharacter &pcPlayerCharacter,
-                                           CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgPlayerAppearance::IDD, pParent)
-{
+CDlgPlayerAppearance::CDlgPlayerAppearance(CPlayerCharacter& pcPlayerCharacter, CWnd* pParent /*=NULL*/) :
+CDialog(CDlgPlayerAppearance::IDD, pParent) {
   // make a copy of player's appearance, we will change it
   m_pcPlayerCharacter = pcPlayerCharacter;
   //{{AFX_DATA_INIT(CDlgPlayerAppearance)
-    // NOTE: the ClassWizard will add member initialization here
+  // NOTE: the ClassWizard will add member initialization here
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgPlayerAppearance::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgPlayerAppearance::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgPlayerAppearance)
   DDX_Control(pDX, IDC_AVAILABLE_APPEARANCES, m_comboAvailableAppearances);
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPlayerAppearance, CDialog)
-  //{{AFX_MSG_MAP(CDlgPlayerAppearance)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgPlayerAppearance)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

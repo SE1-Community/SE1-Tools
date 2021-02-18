@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -19,21 +19,20 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef WORLDEDITORDOC_H
 #define WORLDEDITORDOC_H 1
 
-#define SNAP_DOUBLE_CM 0.015625
-#define SNAP_FLOAT_CM 0.015625f
-#define SNAP_FLOAT_12 0.125f
-#define SNAP_FLOAT_25 0.25f
+#define SNAP_DOUBLE_CM  0.015625
+#define SNAP_FLOAT_CM   0.015625f
+#define SNAP_FLOAT_12   0.125f
+#define SNAP_FLOAT_25   0.25f
 #define SNAP_ANGLE_GRID (AngleDeg(2.5f))
 
 #define POLYGON_MODE 1
-#define SECTOR_MODE 2
-#define ENTITY_MODE 3
-#define VERTEX_MODE 4
+#define SECTOR_MODE  2
+#define ENTITY_MODE  3
+#define VERTEX_MODE  4
 #define TERRAIN_MODE 5
-#define CSG_MODE 6
+#define CSG_MODE     6
 
-enum ESelectionType
-{
+enum ESelectionType {
   ST_NONE = 0,
   ST_VERTEX,
   ST_ENTITY,
@@ -41,9 +40,8 @@ enum ESelectionType
   ST_SECTOR,
   ST_POLYGON,
 };
-  
-enum CSGType 
-{
+
+enum CSGType {
   CSG_ILLEGAL = 0,
   CSG_ADD,
   CSG_ADD_REVERSE,
@@ -60,39 +58,37 @@ enum CSGType
   CSG_ADD_ENTITIES,
 };
 
-class CUndo
-{
-public:  
+class CUndo {
+  public:
   CListNode m_lnListNode;
-  CTFileName m_fnmUndoFile;     // name of temporary file used for undo/redo
+  CTFileName m_fnmUndoFile; // name of temporary file used for undo/redo
   // Constructor.
-  CUndo(void);    // throw char * 
+  CUndo(void); // throw char *
   // Destructor.
   ~CUndo(void);
 };
 
-class CWorldEditorDoc : public CDocument
-{
-protected: // create from serialization only
+class CWorldEditorDoc : public CDocument {
+  protected: // create from serialization only
   CWorldEditorDoc();
   DECLARE_DYNCREATE(CWorldEditorDoc)
 
-// Attributes
-public:
+  // Attributes
+  public:
   CDynamicContainer<CTerrainUndo> m_dcTerrainUndo;
   INDEX m_iCurrentTerrainUndo;
   BOOL m_bAskedToCheckOut;
   SLONG m_slDisplaceTexTime;
   INDEX m_iMirror;
   INDEX m_iTexture;
-  CTerrain *m_ptrSelectedTerrain;
+  CTerrain* m_ptrSelectedTerrain;
   CTextureObject m_toBackdropUp;
   CTextureObject m_toBackdropFt;
   CTextureObject m_toBackdropRt;
   CObject3D m_o3dBackdropObject;
   FLOAT3D m_vCreateBoxVertice0; // vertices that were last used in box creation
   FLOAT3D m_vCreateBoxVertice1;
-  FLOAT3D m_avVolumeBoxVertice[ 8]; // volume box vertices 
+  FLOAT3D m_avVolumeBoxVertice[8]; // volume box vertices
   // number of vertices used for creating last primitive base polygon (-1 for recreate base)
   BOOL m_bPrimitiveCreatedFirstTime;
   INDEX m_ctLastPrimitiveVertices;
@@ -123,8 +119,8 @@ public:
   CPlacement3D m_plDeltaPlacement;
   CPlacement3D m_plLastPlacement;
   CWorld m_woWorld;
-  CWorld *m_pwoSecondLayer;   // world for holding second layer
-  CEntity *m_penPrimitive;
+  CWorld* m_pwoSecondLayer; // world for holding second layer
+  CEntity* m_penPrimitive;
   // index for holding pre CSG mode
   INDEX m_iPreCSGMode;
   INDEX m_iMode;
@@ -139,36 +135,36 @@ public:
   CStaticArray<DOUBLE3D> m_avStartDragVertices;
   CBrushPolygonSelection m_selPolygonSelection;
   CStaticArray<CPlacement3D> m_aSelectedEntityPlacements;
-  CBrushPolygon *m_pbpoLastCentered;
+  CBrushPolygon* m_pbpoLastCentered;
 
   CChangeableRT m_chSelections;
   CChangeableRT m_chDocument;
 
-  BOOL m_bWasEverSaved;     // set if saved at least once (if not - play from testgame.wld)
+  BOOL m_bWasEverSaved; // set if saved at least once (if not - play from testgame.wld)
   BOOL m_bReadOnly;     // opened file was read-only
-  CWorldEditorView *m_pCutLineView;
+  CWorldEditorView* m_pCutLineView;
   FLOAT3D m_vCutLineStart;
   FLOAT3D m_vCutLineEnd;
   FLOAT3D m_vControlLineDragStart;
 
-// Operations
-public:
+  // Operations
+  public:
   // Function corects coordinates of vertices that represent box because given vertice is
   // moved and box has invalid geometry
   void CorrectBox(INDEX iMovedVtx, FLOAT3D vNewPosition);
   // Selects entity with given index inside volume
-  void SelectGivenEntity( INDEX iEntityToSelect);
+  void SelectGivenEntity(INDEX iEntityToSelect);
   // adds all world's entities that fall inside volume into volume selection
   void SelectEntitiesByVolumeBox(void);
-  void ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjectedMapping=FALSE,
-    INDEX iMipBrush=0, FLOAT fMipFactor=1E6f, BOOL bApplyDefaultPolygonProperties=TRUE);
+  void ConvertObject3DToBrush(CObject3D& ob, BOOL bApplyProjectedMapping = FALSE, INDEX iMipBrush = 0, FLOAT fMipFactor = 1E6f,
+                              BOOL bApplyDefaultPolygonProperties = TRUE);
   // calculate base of primitive (discard vertex draging)
   void CreateConusPrimitive(void);
   void CreateTorusPrimitive(void);
   void CreateStaircasesPrimitive(void);
   void CreateSpherePrimitive(void);
   void CreateTerrainPrimitive(void);
-  void CreateTerrainObject3D( CImageInfo *piiDisplace, INDEX iSlicesX, INDEX iSlicesZ, INDEX iMip);
+  void CreateTerrainObject3D(CImageInfo* piiDisplace, INDEX iSlicesX, INDEX iSlicesZ, INDEX iMip);
   void CreatePrimitive(void);
   // apply auto colorize function
   void ApplyAutoColorize(void);
@@ -180,10 +176,9 @@ public:
   void ApplyCurrentPrimitiveSettings(void);
   BOOL IsEntityCSGEnabled(void);
   // start creating primitive
-  void StartPrimitiveCSG( CPlacement3D plPrimitive, BOOL bResetAngles = TRUE);
+  void StartPrimitiveCSG(CPlacement3D plPrimitive, BOOL bResetAngles = TRUE);
   // start CSG with world template
-  void StartTemplateCSG( CPlacement3D plPrimitive, const CTFileName &fnWorld,
-    BOOL bResetAngles = TRUE);
+  void StartTemplateCSG(CPlacement3D plPrimitive, const CTFileName& fnWorld, BOOL bResetAngles = TRUE);
   // inform all views that CSG is started
   void AtStartCSG(void);
   // inform all views that CSG is finished
@@ -196,17 +191,17 @@ public:
   // clean up after doing a CSG
   void StopCSG(void);
   // does "snap to grid" for given float
-  void SnapFloat( FLOAT &fDest, FLOAT fStep = SNAP_FLOAT_GRID);
+  void SnapFloat(FLOAT& fDest, FLOAT fStep = SNAP_FLOAT_GRID);
   // does "snap to grid" for given angle
-  void SnapAngle( ANGLE &angDest, ANGLE fStep = SNAP_ANGLE_GRID);
+  void SnapAngle(ANGLE& angDest, ANGLE fStep = SNAP_ANGLE_GRID);
   // does "snap to grid" for given placement
-  void SnapToGrid( CPlacement3D &plPlacement, FLOAT fSnapValue);
+  void SnapToGrid(CPlacement3D& plPlacement, FLOAT fSnapValue);
   // does "snap to grid" for primitive values
   void SnapPrimitiveValuesToGrid(void);
   // saves curent state of the world as tail of give undo/redo list
-  void SaveWorldIntoUndoRedoList( CListHead &lhList);
+  void SaveWorldIntoUndoRedoList(CListHead& lhList);
   // restores last operation from given undo/redo object
-  void LoadWorldFromUndoRedoList( CUndo *pUndoRedo);
+  void LoadWorldFromUndoRedoList(CUndo* pUndoRedo);
   // remembers last operation into undo buffer
   void RememberUndo(void);
   // undoes last operation
@@ -214,19 +209,21 @@ public:
   // redoes last undoed operation
   void Redo(void);
   // retrieves editing mode
-  inline INDEX GetEditingMode() { return m_iMode;};
+  inline INDEX GetEditingMode() {
+    return m_iMode;
+  };
   // selects all entities in volume
   void OnSelectAllInVolume(void);
   // sets editing mode
-  void SetEditingMode( INDEX iNewMode);
+  void SetEditingMode(INDEX iNewMode);
   // paste given texture over polygon selection
-  void PasteTextureOverSelection_t( CTFileName fnFileName);
+  void PasteTextureOverSelection_t(CTFileName fnFileName);
   // deselect all selected members in current selection mode
   void DeselectAll(void);
   // Sets message about current mode and selected members
-  void SetStatusLineModeInfoMessage( void);
+  void SetStatusLineModeInfoMessage(void);
   // creates texture from picture and initializes texture object
-  void SetupBackdropTextureObject( CTFileName fnPicture, CTextureObject &to);
+  void SetupBackdropTextureObject(CTFileName fnPicture, CTextureObject& to);
   // saves thumbnail
   void SaveThumbnail(void);
   // reset primitive settings
@@ -235,12 +232,12 @@ public:
   void DeletePrimitiveVertex(INDEX iVtxToDelete);
   void ApplyMirrorAndStretch(INDEX iMirror, FLOAT fStretch);
   void SetActiveTextureLayer(INDEX iLayer);
-  
-  void ClearSelections(ESelectionType stExcept=ST_NONE);
+
+  void ClearSelections(ESelectionType stExcept = ST_NONE);
   BOOL IsCloneUpdatingAllowed(void);
 
-  void SetCutMode( CWorldEditorView *pwedView);
-  void ApplyCut( void);
+  void SetCutMode(CWorldEditorView* pwedView);
+  void ApplyCut(void);
 
   // show/hide functoins
   void OnHideSelectedEntities(void);
@@ -249,14 +246,14 @@ public:
   void OnHideSelectedSectors(void);
   void OnHideUnselectedSectors(void);
   void OnShowAllSectors(void);
-  void SetModifiedFlag( BOOL bModified = TRUE);
+  void SetModifiedFlag(BOOL bModified = TRUE);
 
   void ReloadWorld(void);
   BOOL IsReadOnly(void);
   BOOL IsBrushUpdatingAllowed(void);
 
   void OnIdle(void);
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWorldEditorDoc)
   public:
@@ -266,18 +263,17 @@ public:
   virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CWorldEditorDoc();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-public:
+  protected:
+  // Generated message map functions
+  public:
   //{{AFX_MSG(CWorldEditorDoc)
   afx_msg void OnCsgSplitSectors();
   afx_msg void OnUpdateCsgSplitSectors(CCmdUI* pCmdUI);
@@ -338,10 +334,10 @@ public:
   afx_msg void OnShowAll();
   afx_msg void OnCheckEdit();
   afx_msg void OnCheckAdd();
-        afx_msg void OnCheckDelete();
+  afx_msg void OnCheckDelete();
   afx_msg void OnUpdateCheckEdit(CCmdUI* pCmdUI);
   afx_msg void OnUpdateCheckAdd(CCmdUI* pCmdUI);
-        afx_msg void OnUpdateCheckDelete(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateCheckDelete(CCmdUI* pCmdUI);
   afx_msg void OnUpdateBrushes();
   afx_msg void OnSelectByClassImportant();
   afx_msg void OnInsert3dObject();

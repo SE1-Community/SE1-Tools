@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -29,11 +29,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPreferences dialog
 #define PREF_COMBO_HEIGHT 100
-extern UINT APIENTRY ModelerFileRequesterHook( HWND hdlg, UINT uiMsg, WPARAM wParam,  LPARAM lParam);
+extern UINT APIENTRY ModelerFileRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam);
 
-CDlgPreferences::CDlgPreferences(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgPreferences::IDD, pParent)
-{
+CDlgPreferences::CDlgPreferences(CWnd *pParent /*=NULL*/) : CDialog(CDlgPreferences::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgPreferences)
   m_AllwaysLamp = FALSE;
   m_PrefsCopy = FALSE;
@@ -51,20 +49,17 @@ CDlgPreferences::CDlgPreferences(CWnd* pParent /*=NULL*/)
   m_Prefs = theApp.m_Preferences;
 }
 
-
-void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgPreferences::DoDataExchange(CDataExchange *pDX) {
   CDialog::DoDataExchange(pDX);
-  
+
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE )
-  {
-    m_MappingPaper.SetColor( m_Prefs.ap_MappingPaperColor);
-    m_MappingActiveInk.SetColor( m_Prefs.ap_MappingActiveSurfaceColor);
-    m_MappingInactiveInk.SetColor( m_Prefs.ap_MappingInactiveSurfaceColor);
-    m_ModelPaper.SetColor( m_Prefs.ap_DefaultPaperColor);
-    m_ModelInk.SetColor( m_Prefs.ap_DefaultInkColor);
-    m_MappingWinBcgColor.SetColor( m_Prefs.ap_MappingWinBcgColor);
+  if (pDX->m_bSaveAndValidate == FALSE) {
+    m_MappingPaper.SetColor(m_Prefs.ap_MappingPaperColor);
+    m_MappingActiveInk.SetColor(m_Prefs.ap_MappingActiveSurfaceColor);
+    m_MappingInactiveInk.SetColor(m_Prefs.ap_MappingInactiveSurfaceColor);
+    m_ModelPaper.SetColor(m_Prefs.ap_DefaultPaperColor);
+    m_ModelInk.SetColor(m_Prefs.ap_DefaultInkColor);
+    m_MappingWinBcgColor.SetColor(m_Prefs.ap_MappingWinBcgColor);
 
     m_PrefsCopy = m_Prefs.ap_CopyExistingWindowPrefs;
     m_bIsFloorVisibleByDefault = m_Prefs.ap_bIsFloorVisibleByDefault;
@@ -73,7 +68,7 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     m_AllwaysLamp = m_Prefs.ap_AllwaysSeeLamp;
     m_WindowFit = m_Prefs.ap_AutoWindowFit;
     m_SetDefaultColors = m_Prefs.ap_SetDefaultColors;
-    m_colorDefaultAmbientColor.SetColor( m_Prefs.ap_colDefaultAmbientColor);
+    m_colorDefaultAmbientColor.SetColor(m_Prefs.ap_colDefaultAmbientColor);
     m_fDefaultBanking = m_Prefs.ap_fDefaultBanking;
     m_fDefaultHeading = m_Prefs.ap_fDefaultHeading;
     m_fDefaultPitch = m_Prefs.ap_fDefaultPitch;
@@ -105,10 +100,9 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
   DDX_Check(pDX, IDC_PREFS_ALLWAYS_BCG, m_bIsBcgVisibleByDefault);
   DDX_Check(pDX, IDC_PREFS_ALLOW_SOUND_LOCK, m_bAllowSoundLock);
   //}}AFX_DATA_MAP
-  
+
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
+  if (pDX->m_bSaveAndValidate != FALSE) {
     m_Prefs.ap_MappingPaperColor = m_MappingPaper.GetColor();
     m_Prefs.ap_MappingActiveSurfaceColor = m_MappingActiveInk.GetColor();
     m_Prefs.ap_MappingInactiveSurfaceColor = m_MappingInactiveInk.GetColor();
@@ -131,54 +125,40 @@ void CDlgPreferences::DoDataExchange(CDataExchange* pDX)
     m_Prefs.ap_fDefaultBanking = m_fDefaultBanking;
     m_Prefs.ap_fDefaultFOW = m_fDefaultFOW;
 
-    if (!theApp.m_WorkingTextures.IsEmpty())
-    {
-      m_Prefs.ap_DefaultWinBcgTexture = 
-        ((CBcgTexture *) m_ComboWinBcgTexture.GetItemDataPtr( 
-        m_ComboWinBcgTexture.GetCurSel()))->wt_FileName;
+    if (!theApp.m_WorkingTextures.IsEmpty()) {
+      m_Prefs.ap_DefaultWinBcgTexture
+        = ((CBcgTexture *)m_ComboWinBcgTexture.GetItemDataPtr(m_ComboWinBcgTexture.GetCurSel()))->wt_FileName;
+    } else {
     }
-    else
-    {
-    }
-    INDEX iCurSel=m_ctrlGfxApi.GetCurSel();
-    INDEX iOldGfxApi=theApp.m_iApi;
-    if (iCurSel != CB_ERR)
-    {
-      switch (iCurSel)
-      {
-      case 0:
-        theApp.m_iApi=GAT_OGL;
-        break;
+    INDEX iCurSel = m_ctrlGfxApi.GetCurSel();
+    INDEX iOldGfxApi = theApp.m_iApi;
+    if (iCurSel != CB_ERR) {
+      switch (iCurSel) {
+        case 0: theApp.m_iApi = GAT_OGL; break;
 #ifdef SE1_D3D
-      case 1:
-        theApp.m_iApi=GAT_D3D;
-        break;
+        case 1: theApp.m_iApi = GAT_D3D; break;
 #endif // SE1_D3D
-      default:
-        {
+        default: {
         }
       }
-      if (iOldGfxApi != theApp.m_iApi)
-      {
-        _pGfx->ResetDisplayMode((enum GfxAPIType) theApp.m_iApi);
+      if (iOldGfxApi != theApp.m_iApi) {
+        _pGfx->ResetDisplayMode((enum GfxAPIType)theApp.m_iApi);
       }
     }
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPreferences, CDialog)
-  //{{AFX_MSG_MAP(CDlgPreferences)
-  ON_BN_CLICKED(IDC_ADD_WORKING_TEXTURE, OnAddWorkingTexture)
-  ON_BN_CLICKED(IDC_REMOVE_WORKING_TEXTURE, OnRemoveWorkingTexture)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgPreferences)
+ON_BN_CLICKED(IDC_ADD_WORKING_TEXTURE, OnAddWorkingTexture)
+ON_BN_CLICKED(IDC_REMOVE_WORKING_TEXTURE, OnRemoveWorkingTexture)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPreferences message handlers
 
-BOOL CDlgPreferences::OnInitDialog() 
-{
+BOOL CDlgPreferences::OnInitDialog() {
   CDialog::OnInitDialog();
 
   m_ctrlGfxApi.ResetContent();
@@ -187,17 +167,11 @@ BOOL CDlgPreferences::OnInitDialog()
   m_ctrlGfxApi.AddString(L"DirectX");
 #endif // SE1_D3D
 
-  if (IsWindow(m_ctrlGfxApi.m_hWnd))
-  {
-    switch (theApp.m_iApi)
-    {
-    case GAT_OGL:
-      m_ctrlGfxApi.SetCurSel(0);
-      break;
+  if (IsWindow(m_ctrlGfxApi.m_hWnd)) {
+    switch (theApp.m_iApi) {
+      case GAT_OGL: m_ctrlGfxApi.SetCurSel(0); break;
 #ifdef SE1_D3D
-    case GAT_D3D:
-      m_ctrlGfxApi.SetCurSel(1);
-      break;
+      case GAT_D3D: m_ctrlGfxApi.SetCurSel(1); break;
 #endif // SE1_D3D
     }
   }
@@ -206,75 +180,62 @@ BOOL CDlgPreferences::OnInitDialog()
   return TRUE;
 }
 
-void CDlgPreferences::InitTextureCombos()
-{
+void CDlgPreferences::InitTextureCombos() {
   int iIndex;
-  
+
   m_ComboWinBcgTexture.ResetContent();
   INDEX iChoosedWinBcg = 0;
-  if (theApp.m_WorkingTextures.IsEmpty())
-  {
-    m_ComboWinBcgTexture.AddString( L"None available");
-    m_ComboWinBcgTexture.EnableWindow( FALSE);
-  }
-  else
-  {
-    m_ComboWinBcgTexture.EnableWindow( TRUE);
-    INDEX iTexCt = 0;      
-    FOREACHINLIST( CBcgTexture, wt_ListNode, theApp.m_WorkingTextures, it_wt)
-    {
+  if (theApp.m_WorkingTextures.IsEmpty()) {
+    m_ComboWinBcgTexture.AddString(L"None available");
+    m_ComboWinBcgTexture.EnableWindow(FALSE);
+  } else {
+    m_ComboWinBcgTexture.EnableWindow(TRUE);
+    INDEX iTexCt = 0;
+    FOREACHINLIST(CBcgTexture, wt_ListNode, theApp.m_WorkingTextures, it_wt) {
       if (it_wt->wt_FileName == m_Prefs.ap_DefaultWinBcgTexture)
         iChoosedWinBcg = iTexCt;
-      
-      iIndex = m_ComboWinBcgTexture.AddString( CString(it_wt->wt_FileName.FileName()));
-      m_ComboWinBcgTexture.SetItemDataPtr( iIndex, &it_wt.Current());
-      iTexCt ++;
+
+      iIndex = m_ComboWinBcgTexture.AddString(CString(it_wt->wt_FileName.FileName()));
+      m_ComboWinBcgTexture.SetItemDataPtr(iIndex, &it_wt.Current());
+      iTexCt++;
     }
   }
-  m_ComboWinBcgTexture.SetCurSel( iChoosedWinBcg);
+  m_ComboWinBcgTexture.SetCurSel(iChoosedWinBcg);
 }
 
-void CDlgPreferences::OnAddWorkingTexture() 
-{
+void CDlgPreferences::OnAddWorkingTexture() {
   // call file requester for opening documents
   CDynamicArray<CTFileName> afnWorkingTextures;
-  _EngineGUI.FileRequester( "Choose textures to add", FILTER_TEX FILTER_END,
-    "Working textures directory", "Textures\\", "", &afnWorkingTextures);
+  _EngineGUI.FileRequester("Choose textures to add", FILTER_TEX FILTER_END, "Working textures directory", "Textures\\", "",
+                           &afnWorkingTextures);
   // insert selected textures
-  FOREACHINDYNAMICARRAY( afnWorkingTextures, CTFileName, itTexture)
-  {
+  FOREACHINDYNAMICARRAY(afnWorkingTextures, CTFileName, itTexture) {
     // add new working texture
-    theApp.AddModelerWorkingTexture( itTexture.Current());
+    theApp.AddModelerWorkingTexture(itTexture.Current());
   }
-  if (afnWorkingTextures.Count() != 0)
-  {
+  if (afnWorkingTextures.Count() != 0) {
     InitTextureCombos();
     INDEX iTextures = m_ComboWinBcgTexture.GetCount();
-    if ((iTextures > 0) && (iTextures != CB_ERR) )
-    {
+    if ((iTextures > 0) && (iTextures != CB_ERR)) {
       // select last added texture as current
-      m_ComboWinBcgTexture.SetCurSel( iTextures-1);
+      m_ComboWinBcgTexture.SetCurSel(iTextures - 1);
     }
   }
 }
 
-void CDlgPreferences::OnRemoveWorkingTexture() 
-{
-  if (theApp.m_WorkingTextures.Count() == 0)
-  {
+void CDlgPreferences::OnRemoveWorkingTexture() {
+  if (theApp.m_WorkingTextures.Count() == 0) {
     return;
   }
 
   INDEX cur_sel = m_ComboWinBcgTexture.GetCurSel();
-  if (cur_sel != LB_ERR)
-  {
-    CBcgTexture *pWT = (CBcgTexture *) m_ComboWinBcgTexture.GetItemDataPtr( cur_sel);
+  if (cur_sel != LB_ERR) {
+    CBcgTexture *pWT = (CBcgTexture *)m_ComboWinBcgTexture.GetItemDataPtr(cur_sel);
     pWT->wt_ListNode.Remove();
-    
-    _pTextureStock->Release( pWT->wt_TextureData);
+
+    _pTextureStock->Release(pWT->wt_TextureData);
     delete pWT;
-    UpdateData( FALSE);
+    UpdateData(FALSE);
   }
   InitTextureCombos();
 }
-

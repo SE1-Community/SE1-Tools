@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,16 +25,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCreateAnimatedTexture dialog
 
-class CDlgCreateAnimatedTexture : public CDialog
-{
-// Construction
-public:
-  CDlgCreateAnimatedTexture(CDynamicArray<CTFileName> &afnPictures, CWnd* pParent = NULL);   // standard constructor
+class CDlgCreateAnimatedTexture : public CDialog {
+  // Construction
+  public:
+  CDlgCreateAnimatedTexture(CDynamicArray<CTFileName> &afnPictures, CWnd *pParent = NULL); // standard constructor
   ~CDlgCreateAnimatedTexture();
   void ReleaseCreatedTexture(void);
   void InitAnimationsCombo(void);
   void RefreshTexture(void);
-  
+
   CDynamicArray<CTFileName> *m_pafnPictures;
   BOOL m_bPreviewWindowsCreated;
   PIX m_pixSourceWidth;
@@ -45,27 +44,25 @@ public:
   CWndDisplayTexture m_wndViewCreatedTexture;
   CTextureData *m_ptdCreated;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgCreateAnimatedTexture)
   enum { IDD = IDD_CREATE_ANIMATED_TEXTURE };
-  CButton  m_ctrlCheckButton;
-  CComboBox  m_ctrlAnimationsCombo;
-  CString  m_strEditScript;
-  CString  m_strSizeInPixels;
-  CString  m_strCreatedTextureName;
+  CButton m_ctrlCheckButton;
+  CComboBox m_ctrlAnimationsCombo;
+  CString m_strEditScript;
+  CString m_strSizeInPixels;
+  CString m_strCreatedTextureName;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgCreateAnimatedTexture)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgCreateAnimatedTexture)
   afx_msg void OnPaint();

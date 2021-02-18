@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,50 +21,47 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgWorldSettings dialog
 
-class CDlgWorldSettings : public CDialog
-{
-// Construction
-public:
-  CDlgWorldSettings(CWnd* pParent = NULL);   // standard constructor
-  void SetupBcgSettings( BOOL bOnNewDocument); // setups background settings dialog
+class CDlgWorldSettings : public CDialog {
+  // Construction
+  public:
+  CDlgWorldSettings(CWnd* pParent = NULL);    // standard constructor
+  void SetupBcgSettings(BOOL bOnNewDocument); // setups background settings dialog
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgWorldSettings)
   enum { IDD = IDD_WORLD_SETTINGS };
-  CColoredButton  m_BackgroundColor;
-  CString  m_fnBackgroundPicture;
-  CString  m_strMissionDescription;
-  float  m_fFrontViewCenterX;
-  float  m_fFrontViewCenterY;
-  float  m_fFrontViewHeight;
-  CString  m_strFrontViewPicture;
-  float  m_fFrontViewWidth;
-  float  m_fRightViewCenterX;
-  float  m_fRightViewCenterY;
-  float  m_fRightViewHeight;
-  CString  m_strRightViewPicture;
-  float  m_fRightViewWidth;
-  float  m_fTopViewCenterX;
-  float  m_fTopViewCenterY;
-  float  m_fTopViewHeight;
-  CString  m_strTopViewPicture;
-  float  m_fTopViewWidth;
-  CString  m_strBackdropObject;
-  CString  m_strLevelName;
+  CColoredButton m_BackgroundColor;
+  CString m_fnBackgroundPicture;
+  CString m_strMissionDescription;
+  float m_fFrontViewCenterX;
+  float m_fFrontViewCenterY;
+  float m_fFrontViewHeight;
+  CString m_strFrontViewPicture;
+  float m_fFrontViewWidth;
+  float m_fRightViewCenterX;
+  float m_fRightViewCenterY;
+  float m_fRightViewHeight;
+  CString m_strRightViewPicture;
+  float m_fRightViewWidth;
+  float m_fTopViewCenterX;
+  float m_fTopViewCenterY;
+  float m_fTopViewHeight;
+  CString m_strTopViewPicture;
+  float m_fTopViewWidth;
+  CString m_strBackdropObject;
+  CString m_strLevelName;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgWorldSettings)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   virtual void OnOK();
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgWorldSettings)
   afx_msg void OnBrowseBackgroundPicture();

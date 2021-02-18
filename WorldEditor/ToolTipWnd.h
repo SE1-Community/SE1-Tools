@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,44 +25,42 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CToolTipWnd window
 
-class CToolTipWnd : public CWnd
-{
-// Construction
-public:
+class CToolTipWnd : public CWnd {
+  // Construction
+  public:
   CToolTipWnd();
 
-// Attributes
-public:
+  // Attributes
+  public:
   POINT m_ptMouse;
   BOOL m_bManualControl;
   PIX m_pixManualX;
   PIX m_pixManualY;
   CTString m_strText;
-  CTString GetLine( INDEX iLine);
-  INDEX GetLinesCount( void);
+  CTString GetLine(INDEX iLine);
+  INDEX GetLinesCount(void);
   void ObtainTextSize(PIX &pixMaxWidth, PIX &pixMaxHeight);
   void SetupWindowSizeAndPosition(void);
-  void ManualUpdate( void);
+  void ManualUpdate(void);
   void ManualOff(void);
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CToolTipWnd)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CToolTipWnd();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CToolTipWnd)
   afx_msg void OnPaint();
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-  afx_msg void OnSetFocus(CWnd* pOldWnd);
+  afx_msg void OnSetFocus(CWnd *pOldWnd);
   afx_msg void OnTimer(UINT nIDEvent);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()

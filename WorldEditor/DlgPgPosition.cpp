@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -31,8 +31,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CDlgPgPosition, CPropertyPage)
 
-CDlgPgPosition::CDlgPgPosition() : CPropertyPage(CDlgPgPosition::IDD)
-{
+CDlgPgPosition::CDlgPgPosition() : CPropertyPage(CDlgPgPosition::IDD) {
   //{{AFX_DATA_INIT(CDlgPgPosition)
   m_fBanking = 0.0f;
   m_fHeading = 0.0f;
@@ -43,55 +42,51 @@ CDlgPgPosition::CDlgPgPosition() : CPropertyPage(CDlgPgPosition::IDD)
   //}}AFX_DATA_INIT
 }
 
-CDlgPgPosition::~CDlgPgPosition()
-{
-}
+CDlgPgPosition::~CDlgPgPosition() {}
 
-void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
-{
-  if (theApp.m_bDisableDataExchange) return;
+void CDlgPgPosition::DoDataExchange(CDataExchange* pDX) {
+  if (theApp.m_bDisableDataExchange)
+    return;
 
   CPropertyPage::DoDataExchange(pDX);
 
-  SetModified( TRUE);
+  SetModified(TRUE);
 
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
   // if document doesn't exist, return
-  if (pDoc == NULL)  return;
-  // get active view 
-  CWorldEditorView *pWorldEditorView = theApp.GetActiveView();
+  if (pDoc == NULL)
+    return;
+  // get active view
+  CWorldEditorView* pWorldEditorView = theApp.GetActiveView();
 
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
+  if (pDX->m_bSaveAndValidate == FALSE) {
     // is CSG on?
-    if (pDoc->m_pwoSecondLayer != NULL)
-    {
+    if (pDoc->m_pwoSecondLayer != NULL) {
       // yes, pick up coordinates for editting from second layer
-      m_fHeading = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(1));
-      m_fPitch   = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(2));
-      m_fBanking = DegAngle( pDoc->m_plSecondLayer.pl_OrientationAngle(3));
+      m_fHeading = DegAngle(pDoc->m_plSecondLayer.pl_OrientationAngle(1));
+      m_fPitch = DegAngle(pDoc->m_plSecondLayer.pl_OrientationAngle(2));
+      m_fBanking = DegAngle(pDoc->m_plSecondLayer.pl_OrientationAngle(3));
 
       m_fX = pDoc->m_plSecondLayer.pl_PositionVector(1);
       m_fY = pDoc->m_plSecondLayer.pl_PositionVector(2);
       m_fZ = pDoc->m_plSecondLayer.pl_PositionVector(3);
     }
     // otherwise if we are in entity mode and there is only one entity selected
-    else if ((pDoc->m_iMode == ENTITY_MODE) && ( pDoc->m_selEntitySelection.Count() == 1) )
-    {
+    else if ((pDoc->m_iMode == ENTITY_MODE) && (pDoc->m_selEntitySelection.Count() == 1)) {
       // lock selection's dynamic container
       pDoc->m_selEntitySelection.Lock();
       // get first entity
-      CEntity *penEntityOne = pDoc->m_selEntitySelection.Pointer(0);
+      CEntity* penEntityOne = pDoc->m_selEntitySelection.Pointer(0);
       // unlock selection's dynamic container
       pDoc->m_selEntitySelection.Unlock();
 
       // get placement of first entity
       CPlacement3D plEntityOnePlacement = penEntityOne->GetPlacement();
-      m_fHeading = DegAngle( plEntityOnePlacement.pl_OrientationAngle(1));
-      m_fPitch   = DegAngle( plEntityOnePlacement.pl_OrientationAngle(2));
-      m_fBanking = DegAngle( plEntityOnePlacement.pl_OrientationAngle(3));
+      m_fHeading = DegAngle(plEntityOnePlacement.pl_OrientationAngle(1));
+      m_fPitch = DegAngle(plEntityOnePlacement.pl_OrientationAngle(2));
+      m_fBanking = DegAngle(plEntityOnePlacement.pl_OrientationAngle(3));
 
       m_fX = plEntityOnePlacement.pl_PositionVector(1);
       m_fY = plEntityOnePlacement.pl_PositionVector(2);
@@ -110,99 +105,92 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
+  if (pDX->m_bSaveAndValidate != FALSE) {
     // is CSG on?
-    if (pDoc->m_pwoSecondLayer != NULL)
-    {
+    if (pDoc->m_pwoSecondLayer != NULL) {
       // yes, copy coordinates from editting controls into second layer
-      pDoc->m_plSecondLayer.pl_OrientationAngle(1) = AngleDeg( m_fHeading);
-      pDoc->m_plSecondLayer.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
-      pDoc->m_plSecondLayer.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(1) = AngleDeg(m_fHeading);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(2) = AngleDeg(m_fPitch);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(3) = AngleDeg(m_fBanking);
       pDoc->m_plSecondLayer.pl_PositionVector(1) = m_fX;
       pDoc->m_plSecondLayer.pl_PositionVector(2) = m_fY;
       pDoc->m_plSecondLayer.pl_PositionVector(3) = m_fZ;
 
       // snap values to grid
-      pDoc->SnapToGrid( pDoc->m_plSecondLayer, SNAP_FLOAT_12);
+      pDoc->SnapToGrid(pDoc->m_plSecondLayer, SNAP_FLOAT_12);
       theApp.m_vfpCurrent.vfp_plPrimitive = pDoc->m_plSecondLayer;
 
       // update all document's views
-      pDoc->UpdateAllViews( NULL);
+      pDoc->UpdateAllViews(NULL);
     }
     // otherwise if we are in entity mode
-    else if (pDoc->m_iMode == ENTITY_MODE)
-    {
+    else if (pDoc->m_iMode == ENTITY_MODE) {
       // there must be only one entity selected
-      ASSERT( pDoc->m_selEntitySelection.Count() == 1);
-      
+      ASSERT(pDoc->m_selEntitySelection.Count() == 1);
+
       // lock selection's dynamic container
       pDoc->m_selEntitySelection.Lock();
       // get first entity
-      CEntity *penEntityOne = pDoc->m_selEntitySelection.Pointer(0);
+      CEntity* penEntityOne = pDoc->m_selEntitySelection.Pointer(0);
       // unlock selection's dynamic container
       pDoc->m_selEntitySelection.Unlock();
 
       // get placement of first entity
       CPlacement3D plEntityOnePlacement = penEntityOne->GetPlacement();
-      plEntityOnePlacement.pl_OrientationAngle(1) = AngleDeg( m_fHeading);
-      plEntityOnePlacement.pl_OrientationAngle(2) = AngleDeg( m_fPitch);
-      plEntityOnePlacement.pl_OrientationAngle(3) = AngleDeg( m_fBanking);
+      plEntityOnePlacement.pl_OrientationAngle(1) = AngleDeg(m_fHeading);
+      plEntityOnePlacement.pl_OrientationAngle(2) = AngleDeg(m_fPitch);
+      plEntityOnePlacement.pl_OrientationAngle(3) = AngleDeg(m_fBanking);
 
       plEntityOnePlacement.pl_PositionVector(1) = m_fX;
       plEntityOnePlacement.pl_PositionVector(2) = m_fY;
       plEntityOnePlacement.pl_PositionVector(3) = m_fZ;
 
       // snap entity's placement
-      pDoc->SnapToGrid( plEntityOnePlacement, SNAP_FLOAT_12);
-      
-      // set placement back to entity
-      penEntityOne->SetPlacement( plEntityOnePlacement);
+      pDoc->SnapToGrid(plEntityOnePlacement, SNAP_FLOAT_12);
 
-      pDoc->SetModifiedFlag( TRUE);
-      pDoc->UpdateAllViews( NULL);
+      // set placement back to entity
+      penEntityOne->SetPlacement(plEntityOnePlacement);
+
+      pDoc->SetModifiedFlag(TRUE);
+      pDoc->UpdateAllViews(NULL);
       m_udSelection.MarkUpdated();
 
       // update all document's views
-      pDoc->UpdateAllViews( NULL);
+      pDoc->UpdateAllViews(NULL);
     }
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPgPosition, CPropertyPage)
-  //{{AFX_MSG_MAP(CDlgPgPosition)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgPgPosition)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgPosition message handlers
 
-BOOL CDlgPgPosition::OnIdle(LONG lCount)
-{
+BOOL CDlgPgPosition::OnIdle(LONG lCount) {
   // obtain document
   CWorldEditorDoc* pDoc = theApp.GetDocument();
-  if ((pDoc == NULL) || !IsWindow(m_hWnd)) return FALSE;
+  if ((pDoc == NULL) || !IsWindow(m_hWnd))
+    return FALSE;
 
   // if selections have been changed (they are not up to date)
-  if (!pDoc->m_chSelections.IsUpToDate( m_udSelection))
-  {
+  if (!pDoc->m_chSelections.IsUpToDate(m_udSelection)) {
     // update dialog data
-    UpdateData( FALSE);
+    UpdateData(FALSE);
   }
 
   return TRUE;
 }
 
-BOOL CDlgPgPosition::PreTranslateMessage(MSG* pMsg) 
-{
-  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
-  {
+BOOL CDlgPgPosition::PreTranslateMessage(MSG* pMsg) {
+  if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN) {
     // move coordinates from page to entity and snap them
-    UpdateData( TRUE);
+    UpdateData(TRUE);
     // place snapped coordinates back to dialog
-    UpdateData( FALSE);
+    UpdateData(FALSE);
     // the message is handled
     return TRUE;
   }

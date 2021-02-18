@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,11 +28,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEditButtonAction dialog
 
-
-CDlgEditButtonAction::CDlgEditButtonAction(CButtonAction *pbaButtonAction, 
-                                           CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgEditButtonAction::IDD, pParent)
-{
+CDlgEditButtonAction::CDlgEditButtonAction(CButtonAction* pbaButtonAction, CWnd* pParent /*=NULL*/) :
+CDialog(CDlgEditButtonAction::IDD, pParent) {
   // remember button action that is edited
   m_pbaButtonAction = pbaButtonAction;
 
@@ -43,13 +40,10 @@ CDlgEditButtonAction::CDlgEditButtonAction(CButtonAction *pbaButtonAction,
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
+  if (pDX->m_bSaveAndValidate == FALSE) {
     m_strButtonActionName = m_pbaButtonAction->ba_strName;
     m_strButtonDownCommand = m_pbaButtonAction->ba_strCommandLineWhenPressed;
     m_strButtonUpCommand = m_pbaButtonAction->ba_strCommandLineWhenReleased;
@@ -62,19 +56,17 @@ void CDlgEditButtonAction::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
+  if (pDX->m_bSaveAndValidate != FALSE) {
     m_pbaButtonAction->ba_strName = m_strButtonActionName;
     m_pbaButtonAction->ba_strCommandLineWhenPressed = m_strButtonDownCommand;
     m_pbaButtonAction->ba_strCommandLineWhenReleased = m_strButtonUpCommand;
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgEditButtonAction, CDialog)
-  //{{AFX_MSG_MAP(CDlgEditButtonAction)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgEditButtonAction)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

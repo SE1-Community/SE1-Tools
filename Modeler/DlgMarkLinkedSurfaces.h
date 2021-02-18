@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,29 +22,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgMarkLinkedSurfaces dialog
 
-class CDlgMarkLinkedSurfaces : public CDialog
-{
-// Construction
-public:
-  CDlgMarkLinkedSurfaces( CWnd* pParent = NULL);   // standard constructor
+class CDlgMarkLinkedSurfaces : public CDialog {
+  // Construction
+  public:
+  CDlgMarkLinkedSurfaces(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgMarkLinkedSurfaces)
   enum { IDD = IDD_LINKED_SURFACES };
-  CLinkedSurfaceList  m_listSurfaces;
+  CLinkedSurfaceList m_listSurfaces;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgMarkLinkedSurfaces)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgMarkLinkedSurfaces)
   virtual BOOL OnInitDialog();
@@ -53,4 +50,4 @@ protected:
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };
-#endif //DLGMARKLINKEDSURFACES_H
+#endif // DLGMARKLINKEDSURFACES_H

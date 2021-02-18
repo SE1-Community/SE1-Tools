@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,23 +28,16 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgNewProgress dialog
 
-
-CDlgNewProgress::CDlgNewProgress(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgNewProgress::IDD, pParent)
-{
-  
+CDlgNewProgress::CDlgNewProgress(CWnd* pParent /*=NULL*/) : CDialog(CDlgNewProgress::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgNewProgress)
   m_ProgressMessage = _T("");
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgNewProgress::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgNewProgress::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
 
-  if (!pDX->m_bSaveAndValidate)
-  {
+  if (!pDX->m_bSaveAndValidate) {
     m_ProgressMessage = m_strNewMessage;
   }
 
@@ -54,13 +47,11 @@ void CDlgNewProgress::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgNewProgress, CDialog)
-  //{{AFX_MSG_MAP(CDlgNewProgress)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgNewProgress)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgNewProgress message handlers
-

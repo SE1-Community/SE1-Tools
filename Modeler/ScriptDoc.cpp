@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,39 +30,31 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CScriptDoc, CDocument)
 
-CScriptDoc::CScriptDoc()
-{
-}
+CScriptDoc::CScriptDoc() {}
 
-BOOL CScriptDoc::OnNewDocument()
-{
+BOOL CScriptDoc::OnNewDocument() {
   if (!CDocument::OnNewDocument())
     return FALSE;
   return TRUE;
 }
 
-CScriptDoc::~CScriptDoc()
-{
-}
-
+CScriptDoc::~CScriptDoc() {}
 
 BEGIN_MESSAGE_MAP(CScriptDoc, CDocument)
-  //{{AFX_MSG_MAP(CScriptDoc)
-    // NOTE - the ClassWizard will add and remove mapping macros here.
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CScriptDoc)
+// NOTE - the ClassWizard will add and remove mapping macros here.
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CScriptDoc diagnostics
 
 #ifdef _DEBUG
-void CScriptDoc::AssertValid() const
-{
+void CScriptDoc::AssertValid() const {
   CDocument::AssertValid();
 }
 
-void CScriptDoc::Dump(CDumpContext& dc) const
-{
+void CScriptDoc::Dump(CDumpContext& dc) const {
   CDocument::Dump(dc);
 }
 #endif //_DEBUG
@@ -70,8 +62,7 @@ void CScriptDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CScriptDoc serialization
 
-void CScriptDoc::Serialize(CArchive& ar)
-{
+void CScriptDoc::Serialize(CArchive& ar) {
   ((CEditView*)m_viewList.GetHead())->SerializeRaw(ar);
 }
 

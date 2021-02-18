@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,10 +30,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTEOperationSettings dialog
 
-
-CDlgTEOperationSettings::CDlgTEOperationSettings(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgTEOperationSettings::IDD, pParent)
-{
+CDlgTEOperationSettings::CDlgTEOperationSettings(CWnd *pParent /*=NULL*/) : CDialog(CDlgTEOperationSettings::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgTEOperationSettings)
   m_fClampAltitude = 0.0f;
   m_fNoiseAltitude = 0.0f;
@@ -46,31 +43,25 @@ CDlgTEOperationSettings::CDlgTEOperationSettings(CWnd* pParent /*=NULL*/)
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgTEOperationSettings::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgTEOperationSettings::DoDataExchange(CDataExchange *pDX) {
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
-    m_strDistributionNoiseTexture=theApp.m_fnDistributionNoiseTexture.FileName();
-    m_strContinousNoiseTexture=theApp.m_fnContinousNoiseTexture.FileName();
+  if (pDX->m_bSaveAndValidate == FALSE) {
+    m_strDistributionNoiseTexture = theApp.m_fnDistributionNoiseTexture.FileName();
+    m_strContinousNoiseTexture = theApp.m_fnContinousNoiseTexture.FileName();
 
-    CTerrain *ptrTerrain=GetTerrain();
-    if (ptrTerrain != NULL)
-    {
-      GetDlgItem(IDC_EQUALIZE_VALUE)->EnableWindow( TRUE);
-      m_fClampAltitude=FLOAT(theApp.m_uwEditAltitude)/65535*ptrTerrain->tr_vTerrainSize(2);
+    CTerrain *ptrTerrain = GetTerrain();
+    if (ptrTerrain != NULL) {
+      GetDlgItem(IDC_EQUALIZE_VALUE)->EnableWindow(TRUE);
+      m_fClampAltitude = FLOAT(theApp.m_uwEditAltitude) / 65535 * ptrTerrain->tr_vTerrainSize(2);
+    } else {
+      GetDlgItem(IDC_EQUALIZE_VALUE)->EnableWindow(FALSE);
+      m_fClampAltitude = 0;
     }
-    else
-    {
-      GetDlgItem(IDC_EQUALIZE_VALUE)->EnableWindow( FALSE);
-      m_fClampAltitude=0;
-    }
-    m_fPaintPower=theApp.m_fPaintPower*100.0f;
-    m_fSmoothPower=theApp.m_fSmoothPower*100.0f;
-    m_fFilterPower=theApp.m_fFilterPower*100.0f;
-    m_fPosterizeStep=theApp.m_fPosterizeStep;
-    m_fNoiseAltitude=theApp.m_fNoiseAltitude;
+    m_fPaintPower = theApp.m_fPaintPower * 100.0f;
+    m_fSmoothPower = theApp.m_fSmoothPower * 100.0f;
+    m_fFilterPower = theApp.m_fFilterPower * 100.0f;
+    m_fPosterizeStep = theApp.m_fPosterizeStep;
+    m_fNoiseAltitude = theApp.m_fNoiseAltitude;
   }
 
   CDialog::DoDataExchange(pDX);
@@ -93,161 +84,157 @@ void CDlgTEOperationSettings::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
-    CTerrain *ptrTerrain=GetTerrain();
-    if (ptrTerrain != NULL)
-    {
-      theApp.m_uwEditAltitude=m_fClampAltitude/ptrTerrain->tr_vTerrainSize(2)*65535;
+  if (pDX->m_bSaveAndValidate != FALSE) {
+    CTerrain *ptrTerrain = GetTerrain();
+    if (ptrTerrain != NULL) {
+      theApp.m_uwEditAltitude = m_fClampAltitude / ptrTerrain->tr_vTerrainSize(2) * 65535;
     }
-    theApp.m_fPaintPower=m_fPaintPower/100.0f;
-    theApp.m_fSmoothPower=m_fSmoothPower/100.0f;
-    INDEX iSelectedItem=iSelectedItem=m_ctrlFilter.GetCurSel();
-    theApp.m_iFilter=m_ctrlFilter.GetItemData(iSelectedItem);
-    theApp.m_fFilterPower=m_fFilterPower/100.0f;
-    theApp.m_fPosterizeStep=m_fPosterizeStep;
-    theApp.m_fNoiseAltitude=m_fNoiseAltitude;
-    theApp.m_iTerrainGenerationMethod=m_ctrlGenerationMethod.GetCurSel();
+    theApp.m_fPaintPower = m_fPaintPower / 100.0f;
+    theApp.m_fSmoothPower = m_fSmoothPower / 100.0f;
+    INDEX iSelectedItem = iSelectedItem = m_ctrlFilter.GetCurSel();
+    theApp.m_iFilter = m_ctrlFilter.GetItemData(iSelectedItem);
+    theApp.m_fFilterPower = m_fFilterPower / 100.0f;
+    theApp.m_fPosterizeStep = m_fPosterizeStep;
+    theApp.m_fNoiseAltitude = m_fNoiseAltitude;
+    theApp.m_iTerrainGenerationMethod = m_ctrlGenerationMethod.GetCurSel();
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgTEOperationSettings, CDialog)
-  //{{AFX_MSG_MAP(CDlgTEOperationSettings)
-  ON_BN_CLICKED(IDC_VIEW_NOISE_TEXTURE, OnViewNoiseTexture)
-  ON_BN_CLICKED(IDC_BROWSE_CONTINOUS_NOISE, OnBrowseContinousNoise)
-  ON_BN_CLICKED(IDC_BROWSE_DISTRIBUTION_NOISE, OnBrowseDistributionNoise)
-  ON_BN_CLICKED(IDC_VIEW_DISTRIBUTION_NOISE_TEXTURE, OnViewDistributionNoiseTexture)
-  ON_BN_CLICKED(IDC_GENERATION_SETTINGS, OnGenerationSettings)
-  ON_CBN_DROPDOWN(IDC_GENERATION_ALGORITHM, OnDropdownGenerationAlgorithm)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgTEOperationSettings)
+ON_BN_CLICKED(IDC_VIEW_NOISE_TEXTURE, OnViewNoiseTexture)
+ON_BN_CLICKED(IDC_BROWSE_CONTINOUS_NOISE, OnBrowseContinousNoise)
+ON_BN_CLICKED(IDC_BROWSE_DISTRIBUTION_NOISE, OnBrowseDistributionNoise)
+ON_BN_CLICKED(IDC_VIEW_DISTRIBUTION_NOISE_TEXTURE, OnViewDistributionNoiseTexture)
+ON_BN_CLICKED(IDC_GENERATION_SETTINGS, OnGenerationSettings)
+ON_CBN_DROPDOWN(IDC_GENERATION_ALGORITHM, OnDropdownGenerationAlgorithm)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTEOperationSettings message handlers
 
-CTString GetFilterName(INDEX iFilter)
-{
-  if (iFilter == FLT_SHARPEN) return "Sharpen";
-  if (iFilter == FLT_FINEBLUR) return "Fine blur";
-  if (iFilter == FLT_EMBOSS) return "Emboss";
-  if (iFilter == FLT_EDGEDETECT) return "Edge detect";
+CTString GetFilterName(INDEX iFilter) {
+  if (iFilter == FLT_SHARPEN)
+    return "Sharpen";
+  if (iFilter == FLT_FINEBLUR)
+    return "Fine blur";
+  if (iFilter == FLT_EMBOSS)
+    return "Emboss";
+  if (iFilter == FLT_EDGEDETECT)
+    return "Edge detect";
   return "Unknown";
 }
 
-BOOL CDlgTEOperationSettings::OnInitDialog() 
-{
+BOOL CDlgTEOperationSettings::OnInitDialog() {
   CDialog::OnInitDialog();
-  
-  if (IsWindow( m_ctrlFilter.m_hWnd))
-  {
+
+  if (IsWindow(m_ctrlFilter.m_hWnd)) {
     INDEX iItem;
-    iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_SHARPEN)));
-    m_ctrlFilter.SetItemData(iItem,FLT_SHARPEN);
-    if (theApp.m_iFilter == FLT_SHARPEN) m_ctrlFilter.SetCurSel(iItem);
-    iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_FINEBLUR)));
-    m_ctrlFilter.SetItemData(iItem,FLT_FINEBLUR);
-    if (theApp.m_iFilter == FLT_FINEBLUR) m_ctrlFilter.SetCurSel(iItem);
-    iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_EMBOSS)));
-    m_ctrlFilter.SetItemData(iItem,FLT_EMBOSS);
-    if (theApp.m_iFilter == FLT_EMBOSS) m_ctrlFilter.SetCurSel(iItem);
-    iItem=m_ctrlFilter.AddString(CString(GetFilterName(FLT_EDGEDETECT)));
-    m_ctrlFilter.SetItemData(iItem,FLT_EDGEDETECT);
-    if (theApp.m_iFilter == FLT_EDGEDETECT) m_ctrlFilter.SetCurSel(iItem);
+    iItem = m_ctrlFilter.AddString(CString(GetFilterName(FLT_SHARPEN)));
+    m_ctrlFilter.SetItemData(iItem, FLT_SHARPEN);
+    if (theApp.m_iFilter == FLT_SHARPEN)
+      m_ctrlFilter.SetCurSel(iItem);
+    iItem = m_ctrlFilter.AddString(CString(GetFilterName(FLT_FINEBLUR)));
+    m_ctrlFilter.SetItemData(iItem, FLT_FINEBLUR);
+    if (theApp.m_iFilter == FLT_FINEBLUR)
+      m_ctrlFilter.SetCurSel(iItem);
+    iItem = m_ctrlFilter.AddString(CString(GetFilterName(FLT_EMBOSS)));
+    m_ctrlFilter.SetItemData(iItem, FLT_EMBOSS);
+    if (theApp.m_iFilter == FLT_EMBOSS)
+      m_ctrlFilter.SetCurSel(iItem);
+    iItem = m_ctrlFilter.AddString(CString(GetFilterName(FLT_EDGEDETECT)));
+    m_ctrlFilter.SetItemData(iItem, FLT_EDGEDETECT);
+    if (theApp.m_iFilter == FLT_EDGEDETECT)
+      m_ctrlFilter.SetCurSel(iItem);
 
     m_ctrlGenerationMethod.AddString(L"Subdivide and displace");
     m_ctrlGenerationMethod.AddString(L"Fractal Brownian motion (FBM)");
     m_ctrlGenerationMethod.SetCurSel(theApp.m_iTerrainGenerationMethod);
   }
 
-  return TRUE;  // return TRUE unless you set the focus to a control
-                // EXCEPTION: OCX Property Pages should return FALSE
+  return TRUE; // return TRUE unless you set the focus to a control
+               // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgTEOperationSettings::OnViewNoiseTexture() 
-{
-  if (!SetupContinousNoiseTexture()) return;
+void CDlgTEOperationSettings::OnViewNoiseTexture() {
+  if (!SetupContinousNoiseTexture())
+    return;
 
   POINT pt;
   GetCursorPos(&pt);
-  CTString strText1=_ptdContinousRandomNoise->GetName();
-  CTString strText2=_ptdContinousRandomNoise->GetDescription();
+  CTString strText1 = _ptdContinousRandomNoise->GetName();
+  CTString strText2 = _ptdContinousRandomNoise->GetDescription();
 
-  CWndDisplayTexture *pDisplay=new CWndDisplayTexture;
+  CWndDisplayTexture *pDisplay = new CWndDisplayTexture;
   pDisplay->Initialize(pt.x, pt.y, _ptdContinousRandomNoise, strText1, strText2);
 
   FreeContinousNoiseTexture();
 }
 
-void CDlgTEOperationSettings::OnViewDistributionNoiseTexture() 
-{
-  if (!SetupDistributionNoiseTexture()) return;
+void CDlgTEOperationSettings::OnViewDistributionNoiseTexture() {
+  if (!SetupDistributionNoiseTexture())
+    return;
 
   POINT pt;
   GetCursorPos(&pt);
-  CTString strText1=_ptdDistributionRandomNoise->GetName();
-  CTString strText2=_ptdDistributionRandomNoise->GetDescription();
+  CTString strText1 = _ptdDistributionRandomNoise->GetName();
+  CTString strText2 = _ptdDistributionRandomNoise->GetDescription();
 
-  CWndDisplayTexture *pDisplay=new CWndDisplayTexture;
+  CWndDisplayTexture *pDisplay = new CWndDisplayTexture;
   pDisplay->Initialize(pt.x, pt.y, _ptdDistributionRandomNoise, strText1, strText2);
 
   FreeDistributionNoiseTexture();
 }
 
-void CDlgTEOperationSettings::OnBrowseContinousNoise() 
-{
-  CTFileName fnNoise=_EngineGUI.FileRequester(
-    "Noise texture", FILTER_TEX FILTER_ALL FILTER_END,
-    "Noise texture directory", "Textures\\");
-  if (fnNoise == "") return;
+void CDlgTEOperationSettings::OnBrowseContinousNoise() {
+  CTFileName fnNoise
+    = _EngineGUI.FileRequester("Noise texture", FILTER_TEX FILTER_ALL FILTER_END, "Noise texture directory", "Textures\\");
+  if (fnNoise == "")
+    return;
 
-  if (!SetupContinousNoiseTexture()) return;
-  theApp.m_fnContinousNoiseTexture=fnNoise;
+  if (!SetupContinousNoiseTexture())
+    return;
+  theApp.m_fnContinousNoiseTexture = fnNoise;
   FreeContinousNoiseTexture();
   UpdateData(FALSE);
 }
 
-void CDlgTEOperationSettings::OnBrowseDistributionNoise() 
-{
-  CTFileName fnNoise=_EngineGUI.FileRequester(
-    "Noise texture", FILTER_TEX FILTER_ALL FILTER_END,
-    "Noise texture directory", "Textures\\");
-  if (fnNoise == "") return;
+void CDlgTEOperationSettings::OnBrowseDistributionNoise() {
+  CTFileName fnNoise
+    = _EngineGUI.FileRequester("Noise texture", FILTER_TEX FILTER_ALL FILTER_END, "Noise texture directory", "Textures\\");
+  if (fnNoise == "")
+    return;
 
-  if (!SetupDistributionNoiseTexture()) return;
-  theApp.m_fnDistributionNoiseTexture=fnNoise;
+  if (!SetupDistributionNoiseTexture())
+    return;
+  theApp.m_fnDistributionNoiseTexture = fnNoise;
   FreeDistributionNoiseTexture();
   UpdateData(FALSE);
 }
 
-void CDlgTEOperationSettings::OnGenerationSettings() 
-{
-  INDEX iItem=m_ctrlGenerationMethod.GetCurSel();
-  switch (iItem)
-  {
-  case 0:
-  {
-    CDlgEditFloat dlg(this);
-    dlg.m_fEditFloat=theApp.m_iRNDSubdivideAndDisplaceItterations;
-    dlg.m_strVarName = "Random itterations";
-    dlg.m_strTitle = "Subdivide and displace";
-    if (dlg.DoModal() != IDOK)
-    {
-      return;
+void CDlgTEOperationSettings::OnGenerationSettings() {
+  INDEX iItem = m_ctrlGenerationMethod.GetCurSel();
+  switch (iItem) {
+    case 0: {
+      CDlgEditFloat dlg(this);
+      dlg.m_fEditFloat = theApp.m_iRNDSubdivideAndDisplaceItterations;
+      dlg.m_strVarName = "Random itterations";
+      dlg.m_strTitle = "Subdivide and displace";
+      if (dlg.DoModal() != IDOK) {
+        return;
+      }
+      theApp.m_iRNDSubdivideAndDisplaceItterations = dlg.m_fEditFloat;
+      break;
     }
-    theApp.m_iRNDSubdivideAndDisplaceItterations=dlg.m_fEditFloat;
-    break;
-  }
-  case 1:
-  {
-    CDlgGenerateFBM dlg(this);
-    dlg.DoModal();
-    break;
-  }
+    case 1: {
+      CDlgGenerateFBM dlg(this);
+      dlg.DoModal();
+      break;
+    }
   }
 }
 
-void CDlgTEOperationSettings::OnDropdownGenerationAlgorithm() 
-{
-  m_ctrlGenerationMethod.SetDroppedWidth( 256);
+void CDlgTEOperationSettings::OnDropdownGenerationAlgorithm() {
+  m_ctrlGenerationMethod.SetDroppedWidth(256);
 }

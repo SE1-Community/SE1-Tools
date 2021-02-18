@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,29 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CPropertyComboBar dialog
 
-class CPropertyComboBar : public CDialogBar
-{
-// Construction
-public:
-  BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle,
-               UINT nID, BOOL = TRUE);
+class CPropertyComboBar : public CDialogBar {
+  // Construction
+  public:
+  BOOL Create(CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID, BOOL = TRUE);
   BOOL OnIdle(LONG lCount);
   // show/hide controls depending on editing property type
   void ArrangeControls();
-  CPropertyID *GetSelectedProperty();
+  CPropertyID* GetSelectedProperty();
   void SelectPreviousEmptyTarget(void);
   void SelectPreviousProperty(void);
   void SelectNextEmptyTarget(void);
   void SelectNextProperty(void);
   void CircleTargetProperties(INDEX iDirection, BOOL bOnlyEmptyTargets);
   void SetIntersectingFileName();
-  void SelectAxisRadio(CWnd *pwndToSelect);
-  void SetColorPropertyToEntities( COLOR colNewColor);
-  void SetFirstValidEmptyTargetProperty(CEntity *penTarget);
-  void ClearAllTargets(CEntity *penClicked);
-  void SelectProperty(CEntityProperty *penpToMatch);
-// Attributes
-public:
+  void SelectAxisRadio(CWnd* pwndToSelect);
+  void SetColorPropertyToEntities(COLOR colNewColor);
+  void SetFirstValidEmptyTargetProperty(CEntity* penTarget);
+  void ClearAllTargets(CEntity* penClicked);
+  void SelectProperty(CEntityProperty* penpToMatch);
+  // Attributes
+  public:
   CSize m_Size;
 
   float m_fEditingFloat;
@@ -73,12 +71,12 @@ public:
   CCtrlAxisRadio m_XCtrlAxisRadio;
   CCtrlAxisRadio m_YCtrlAxisRadio;
   CCtrlAxisRadio m_ZCtrlAxisRadio;
-  CCtrlEditFloat m_EditBBoxMinCtrl; 
+  CCtrlEditFloat m_EditBBoxMinCtrl;
   CCtrlEditFloat m_EditBBoxMaxCtrl;
   CCtrlEditBoolean m_EditBoolCtrl;
   CColoredButton m_EditColorCtrl;
   CCtrlBrowseFile m_BrowseFileCtrl;
-  
+
   CCtrlEditFloat m_EditHeading;
   CCtrlEditFloat m_EditPitch;
   CCtrlEditFloat m_EditBanking;
@@ -93,7 +91,6 @@ public:
   CCtrlEditBoolean m_EditDifficulty_4;
   CCtrlEditBoolean m_EditDifficulty_5;
 
-
   CCtrlEditBoolean m_EditSingleSpawn;
   CCtrlEditBoolean m_EditCooperativeSpawn;
   CCtrlEditBoolean m_EditDeathMatchSpawn;
@@ -103,21 +100,21 @@ public:
   CCtrlEditBoolean m_EditGameMode_4;
   CCtrlEditBoolean m_EditGameMode_5;
   CCtrlEditBoolean m_EditGameMode_6;
-  
+
   CCtrlEditFlags m_ctrlEditFlags;
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CPropertyComboBar)
   protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
-  virtual CSize CalcDynamicLayout( int nLength, DWORD dwMode );
+  // Implementation
+  public:
+  virtual CSize CalcDynamicLayout(int nLength, DWORD dwMode);
   void SetIntersectingEntityClassName(void);
-  CEntity *GetSelectedEntityPtr(void);
+  CEntity* GetSelectedEntityPtr(void);
 
   // Generated message map functions
   //{{AFX_MSG(CPropertyComboBar)
@@ -125,11 +122,11 @@ public:
   afx_msg void OnNoFile();
   afx_msg void OnNoTarget();
   //}}AFX_MSG
-  afx_msg void OnUpdateBrowseFile( CCmdUI* pCmdUI );
-  afx_msg void OnUpdateNoFile( CCmdUI* pCmdUI );
-  afx_msg void OnUpdateNoTarget( CCmdUI* pCmdUI );
-  afx_msg void OnUpdateEditColor( CCmdUI* pCmdUI );
-  afx_msg void OnUpdateEditFlags( CCmdUI* pCmdUI );
+  afx_msg void OnUpdateBrowseFile(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateNoFile(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateNoTarget(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateEditColor(CCmdUI* pCmdUI);
+  afx_msg void OnUpdateEditFlags(CCmdUI* pCmdUI);
   DECLARE_MESSAGE_MAP()
 };
 #endif // PROPERTYCOMBOBAR_H

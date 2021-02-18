@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,31 +25,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEditTerrainBrush dialog
 
-class CDlgEditTerrainBrush : public CDialog
-{
-// Construction
-public:
-  CDlgEditTerrainBrush(CWnd* pParent = NULL);   // standard constructor
+class CDlgEditTerrainBrush : public CDialog {
+  // Construction
+  public:
+  CDlgEditTerrainBrush(CWnd* pParent = NULL); // standard constructor
   INDEX m_iBrush;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgEditTerrainBrush)
   enum { IDD = IDD_EDIT_TERRAIN_BRUSH };
-  float  m_fFallOff;
-  float  m_fHotSpot;
+  float m_fFallOff;
+  float m_fHotSpot;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgEditTerrainBrush)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgEditTerrainBrush)
   afx_msg void OnGenerateTerrainBrush();

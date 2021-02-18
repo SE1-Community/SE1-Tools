@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -27,30 +27,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CTriangularisationCombo window
 
-class CTriangularisationCombo : public CComboBox
-{
-// Construction
-public:
+class CTriangularisationCombo : public CComboBox {
+  // Construction
+  public:
   CTriangularisationCombo();
   BOOL OnIdle(LONG lCount);
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CTriangularisationCombo)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CTriangularisationCombo();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CTriangularisationCombo)
   afx_msg void OnSelchange();
   afx_msg void OnDropdown();

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -16,16 +16,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #if !defined(AFX_DLG_TEMPLATE_INCLUDED_)
 #define AFX_DLG_TEMPLATE_INCLUDED_
 
-
 #if _MSC_VER > 1000
 #pragma once
 #endif
 
 #include "SplitterFrame.h"
 
-class CDlgTemplate : public CDialogBar
-{
-public:
+class CDlgTemplate : public CDialogBar {
+  public:
   CDlgTemplate();
   virtual ~CDlgTemplate();
   virtual CSize CalcDynamicLayout(int nLength, DWORD nMode);
@@ -40,12 +38,13 @@ public:
   CSize m_Size;
 
   ULONG dlg_ulEnabledDockingSides;
-protected:
+
+  protected:
   CSplitterFrame dlg_spSlitter;
   INDEX dlg_iSplitterID;
   BOOL dlg_bDockingEnabled;
   //{{AFX_MSG(CDlgTemplate)
-    afx_msg void OnSize(UINT nType, int cx, int cy);
+  afx_msg void OnSize(UINT nType, int cx, int cy);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

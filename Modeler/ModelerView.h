@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -18,15 +18,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 #ifndef MODELERVIEW_H
 #define MODELERVIEW_H 1
-extern BOOL MyChooseColor( COLORREF &clrNewColor, CWnd &wndOwner);
+extern BOOL MyChooseColor(COLORREF& clrNewColor, CWnd& wndOwner);
 class CMainFrame;
 
 #define STATUS_LINE_PANE 0
 // macro used for writing text into status line
-#define STATUS_LINE_MESSAGE( message) {\
-  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd()); \
-  ASSERT( pMainFrame != NULL); \
-  pMainFrame->m_wndStatusBar.SetPaneText( STATUS_LINE_PANE, message, TRUE);};
+#define STATUS_LINE_MESSAGE(message) \
+  { \
+    CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd()); \
+    ASSERT(pMainFrame != NULL); \
+    pMainFrame->m_wndStatusBar.SetPaneText(STATUS_LINE_PANE, message, TRUE); \
+  };
 
 enum AxisType {
   AT_NONE = 0,
@@ -62,14 +64,13 @@ enum InputAction {
   IA_ZOOMING_MEASURE_VERTEX,
 };
 
-class CModelerView : public CView 
-{
-protected: // create from serialization only
-  CModelerView(); 
+class CModelerView : public CView {
+  protected: // create from serialization only
+  CModelerView();
   DECLARE_DYNCREATE(CModelerView)
 
-// Attributes
-public:
+  // Attributes
+  public:
   BOOL m_bViewMeasureVertex;
   FLOAT3D m_vViewMeasureVertex;
   AxisType m_atAxisType;
@@ -96,7 +97,7 @@ public:
   FLOAT m_LightDistance;
   COLOR m_LightColor;
   COLOR m_colAmbientColor;
-  CTextureDataInfo *m_ptdiTextureDataInfo;
+  CTextureDataInfo* m_ptdiTextureDataInfo;
   COLORREF m_PaperColor;
   COLORREF m_InkColor;
   BOOL m_IsWinBcgTexture;
@@ -116,7 +117,7 @@ public:
 
   CUpdateable m_udViewPicture;
 
-  ModelTextureVertex *m_pmtvClosestVertex;
+  ModelTextureVertex* m_pmtvClosestVertex;
 
   INDEX m_iClossestSurface;
   float m_fCurrentMipFactor;
@@ -126,46 +127,47 @@ public:
   CPoint m_MouseDownLocation;
   CPoint m_BoxStart;
 
-  CDrawPort *m_pDrawPort;
-  CViewPort *m_pViewPort;
+  CDrawPort* m_pDrawPort;
+  CViewPort* m_pViewPort;
 
-// Operations
-public:
+  // Operations
+  public:
   void OnIdle(void);
-  void ClearBcg( COLOR color, CDrawPort *pDrawPort);
-  void RenderView( CDrawPort *pDrawPort);
-  static CModelerView *GetActiveView(void);
-  static CModelerView *GetActiveMappingView(void);
-  static CModelerView *GetActiveMappingNormalView(void);
-  void SetProjectionData( CPerspectiveProjection3D &prProjection, CDrawPort *pDP);
-  INDEX GetClosestVertex(FLOAT3D &vClosestVertex);
+  void ClearBcg(COLOR color, CDrawPort* pDrawPort);
+  void RenderView(CDrawPort* pDrawPort);
+  static CModelerView* GetActiveView(void);
+  static CModelerView* GetActiveMappingView(void);
+  static CModelerView* GetActiveMappingNormalView(void);
+  void SetProjectionData(CPerspectiveProjection3D& prProjection, CDrawPort* pDP);
+  INDEX GetClosestVertex(FLOAT3D& vClosestVertex);
   void ResetViewerPosition(void);
   void MagnifyMapping(CPoint point, FLOAT fMagnification);
-  void FastZoomIn( CPoint point);
-  void FastZoomOut( void);
+  void FastZoomIn(CPoint point);
+  void FastZoomOut(void);
   BOOL AssureValidTDI();
   // gets pointer to MDIFrameWnd main frame of application
-  CMainFrame *GetMainFrame();
-  CModelerDoc *GetDocument(void);
+  CMainFrame* GetMainFrame();
+  CModelerDoc* GetDocument(void);
   BOOL UpdateAnimations(void);
-  
-  void FillThumbnailSettings( CThumbnailSettings &tsToReceive);
-  void ApplyThumbnailSettings( CThumbnailSettings &tsToApply);
+
+  void FillThumbnailSettings(CThumbnailSettings& tsToReceive);
+  void ApplyThumbnailSettings(CThumbnailSettings& tsToApply);
   void SaveThumbnail();
 
-  void RenderAxis( CPerspectiveProjection3D &prProjection, CPlacement3D &pl, FLOAT fSize);
-  void DrawArrowAndTypeText(CPerspectiveProjection3D &prProjection,
-    const FLOAT3D &v0, const FLOAT3D &v1, COLOR colColor, CTString strText);
-  void RenderAxisOfAllAttachments(CPerspectiveProjection3D &prProjection, CPlacement3D &plParent, CModelObject &mo);
+  void RenderAxis(CPerspectiveProjection3D& prProjection, CPlacement3D& pl, FLOAT fSize);
+  void DrawArrowAndTypeText(CPerspectiveProjection3D& prProjection, const FLOAT3D& v0, const FLOAT3D& v1, COLOR colColor,
+                            CTString strText);
+  void RenderAxisOfAllAttachments(CPerspectiveProjection3D& prProjection, CPlacement3D& plParent, CModelObject& mo);
   FLOAT GetModelToViewerDistance(void);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CModelerView)
   public:
-  virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+  virtual void OnDraw(CDC* pDC); // overridden to draw this view
   virtual void OnInitialUpdate();
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
   virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
   virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -174,18 +176,17 @@ public:
   virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CModelerView();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:
-
-// Generated message map functions
-public:
+  protected:
+  // Generated message map functions
+  public:
   //{{AFX_MSG(CModelerView)
   afx_msg void OnDestroy();
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
@@ -356,9 +357,10 @@ public:
   DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in ModelerView.cpp
-inline CModelerDoc* CModelerView::GetDocument()
-   { return (CModelerDoc*)m_pDocument; }
+#ifndef _DEBUG // debug version in ModelerView.cpp
+inline CModelerDoc* CModelerView::GetDocument() {
+  return (CModelerDoc*)m_pDocument;
+}
 #endif
 
 #endif // MODELERVIEW_H

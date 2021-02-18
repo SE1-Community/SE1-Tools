@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -40,46 +40,42 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define GR_ALLFRAMES_BBOX 7
 #define GR_BONE           8
 
-class Control
-{
-public:
-  Control()
-  {
-  }
+class Control {
+  public:
+  Control() {}
 
   FLOAT ct_fLeft; // rect
   FLOAT ct_fRight;
   INDEX ct_iTop;
-  INDEX ct_iBottom; 
-  INDEX ct_iID; // id of control
+  INDEX ct_iBottom;
+  INDEX ct_iID;           // id of control
   CDialog *ct_pParentDlg; // parent dlg
 };
 
-class CDlgBarTreeView : public CDlgTemplate
-{
-public:
+class CDlgBarTreeView : public CDlgTemplate {
+  public:
   CDlgBarTreeView();
   virtual ~CDlgBarTreeView();
 
-  BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID);
+  BOOL Create(CWnd *pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID);
   CSize CalcDynamicLayout(int nLength, DWORD nMode);
   CSize CalcLayout(int nLength, DWORD nMode);
   void AddDialogControls(CDialog *pDlg);
   void RemoveDialogControls(CDialog *pDlg);
   void AddControlToArray(CWnd *pChild, CDialog *pDlg);
   void RemoveControlFromArray(CWnd *pChild, CDialog *pDlg);
-  void ResizeDlgWithChildren(CDialog *pDlg,CRect rcDlg);
-  
+  void ResizeDlgWithChildren(CDialog *pDlg, CRect rcDlg);
+
   NodeInfo &GetNodeInfo(HTREEITEM hItem);
   NodeInfo &GetSelectedNodeInfo();
 
-  void ShowSurfaceShader(MeshSurface *pmsrf,MeshLOD *pmlod,MeshInstance *pmshi);
+  void ShowSurfaceShader(MeshSurface *pmsrf, MeshLOD *pmlod, MeshInstance *pmshi);
   void ChangeShaderOnSelectedSurfaces(CTString fnNewShader);
-  void ChangeTextureOnSelectedSurfaces(CTString strControlID,CTString strNewTexID);
-  void ChangeTextureCoordsOnSelectedSurfaces(CTString strControlID,INDEX iNewTexCoordsIndex);
-  void ChangeColorOnSelectedSurfaces(CTString strControlID,COLOR colNewColor);
-  void ChangeFloatOnSelectedSurfaces(CTString strControlID,FLOAT fNewFloat);
-  void ChangeFlagOnSelectedSurfaces(CTString strControlID,BOOL bChecked,INDEX iFlagIndex);
+  void ChangeTextureOnSelectedSurfaces(CTString strControlID, CTString strNewTexID);
+  void ChangeTextureCoordsOnSelectedSurfaces(CTString strControlID, INDEX iNewTexCoordsIndex);
+  void ChangeColorOnSelectedSurfaces(CTString strControlID, COLOR colNewColor);
+  void ChangeFloatOnSelectedSurfaces(CTString strControlID, FLOAT fNewFloat);
+  void ChangeFlagOnSelectedSurfaces(CTString strControlID, BOOL bChecked, INDEX iFlagIndex);
   BOOL IsSurfaceSelected(MeshSurface &msrf);
 
   void ChangeColorOnSelectedModel(COLOR colNewColor);
@@ -87,14 +83,14 @@ public:
   void VScrollControls(CDialog *pDlg);
   void UpdateModelInstInfo(CModelInstance *pmi);
   void AddSkeleton(CModelInstance &mi, HTREEITEM hParent);
-  void AddMeshInstances(CModelInstance &mi,HTREEITEM hParent);
-  void AddSurfaces(CModelInstance &mi,MeshLOD &mlod,HTREEITEM hParent);
-  void AddColisionBoxes(CModelInstance &mi,HTREEITEM hParent);
-  void AddAllFramesBBox(CModelInstance &mi,HTREEITEM hParent);
-  HTREEITEM AddAnimSet(CModelInstance &mi,HTREEITEM hParent);
+  void AddMeshInstances(CModelInstance &mi, HTREEITEM hParent);
+  void AddSurfaces(CModelInstance &mi, MeshLOD &mlod, HTREEITEM hParent);
+  void AddColisionBoxes(CModelInstance &mi, HTREEITEM hParent);
+  void AddAllFramesBBox(CModelInstance &mi, HTREEITEM hParent);
+  HTREEITEM AddAnimSet(CModelInstance &mi, HTREEITEM hParent);
   HTREEITEM AddModelInst(CModelInstance &mi, CModelInstance *pmiParent, HTREEITEM hParent);
   void ExpandAllModelInstances(HTREEITEM hItem);
-  
+
   void ResetControls();
 
   void SetCustomTabText(wchar_t *strText);
@@ -102,25 +98,25 @@ public:
   void ShowControlGroup(INDEX iGroup);
 
   // for reselecting an item after refresh
-  BOOL RememberSelectedItem(HTREEITEM hParent,HTREEITEM hSelected);
+  BOOL RememberSelectedItem(HTREEITEM hParent, HTREEITEM hSelected);
   // find previously selected item
   BOOL ReselectItem(HTREEITEM hParent);
-  // check sec per frame control 
+  // check sec per frame control
   void CheckSecPerFrameCtrl(BOOL bCheck);
 
   void SelItemChanged(HTREEITEM hSelected);
-  void OnItemClick(HTREEITEM hItem,HTREEITEM hLastSelected);
+  void OnItemClick(HTREEITEM hItem, HTREEITEM hLastSelected);
   void OnItemIconClick(HTREEITEM hItem);
   void TogleSurfaceSelection(HTREEITEM hItem);
   void SelectAllSurfaces(HTREEITEM hItem);
   void DeSelectAllSurfaces(HTREEITEM hParent = NULL);
   void SelectMeshSurface(HTREEITEM hItem);
   void DeselectMeshSurface(HTREEITEM hItem);
-  void FillBonesToComboBox(CSkeleton *pskl,INDEX iSelectedIndex);
+  void FillBonesToComboBox(CSkeleton *pskl, INDEX iSelectedIndex);
   void FillParentDropDown(CModelInstance *pmi);
 
-  CModelTreeCtrl  m_TreeCtrl;       // tree view control
-  CImageList      m_IconsImageList; // image lis for tree control
+  CModelTreeCtrl m_TreeCtrl;   // tree view control
+  CImageList m_IconsImageList; // image lis for tree control
 
   // dialogs
   CDlgClient m_dlgParent;
@@ -132,9 +128,9 @@ public:
   CDlgClient m_dlgTexture;
   CDlgClient m_dlgListOpt;
   CDlgClient m_dlgShader;
-  CDialog    *pdlgCurrent;
+  CDialog *pdlgCurrent;
 
-  CTexView   m_tvTexView;
+  CTexView m_tvTexView;
 
   CStaticStackArray<class Control> dlg_aControls;
 
@@ -172,16 +168,15 @@ public:
   // controls in texture dialog
   CTextBox m_tbTextureName;
 
-//  CSize m_Size;
+  //  CSize m_Size;
   // Generated message map functions
 
-protected:
+  protected:
   //{{AFX_MSG(CDlgBarTreeView)
-  afx_msg void OnSelchangeModeSelectTab(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnSelchangeModeSelectTab(NMHDR *pNMHDR, LRESULT *pResult);
   afx_msg void OnSize(UINT nType, int cx, int cy);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 
 #endif // !defined(AFX_DLGBARTREEVIEW_H__97A19AEB_ACE0_11D5_8AB4_00C0262D9BFE__INCLUDED_)

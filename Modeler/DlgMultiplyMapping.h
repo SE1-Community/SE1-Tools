@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,36 +21,33 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgMultiplyMapping dialog
 
-class CDlgMultiplyMapping : public CDialog
-{
-// Construction
-public:
+class CDlgMultiplyMapping : public CDialog {
+  // Construction
+  public:
   FLOAT3D m_f3MultiplyValues;
   CDlgMultiplyMapping(FLOAT3D f3InitialValues = FLOAT3D(1.0f, 1.0f, 1.0f),
-    CWnd* pParent = NULL);   // standard constructor
+                      CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgMultiplyMapping)
   enum { IDD = IDD_MULTIPLY_MAPPING };
-  float  m_fMultiplyXOffset;
-  float  m_fMultiplyYOffset;
-  float  m_fMultiplyZoom;
+  float m_fMultiplyXOffset;
+  float m_fMultiplyYOffset;
+  float m_fMultiplyZoom;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgMultiplyMapping)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgMultiplyMapping)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

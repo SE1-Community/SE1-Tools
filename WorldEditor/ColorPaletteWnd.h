@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,39 +23,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 extern COLOR *_pcolColorToSet;
 
-class CColorPaletteWnd : public CWnd
-{
-// Construction
-public:
+class CColorPaletteWnd : public CWnd {
+  // Construction
+  public:
   CColorPaletteWnd();
 
-// Attributes
-public:
+  // Attributes
+  public:
   INDEX m_iSelectedColor;
 
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
 
-// Operations
-public:
+  // Operations
+  public:
   // calculate given color's box in pixels
-  PIXaabbox2D GetColorBBox( INDEX iColor);
+  PIXaabbox2D GetColorBBox(INDEX iColor);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CColorPaletteWnd)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CColorPaletteWnd();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CColorPaletteWnd)
   afx_msg void OnPaint();
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-  afx_msg void OnKillFocus(CWnd* pNewWnd);
+  afx_msg void OnKillFocus(CWnd *pNewWnd);
   afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()

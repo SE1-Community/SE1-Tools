@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -29,9 +29,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgExportForSkinning dialog
 
-CDlgExportForSkinning::CDlgExportForSkinning(CTFileName fnExportFile, CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgExportForSkinning::IDD, pParent)
-{
+CDlgExportForSkinning::CDlgExportForSkinning(CTFileName fnExportFile, CWnd* pParent /*=NULL*/) :
+CDialog(CDlgExportForSkinning::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgExportForSkinning)
   m_bColoredSurfaces = FALSE;
   m_bSurfaceNumbers = FALSE;
@@ -40,28 +39,25 @@ CDlgExportForSkinning::CDlgExportForSkinning(CTFileName fnExportFile, CWnd* pPar
   m_strSurfaceListFile = _T("");
   //}}AFX_DATA_INIT
 
-  m_bWireFrame =                    GetFlagFromProfile(   "Export mapping wire frame", TRUE);
-  m_bColoredSurfaces =              GetFlagFromProfile(   "Export mapping colored surfaces", TRUE);
-  m_bSurfaceNumbers =               GetFlagFromProfile(   "Export surface numbers", TRUE);
+  m_bWireFrame = GetFlagFromProfile("Export mapping wire frame", TRUE);
+  m_bColoredSurfaces = GetFlagFromProfile("Export mapping colored surfaces", TRUE);
+  m_bSurfaceNumbers = GetFlagFromProfile("Export surface numbers", TRUE);
   m_strExportedFileName = fnExportFile;
-  m_strSurfaceListFile = fnExportFile.FileDir()+fnExportFile.FileName()+".txt";
-  
-  COLOR colPaper = GetColorFromProfile( "Paper color", C_WHITE);
-  m_ctrlPaperColor.SetColor( colPaper);
-  COLOR colWire = GetColorFromProfile( "Wire color", C_BLACK);
-  m_ctrlWireColor.SetColor( colWire);
+  m_strSurfaceListFile = fnExportFile.FileDir() + fnExportFile.FileName() + ".txt";
+
+  COLOR colPaper = GetColorFromProfile("Paper color", C_WHITE);
+  m_ctrlPaperColor.SetColor(colPaper);
+  COLOR colWire = GetColorFromProfile("Wire color", C_BLACK);
+  m_ctrlWireColor.SetColor(colWire);
 
   m_strExportedFileName = fnExportFile;
 }
 
-
-void CDlgExportForSkinning::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgExportForSkinning::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
-  
+
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE )
-  {
+  if (pDX->m_bSaveAndValidate == FALSE) {
   }
   //{{AFX_DATA_MAP(CDlgExportForSkinning)
   DDX_Control(pDX, IDC_EXPORT_WIRE_COLOR, m_ctrlWireColor);
@@ -75,55 +71,50 @@ void CDlgExportForSkinning::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE )
-  {
+  if (pDX->m_bSaveAndValidate != FALSE) {
     INDEX iSelected = m_ctrlExportPictureSize.GetCurSel();
-    m_iTextureWidth = m_ctrlExportPictureSize.GetItemData( iSelected);
-    SetIndexToProfile(  "Export mapping width", m_iTextureWidth);
-    SetFlagToProfile(   "Export mapping wire frame", m_bWireFrame);
-    SetFlagToProfile(   "Export mapping colored surfaces", m_bColoredSurfaces);
-    SetFlagToProfile(   "Export surface numbers", m_bSurfaceNumbers);
-  
+    m_iTextureWidth = m_ctrlExportPictureSize.GetItemData(iSelected);
+    SetIndexToProfile("Export mapping width", m_iTextureWidth);
+    SetFlagToProfile("Export mapping wire frame", m_bWireFrame);
+    SetFlagToProfile("Export mapping colored surfaces", m_bColoredSurfaces);
+    SetFlagToProfile("Export surface numbers", m_bSurfaceNumbers);
+
     COLOR colPaper = m_ctrlPaperColor.GetColor();
-    SetColorToProfile( "Paper color", colPaper);
+    SetColorToProfile("Paper color", colPaper);
     COLOR colWire = m_ctrlWireColor.GetColor();
-    SetColorToProfile( "Wire color", colWire);
+    SetColorToProfile("Wire color", colWire);
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgExportForSkinning, CDialog)
-  //{{AFX_MSG_MAP(CDlgExportForSkinning)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgExportForSkinning)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgExportForSkinning message handlers
 
-BOOL CDlgExportForSkinning::OnInitDialog() 
-{
+BOOL CDlgExportForSkinning::OnInitDialog() {
   CDialog::OnInitDialog();
-  
-  m_iTextureWidth = GetIndexFromProfile(  "Export mapping width", 256);
+
+  m_iTextureWidth = GetIndexFromProfile("Export mapping width", 256);
   CModelerDoc* pDoc = theApp.GetDocument();
-  FLOAT fWHRatio = FLOAT(pDoc->m_emEditModel.edm_md.md_Width)/pDoc->m_emEditModel.edm_md.md_Height;
+  FLOAT fWHRatio = FLOAT(pDoc->m_emEditModel.edm_md.md_Width) / pDoc->m_emEditModel.edm_md.md_Height;
   CTString strTemp;
   INDEX iWidth = 8;
   INDEX iToSelect = 0;
-  while (iWidth <= 2048)
-  {
-    strTemp.PrintF( "%d x %d", iWidth, INDEX(iWidth/fWHRatio));
-    INDEX iAddedAs = m_ctrlExportPictureSize.AddString( CString(strTemp));
-    m_ctrlExportPictureSize.SetItemData( iAddedAs, iWidth);
-    if (iWidth == m_iTextureWidth)
-    {
+  while (iWidth <= 2048) {
+    strTemp.PrintF("%d x %d", iWidth, INDEX(iWidth / fWHRatio));
+    INDEX iAddedAs = m_ctrlExportPictureSize.AddString(CString(strTemp));
+    m_ctrlExportPictureSize.SetItemData(iAddedAs, iWidth);
+    if (iWidth == m_iTextureWidth) {
       iToSelect = iAddedAs;
     }
-    iWidth*=2;
+    iWidth *= 2;
   }
   // select last used export picture size
-  m_ctrlExportPictureSize.SetCurSel( iToSelect);
-  
-  return TRUE;  // return TRUE unless you set the focus to a control
-                // EXCEPTION: OCX Property Pages should return FALSE
+  m_ctrlExportPictureSize.SetCurSel(iToSelect);
+
+  return TRUE; // return TRUE unless you set the focus to a control
+               // EXCEPTION: OCX Property Pages should return FALSE
 }

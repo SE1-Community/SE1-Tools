@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,49 +21,47 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgAnim dialog
 
-class CDlgInfoPgAnim : public CPropertyPage
-{
+class CDlgInfoPgAnim : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgInfoPgAnim)
 
-// Construction
-public:
+  // Construction
+  public:
   CDlgInfoPgAnim();
   ~CDlgInfoPgAnim();
   void SetAnimPageFromView(CModelerView* pModelerView);
   BOOL OnIdle(LONG lCount);
   CUpdateable m_udAllValues;
-  
-// Dialog Data
+
+  // Dialog Data
   //{{AFX_DATA(CDlgInfoPgAnim)
   enum { IDD = IDD_INFO_ANIMATION };
-  CString  m_strCurrentFrame;
-  CString  m_strFramesInAnim;
-  CString  m_strAnimName;
-  CString  m_strTimePassed;
-  CString  m_strAnimState;
-  CString  m_strAnimationLenght;
-  CString  m_strNoOfAnimations;
-  CString  m_strNoOfFrames;
-  float  m_fAnimSpeed;
+  CString m_strCurrentFrame;
+  CString m_strFramesInAnim;
+  CString m_strAnimName;
+  CString m_strTimePassed;
+  CString m_strAnimState;
+  CString m_strAnimationLenght;
+  CString m_strNoOfAnimations;
+  CString m_strNoOfFrames;
+  float m_fAnimSpeed;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgInfoPgAnim)
   public:
   virtual BOOL OnSetActive();
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgInfoPgAnim)
   afx_msg void OnChangeAnimSpeed();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 #endif // DLGINFOPGANIM

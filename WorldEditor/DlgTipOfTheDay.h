@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -27,32 +27,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTipOfTheDay dialog
 
-class CDlgTipOfTheDay : public CDialog
-{
-public:
+class CDlgTipOfTheDay : public CDialog {
+  public:
   CStaticStackArray<CTString> m_astrTips;
-// Construction
-public:
-  CDlgTipOfTheDay(CWnd* pParent = NULL);   // standard constructor
+  // Construction
+  public:
+  CDlgTipOfTheDay(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgTipOfTheDay)
   enum { IDD = IDD_TIPOFTHEDAY };
-  CCtlTipOfTheDayText  m_wndTipText;
-  BOOL  m_bShowTipsAtStartup;
+  CCtlTipOfTheDayText m_wndTipText;
+  BOOL m_bShowTipsAtStartup;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgTipOfTheDay)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgTipOfTheDay)
   virtual void OnCancel();

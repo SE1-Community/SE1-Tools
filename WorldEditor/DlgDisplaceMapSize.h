@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,35 +25,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgDisplaceMapSize dialog
 
-class CDlgDisplaceMapSize : public CDialog
-{
-// Construction
-public:
-  CDlgDisplaceMapSize(CWnd* pParent = NULL);   // standard constructor
+class CDlgDisplaceMapSize : public CDialog {
+  // Construction
+  public:
+  CDlgDisplaceMapSize(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgDisplaceMapSize)
   enum { IDD = IDD_DISPLACE_MAP_SIZE };
-  UINT  m_pixWidth;
-  UINT  m_pixHeight;
-  BOOL  m_bMidPixSample;
-  BOOL  m_bHighResolution;
+  UINT m_pixWidth;
+  UINT m_pixHeight;
+  BOOL m_bMidPixSample;
+  BOOL m_bHighResolution;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgDisplaceMapSize)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgDisplaceMapSize)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

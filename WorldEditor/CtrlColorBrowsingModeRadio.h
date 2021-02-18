@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,33 +25,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlColorBrowsingModeRadio window
 
-class CCtrlColorBrowsingModeRadio : public CButton
-{
-// Construction
-public:
+class CCtrlColorBrowsingModeRadio : public CButton {
+  // Construction
+  public:
   CCtrlColorBrowsingModeRadio();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlColorBrowsingModeRadio)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlColorBrowsingModeRadio();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlColorBrowsingModeRadio)
   afx_msg void OnClicked();
   //}}AFX_MSG

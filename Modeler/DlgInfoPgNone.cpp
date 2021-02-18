@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,38 +28,31 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgNone property page
 
-
-CDlgInfoPgNone::CDlgInfoPgNone() : CPropertyPage(CDlgInfoPgNone::IDD)
-{
+CDlgInfoPgNone::CDlgInfoPgNone() : CPropertyPage(CDlgInfoPgNone::IDD) {
   //{{AFX_DATA_INIT(CDlgInfoPgNone)
-    // NOTE: the ClassWizard will add member initialization here
+  // NOTE: the ClassWizard will add member initialization here
   //}}AFX_DATA_INIT
   theApp.m_pPgInfoNone = this;
 }
 
-
-void CDlgInfoPgNone::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgInfoPgNone::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgInfoPgNone)
-    // NOTE: the ClassWizard will add DDX and DDV calls here
+  // NOTE: the ClassWizard will add DDX and DDV calls here
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgInfoPgNone, CPropertyPage)
-  //{{AFX_MSG_MAP(CDlgInfoPgNone)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgInfoPgNone)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgNone message handlers
 
-BOOL CDlgInfoPgNone::OnIdle(LONG lCount)
-{
+BOOL CDlgInfoPgNone::OnIdle(LONG lCount) {
   // refresh info frame size
-  ((CMainFrame *)( theApp.m_pMainWnd))->m_pInfoFrame->SetSizes();
+  ((CMainFrame*)(theApp.m_pMainWnd))->m_pInfoFrame->SetSizes();
   return TRUE;
 }
-

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,31 +25,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CMDIClientWnd window
 
-class CMDIClientWnd : public CWnd
-{
-// Construction
-public:
+class CMDIClientWnd : public CWnd {
+  // Construction
+  public:
   CMDIClientWnd();
 
-// Attributes
-public:
+  // Attributes
+  public:
   CRect ClientRect;
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CMDIClientWnd)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CMDIClientWnd();
   void GetCurrentRect(CRect &rc);
   void SetCurrentRect(CRect &rc);
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CMDIClientWnd)
   afx_msg void OnSize(UINT nType, int cx, int cy);
   afx_msg void OnSizing(UINT fwSide, LPRECT pRect);

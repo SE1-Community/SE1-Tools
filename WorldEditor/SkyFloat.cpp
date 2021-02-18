@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,59 +21,46 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "StdAfx.h"
 
 //--------------------------------------------------------------------------------------------
-void AFXAPI DDX_SkyFloat(CDataExchange* pDX, int nIDC, float &fNumber)
-{
+void AFXAPI DDX_SkyFloat(CDataExchange *pDX, int nIDC, float &fNumber) {
   BOOL bTrue = TRUE;
-  DDX_SkyFloat( pDX, nIDC, fNumber, bTrue);
+  DDX_SkyFloat(pDX, nIDC, fNumber, bTrue);
 }
 
-void AFXAPI DDX_SkyFloat(CDataExchange* pDX, int nIDC, float &fNumber, BOOL &bValid)
-{
+void AFXAPI DDX_SkyFloat(CDataExchange *pDX, int nIDC, float &fNumber, BOOL &bValid) {
   HWND hWndCtrl = pDX->PrepareEditCtrl(nIDC);
-  if (pDX->m_bSaveAndValidate)
-  {
-    if (!FloatFromString(hWndCtrl, fNumber, bValid))
-    {
+  if (pDX->m_bSaveAndValidate) {
+    if (!FloatFromString(hWndCtrl, fNumber, bValid)) {
       AfxMessageBox(L"Invalid character entered");
       pDX->Fail();
     }
-  }
-  else
-  {
+  } else {
     StringFromFloat(hWndCtrl, fNumber, bValid);
   }
 }
 
-BOOL FloatFromString(HWND hWnd, float &fNumber, BOOL &bValid)
-{
+BOOL FloatFromString(HWND hWnd, float &fNumber, BOOL &bValid) {
   TCHAR szWindowText[20];
   ::GetWindowText(hWnd, szWindowText, 19);
-  if (CTString( CStringA(szWindowText)) == "")
-  {
+  if (CTString(CStringA(szWindowText)) == "") {
     bValid = FALSE;
     return TRUE;
   }
-  
-  bValid = TRUE;  
+
+  bValid = TRUE;
   float fTmpNumber = fNumber;
   int iNumLen, iRetLen;
-  iNumLen = strlen( CStringA(szWindowText));
-  iRetLen = sscanf( CStringA(szWindowText), "%f", &fTmpNumber);
-  if ((iRetLen == 1)  || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0)) )
-  {
+  iNumLen = strlen(CStringA(szWindowText));
+  iRetLen = sscanf(CStringA(szWindowText), "%f", &fTmpNumber);
+  if ((iRetLen == 1) || ((iNumLen == 1) && (szWindowText[0] == '-') || (iNumLen == 0))) {
     fNumber = fTmpNumber;
     return TRUE;
-  }
-  else
-  {
+  } else {
     return FALSE;
   }
 }
 
-void StringFromFloat(HWND hWnd, float fNumber, BOOL &bValid)
-{
-  if (!bValid) 
-  {
+void StringFromFloat(HWND hWnd, float fNumber, BOOL &bValid) {
+  if (!bValid) {
     ::SetWindowText(hWnd, L"");
     return;
   }

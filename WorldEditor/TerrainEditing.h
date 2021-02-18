@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -13,15 +13,14 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
-
 #ifndef TERRAINEDITING_H
 #define TERRAINEDITING_H
 
 #include <Engine/Terrain/TerrainEditing.h>
 
-#define FLT_FINEBLUR 0
-#define FLT_SHARPEN 1
-#define FLT_EMBOSS 2
+#define FLT_FINEBLUR   0
+#define FLT_SHARPEN    1
+#define FLT_EMBOSS     2
 #define FLT_EDGEDETECT 3
 
 #define FLT_COUNT 4
@@ -81,20 +80,20 @@ enum ETerrainEdit {
 };
 
 class CTerrainUndo {
-public:
+  public:
   ULONG tu_ulEntityID;
   UWORD *tu_puwUndoBuffer;
   UWORD *tu_puwRedoBuffer;
   Rect tu_rcRect;
   BufferType tu_btUndoBufferType;
   INDEX tu_iUndoBufferData;
-  
+
   // constructor
   CTerrainUndo();
 };
 
 class CTileInfo {
-public:
+  public:
   INDEX ti_ix;
   INDEX ti_iy;
   BOOL ti_bSwapXY;
@@ -105,20 +104,20 @@ public:
 
 extern CTextureData *_ptdContinousRandomNoise;
 extern CTextureData *_ptdDistributionRandomNoise;
-BOOL SetupContinousNoiseTexture( void);
-void FreeContinousNoiseTexture( void);
-BOOL SetupDistributionNoiseTexture( void);
-void FreeDistributionNoiseTexture( void);
+BOOL SetupContinousNoiseTexture(void);
+void FreeContinousNoiseTexture(void);
+BOOL SetupDistributionNoiseTexture(void);
+void FreeDistributionNoiseTexture(void);
 
 void RandomizeWhiteNoise(void);
-FLOAT *GenerateTerrain_FBMBuffer(PIX pixW, PIX pixH, INDEX ctOctaves, FLOAT fHighFrequencyStep,
-                                 FLOAT fStepFactor, FLOAT fMaxAmplitude, FLOAT fAmplitudeDecreaser,
-                                 BOOL bAddNegativeValues, BOOL bRandomOffest, FLOAT &fMin, FLOAT &fMax);
+FLOAT *GenerateTerrain_FBMBuffer(PIX pixW, PIX pixH, INDEX ctOctaves, FLOAT fHighFrequencyStep, FLOAT fStepFactor,
+                                 FLOAT fMaxAmplitude, FLOAT fAmplitudeDecreaser, BOOL bAddNegativeValues, BOOL bRandomOffest,
+                                 FLOAT &fMin, FLOAT &fMax);
 void GenerateLayerDistribution(INDEX iForLayer, Rect rect);
 void GenerateLayerDistribution(INDEX iLayer);
 void OptimizeLayers(void);
 void RecalculateShadows(void);
-void SetHMPixel( UWORD pix, INDEX x, INDEX y);
+void SetHMPixel(UWORD pix, INDEX x, INDEX y);
 UWORD GetHMPixel(INDEX x, INDEX y);
 void EditTerrain(CTextureData *ptdBrush, FLOAT3D &vHitPoint, FLOAT fStrength, ETerrainEdit teTool);
 void UpdateLayerDistribution(void);
@@ -135,7 +134,7 @@ void ApplyPosterizeOntoTerrain(void);
 void DiscardLayerDistribution(Rect rect);
 void ApplyTerrainUndo(CTerrainUndo *ptrud);
 void ApplyTerrainRedo(CTerrainUndo *ptrud);
-void DeleteTerrainUndo(CWorldEditorDoc* pDoc);
+void DeleteTerrainUndo(CWorldEditorDoc *pDoc);
 void TerrainEditBegin(void);
 void TerrainEditEnd(void);
 void ObtainLayerTileInfo(CDynamicContainer<CTileInfo> *pdcTileInfo, CTextureData *ptdTexture, INDEX &ctTilesPerRaw);

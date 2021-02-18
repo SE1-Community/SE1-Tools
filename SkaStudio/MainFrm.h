@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -26,26 +26,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "MDIClientWnd.h"
 #include "SplitterFrame.h"
-class CMainFrame : public CMDIFrameWnd
-{
+class CMainFrame : public CMDIFrameWnd {
   DECLARE_DYNAMIC(CMainFrame)
-public:
+  public:
   CMainFrame();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CMainFrame)
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CMainFrame();
 #ifdef _DEBUG
   virtual void AssertValid() const;
@@ -53,20 +50,20 @@ public:
 #endif
   CTString CreateTexture();
 
-public:
+  public:
   // mdi client
   CMDIClientWnd m_wndMDIClient;
   // status bar
-  CStatusBar  m_wndStatusBar;
+  CStatusBar m_wndStatusBar;
   // toolbars
-  CToolBar    m_wndToolBar;
-  CToolBar    m_wndNavigationToolBar;
-  CToolBar    m_wndToolBarManage;
+  CToolBar m_wndToolBar;
+  CToolBar m_wndNavigationToolBar;
+  CToolBar m_wndToolBarManage;
   // edit control for model instance stretch
   CEdit m_ctrlMIStretch;
 
-// Generated message map functions
-private:
+  // Generated message map functions
+  private:
   //{{AFX_MSG(CMainFrame)
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
   afx_msg void OnActivateApp(BOOL bActive, DWORD hTask);

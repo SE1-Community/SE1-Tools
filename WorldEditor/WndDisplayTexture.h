@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,14 +25,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CWndDisplayTexture window
 
-class CWndDisplayTexture : public CWnd
-{
-// Construction
-public:
+class CWndDisplayTexture : public CWnd {
+  // Construction
+  public:
   CWndDisplayTexture();
 
-// Attributes
-public:
+  // Attributes
+  public:
   CTextureData *m_ptd;
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
@@ -42,26 +41,25 @@ public:
   PIXaabbox2D m_boxText1;
   PIXaabbox2D m_boxText2;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWndDisplayTexture)
   public:
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CWndDisplayTexture();
-  BOOL Initialize(PIX pixX, PIX pixY, CTextureData *ptd, CTString strText1="", CTString strText2="", BOOL bDown=FALSE);
+  BOOL Initialize(PIX pixX, PIX pixY, CTextureData *ptd, CTString strText1 = "", CTString strText2 = "", BOOL bDown = FALSE);
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CWndDisplayTexture)
   afx_msg void OnPaint();
-  afx_msg void OnKillFocus(CWnd* pNewWnd);
+  afx_msg void OnKillFocus(CWnd *pNewWnd);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

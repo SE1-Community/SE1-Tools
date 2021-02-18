@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,10 +25,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlEditFlags window
 
-class CCtrlEditFlags : public CButton
-{
-// Construction
-public:
+class CCtrlEditFlags : public CButton {
+  // Construction
+  public:
   CTString m_astrBitDescription[32];
   CCtrlEditFlags();
   CWnd *m_pDialog;
@@ -43,44 +42,42 @@ public:
   INDEX m_iMouseDownArea;
 
   void SetBitDescription(INDEX iBit, CTString strBitName);
-  void SetDialogPtr( CWnd *pDialog);
+  void SetDialogPtr(CWnd *pDialog);
   void SetDefaultValue(ULONG ulDefault);
   void SetEditableMask(ULONG ulEditable);
   void SetFlags(ULONG ulFlags);
   void MergeFlags(ULONG ulFlags);
-  void SetPrevEditableBank( void);
-  void SetNextEditableBank( void);
-  void SetFirstEditableBank( void);
+  void SetPrevEditableBank(void);
+  void SetNextEditableBank(void);
+  void SetFirstEditableBank(void);
   CTString GetTipForArea(INDEX iArea) const;
   void ApplyChange(ULONG &ulOldFlags);
   RECT GetRectForArea(INDEX iArea) const;
-  INDEX GetAreaUnderMouse( CPoint point) const;
-  int OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
+  INDEX GetAreaUnderMouse(CPoint point) const;
+  int OnToolHitTest(CPoint point, TOOLINFO *pTI) const;
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlEditFlags)
   public:
   virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlEditFlags();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlEditFlags)
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
   afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-  afx_msg void OnKillFocus(CWnd* pNewWnd);
+  afx_msg void OnKillFocus(CWnd *pNewWnd);
   //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP()

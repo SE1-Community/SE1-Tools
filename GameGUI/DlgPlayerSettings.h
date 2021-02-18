@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,31 +23,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class CDlgPlayerControls;
 
-class CDlgPlayerSettings : public CDialog
-{
-// Construction
-public:
-  CDlgPlayerSettings(CWnd* pParent = NULL);   // standard constructor
-  void InitPlayersAndControlsLists(void); 
+class CDlgPlayerSettings : public CDialog {
+  // Construction
+  public:
+  CDlgPlayerSettings(CWnd* pParent = NULL); // standard constructor
+  void InitPlayersAndControlsLists(void);
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPlayerSettings)
   enum { IDD = IDD_SETTINGS_PLAYERS };
-  CListBox  m_listAvailableControls;
-  CListBox  m_listAvailablePlayers;
+  CListBox m_listAvailableControls;
+  CListBox m_listAvailablePlayers;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgPlayerSettings)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
-
+  // Implementation
+  public:
   // Generated message map functions
   //{{AFX_MSG(CDlgPlayerSettings)
   afx_msg void OnPlayerAppearance();

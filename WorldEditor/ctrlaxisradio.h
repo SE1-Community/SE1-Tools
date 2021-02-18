@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,33 +23,32 @@ class CPropertyComboBar;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlAxisRadio window
 
-class CCtrlAxisRadio : public CButton
-{
-// Construction
-public:
+class CCtrlAxisRadio : public CButton {
+  // Construction
+  public:
   CCtrlAxisRadio();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlAxisRadio)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlAxisRadio();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlAxisRadio)
   afx_msg void OnClicked();
   //}}AFX_MSG
@@ -58,4 +57,4 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-#endif    // CTRLAXISRADIO_H
+#endif // CTRLAXISRADIO_H

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -31,52 +31,42 @@ static char THIS_FILE[] = __FILE__;
 // CToolTipWnd
 
 CStaticArray<PIX> _saPixLineHeights;
-CToolTipWnd::CToolTipWnd()
-{
-}
+CToolTipWnd::CToolTipWnd() {}
 
-CToolTipWnd::~CToolTipWnd()
-{
+CToolTipWnd::~CToolTipWnd() {
   _saPixLineHeights.Clear();
 }
 
-
 BEGIN_MESSAGE_MAP(CToolTipWnd, CWnd)
-  //{{AFX_MSG_MAP(CToolTipWnd)
-  ON_WM_PAINT()
-  ON_WM_CREATE()
-  ON_WM_SETFOCUS()
-  ON_WM_TIMER()
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CToolTipWnd)
+ON_WM_PAINT()
+ON_WM_CREATE()
+ON_WM_SETFOCUS()
+ON_WM_TIMER()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CToolTipWnd message handlers
 
-CTString CToolTipWnd::GetLine(INDEX iLine)
-{
-  INDEX ctLines=0;
+CTString CToolTipWnd::GetLine(INDEX iLine) {
+  INDEX ctLines = 0;
 
-  const char *pText = (const char *) m_strText;
-  while (*pText != 0)
-  {
-    if (iLine == ctLines)
-    {
+  const char *pText = (const char *)m_strText;
+  while (*pText != 0) {
+    if (iLine == ctLines) {
       char achrLine[1024];
       INDEX iChar = 0;
-      while ((*pText != '\n') && (*pText != 0) )
-      {
+      while ((*pText != '\n') && (*pText != 0)) {
         achrLine[iChar] = *pText;
         iChar++;
         pText++;
       }
       achrLine[iChar] = 0;
-      return CTString( achrLine);
+      return CTString(achrLine);
     }
 
-    if (*pText == '\n')
-    {
+    if (*pText == '\n') {
       ctLines++;
     }
     pText++;
@@ -85,161 +75,143 @@ CTString CToolTipWnd::GetLine(INDEX iLine)
   return CTString("Line not found !!!");
 }
 
-INDEX CToolTipWnd::GetLinesCount( void)
-{
-  INDEX ctLines=0;
-  const char *pText = (const char *) m_strText;
-  while (*pText != 0)
-  {
-    if (*pText == '\n')
-    {
+INDEX CToolTipWnd::GetLinesCount(void) {
+  INDEX ctLines = 0;
+  const char *pText = (const char *)m_strText;
+  while (*pText != 0) {
+    if (*pText == '\n') {
       ctLines++;
-      if (*(pText+1) == 0) return ctLines;
+      if (*(pText + 1) == 0)
+        return ctLines;
     }
     pText++;
   }
-  return ctLines+1;
+  return ctLines + 1;
 }
 
-void CToolTipWnd::ObtainTextSize(PIX &pixMaxWidth, PIX &pixMaxHeight) 
-{
+void CToolTipWnd::ObtainTextSize(PIX &pixMaxWidth, PIX &pixMaxHeight) {
   CDC *pDC = GetDC();
-  if (pDC == NULL) return;
+  if (pDC == NULL)
+    return;
 
   pixMaxWidth = 0;
   _saPixLineHeights.Clear();
   PIX pixStartY = 0;
   INDEX ctLines = GetLinesCount();
-  _saPixLineHeights.New( ctLines);
-  for (INDEX iLine = 0; iLine<ctLines; iLine++)
-  {
+  _saPixLineHeights.New(ctLines);
+  for (INDEX iLine = 0; iLine < ctLines; iLine++) {
     CTString strLine = GetLine(iLine);
-    CSize size = pDC->GetOutputTextExtent( CString(strLine));
-    if (size.cx>pixMaxWidth)  pixMaxWidth = size.cx;
+    CSize size = pDC->GetOutputTextExtent(CString(strLine));
+    if (size.cx > pixMaxWidth)
+      pixMaxWidth = size.cx;
     _saPixLineHeights[iLine] = pixStartY;
     pixStartY += size.cy;
   }
   pixMaxHeight = pixStartY;
-  ReleaseDC( pDC);
+  ReleaseDC(pDC);
 }
 
-void CToolTipWnd::OnPaint() 
-{
+void CToolTipWnd::OnPaint() {
   CPaintDC dc(this);
-  
+
   CRect rectWindow;
   GetClientRect(rectWindow);
-  DWORD colPaper = GetSysColor( COLOR_INFOBK);
-  DWORD colInk = GetSysColor( COLOR_INFOTEXT);
-  dc.FillSolidRect( rectWindow, colPaper);
-  dc.SetTextColor( colInk);
-  
+  DWORD colPaper = GetSysColor(COLOR_INFOBK);
+  DWORD colInk = GetSysColor(COLOR_INFOTEXT);
+  dc.FillSolidRect(rectWindow, colPaper);
+  dc.SetTextColor(colInk);
+
   CDC *pDC = GetDC();
-  if (pDC == NULL) return;
-  pDC->SelectObject( &theApp.m_FixedFont);
-  
+  if (pDC == NULL)
+    return;
+  pDC->SelectObject(&theApp.m_FixedFont);
+
   INDEX ctLines = GetLinesCount();
-  for (INDEX iLine = 0; iLine<ctLines; iLine++)
-  {
+  for (INDEX iLine = 0; iLine < ctLines; iLine++) {
     CTString strLine = GetLine(iLine);
-    dc.TextOut( 0, _saPixLineHeights[iLine], CString(strLine));
+    dc.TextOut(0, _saPixLineHeights[iLine], CString(strLine));
   }
-  ReleaseDC( pDC);
+  ReleaseDC(pDC);
 }
 
-int CToolTipWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
+int CToolTipWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) {
   if (CWnd::OnCreate(lpCreateStruct) == -1)
     return -1;
-  
+
   SetupWindowSizeAndPosition();
 
-  if (!m_bManualControl)
-  {
-    SetTimer( 0, 10, NULL);
+  if (!m_bManualControl) {
+    SetTimer(0, 10, NULL);
   }
   return 0;
 }
 
-void CToolTipWnd::SetupWindowSizeAndPosition(void)
-{
+void CToolTipWnd::SetupWindowSizeAndPosition(void) {
   CDC *pDC = GetDC();
-  pDC->SelectObject( &theApp.m_FixedFont);
+  pDC->SelectObject(&theApp.m_FixedFont);
 
   PIX pixWidth, pixHeight;
-  ObtainTextSize( pixWidth, pixHeight);
-  pixWidth+=2;
-  pixHeight+=2;
-  
-  GetCursorPos( &m_ptMouse); 
+  ObtainTextSize(pixWidth, pixHeight);
+  pixWidth += 2;
+  pixHeight += 2;
+
+  GetCursorPos(&m_ptMouse);
   int iCursorX = 12;
   int iCursorY = 18;
   CRect rectWindow;
-  rectWindow.left = m_ptMouse.x+iCursorX;
-  rectWindow.top = m_ptMouse.y+iCursorY;
+  rectWindow.left = m_ptMouse.x + iCursorX;
+  rectWindow.top = m_ptMouse.y + iCursorY;
 
-  if (m_bManualControl)
-  {
+  if (m_bManualControl) {
     rectWindow.left = m_pixManualX;
     rectWindow.top = m_pixManualY;
   }
 
   rectWindow.right = rectWindow.left + pixWidth;
   rectWindow.bottom = rectWindow.top + pixHeight;
-  
-  int iEdgeX   = ::GetSystemMetrics(SM_CXEDGE);    // window edge width
-  int iEdgeY   = ::GetSystemMetrics(SM_CYEDGE);
-  PIX pixScreenX = ::GetSystemMetrics(SM_CXMAXIMIZED)-4*iEdgeX;  // screen size
-  PIX pixScreenY = ::GetSystemMetrics(SM_CYMAXIMIZED)-4*iEdgeX;
-  if (rectWindow.bottom > pixScreenY)
-  {
-    rectWindow.top -= rectWindow.bottom-pixScreenY;
+
+  int iEdgeX = ::GetSystemMetrics(SM_CXEDGE); // window edge width
+  int iEdgeY = ::GetSystemMetrics(SM_CYEDGE);
+  PIX pixScreenX = ::GetSystemMetrics(SM_CXMAXIMIZED) - 4 * iEdgeX; // screen size
+  PIX pixScreenY = ::GetSystemMetrics(SM_CYMAXIMIZED) - 4 * iEdgeX;
+  if (rectWindow.bottom > pixScreenY) {
+    rectWindow.top -= rectWindow.bottom - pixScreenY;
   }
-  if (rectWindow.right > pixScreenX)
-  {
-    rectWindow.left -= rectWindow.right-pixScreenX;
+  if (rectWindow.right > pixScreenX) {
+    rectWindow.left -= rectWindow.right - pixScreenX;
   }
-  MoveWindow( rectWindow);
-  
-  ReleaseDC( pDC);
+  MoveWindow(rectWindow);
+
+  ReleaseDC(pDC);
 }
 
-void CToolTipWnd::OnSetFocus(CWnd* pOldWnd) 
-{
-  if (pOldWnd != NULL && IsWindow(pOldWnd->m_hWnd))
-  {
+void CToolTipWnd::OnSetFocus(CWnd *pOldWnd) {
+  if (pOldWnd != NULL && IsWindow(pOldWnd->m_hWnd)) {
     pOldWnd->SetFocus();
   }
 }
 
-void CToolTipWnd::ManualUpdate(void) 
-{
+void CToolTipWnd::ManualUpdate(void) {
   SetupWindowSizeAndPosition();
-  Invalidate( FALSE);
+  Invalidate(FALSE);
 }
 
-void CToolTipWnd::ManualOff(void)
-{
-  CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-  if (pMainFrame->m_pwndToolTip != NULL)
-  {
+void CToolTipWnd::ManualOff(void) {
+  CMainFrame *pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+  if (pMainFrame->m_pwndToolTip != NULL) {
     delete pMainFrame->m_pwndToolTip;
     pMainFrame->m_pwndToolTip = NULL;
   }
 }
 
-void CToolTipWnd::OnTimer(UINT nIDEvent) 
-{
-  ASSERT( m_bManualControl == FALSE);
-  if (nIDEvent == 0)
-  {
+void CToolTipWnd::OnTimer(UINT nIDEvent) {
+  ASSERT(m_bManualControl == FALSE);
+  if (nIDEvent == 0) {
     POINT ptMouse;
-    GetCursorPos( &ptMouse); 
-    if (((Abs(ptMouse.x-m_ptMouse.x)) > 2) ||
-        ((Abs(ptMouse.y-m_ptMouse.y)) > 2) )
-    {
-      KillTimer( 0);
-      CMainFrame* pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    GetCursorPos(&ptMouse);
+    if (((Abs(ptMouse.x - m_ptMouse.x)) > 2) || ((Abs(ptMouse.y - m_ptMouse.y)) > 2)) {
+      KillTimer(0);
+      CMainFrame *pMainFrame = STATIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
       delete pMainFrame->m_pwndToolTip;
       pMainFrame->m_pwndToolTip = NULL;
     }

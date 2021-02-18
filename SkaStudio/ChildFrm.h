@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -24,38 +24,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #pragma once
 #endif // _MSC_VER > 1000
 
-
-class CChildFrame : public CMDIChildWnd
-{
+class CChildFrame : public CMDIChildWnd {
   DECLARE_DYNCREATE(CChildFrame)
-public:
+  public:
   CChildFrame();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CChildFrame)
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CChildFrame();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
-protected:
+  // Generated message map functions
+  protected:
   //{{AFX_MSG(CChildFrame)
-    // NOTE - the ClassWizard will add and remove member functions here.
-    //    DO NOT EDIT what you see in these blocks of generated code!
+  // NOTE - the ClassWizard will add and remove member functions here.
+  //    DO NOT EDIT what you see in these blocks of generated code!
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

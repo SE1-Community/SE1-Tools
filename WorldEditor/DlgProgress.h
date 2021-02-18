@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,38 +22,35 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgProgress dialog
 
-class CDlgProgress : public CDialog
-{
-// Construction
-public:
-  CDlgProgress(CWnd* pParent = NULL, BOOL bCanCancel=FALSE);   // standard constructor
-  void SetProgressMessageAndPosition( char *strProgressMessage, INDEX iCurrentPos);
-  
+class CDlgProgress : public CDialog {
+  // Construction
+  public:
+  CDlgProgress(CWnd* pParent = NULL, BOOL bCanCancel = FALSE); // standard constructor
+  void SetProgressMessageAndPosition(char* strProgressMessage, INDEX iCurrentPos);
+
   BOOL m_bCancelPressed;
   BOOL m_bHasCancel;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgProgress)
   enum { IDD = IDD_PROGRESS_DIALOG };
-  CProgressCtrl  m_ctrlProgres;
-  CString  m_strProgressMessage;
+  CProgressCtrl m_ctrlProgres;
+  CString m_strProgressMessage;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgProgress)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgProgress)
   afx_msg void OnCancel();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };
-#endif  // DLGPROGRESS_H
+#endif // DLGPROGRESS_H

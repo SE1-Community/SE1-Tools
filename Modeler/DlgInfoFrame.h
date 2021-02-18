@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -13,38 +13,36 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
-
 // DlgInfoFrame.h : header file
 //
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoFrame frame
 
-class CDlgInfoFrame : public CMiniFrameWnd
-{
-// Constructor
-public:
+class CDlgInfoFrame : public CMiniFrameWnd {
+  // Constructor
+  public:
   CDlgInfoFrame();
   ~CDlgInfoFrame();
   void SetSizes();
 
-// Attributes
-public:
+  // Attributes
+  public:
   int m_PageWidth;
   int m_PageHeight;
-  CDlgInfoSheet *m_pInfoSheet;
+  CDlgInfoSheet* m_pInfoSheet;
 
-// Operations
-public:
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgInfoFrame)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
-// Handlers
-protected:
+  // Handlers
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgInfoFrame)
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

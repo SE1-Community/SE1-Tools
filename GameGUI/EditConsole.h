@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,32 +25,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CEditConsole window
 
-class CEditConsole : public CEdit
-{
-// Construction
-public:
+class CEditConsole : public CEdit {
+  // Construction
+  public:
   CEditConsole();
 
-// Attributes
-public:
-
-// Operations
-public:
+  // Attributes
+  public:
+  // Operations
+  public:
   void SetTextFromConsole(void);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CEditConsole)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CEditConsole();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CEditConsole)
   //}}AFX_MSG
 

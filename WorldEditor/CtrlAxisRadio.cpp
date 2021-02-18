@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,34 +30,29 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlAxisRadio
 
-CCtrlAxisRadio::CCtrlAxisRadio()
-{
-}
+CCtrlAxisRadio::CCtrlAxisRadio() {}
 
-CCtrlAxisRadio::~CCtrlAxisRadio()
-{
-}
+CCtrlAxisRadio::~CCtrlAxisRadio() {}
 
-void CCtrlAxisRadio::SetDialogPtr( CPropertyComboBar *pDialog)
-{
+void CCtrlAxisRadio::SetDialogPtr(CPropertyComboBar *pDialog) {
   m_pDialog = pDialog;
 }
 
 BEGIN_MESSAGE_MAP(CCtrlAxisRadio, CButton)
-  //{{AFX_MSG_MAP(CCtrlAxisRadio)
-  ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CCtrlAxisRadio)
+ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlAxisRadio message handlers
 
-void CCtrlAxisRadio::OnClicked() 
-{
+void CCtrlAxisRadio::OnClicked() {
   // don't do anything if document doesn't exist
-  if (theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL)
+    return;
   // select clicked axis radio
-  m_pDialog->SelectAxisRadio( this);
+  m_pDialog->SelectAxisRadio(this);
   // show that second axis have been selected
   m_pDialog->ArrangeControls();
 }

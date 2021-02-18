@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,36 +25,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSnapVertex dialog
 
-class CDlgSnapVertex : public CDialog
-{
-// Construction
-public:
-  CDlgSnapVertex(CWnd* pParent = NULL);   // standard constructor
+class CDlgSnapVertex : public CDialog {
+  // Construction
+  public:
+  CDlgSnapVertex(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgSnapVertex)
   enum { IDD = IDD_SNAP_VERTEX };
-  float  m_fX;
-  float  m_fY;
-  float  m_fZ;
+  float m_fX;
+  float m_fY;
+  float m_fZ;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgSnapVertex)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgSnapVertex)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,8 +30,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CDlgPgInfoAttachingSound, CPropertyPage)
 
-CDlgPgInfoAttachingSound::CDlgPgInfoAttachingSound() : CPropertyPage(CDlgPgInfoAttachingSound::IDD)
-{
+CDlgPgInfoAttachingSound::CDlgPgInfoAttachingSound() : CPropertyPage(CDlgPgInfoAttachingSound::IDD) {
   //{{AFX_DATA_INIT(CDlgPgInfoAttachingSound)
   m_strAttachedSound = _T("");
   m_bLooping = FALSE;
@@ -40,22 +39,19 @@ CDlgPgInfoAttachingSound::CDlgPgInfoAttachingSound() : CPropertyPage(CDlgPgInfoA
   //}}AFX_DATA_INIT
 }
 
-CDlgPgInfoAttachingSound::~CDlgPgInfoAttachingSound()
-{
-}
+CDlgPgInfoAttachingSound::~CDlgPgInfoAttachingSound() {}
 
-void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange *pDX) {
   CPropertyPage::DoDataExchange(pDX);
 
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (pModelerView == NULL) return;
-  CModelerDoc* pDoc = pModelerView->GetDocument();  
+  if (pModelerView == NULL)
+    return;
+  CModelerDoc *pDoc = pModelerView->GetDocument();
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
 
   // if transfering data from document to dialog
-  if (!pDX->m_bSaveAndValidate)
-  {
+  if (!pDX->m_bSaveAndValidate) {
     m_strAttachedSound = asSound.as_fnAttachedSound;
     if (m_strAttachedSound == "")
       m_strAttachedSound = "<No sound>";
@@ -65,7 +61,7 @@ void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange* pDX)
     // mark that the values have been updated to reflect the state of the view
     m_udAllValues.MarkUpdated();
   }
-  
+
   //{{AFX_DATA_MAP(CDlgPgInfoAttachingSound)
   DDX_Text(pDX, IDC_ATTACHING_SOUND_T, m_strAttachedSound);
   DDX_Check(pDX, IDC_IS_LOOPING, m_bLooping);
@@ -74,90 +70,81 @@ void CDlgPgInfoAttachingSound::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if transfering data from dialog to document
-  if (pDX->m_bSaveAndValidate)
-  {
-    if (m_strAttachedSound != "<No sound>")
-    {
-      asSound.as_fnAttachedSound = CTString( CStringA(m_strAttachedSound));
+  if (pDX->m_bSaveAndValidate) {
+    if (m_strAttachedSound != "<No sound>") {
+      asSound.as_fnAttachedSound = CTString(CStringA(m_strAttachedSound));
       asSound.as_bLooping = m_bLooping;
       asSound.as_bPlaying = m_bPlaying;
       asSound.as_fDelay = m_fDelay;
-    
+
       pDoc->SetModifiedFlag();
-      pDoc->UpdateAllViews( NULL);
+      pDoc->UpdateAllViews(NULL);
     }
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPgInfoAttachingSound, CPropertyPage)
-  //{{AFX_MSG_MAP(CDlgPgInfoAttachingSound)
-  ON_BN_CLICKED(IDC_BROWSE_SOUND, OnBrowseSound)
-  ON_BN_CLICKED(IDC_IS_LOOPING, OnIsLooping)
-  ON_BN_CLICKED(IDC_IS_PLAYING, OnIsPlaying)
-  ON_BN_CLICKED(IDC_ATTACHING_SOUND_NONE, OnAttachingSoundNone)
-  ON_EN_CHANGE(IDC_SOUND_START_DELAY, OnChangeSoundStartDelay)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgPgInfoAttachingSound)
+ON_BN_CLICKED(IDC_BROWSE_SOUND, OnBrowseSound)
+ON_BN_CLICKED(IDC_IS_LOOPING, OnIsLooping)
+ON_BN_CLICKED(IDC_IS_PLAYING, OnIsPlaying)
+ON_BN_CLICKED(IDC_ATTACHING_SOUND_NONE, OnAttachingSoundNone)
+ON_EN_CHANGE(IDC_SOUND_START_DELAY, OnChangeSoundStartDelay)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgInfoAttachingSound message handlers
 
-BOOL CDlgPgInfoAttachingSound::OnInitDialog() 
-{
+BOOL CDlgPgInfoAttachingSound::OnInitDialog() {
   CPropertyPage::OnInitDialog();
   return TRUE;
 }
 
-BOOL CDlgPgInfoAttachingSound::OnIdle(LONG lCount)
-{
-  return TRUE;   
+BOOL CDlgPgInfoAttachingSound::OnIdle(LONG lCount) {
+  return TRUE;
 }
 
-void CDlgPgInfoAttachingSound::OnBrowseSound() 
-{
+void CDlgPgInfoAttachingSound::OnBrowseSound() {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (pModelerView == NULL) return;
-  CModelerDoc* pDoc = pModelerView->GetDocument();  
+  if (pModelerView == NULL)
+    return;
+  CModelerDoc *pDoc = pModelerView->GetDocument();
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
 
   // request sound
-  CTFileName fnNewSound = _EngineGUI.FileRequester(
-    "Select sound to attach to animation", 
-    FILTER_WAV FILTER_END,
-    "Sounds directory", "Sounds",
-    asSound.as_fnAttachedSound.FileName()+asSound.as_fnAttachedSound.FileExt());
-  if (fnNewSound == "") return;
+  CTFileName fnNewSound
+    = _EngineGUI.FileRequester("Select sound to attach to animation", FILTER_WAV FILTER_END, "Sounds directory", "Sounds",
+                               asSound.as_fnAttachedSound.FileName() + asSound.as_fnAttachedSound.FileExt());
+  if (fnNewSound == "")
+    return;
 
   asSound.as_fnAttachedSound = fnNewSound;
   pDoc->SetModifiedFlag();
-  pDoc->UpdateAllViews( NULL);
-  UpdateData( FALSE);
+  pDoc->UpdateAllViews(NULL);
+  UpdateData(FALSE);
 }
 
-void CDlgPgInfoAttachingSound::OnAttachingSoundNone() 
-{
+void CDlgPgInfoAttachingSound::OnAttachingSoundNone() {
   CModelerView *pModelerView = CModelerView::GetActiveView();
-  if (pModelerView == NULL) return;
-  CModelerDoc* pDoc = pModelerView->GetDocument();  
+  if (pModelerView == NULL)
+    return;
+  CModelerDoc *pDoc = pModelerView->GetDocument();
   CAttachedSound &asSound = pDoc->m_emEditModel.edm_aasAttachedSounds[pModelerView->m_ModelObject.GetAnim()];
   asSound.as_fnAttachedSound = CTString("");
   pDoc->SetModifiedFlag();
-  pDoc->UpdateAllViews( NULL);
-  UpdateData( FALSE);
+  pDoc->UpdateAllViews(NULL);
+  UpdateData(FALSE);
 }
 
-void CDlgPgInfoAttachingSound::OnIsLooping() 
-{
-  UpdateData( TRUE);
+void CDlgPgInfoAttachingSound::OnIsLooping() {
+  UpdateData(TRUE);
 }
 
-void CDlgPgInfoAttachingSound::OnIsPlaying() 
-{
-  UpdateData( TRUE);
+void CDlgPgInfoAttachingSound::OnIsPlaying() {
+  UpdateData(TRUE);
 }
 
-void CDlgPgInfoAttachingSound::OnChangeSoundStartDelay() 
-{
-  UpdateData( TRUE);
+void CDlgPgInfoAttachingSound::OnChangeSoundStartDelay() {
+  UpdateData(TRUE);
 }

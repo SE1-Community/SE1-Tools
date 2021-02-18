@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,20 +23,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #define STRING_HEIGHT 16
 
-HGLOBAL CreateHDrop( const CTFileName &fnToDrag, BOOL bAddAppPath=TRUE);
+HGLOBAL CreateHDrop(const CTFileName &fnToDrag, BOOL bAddAppPath = TRUE);
 
-class CBrowseWindow : public CWnd
-{
-// Construction
-public:
-  BOOL AttachToControl( CWnd *pwndParent);
+class CBrowseWindow : public CWnd {
+  // Construction
+  public:
+  BOOL AttachToControl(CWnd *pwndParent);
   CBrowseWindow();
-  void SetBrowserPtr( CBrowser *pBrowser);
+  void SetBrowserPtr(CBrowser *pBrowser);
 
-// Attributes
-public:
+  // Attributes
+  public:
   INDEX m_iLastHittedItem;
-  BOOL m_bDirectoryOpen;    // If directory is opened (valid)
+  BOOL m_bDirectoryOpen; // If directory is opened (valid)
   CBrowser *m_pBrowser;
   CListHead m_IconsList;
   INDEX m_IconsInLine;
@@ -47,38 +46,38 @@ public:
   PIX m_BrowseWndWidth;
   PIX m_BrowseWndHeight;
 
-// Operations
-public:
-  void OpenDirectory( CVirtualTreeNode *pVTN);
-  void CloseDirectory( CVirtualTreeNode *pVTN);
-  void InsertItem( CTFileName fnItem, CPoint pt);
+  // Operations
+  public:
+  void OpenDirectory(CVirtualTreeNode *pVTN);
+  void CloseDirectory(CVirtualTreeNode *pVTN);
+  void InsertItem(CTFileName fnItem, CPoint pt);
   void DeleteSelectedItems();
-  CVirtualTreeNode *GetItem( INDEX iItem) const;
-  INDEX GetItemNo( CVirtualTreeNode *pVTN);
-  void SetItemSize( PIX pixWidth, PIX pixHeight);
-  INDEX HitItem( CPoint pt, FLOAT &fHitXOffset, FLOAT &fHitYOffset) const;
+  CVirtualTreeNode *GetItem(INDEX iItem) const;
+  INDEX GetItemNo(CVirtualTreeNode *pVTN);
+  void SetItemSize(PIX pixWidth, PIX pixHeight);
+  INDEX HitItem(CPoint pt, FLOAT &fHitXOffset, FLOAT &fHitYOffset) const;
   void Refresh();
-  void SelectByTextures( BOOL bInSelectedSectors, BOOL bExceptSelected);
+  void SelectByTextures(BOOL bInSelectedSectors, BOOL bExceptSelected);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CBrowseWindow)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   COleDataSource m_DataSource;
 
   virtual ~CBrowseWindow();
-  void OnContextMenu( CPoint point);
-  void GetToolTipText( char *pToolTipText);
+  void OnContextMenu(CPoint point);
+  void GetToolTipText(char *pToolTipText);
 
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
-  
+
   // Generated message map functions
   //{{AFX_MSG(CBrowseWindow)
-  afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+  afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar);
   afx_msg void OnPaint();
   afx_msg void OnDropFiles(HDROP hDropInfo);
   afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -91,7 +90,7 @@ public:
   afx_msg void OnShowDescription();
   afx_msg void OnShowFilename();
   afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-  afx_msg void OnRecreateTexture(); 
+  afx_msg void OnRecreateTexture();
   afx_msg void OnCreateAndAddTexture();
   afx_msg void OnSelectByTextureInSelectedSectors();
   afx_msg void OnSelectByTextureInWorld();

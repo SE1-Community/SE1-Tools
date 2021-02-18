@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -13,10 +13,10 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
-#include <afxcmn.h>      // MFC support for Windows Common Controls
+#include <afxcmn.h> // MFC support for Windows Common Controls
 #include <commdlg.h>
 
-#define ENGINE_INTERNAL 1
+#define ENGINE_INTERNAL   1
 #define ENGINEGUI_EXPORTS 1
 #include <EngineGUI/EngineGUI.h>
 
@@ -30,8 +30,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 // this is needed for resource setting
 #ifndef NDEBUG
-  #define ENGINEGUI_DLL_NAME "EngineGUID.dll"
+#define ENGINEGUI_DLL_NAME "EngineGUID.dll"
 #else
-  #define ENGINEGUI_DLL_NAME "EngineGUI.dll"
+#define ENGINEGUI_DLL_NAME "EngineGUI.dll"
 #endif
-

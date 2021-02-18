@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -17,10 +17,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 
 #ifndef __AFXWIN_H__
-  #error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"       // main symbols
+#include "resource.h" // main symbols
 #include <windows.h>
 
 /////////////////////////////////////////////////////////////////////////////
@@ -29,9 +29,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 
 // Class used for linking bcg textures into global list
-class CBcgTexture
-{
-public:
+class CBcgTexture {
+  public:
   CBcgTexture();
   ~CBcgTexture();
   CListNode wt_ListNode;
@@ -41,18 +40,16 @@ public:
 };
 
 // Class used for linking patches into global list
-class CWorkingPatch
-{
-public:
+class CWorkingPatch {
+  public:
   CListNode wp_ListNode;
   CTextureData *wp_TextureData;
   CTFileName wp_FileName;
 };
 
 // Class used for holding global modeler's preferences
-class CAppPrefs
-{
-public:
+class CAppPrefs {
+  public:
   ~CAppPrefs();
   BOOL ap_CopyExistingWindowPrefs;
   BOOL ap_bIsBcgVisibleByDefault;
@@ -83,21 +80,20 @@ public:
   void WriteToIniFile();
 };
 
-class CModelerApp : public CWinApp
-{
-private:
-public:
+class CModelerApp : public CWinApp {
+  private:
+  public:
   BOOL SubInitInstance(void);
   BOOL m_bRefreshPatchPalette;
   BOOL m_bFirstTimeStarted;
   BOOL m_OnIdlePaused;
-  void CreateNewDocument( CTFileName fnRequestedFile);
-  BOOL AddModelerWorkingTexture( CTFileName fnTexName);
-  BOOL AddModelerWorkingPatch( CTFileName fnPatchName);
-  const CTextureObject *GetValidBcgTexture( CTFileName fnTexName);
-  const CTFileName NextPrevBcgTexture( CTFileName fnTexName, INDEX iNextPrev);
-  class CModelerView* GetActiveView(void);
-  class CModelerDoc* GetDocument(void);
+  void CreateNewDocument(CTFileName fnRequestedFile);
+  BOOL AddModelerWorkingTexture(CTFileName fnTexName);
+  BOOL AddModelerWorkingPatch(CTFileName fnPatchName);
+  const CTextureObject *GetValidBcgTexture(CTFileName fnTexName);
+  const CTFileName NextPrevBcgTexture(CTFileName fnTexName, INDEX iNextPrev);
+  class CModelerView *GetActiveView(void);
+  class CModelerDoc *GetDocument(void);
 
   INDEX m_iApi;
   BOOL m_bChangeDisplayModeInProgress;
@@ -143,7 +139,7 @@ public:
   CModelerApp();
   ~CModelerApp();
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CModelerApp)
   public:
@@ -153,7 +149,7 @@ public:
   virtual int Run();
   //}}AFX_VIRTUAL
 
-// Implementation
+  // Implementation
 
   //{{AFX_MSG(CModelerApp)
   afx_msg void OnAppAbout();
@@ -166,21 +162,17 @@ public:
 
 extern CModelerApp theApp;
 
-BOOL GetFlagFromProfile( CTString strVarName, BOOL bDefault);
-void SetFlagToProfile( CTString strVarName, BOOL bValue);
-INDEX GetIndexFromProfile( CTString strVarName, INDEX iDefault);
-void SetIndexToProfile( CTString strVarName, INDEX iValue);
-COLOR GetColorFromProfile( CTString strVarName, COLOR colDefault);
-void SetColorToProfile( CTString strVarName, COLOR colValue);
+BOOL GetFlagFromProfile(CTString strVarName, BOOL bDefault);
+void SetFlagToProfile(CTString strVarName, BOOL bValue);
+INDEX GetIndexFromProfile(CTString strVarName, INDEX iDefault);
+void SetIndexToProfile(CTString strVarName, INDEX iValue);
+COLOR GetColorFromProfile(CTString strVarName, COLOR colDefault);
+void SetColorToProfile(CTString strVarName, COLOR colValue);
 
 //--------------------------------------------------------------------------------------------
-#define CLRF_CLR(clr) ( ((clr & 0xff000000) >> 24) | \
-                        ((clr & 0x00ff0000) >> 8) | \
-                        ((clr & 0x0000ff00) << 8))
+#define CLRF_CLR(clr) (((clr & 0xff000000) >> 24) | ((clr & 0x00ff0000) >> 8) | ((clr & 0x0000ff00) << 8))
 
-#define CLR_CLRF(clrref) ( ((clrref & 0x000000ff) << 24) | \
-                           ((clrref & 0x0000ff00) << 8) | \
-                           ((clrref & 0x00ff0000) >> 8))
+#define CLR_CLRF(clrref) (((clrref & 0x000000ff) << 24) | ((clrref & 0x0000ff00) << 8) | ((clrref & 0x00ff0000) >> 8))
 
 #define TOOLS_INIT_TOP 100
 

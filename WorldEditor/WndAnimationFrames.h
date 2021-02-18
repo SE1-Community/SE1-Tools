@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -24,14 +24,15 @@ class CDlgLightAnimationEditor;
 /////////////////////////////////////////////////////////////////////////////
 // CWndAnimationFrames window
 
-class CWndAnimationFrames : public CWnd
-{
-// Construction
-public:
+class CWndAnimationFrames : public CWnd {
+  // Construction
+  public:
   CWndAnimationFrames();
-  inline void SetParentDlg( CDlgLightAnimationEditor *pParentDlg) {m_pParentDlg=pParentDlg;};
-  void DeleteSelectedFrame( void);
-  INDEX GetFrame( INDEX iFramePosition);
+  inline void SetParentDlg(CDlgLightAnimationEditor *pParentDlg) {
+    m_pParentDlg = pParentDlg;
+  };
+  void DeleteSelectedFrame(void);
+  INDEX GetFrame(INDEX iFramePosition);
   BOOL IsFrameVisible(INDEX iFrame);
   BOOL IsSelectedFrameKeyFrame(void);
   void ScrollLeft(void);
@@ -39,8 +40,8 @@ public:
   void ScrollPgLeft(void);
   void ScrollPgRight(void);
 
-// Attributes
-public:
+  // Attributes
+  public:
   INDEX m_iFramesInLine;
   INDEX m_iStartingFrame;
   INDEX m_iSelectedFrame;
@@ -48,20 +49,19 @@ public:
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWndAnimationFrames)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CWndAnimationFrames();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CWndAnimationFrames)
   afx_msg void OnPaint();
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

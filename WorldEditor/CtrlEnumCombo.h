@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,33 +22,32 @@ class CPropertyComboBar;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlEnumCombo window
 
-class CCtrlEnumCombo : public CComboBox
-{
-// Construction
-public:
+class CCtrlEnumCombo : public CComboBox {
+  // Construction
+  public:
   CCtrlEnumCombo();
 
-// Attributes
-public:
+  // Attributes
+  public:
   // ptr to parent dialog
   CPropertyComboBar *m_pDialog;
 
-// Operations
-public:
+  // Operations
+  public:
   // sets ptr to parent dialog
-  void SetDialogPtr( CPropertyComboBar *pDialog);
+  void SetDialogPtr(CPropertyComboBar *pDialog);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCtrlEnumCombo)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCtrlEnumCombo();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCtrlEnumCombo)
   afx_msg void OnSelchange();
   afx_msg void OnDropdown();
@@ -58,4 +57,4 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-#endif  // CTRLENUMCOMBO_H
+#endif // CTRLENUMCOMBO_H

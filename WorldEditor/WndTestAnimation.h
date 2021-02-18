@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,35 +23,35 @@ class CDlgLightAnimationEditor;
 /////////////////////////////////////////////////////////////////////////////
 // CWndTestAnimation window
 
-class CWndTestAnimation : public CWnd
-{
-// Construction 
-public:
+class CWndTestAnimation : public CWnd {
+  // Construction
+  public:
   CWndTestAnimation();
-  inline void SetParentDlg( CDlgLightAnimationEditor *pParentDlg) {m_pParentDlg=pParentDlg;};
+  inline void SetParentDlg(CDlgLightAnimationEditor *pParentDlg) {
+    m_pParentDlg = pParentDlg;
+  };
 
-// Attributes
-public:
+  // Attributes
+  public:
   CAnimObject m_aoAnimObject;
   CDlgLightAnimationEditor *m_pParentDlg;
   int m_iTimerID;
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
 
-// Operations
-public:
-
-// Overrides
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWndTestAnimation)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CWndTestAnimation();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CWndTestAnimation)
   afx_msg void OnPaint();
   afx_msg void OnTimer(UINT nIDEvent);

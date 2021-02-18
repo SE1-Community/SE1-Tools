@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -20,12 +20,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define MAINFRM_H 1
 
 #define CLOSEST_SURFACE_PANE 0
-#define ACTIVE_SURFACE_PANE 1
+#define ACTIVE_SURFACE_PANE  1
 
-class CMainFrame : public CMDIFrameWnd
-{
+class CMainFrame : public CMDIFrameWnd {
   DECLARE_DYNAMIC(CMainFrame)
-public:  // control bar embedded members
+  public: // control bar embedded members
   WINDOWPLACEMENT m_OldPlacement;
   LONG m_OldStyleEx;
   LONG m_OldStyle;
@@ -35,7 +34,7 @@ public:  // control bar embedded members
   // edit control that controls how many times will animation be played before looping
   CEdit m_ctrlZLoop;
 
-  void DockControlBarRelativeTo(CToolBar* Bar,CToolBar* LeftOf, int dx, int dy);
+  void DockControlBarRelativeTo(CToolBar* Bar, CToolBar* LeftOf, int dx, int dy);
   void EnableSound(void);
   void DisableSound(void);
   void ToggleInfoWindow(void);
@@ -46,9 +45,9 @@ public:  // control bar embedded members
   BOOL m_bwndStatusBar;
   BOOL m_bwndToolBar;
   CStatusBar m_wndStatusBar;
-  CToolBar   m_wndToolBar;
+  CToolBar m_wndToolBar;
 
-public:
+  public:
   CDlgNewProgress m_NewProgress;
   CFont m_Font;
   CAnimComboBox m_AnimComboBox;
@@ -56,17 +55,17 @@ public:
   CStainsComboBox m_StainsComboBox;
   // Color palette dialog
   BOOL OnIdle(LONG lCount);
-  BOOL           m_bColorsPalette;
-  CPaletteDialog *m_dlgPaletteDialog;
+  BOOL m_bColorsPalette;
+  CPaletteDialog* m_dlgPaletteDialog;
 
   // Property sheet - info dialog
-  CDlgInfoFrame *m_pInfoFrame;
+  CDlgInfoFrame* m_pInfoFrame;
   BOOL m_bInfoVisible;
   void HideModelessInfoSheet();
 
   // Patches palette dialog
-  CPatchPalette *m_dlgPatchesPalette;
-  BOOL          m_bPatchesPalette;
+  CPatchPalette* m_dlgPatchesPalette;
+  BOOL m_bPatchesPalette;
 
   // Anim controll bar
   CToolBar m_AnimToolBar;
@@ -81,32 +80,31 @@ public:
 
   CMainFrame();
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CMainFrame)
   public:
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
   virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CMainFrame();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
-protected:
+  // Generated message map functions
+  protected:
   //{{AFX_MSG(CMainFrame)
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
   afx_msg void OnClose();
@@ -147,12 +145,12 @@ protected:
   afx_msg void OnTessellateLess();
   afx_msg void OnTessellateMore();
   //}}AFX_MSG
-  
-public:
+
+  public:
   afx_msg void OnWindowTogglemax();
   afx_msg void OnColorFromPallete(UINT nID);
   afx_msg void OnUpdateColorFromPallete(CCmdUI* pCmdUI);
-  
+
   DECLARE_MESSAGE_MAP()
 };
 

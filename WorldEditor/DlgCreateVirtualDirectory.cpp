@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -29,26 +29,22 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCreateVirtualDirectory dialog
 
-
 CDlgCreateVirtualDirectory::CDlgCreateVirtualDirectory(CTString strOldName /*= ""*/,
-              CTString strTitle /*="Create virtual directory"*/, CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgCreateVirtualDirectory::IDD, pParent)
-{
+                                                       CTString strTitle /*="Create virtual directory"*/,
+                                                       CWnd* pParent /*=NULL*/) :
+CDialog(CDlgCreateVirtualDirectory::IDD, pParent) {
   m_strTitle = strTitle;
   //{{AFX_DATA_INIT(CDlgCreateVirtualDirectory)
   m_strDirectoryName = CString(strOldName);
   //}}AFX_DATA_INIT
 }
 
-
-void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX) {
   INDEX i;
   CDialog::DoDataExchange(pDX);
 
   // if dialog is receiving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
+  if (pDX->m_bSaveAndValidate == FALSE) {
   }
 
   //{{AFX_DATA_MAP(CDlgCreateVirtualDirectory)
@@ -58,15 +54,12 @@ void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog gives data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
-    m_strCreatedDirName = CTString( CStringA(m_strDirectoryName));
+  if (pDX->m_bSaveAndValidate != FALSE) {
+    m_strCreatedDirName = CTString(CStringA(m_strDirectoryName));
     m_iSelectedIconType = 0;
     // Now set selected directory icon type
-    for (i=0; i<m_DirectoryIconsList.GetItemCount(); i++)
-    {
-      if (m_DirectoryIconsList.GetItemState( i, LVIS_SELECTED) != 0)
-      {
+    for (i = 0; i < m_DirectoryIconsList.GetItemCount(); i++) {
+      if (m_DirectoryIconsList.GetItemState(i, LVIS_SELECTED) != 0) {
         m_iSelectedIconType = i;
         break;
       }
@@ -74,36 +67,32 @@ void CDlgCreateVirtualDirectory::DoDataExchange(CDataExchange* pDX)
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgCreateVirtualDirectory, CDialog)
-  //{{AFX_MSG_MAP(CDlgCreateVirtualDirectory)
-  ON_NOTIFY(NM_DBLCLK, IDC_DIRECTORY_ICON_LIST, OnDblclkDirectoryIconList)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgCreateVirtualDirectory)
+ON_NOTIFY(NM_DBLCLK, IDC_DIRECTORY_ICON_LIST, OnDblclkDirectoryIconList)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCreateVirtualDirectory message handlers
 
-BOOL CDlgCreateVirtualDirectory::OnInitDialog() 
-{
+BOOL CDlgCreateVirtualDirectory::OnInitDialog() {
   CDialog::OnInitDialog();
-  
-  SetWindowText( CString(m_strTitle));
 
-  m_IconsImageList.Create( IDB_DIRECTORY_ICONS, 16, 1, CLR_NONE);
-  m_DirectoryIconsList.SetImageList( &m_IconsImageList, LVSIL_SMALL);
+  SetWindowText(CString(m_strTitle));
 
-  for (INDEX i=0; i<NO_OF_ICONS; i++)
-  {
-    m_DirectoryIconsList.InsertItem( i, L"", i);
+  m_IconsImageList.Create(IDB_DIRECTORY_ICONS, 16, 1, CLR_NONE);
+  m_DirectoryIconsList.SetImageList(&m_IconsImageList, LVSIL_SMALL);
+
+  for (INDEX i = 0; i < NO_OF_ICONS; i++) {
+    m_DirectoryIconsList.InsertItem(i, L"", i);
   }
 
-  return TRUE;  // return TRUE unless you set the focus to a control
-                // EXCEPTION: OCX Property Pages should return FALSE
+  return TRUE; // return TRUE unless you set the focus to a control
+               // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgCreateVirtualDirectory::OnDblclkDirectoryIconList(NMHDR* pNMHDR, LRESULT* pResult) 
-{
+void CDlgCreateVirtualDirectory::OnDblclkDirectoryIconList(NMHDR* pNMHDR, LRESULT* pResult) {
   UpdateData();
   if (m_strCreatedDirName != "")
     EndDialog(IDOK);

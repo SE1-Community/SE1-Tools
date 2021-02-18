@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,44 +21,41 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgGlobal dialog
 
-class CDlgPgGlobal : public CPropertyPage
-{
+class CDlgPgGlobal : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgGlobal)
 
-// Construction
-public:
+  // Construction
+  public:
   CDlgPgGlobal();
   ~CDlgPgGlobal();
   BOOL OnIdle(LONG lCount);
-  CActiveTextureWnd  m_wndActiveTexture;
+  CActiveTextureWnd m_wndActiveTexture;
 
   CUpdateableRT m_udSelectionCounts;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgGlobal)
   enum { IDD = IDD_PG_GLOBAL };
-  CString  m_strTextureInfo;
-  CString  m_strSelectedEntitiesCt;
-  CString  m_strSelectedPolygonsCt;
-  CString  m_strSelectedSectorsCt;
+  CString m_strTextureInfo;
+  CString m_strSelectedEntitiesCt;
+  CString m_strSelectedPolygonsCt;
+  CString m_strSelectedSectorsCt;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgGlobal)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgGlobal)
   virtual BOOL OnInitDialog();
   afx_msg void OnDropFiles(HDROP hDropInfo);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 #endif // DLGPGGLOBAL_H

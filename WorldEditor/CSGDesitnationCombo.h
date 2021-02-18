@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -22,37 +22,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 // CCSGDesitnationCombo window
 class CWorldEditorDoc;
 
-class CCSGDesitnationCombo : public CComboBox
-{
-// Construction
-public:
+class CCSGDesitnationCombo : public CComboBox {
+  // Construction
+  public:
   CCSGDesitnationCombo();
   BOOL OnIdle(LONG lCount);
-  void SelectBrushEntity( CEntity *penBrush);
+  void SelectBrushEntity(CEntity *penBrush);
 
   CTString m_strLastSelectedName;
   CEntity *GetSelectedBrushEntity(void);
-  
+
   CUpdateableRT m_udComboEntries;
   CWorldEditorDoc *m_pLastDoc;
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCSGDesitnationCombo)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCSGDesitnationCombo();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCSGDesitnationCombo)
   afx_msg void OnSelchange();
   afx_msg void OnDropdown();

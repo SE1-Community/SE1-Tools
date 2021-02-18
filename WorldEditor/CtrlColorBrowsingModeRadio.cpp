@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,35 +28,29 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlColorBrowsingModeRadio
 
-CCtrlColorBrowsingModeRadio::CCtrlColorBrowsingModeRadio()
-{
-}
+CCtrlColorBrowsingModeRadio::CCtrlColorBrowsingModeRadio() {}
 
-CCtrlColorBrowsingModeRadio::~CCtrlColorBrowsingModeRadio()
-{
-}
+CCtrlColorBrowsingModeRadio::~CCtrlColorBrowsingModeRadio() {}
 
-void CCtrlColorBrowsingModeRadio::SetDialogPtr( CPropertyComboBar *pDialog)
-{
+void CCtrlColorBrowsingModeRadio::SetDialogPtr(CPropertyComboBar *pDialog) {
   m_pDialog = pDialog;
 }
 
-
 BEGIN_MESSAGE_MAP(CCtrlColorBrowsingModeRadio, CButton)
-  //{{AFX_MSG_MAP(CCtrlColorBrowsingModeRadio)
-  ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CCtrlColorBrowsingModeRadio)
+ON_CONTROL_REFLECT(BN_CLICKED, OnClicked)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CCtrlColorBrowsingModeRadio message handlers
 
-void CCtrlColorBrowsingModeRadio::OnClicked() 
-{
+void CCtrlColorBrowsingModeRadio::OnClicked() {
   // don't do anything if document doesn't exist
-  if (theApp.GetDocument() == NULL) return;
+  if (theApp.GetDocument() == NULL)
+    return;
   // select clicked axis radio
-  m_pDialog->SelectColorBrowsingModeRadio( this);
+  m_pDialog->SelectColorBrowsingModeRadio(this);
   // show that second axis have been selected
   m_pDialog->ArrangeControls();
 }

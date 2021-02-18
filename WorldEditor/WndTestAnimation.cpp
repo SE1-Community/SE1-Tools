@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -30,58 +30,48 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWndTestAnimation
 
-CWndTestAnimation::CWndTestAnimation()
-{
+CWndTestAnimation::CWndTestAnimation() {
   m_pDrawPort = NULL;
   m_pViewPort = NULL;
   // mark that timer is not yet started
   m_iTimerID = -1;
 }
 
-CWndTestAnimation::~CWndTestAnimation()
-{
-}
-
+CWndTestAnimation::~CWndTestAnimation() {}
 
 BEGIN_MESSAGE_MAP(CWndTestAnimation, CWnd)
-  //{{AFX_MSG_MAP(CWndTestAnimation)
-  ON_WM_PAINT()
-  ON_WM_TIMER()
-  ON_WM_DESTROY()
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CWndTestAnimation)
+ON_WM_PAINT()
+ON_WM_TIMER()
+ON_WM_DESTROY()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CWndTestAnimation message handlers
 
-void CWndTestAnimation::OnPaint() 
-{
+void CWndTestAnimation::OnPaint() {
   {
-  CPaintDC dc(this); // device context for painting
+    CPaintDC dc(this); // device context for painting
   }
 
-  if (m_iTimerID == -1)
-  {
-    m_iTimerID = (int) SetTimer( 1, 50, NULL);
+  if (m_iTimerID == -1) {
+    m_iTimerID = (int)SetTimer(1, 50, NULL);
   }
 
-  if ((m_pViewPort == NULL) && (m_pDrawPort == NULL) )
-  {
+  if ((m_pViewPort == NULL) && (m_pDrawPort == NULL)) {
     // initialize canvas for active texture button
-    _pGfx->CreateWindowCanvas( m_hWnd, &m_pViewPort, &m_pDrawPort);
+    _pGfx->CreateWindowCanvas(m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
 
   // if there is a valid drawport, and the drawport can be locked
-  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock()) )
-  {
+  if ((m_pDrawPort != NULL) && (m_pDrawPort->Lock())) {
     // get curently selected light animation combo member
     INDEX iLightAnimation = m_pParentDlg->GetSelectedLightAnimation();
     // if animation has changed
-    if (iLightAnimation != m_aoAnimObject.GetAnim() )
-    {
+    if (iLightAnimation != m_aoAnimObject.GetAnim()) {
       // start new animation
-      m_aoAnimObject.StartAnim( iLightAnimation);
+      m_aoAnimObject.StartAnim(iLightAnimation);
     }
     // get current frame (color)
     SLONG col0, col1;
@@ -90,12 +80,11 @@ void CWndTestAnimation::OnPaint()
     COLOR colorFrame = LerpColor(col0, col1, fRatio);
 
     // clear window background to black
-    m_pDrawPort->Fill( colorFrame | CT_OPAQUE);
+    m_pDrawPort->Fill(colorFrame | CT_OPAQUE);
     // unlock the drawport
     m_pDrawPort->Unlock();
     // if there is a valid viewport
-    if (m_pViewPort != NULL)
-    {
+    if (m_pViewPort != NULL) {
       // swap it
       m_pViewPort->SwapBuffers();
     }
@@ -103,32 +92,27 @@ void CWndTestAnimation::OnPaint()
 }
 
 static TICK _llLastTick = 0;
-void CWndTestAnimation::OnTimer(UINT nIDEvent) 
-{
+void CWndTestAnimation::OnTimer(UINT nIDEvent) {
   // on our timer discard test animation window
-  if (nIDEvent == 1)
-  {
+  if (nIDEvent == 1) {
     TICK llCurrentTick = _pTimer->GetTimeTick();
-    if (llCurrentTick > _llLastTick)
-    {
+    if (llCurrentTick > _llLastTick) {
       _pTimer->SetGameTick(llCurrentTick);
       _llLastTick = llCurrentTick;
     }
-    Invalidate(FALSE);  
+    Invalidate(FALSE);
   }
 
   CWnd::OnTimer(nIDEvent);
 }
 
-void CWndTestAnimation::OnDestroy() 
-{
-  KillTimer( m_iTimerID);
+void CWndTestAnimation::OnDestroy() {
+  KillTimer(m_iTimerID);
   _pTimer->SetGameTick(0);
   CWnd::OnDestroy();
 
-  if (m_pViewPort != NULL)
-  {
-    _pGfx->DestroyWindowCanvas( m_pViewPort);
+  if (m_pViewPort != NULL) {
+    _pGfx->DestroyWindowCanvas(m_pViewPort);
     m_pViewPort = NULL;
   }
 

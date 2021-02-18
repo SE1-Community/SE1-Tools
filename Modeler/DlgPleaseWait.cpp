@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -28,22 +28,17 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPleaseWait dialog
 
-
-CDlgPleaseWait::CDlgPleaseWait( const CTString &strMessage, const CTString &strArgument,
-                                CWnd* pParent /*= NULL*/)
-              : CDialog(CDlgPleaseWait::IDD, pParent)
-{
+CDlgPleaseWait::CDlgPleaseWait(const CTString& strMessage, const CTString& strArgument, CWnd* pParent /*= NULL*/) :
+CDialog(CDlgPleaseWait::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgPleaseWait)
-  //m_Message = _T("");
-  //m_MessageArgument = _T("");
+  // m_Message = _T("");
+  // m_MessageArgument = _T("");
   //}}AFX_DATA_INIT
   m_Message = strMessage;
   m_MessageArgument = strArgument;
 }
 
-
-void CDlgPleaseWait::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgPleaseWait::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgPleaseWait)
   DDX_Text(pDX, IDC_MESSAGE_ARGUMENT_T, m_MessageArgument);
@@ -51,11 +46,10 @@ void CDlgPleaseWait::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgPleaseWait, CDialog)
-  //{{AFX_MSG_MAP(CDlgPleaseWait)
-    // NOTE: the ClassWizard will add message map macros here
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgPleaseWait)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

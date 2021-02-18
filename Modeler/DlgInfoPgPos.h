@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -19,40 +19,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgInfoPgPos dialog
 
-class CDlgInfoPgPos : public CPropertyPage
-{
+class CDlgInfoPgPos : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgInfoPgPos)
 
-// Construction
-public:
+  // Construction
+  public:
   CUpdateable m_udAllValues;
   BOOL OnIdle(LONG lCount);
   CDlgInfoPgPos();
   ~CDlgInfoPgPos();
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgInfoPgPos)
   enum { IDD = IDD_INFO_POSITION };
-  float  m_fLightDist;
-  float  m_fHeading;
-  float  m_fPitch;
-  float  m_fBanking;
-  float  m_fX;
-  float  m_fY;
-  float  m_fZ;
-  float  m_fFOW;
+  float m_fLightDist;
+  float m_fHeading;
+  float m_fPitch;
+  float m_fBanking;
+  float m_fX;
+  float m_fY;
+  float m_fZ;
+  float m_fFOW;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgInfoPgPos)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgInfoPgPos)
   afx_msg void OnChangeEditHeading();
@@ -65,5 +63,4 @@ protected:
   afx_msg void OnChangeEditFow();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };

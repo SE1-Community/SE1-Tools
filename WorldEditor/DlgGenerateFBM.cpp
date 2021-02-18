@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -38,9 +38,7 @@ FLOAT _fFBMfAmplitudeDecreaser;
 BOOL _bFBMAddNegativeValues;
 BOOL _bFBMRandomOffset;
 
-CDlgGenerateFBM::CDlgGenerateFBM(CWnd* pParent /*=NULL*/)
-  : CDialog(CDlgGenerateFBM::IDD, pParent)
-{
+CDlgGenerateFBM::CDlgGenerateFBM(CWnd *pParent /*=NULL*/) : CDialog(CDlgGenerateFBM::IDD, pParent) {
   //{{AFX_DATA_INIT(CDlgGenerateFBM)
   m_fMaxAltitude = 0.0f;
   m_fOctaveAmplitudeDecreaser = 0.0f;
@@ -52,33 +50,30 @@ CDlgGenerateFBM::CDlgGenerateFBM(CWnd* pParent /*=NULL*/)
   //}}AFX_DATA_INIT
 
   m_bCustomWindowCreated = FALSE;
-  m_pdp=NULL;
-  m_pvp=NULL;
+  m_pdp = NULL;
+  m_pvp = NULL;
 
-  _iFBMOctaves=theApp.m_iFBMOctaves;
-  _fFBMHighFrequencyStep=theApp.m_fFBMHighFrequencyStep;
-  _fFBMStepFactor=theApp.m_fFBMStepFactor;
-  _fFBMMaxAmplitude=theApp.m_fFBMMaxAmplitude;
-  _fFBMfAmplitudeDecreaser=theApp.m_fFBMfAmplitudeDecreaser;
-  _bFBMAddNegativeValues=theApp.m_bFBMAddNegativeValues;
-  _bFBMRandomOffset=theApp.m_bFBMRandomOffset;
+  _iFBMOctaves = theApp.m_iFBMOctaves;
+  _fFBMHighFrequencyStep = theApp.m_fFBMHighFrequencyStep;
+  _fFBMStepFactor = theApp.m_fFBMStepFactor;
+  _fFBMMaxAmplitude = theApp.m_fFBMMaxAmplitude;
+  _fFBMfAmplitudeDecreaser = theApp.m_fFBMfAmplitudeDecreaser;
+  _bFBMAddNegativeValues = theApp.m_bFBMAddNegativeValues;
+  _bFBMRandomOffset = theApp.m_bFBMRandomOffset;
 }
 
-
-void CDlgGenerateFBM::DoDataExchange(CDataExchange* pDX)
-{
+void CDlgGenerateFBM::DoDataExchange(CDataExchange *pDX) {
   // if dialog is recieving data
-  if (pDX->m_bSaveAndValidate == FALSE)
-  {
-    m_ctOctaves=_iFBMOctaves;
-    m_fHighFrequencyStep=_fFBMHighFrequencyStep;
-    m_fOctaveAmplitudeStep=_fFBMStepFactor;
-    m_fMaxAltitude=_fFBMMaxAmplitude;
-    m_fOctaveAmplitudeDecreaser=_fFBMfAmplitudeDecreaser;
-    m_bAddNegativeValues=_bFBMAddNegativeValues;
-    m_bRandomOffset=_bFBMRandomOffset;
-  }
-  else if (!::IsWindow(m_ctrlCtOctavesSpin.m_hWnd)) return;
+  if (pDX->m_bSaveAndValidate == FALSE) {
+    m_ctOctaves = _iFBMOctaves;
+    m_fHighFrequencyStep = _fFBMHighFrequencyStep;
+    m_fOctaveAmplitudeStep = _fFBMStepFactor;
+    m_fMaxAltitude = _fFBMMaxAmplitude;
+    m_fOctaveAmplitudeDecreaser = _fFBMfAmplitudeDecreaser;
+    m_bAddNegativeValues = _bFBMAddNegativeValues;
+    m_bRandomOffset = _bFBMRandomOffset;
+  } else if (!::IsWindow(m_ctrlCtOctavesSpin.m_hWnd))
+    return;
 
   CDialog::DoDataExchange(pDX);
   //{{AFX_DATA_MAP(CDlgGenerateFBM)
@@ -98,230 +93,197 @@ void CDlgGenerateFBM::DoDataExchange(CDataExchange* pDX)
   //}}AFX_DATA_MAP
 
   // if dialog is giving data
-  if (pDX->m_bSaveAndValidate != FALSE)
-  {
-    _iFBMOctaves=m_ctOctaves;
-    _fFBMHighFrequencyStep=m_fHighFrequencyStep;
-    _fFBMStepFactor=m_fOctaveAmplitudeStep;
-    _fFBMMaxAmplitude=m_fMaxAltitude;
-    _fFBMfAmplitudeDecreaser=m_fOctaveAmplitudeDecreaser;
+  if (pDX->m_bSaveAndValidate != FALSE) {
+    _iFBMOctaves = m_ctOctaves;
+    _fFBMHighFrequencyStep = m_fHighFrequencyStep;
+    _fFBMStepFactor = m_fOctaveAmplitudeStep;
+    _fFBMMaxAmplitude = m_fMaxAltitude;
+    _fFBMfAmplitudeDecreaser = m_fOctaveAmplitudeDecreaser;
   }
 }
 
-
 BEGIN_MESSAGE_MAP(CDlgGenerateFBM, CDialog)
-  //{{AFX_MSG_MAP(CDlgGenerateFBM)
-  ON_WM_PAINT()
-  ON_BN_CLICKED(IDC_FBM_RANDOMIZE, OnFbmRandomize)
-  ON_EN_CHANGE(IDC_FBM_HIGH_FREQUENCY_STEP, OnChangeFbmHighFrequencyStep)
-  ON_EN_CHANGE(IDC_FBM_MAX_ALTITUDE, OnChangeFbmMaxAltitude)
-  ON_EN_CHANGE(IDC_FBM_OCTAVE_AMPLITUDE_DECREASE, OnChangeFbmOctaveAmplitudeDecrease)
-  ON_EN_CHANGE(IDC_FBM_OCTAVE_STEP, OnChangeFbmOctaveStep)
-  ON_EN_CHANGE(IDC_FBM_OCTAVES, OnChangeFbmOctaves)
-  ON_BN_CLICKED(IDC_ADD_NEGATIVE_VALUES, OnAddNegativeValues)
-  ON_BN_CLICKED(IDC_FBM_EXPORT, OnFbmExport)
-  ON_BN_CLICKED(IDC_RANDOM_OFFSET, OnRandomOffset)
-  //}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDlgGenerateFBM)
+ON_WM_PAINT()
+ON_BN_CLICKED(IDC_FBM_RANDOMIZE, OnFbmRandomize)
+ON_EN_CHANGE(IDC_FBM_HIGH_FREQUENCY_STEP, OnChangeFbmHighFrequencyStep)
+ON_EN_CHANGE(IDC_FBM_MAX_ALTITUDE, OnChangeFbmMaxAltitude)
+ON_EN_CHANGE(IDC_FBM_OCTAVE_AMPLITUDE_DECREASE, OnChangeFbmOctaveAmplitudeDecrease)
+ON_EN_CHANGE(IDC_FBM_OCTAVE_STEP, OnChangeFbmOctaveStep)
+ON_EN_CHANGE(IDC_FBM_OCTAVES, OnChangeFbmOctaves)
+ON_BN_CLICKED(IDC_ADD_NEGATIVE_VALUES, OnAddNegativeValues)
+ON_BN_CLICKED(IDC_FBM_EXPORT, OnFbmExport)
+ON_BN_CLICKED(IDC_RANDOM_OFFSET, OnRandomOffset)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgGenerateFBM message handlers
 
-BOOL CreateFBMTexture(PIX pixW, PIX pixH, CTFileName fnFBMFile)
-{
+BOOL CreateFBMTexture(PIX pixW, PIX pixH, CTFileName fnFBMFile) {
   FLOAT fMin, fMax;
-  FLOAT *pafFBM=GenerateTerrain_FBMBuffer( pixW, pixH, _iFBMOctaves,
-    _fFBMHighFrequencyStep, _fFBMStepFactor, _fFBMMaxAmplitude,
-    _fFBMfAmplitudeDecreaser, _bFBMAddNegativeValues, _bFBMRandomOffset, fMin, fMax);
+  FLOAT *pafFBM = GenerateTerrain_FBMBuffer(pixW, pixH, _iFBMOctaves, _fFBMHighFrequencyStep, _fFBMStepFactor, _fFBMMaxAmplitude,
+                                            _fFBMfAmplitudeDecreaser, _bFBMAddNegativeValues, _bFBMRandomOffset, fMin, fMax);
 
   CImageInfo ii;
-  ii.ii_Width=pixW;
-  ii.ii_Height=pixH;
-  ii.ii_BitsPerPixel=32;
-  ii.ii_Picture=(UBYTE*) AllocMemory(ii.ii_Width*ii.ii_Height*sizeof(COLOR));
-  COLOR *pcol=(COLOR *)ii.ii_Picture;
+  ii.ii_Width = pixW;
+  ii.ii_Height = pixH;
+  ii.ii_BitsPerPixel = 32;
+  ii.ii_Picture = (UBYTE *)AllocMemory(ii.ii_Width * ii.ii_Height * sizeof(COLOR));
+  COLOR *pcol = (COLOR *)ii.ii_Picture;
 
   // convert buffer to equalized color map
-  FLOAT fConvertFactor=MAX_UBYTE/(fMax-fMin);
+  FLOAT fConvertFactor = MAX_UBYTE / (fMax - fMin);
   // pixelate preview area
-  for (INDEX y=0; y<pixH; y++)
-  {
-    for (INDEX x=0; x<pixW; x++)
-    {
-      INDEX iOffset=y*pixW+x;
-      FLOAT fValue=pafFBM[iOffset];
-      UBYTE ub=(fValue-fMin)*fConvertFactor;
-      COLOR col=RGBToColor(ub,ub,ub)|CT_OPAQUE;
-      *pcol=ByteSwap(col);
+  for (INDEX y = 0; y < pixH; y++) {
+    for (INDEX x = 0; x < pixW; x++) {
+      INDEX iOffset = y * pixW + x;
+      FLOAT fValue = pafFBM[iOffset];
+      UBYTE ub = (fValue - fMin) * fConvertFactor;
+      COLOR col = RGBToColor(ub, ub, ub) | CT_OPAQUE;
+      *pcol = ByteSwap(col);
       pcol++;
     }
   }
 
   CTextureData tdFBM;
-  try
-  {
-    tdFBM.Create_t( &ii, pixW, 16, TRUE);
-    tdFBM.Save_t( fnFBMFile);
-  }
-  catch( char *strError)
-  {
-    (void) strError;
+  try {
+    tdFBM.Create_t(&ii, pixW, 16, TRUE);
+    tdFBM.Save_t(fnFBMFile);
+  } catch (char *strError) {
+    (void)strError;
     WarningMessage("Unable to create FBM preview texture!");
-    FreeMemory( pafFBM);
+    FreeMemory(pafFBM);
     return FALSE;
   }
-  FreeMemory( pafFBM);
+  FreeMemory(pafFBM);
   return TRUE;
 }
 
-
-void CDlgGenerateFBM::OnPaint() 
-{
+void CDlgGenerateFBM::OnPaint() {
   CPaintDC dc(this); // device context for painting
 
-  if (!m_bCustomWindowCreated)
-  {
+  if (!m_bCustomWindowCreated) {
     // obtain window position
     CWnd *pwndTexture = GetDlgItem(IDC_FBM_PREVIEW_FRAME);
     ASSERT(pwndTexture != NULL);
     CRect rect;
     pwndTexture->GetWindowRect(&rect);
     ScreenToClient(&rect);
-    m_wndTexture.Create( NULL, NULL, WS_BORDER|WS_VISIBLE, rect, this, IDW_FBM_PREVIEW);
+    m_wndTexture.Create(NULL, NULL, WS_BORDER | WS_VISIBLE, rect, this, IDW_FBM_PREVIEW);
     // mark that custom window is created
     m_bCustomWindowCreated = TRUE;
   }
 
   // ******** Render preview texture
-  if (m_pdp == NULL)
-  {
-    _pGfx->CreateWindowCanvas( m_wndTexture.m_hWnd, &m_pvp, &m_pdp);
+  if (m_pdp == NULL) {
+    _pGfx->CreateWindowCanvas(m_wndTexture.m_hWnd, &m_pvp, &m_pdp);
   }
-  if ((m_pdp != NULL) && (m_pdp->Lock()) )
-  {
-    PIX pixW=256;
-    PIX pixH=256;
-    
-    CTFileName fnFBMFile=CTString("Textures\\Editor\\FMPPreview.tex");
-    if (CreateFBMTexture(pixW, pixH, fnFBMFile))
-    {
-      try
-      {
+  if ((m_pdp != NULL) && (m_pdp->Lock())) {
+    PIX pixW = 256;
+    PIX pixH = 256;
+
+    CTFileName fnFBMFile = CTString("Textures\\Editor\\FMPPreview.tex");
+    if (CreateFBMTexture(pixW, pixH, fnFBMFile)) {
+      try {
         CTextureObject to;
         to.SetData_t(fnFBMFile);
-        CTextureData *ptd=(CTextureData *)to.GetData();
+        CTextureData *ptd = (CTextureData *)to.GetData();
         ptd->Reload();
-        m_pdp->PutTexture( &to, PIXaabbox2D(PIX2D(0,0),PIX2D(m_pdp->GetWidth(),m_pdp->GetHeight())));
-      }
-      catch( char *strError)
-      {
-        (void) strError;
+        m_pdp->PutTexture(&to, PIXaabbox2D(PIX2D(0, 0), PIX2D(m_pdp->GetWidth(), m_pdp->GetHeight())));
+      } catch (char *strError) {
+        (void)strError;
         WarningMessage("Unable to create FBM preview texture!");
       }
       m_pdp->Unlock();
     }
   }
-  if (m_pvp != NULL)
-  {
+  if (m_pvp != NULL) {
     m_pvp->SwapBuffers();
   }
 }
 
-void CDlgGenerateFBM::OnFbmRandomize() 
-{
+void CDlgGenerateFBM::OnFbmRandomize() {
   RandomizeWhiteNoise();
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnChangeFbmHighFrequencyStep() 
-{
+void CDlgGenerateFBM::OnChangeFbmHighFrequencyStep() {
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnChangeFbmMaxAltitude() 
-{
+void CDlgGenerateFBM::OnChangeFbmMaxAltitude() {
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnChangeFbmOctaveAmplitudeDecrease() 
-{
+void CDlgGenerateFBM::OnChangeFbmOctaveAmplitudeDecrease() {
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnChangeFbmOctaveStep() 
-{
+void CDlgGenerateFBM::OnChangeFbmOctaveStep() {
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnChangeFbmOctaves() 
-{
+void CDlgGenerateFBM::OnChangeFbmOctaves() {
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnOK() 
-{
-  theApp.m_iFBMOctaves=_iFBMOctaves;
-  theApp.m_fFBMHighFrequencyStep=_fFBMHighFrequencyStep;
-  theApp.m_fFBMStepFactor=_fFBMStepFactor;
-  theApp.m_fFBMMaxAmplitude=_fFBMMaxAmplitude;
-  theApp.m_fFBMfAmplitudeDecreaser=_fFBMfAmplitudeDecreaser;
-  theApp.m_bFBMAddNegativeValues=_bFBMAddNegativeValues;
-  theApp.m_bFBMRandomOffset=_bFBMRandomOffset;
+void CDlgGenerateFBM::OnOK() {
+  theApp.m_iFBMOctaves = _iFBMOctaves;
+  theApp.m_fFBMHighFrequencyStep = _fFBMHighFrequencyStep;
+  theApp.m_fFBMStepFactor = _fFBMStepFactor;
+  theApp.m_fFBMMaxAmplitude = _fFBMMaxAmplitude;
+  theApp.m_fFBMfAmplitudeDecreaser = _fFBMfAmplitudeDecreaser;
+  theApp.m_bFBMAddNegativeValues = _bFBMAddNegativeValues;
+  theApp.m_bFBMRandomOffset = _bFBMRandomOffset;
 
   CDialog::OnOK();
 }
 
-BOOL CDlgGenerateFBM::OnInitDialog() 
-{
+BOOL CDlgGenerateFBM::OnInitDialog() {
   CDialog::OnInitDialog();
-  
-  m_ctrlCtOctavesSpin.SetRange(0,16);
+
+  m_ctrlCtOctavesSpin.SetRange(0, 16);
   m_ctrlCtOctavesSpin.SetPos(_iFBMOctaves);
 
   return TRUE;
 }
 
-void CDlgGenerateFBM::OnAddNegativeValues() 
-{
-  _bFBMAddNegativeValues=!_bFBMAddNegativeValues;
+void CDlgGenerateFBM::OnAddNegativeValues() {
+  _bFBMAddNegativeValues = !_bFBMAddNegativeValues;
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-void CDlgGenerateFBM::OnRandomOffset() 
-{
-  _bFBMRandomOffset=!_bFBMRandomOffset;
+void CDlgGenerateFBM::OnRandomOffset() {
+  _bFBMRandomOffset = !_bFBMRandomOffset;
   UpdateData(TRUE);
   Invalidate(FALSE);
 }
 
-
-void CDlgGenerateFBM::OnFbmExport() 
-{
-  CTFileName fnFBM=_EngineGUI.FileRequester(
-    "Export FBM texture", FILTER_TEX FILTER_PCX FILTER_ALL FILTER_END,
-    "Layer mask directory", "Textures\\");
-  if (fnFBM == "") return;
+void CDlgGenerateFBM::OnFbmExport() {
+  CTFileName fnFBM = _EngineGUI.FileRequester("Export FBM texture", FILTER_TEX FILTER_PCX FILTER_ALL FILTER_END,
+                                              "Layer mask directory", "Textures\\");
+  if (fnFBM == "")
+    return;
 
   CDlgEditFloat dlg;
-  dlg.m_fEditFloat=256.0f;
+  dlg.m_fEditFloat = 256.0f;
   dlg.m_strVarName = "Width (pixels)";
   dlg.m_strTitle = "Texture size";
-  if (dlg.DoModal() != IDOK) return;
+  if (dlg.DoModal() != IDOK)
+    return;
 
-  PIX pixW=dlg.m_fEditFloat;
-  
-  if (pixW != 1 << ((INDEX)Log2( (FLOAT)pixW)))
-  {
+  PIX pixW = dlg.m_fEditFloat;
+
+  if (pixW != 1 << ((INDEX)Log2((FLOAT)pixW))) {
     WarningMessage("Size must be power of 2!");
-  }
-  else
-  {
+  } else {
     CreateFBMTexture(pixW, pixW, fnFBM);
   }
 }

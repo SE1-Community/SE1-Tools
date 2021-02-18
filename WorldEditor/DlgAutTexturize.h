@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,35 +25,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAutTexturize dialog
 
-class CDlgAutTexturize : public CDialog
-{
-// Construction
-public:
+class CDlgAutTexturize : public CDialog {
+  // Construction
+  public:
   PIX m_pixWidth;
   PIX m_pixHeight;
   INDEX m_iPretenderStyle;
-  CDlgAutTexturize(CWnd* pParent = NULL);   // standard constructor
+  CDlgAutTexturize(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgAutTexturize)
   enum { IDD = IDD_AUTO_TEXTURIZE };
-  CComboBox  m_ctrlPretenderTextureStyle;
-  CColoredButton  m_colBcg;
-  CComboBox  m_ctrPretenderTextureSize;
-  BOOL  m_bExpandEdges;
+  CComboBox m_ctrlPretenderTextureStyle;
+  CColoredButton m_colBcg;
+  CComboBox m_ctrPretenderTextureSize;
+  BOOL m_bExpandEdges;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgAutTexturize)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgAutTexturize)
   virtual BOOL OnInitDialog();

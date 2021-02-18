@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,51 +25,49 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgPgInfoAttachingPlacement dialog
 
-class CDlgPgInfoAttachingPlacement : public CPropertyPage
-{
+class CDlgPgInfoAttachingPlacement : public CPropertyPage {
   DECLARE_DYNCREATE(CDlgPgInfoAttachingPlacement)
 
-// Construction
-public:
+  // Construction
+  public:
   CUpdateable m_udAllValues;
   INDEX m_iActivePlacement;
   CDlgPgInfoAttachingPlacement();
   ~CDlgPgInfoAttachingPlacement();
 
-  BOOL BrowseAttachement( CAttachedModel *pam);
+  BOOL BrowseAttachement(CAttachedModel *pam);
   void SetPlacementReferenceVertex(INDEX iCenter, INDEX iFront, INDEX iUp);
   INDEX GetCurrentAttachingPlacement(void);
   BOOL BrowseModelAndTexture(CTFileName &fnModel, CTFileName &fnTexture);
   void FillAttachmentModelAnimationCombo(void);
   BOOL OnIdle(LONG lCount);
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgPgInfoAttachingPlacement)
   enum { IDD = IDD_INFO_ATTACHING_PLACEMENT };
-  CComboBox  m_comboAttachmentModelAnimation;
-  float  m_fBanking;
-  float  m_fHeading; 
-  float  m_fPitch;
-  float  m_fXOffset;
-  float  m_fYOffset;
-  float  m_fZOffset;
-  CString  m_strName;
-  CString  m_strAttachingModel;
-  CString  m_strAttachingVertices;
-  CString  m_strPlacementIndex;
-  BOOL  m_bIsVisible;
+  CComboBox m_comboAttachmentModelAnimation;
+  float m_fBanking;
+  float m_fHeading;
+  float m_fPitch;
+  float m_fXOffset;
+  float m_fYOffset;
+  float m_fZOffset;
+  CString m_strName;
+  CString m_strAttachingModel;
+  CString m_strAttachingVertices;
+  CString m_strPlacementIndex;
+  BOOL m_bIsVisible;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generate virtual function overrides
   //{{AFX_VIRTUAL(CDlgPgInfoAttachingPlacement)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgPgInfoAttachingPlacement)
   afx_msg void OnAddAttachingPlacement();
@@ -88,7 +86,6 @@ protected:
   afx_msg void OnSelchangeAttachmentModelAnimationCombo();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

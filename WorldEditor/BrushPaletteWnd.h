@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,36 +25,35 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CBrushPaletteWnd window
 
-class CBrushPaletteWnd : public CWnd
-{
-// Construction
-public:
+class CBrushPaletteWnd : public CWnd {
+  // Construction
+  public:
   CBrushPaletteWnd();
 
-// Attributes
-public:
-  CDrawPort *m_pDrawPort;
-  CViewPort *m_pViewPort;
+  // Attributes
+  public:
+  CDrawPort* m_pDrawPort;
+  CViewPort* m_pViewPort;
   int m_iTimerID;
 
-// Operations
-public:
+  // Operations
+  public:
   // calculate given color's box in pixels
-  PIXaabbox2D GetBrushBBox( INDEX iBrush);
+  PIXaabbox2D GetBrushBBox(INDEX iBrush);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CBrushPaletteWnd)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CBrushPaletteWnd();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CBrushPaletteWnd)
   afx_msg void OnPaint();
   afx_msg void OnKillFocus(CWnd* pNewWnd);

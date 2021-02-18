@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,37 +23,36 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 class CBrowser;
 
-class CVirtualTreeCtrl : public CTreeCtrl
-{
-// Construction
-public:
+class CVirtualTreeCtrl : public CTreeCtrl {
+  // Construction
+  public:
   CVirtualTreeCtrl();
 
-// Attributes
-public:
+  // Attributes
+  public:
   CBrowser *m_pBrowser;
   COleDataSource m_DataSource;
   BOOL m_bIsOpen;
 
-// Operations
-public:
+  // Operations
+  public:
   void OpenTreeCtrl(void);
   void CloseTreeCtrl(void);
-  void SetBrowserPtr( CBrowser *pBrowser);
-  void OnContextMenu( CPoint point);
+  void SetBrowserPtr(CBrowser *pBrowser);
+  void OnContextMenu(CPoint point);
   CVirtualTreeNode *ItemForCoordinate(CPoint pt);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CVirtualTreeCtrl)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CVirtualTreeCtrl();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CVirtualTreeCtrl)
   afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
   afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);

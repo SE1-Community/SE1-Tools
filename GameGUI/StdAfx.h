@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -18,30 +18,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //      are changed infrequently
 //
 
-#define VC_EXTRALEAN    // Exclude rarely-used stuff from Windows headers
+#define VC_EXTRALEAN // Exclude rarely-used stuff from Windows headers
 
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
+#include <afxwin.h> // MFC core and standard components
+#include <afxext.h> // MFC extensions
 
 #ifndef _AFX_NO_OLE_SUPPORT
-#include <afxole.h>         // MFC OLE classes
-#include <afxodlgs.h>       // MFC OLE dialog classes
-#include <afxdisp.h>        // MFC OLE automation classes
-#endif // _AFX_NO_OLE_SUPPORT
-
+#include <afxole.h>   // MFC OLE classes
+#include <afxodlgs.h> // MFC OLE dialog classes
+#include <afxdisp.h>  // MFC OLE automation classes
+#endif                // _AFX_NO_OLE_SUPPORT
 
 #ifndef _AFX_NO_DB_SUPPORT
-#include <afxdb.h>      // MFC ODBC database classes
-#endif // _AFX_NO_DB_SUPPORT
+#include <afxdb.h> // MFC ODBC database classes
+#endif             // _AFX_NO_DB_SUPPORT
 
 #ifndef _AFX_NO_DAO_SUPPORT
-#include <afxdao.h>      // MFC DAO database classes
-#endif // _AFX_NO_DAO_SUPPORT
+#include <afxdao.h> // MFC DAO database classes
+#endif              // _AFX_NO_DAO_SUPPORT
 
 #ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>      // MFC support for Windows Common Controls
-#endif // _AFX_NO_AFXCMN_SUPPORT
-
+#include <afxcmn.h> // MFC support for Windows Common Controls
+#endif              // _AFX_NO_AFXCMN_SUPPORT
 
 #include <EngineGUI/EngineGUI.h>
 #include <Game/Game.h>

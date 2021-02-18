@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -19,16 +19,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef CHILDFRAME_H
 #define CHILDFRAME_H 1
 
-class CChildFrame : public CMDIChildWnd
-{ 
+class CChildFrame : public CMDIChildWnd {
   DECLARE_DYNCREATE(CChildFrame)
-public:
+  public:
   CChildFrame();
 
-// Attributes
-protected:
+  // Attributes
+  protected:
   CSplitterWnd m_wndSplitter;
-public:
+
+  public:
   BOOL m_bDisableVisibilityTweaks;
   BOOL m_bShowVisibilityTweaks;
   BOOL m_bTestGameOn;
@@ -48,7 +48,7 @@ public:
   BOOL m_bShadowsVisible;
   BOOL m_bShadowsCalculate;
   BOOL m_bViewFromEntity;
-  BOOL m_bSelectionVisible;  // if selection should be visible
+  BOOL m_bSelectionVisible; // if selection should be visible
   BOOL m_bLastAutoMipBrushingOn;
   BOOL m_bAutoMipBrushingOn;
   FLOAT m_fManualMipBrushingFactor;
@@ -57,7 +57,7 @@ public:
   BOOL m_bSceneRenderingTime;
   BOOL m_bInfoVisible;
   BOOL m_bRenderViewPictures;
-  CMasterViewer m_mvViewer;      // master viewer for all views inside this frame
+  CMasterViewer m_mvViewer; // master viewer for all views inside this frame
   // grid on/off flag
   BOOL m_bGridOn;
   // selected configuration
@@ -65,20 +65,24 @@ public:
 
   CWorldRenderPrefs::ShadowsType m_stShadowType;
 
-// Operations
-public:
+  // Operations
+  public:
   // called from view
   void KeyPressed(UINT nChar, UINT nRepCnt, UINT nFlags);
-  void RememberChildConfiguration( INDEX iViewConfiguration);
-  void SetChildConfiguration( INDEX iViewConfiguration);
-  void ApplySettingsFromPerspectiveView( CWorldEditorView *pwedView, INDEX iViewConfiguration);
-  void DeleteViewsExcept( CWnd *pwndViewToLeave);
-  inline INDEX CChildFrame::GetHSplitters(void) {  return m_wndSplitter.GetColumnCount();}
-  inline INDEX CChildFrame::GetVSplitters(void) {  return m_wndSplitter.GetRowCount();}
-  CWorldEditorView *GetPerspectiveView(void);
-  void TestGame( BOOL bFullScreen);
+  void RememberChildConfiguration(INDEX iViewConfiguration);
+  void SetChildConfiguration(INDEX iViewConfiguration);
+  void ApplySettingsFromPerspectiveView(CWorldEditorView* pwedView, INDEX iViewConfiguration);
+  void DeleteViewsExcept(CWnd* pwndViewToLeave);
+  inline INDEX CChildFrame::GetHSplitters(void) {
+    return m_wndSplitter.GetColumnCount();
+  }
+  inline INDEX CChildFrame::GetVSplitters(void) {
+    return m_wndSplitter.GetRowCount();
+  }
+  CWorldEditorView* GetPerspectiveView(void);
+  void TestGame(BOOL bFullScreen);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CChildFrame)
   public:
@@ -87,16 +91,16 @@ public:
   virtual void ActivateFrame(int nCmdShow = -1);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CChildFrame();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// Generated message map functions
-public:
+  // Generated message map functions
+  public:
   //{{AFX_MSG(CChildFrame)
   afx_msg void OnGridOnOff();
   afx_msg void OnUpdateGridOnOff(CCmdUI* pCmdUI);

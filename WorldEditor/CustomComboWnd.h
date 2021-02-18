@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,9 +25,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCustomComboWnd window
 
-class CComboLine
-{
-public:
+class CComboLine {
+  public:
   CTFileName cl_fnmTexture;
   PIXaabbox2D cl_boxIcon;
   CTString cl_strText;
@@ -35,14 +34,13 @@ public:
   COLOR cl_colText;
 };
 
-class CCustomComboWnd : public CWnd
-{
-// Construction
-public:
+class CCustomComboWnd : public CWnd {
+  // Construction
+  public:
   CCustomComboWnd();
 
-// Attributes
-public:
+  // Attributes
+  public:
   CDynamicContainer<CComboLine> m_dcComboLines;
   CDrawPort *m_pDrawPort;
   CViewPort *m_pViewPort;
@@ -51,35 +49,34 @@ public:
 
   FLOAT *m_pfResult;
 
-// Operations
-public:
+  // Operations
+  public:
   // calculate given line box in pixels
-  PIXaabbox2D GetLineBBox( INDEX iLine);
-  void RenderOneLine( INDEX iLine, PIXaabbox2D rectLine, CDrawPort *pdp, COLOR colFill);
+  PIXaabbox2D GetLineBBox(INDEX iLine);
+  void RenderOneLine(INDEX iLine, PIXaabbox2D rectLine, CDrawPort *pdp, COLOR colFill);
   void GetComboLineSize(PIX &pixMaxWidth, PIX &pixMaxHeight);
-  BOOL Initialize(FLOAT *pfResult, void (*pOnSelect)(INDEX iSelected),
-    PIX pixX, PIX pixY, BOOL bDown=FALSE);
-  INDEX InsertItem( CTString strText, CTFileName fnIcons=CTString(""), 
-    MEXaabbox2D boxIcon=MEXaabbox2D( MEX2D(0,0), MEX2D(0,0)));
+  BOOL Initialize(FLOAT *pfResult, void (*pOnSelect)(INDEX iSelected), PIX pixX, PIX pixY, BOOL bDown = FALSE);
+  INDEX InsertItem(CTString strText, CTFileName fnIcons = CTString(""),
+                   MEXaabbox2D boxIcon = MEXaabbox2D(MEX2D(0, 0), MEX2D(0, 0)));
   void SetItemValue(INDEX iItem, ULONG ulValue);
   void SetItemColor(INDEX iItem, COLOR col);
 
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCustomComboWnd)
   public:
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+  virtual BOOL PreTranslateMessage(MSG *pMsg);
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCustomComboWnd();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCustomComboWnd)
   afx_msg void OnPaint();
-  afx_msg void OnKillFocus(CWnd* pNewWnd);
+  afx_msg void OnKillFocus(CWnd *pNewWnd);
   afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
   afx_msg void OnDestroy();

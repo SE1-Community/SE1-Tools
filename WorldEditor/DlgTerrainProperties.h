@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,50 +25,47 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTerrainProperties dialog
 
-class CDlgTerrainProperties : public CDialog
-{
-// Construction
-public:
-  CDlgTerrainProperties(CWnd* pParent = NULL);   // standard constructor
+class CDlgTerrainProperties : public CDialog {
+  // Construction
+  public:
+  CDlgTerrainProperties(CWnd* pParent = NULL); // standard constructor
   void PrepareGlobalPretenderCombo(void);
   void PrepareTilePretenderCombo(void);
   void InitComboBoxes(void);
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgTerrainProperties)
   enum { IDD = IDD_TERRAIN_PROPERTIES };
-  CComboBox  m_ctrlGlobalPretenderTexture;
-  CComboBox  m_ctrlTilePretender;
-  CSliderCtrl  m_ctrlShadingMapSlider;
-  CComboBox  m_ctrlQuadsPerTile;
-  CComboBox  m_ctrlHeightMapWidth;
-  CComboBox  m_ctrlHeightMapHeight;
-  CSliderCtrl  m_ctrlShadowMapSlider;
-  CString  m_strHeightmapSize;
-  CString  m_strShadowMapSize;
-  CString  m_strTerrainPretender;
-  CString  m_strTilePretender;
-  float  m_fTerrainLength;
-  float  m_fTerrainHeight;
-  float  m_fTerrainWidth;
-  float  m_fLODSwitch;
-  CString  m_strShadingMapSize;
-  CString  m_strMemoryConsumption;
-  CString  m_strLayerMemory;
-  CString  m_strEdgeMap;
+  CComboBox m_ctrlGlobalPretenderTexture;
+  CComboBox m_ctrlTilePretender;
+  CSliderCtrl m_ctrlShadingMapSlider;
+  CComboBox m_ctrlQuadsPerTile;
+  CComboBox m_ctrlHeightMapWidth;
+  CComboBox m_ctrlHeightMapHeight;
+  CSliderCtrl m_ctrlShadowMapSlider;
+  CString m_strHeightmapSize;
+  CString m_strShadowMapSize;
+  CString m_strTerrainPretender;
+  CString m_strTilePretender;
+  float m_fTerrainLength;
+  float m_fTerrainHeight;
+  float m_fTerrainWidth;
+  float m_fLODSwitch;
+  CString m_strShadingMapSize;
+  CString m_strMemoryConsumption;
+  CString m_strLayerMemory;
+  CString m_strEdgeMap;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgTerrainProperties)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgTerrainProperties)
   afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);

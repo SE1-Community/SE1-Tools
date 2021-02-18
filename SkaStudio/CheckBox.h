@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,31 +25,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CCheckBox window
 
-class CCheckBox : public CButton
-{
-// Construction
-public:
+class CCheckBox : public CButton {
+  // Construction
+  public:
   CCheckBox();
   void SetIndex(INDEX iFlagIndex, ULONG ulFlags);
 
-// Attributes
-public:
-  CTString m_strID;  // ID of control
-  INDEX    m_iIndex; // Index of flag in ulong
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  CTString m_strID; // ID of control
+  INDEX m_iIndex;   // Index of flag in ulong
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CCheckBox)
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CCheckBox();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CCheckBox)
   afx_msg void OnClicked();
   //}}AFX_MSG

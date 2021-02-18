@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,31 +25,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConsole dialog
 
-class CDlgConsole : public CDialog
-{
-// Construction
-public:
-  CDlgConsole(CWnd* pParent = NULL);   // standard constructor
+class CDlgConsole : public CDialog {
+  // Construction
+  public:
+  CDlgConsole(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgConsole)
   enum { IDD = IDD_CONSOLE };
-  CConsoleSymbolsCombo  m_ctrConsoleSymbolsCombo;
-  CEditConsole  m_ctrlEditConsole;
-  CString  m_strConsoleOutput;
+  CConsoleSymbolsCombo m_ctrConsoleSymbolsCombo;
+  CEditConsole m_ctrlEditConsole;
+  CString m_strConsoleOutput;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgConsole)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgConsole)
   virtual BOOL OnInitDialog();

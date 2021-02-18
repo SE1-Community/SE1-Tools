@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -23,17 +23,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define IM_NORMAL  1
 #define IM_MAPPING 2
 
-class CDlgInfoSheet : public CPropertySheet
-{
-// Construction
-public:
+class CDlgInfoSheet : public CPropertySheet {
+  // Construction
+  public:
   CUpdateable m_Updateable;
-  CModelerView *m_LastViewUpdated;
+  CModelerView* m_LastViewUpdated;
   INDEX m_InfoMode;
   BOOL OnIdle(LONG lCount);
   DECLARE_DYNAMIC(CDlgInfoSheet)
   CDlgInfoSheet(CWnd* pWndParent);
-  void CustomSetActivePage( CPropertyPage *pppToActivate);
+  void CustomSetActivePage(CPropertyPage* pppToActivate);
 
   CDlgInfoPgNone m_PgInfoNone;
   CDlgInfoPgRendering m_PgInfoRendering;
@@ -47,28 +46,27 @@ public:
   CDlgInfoSheet(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
   CDlgInfoSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+  // Attributes
+  public:
+  // Operations
+  public:
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgInfoSheet)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void PostNcDestroy();
   //}}AFX_VIRTUAL
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CDlgInfoSheet();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CDlgInfoSheet)
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()

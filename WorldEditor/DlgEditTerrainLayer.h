@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,57 +25,54 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEditTerrainLayer dialog
 
-class CDlgEditTerrainLayer : public CDialog
-{
-// Construction
-public:
-  CDlgEditTerrainLayer(CWnd* pParent = NULL);   // standard constructor 
+class CDlgEditTerrainLayer : public CDialog {
+  // Construction
+  public:
+  CDlgEditTerrainLayer(CWnd* pParent = NULL); // standard constructor
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgEditTerrainLayer)
   enum { IDD = IDD_EDIT_TERRAIN_LAYER };
-  BOOL  m_bAutoGenerate;
-  float  m_fAltitudeMax;
-  float  m_fAltitudeMaxFade;
-  float  m_fAltitudeMin;
-  float  m_fAltitudeMinFade;
-  float  m_fLayerCoverage;
-  CString  m_strLayerName;
-  float  m_fTextureOffsetX;
-  float  m_fTextureOffsetY;
-  float  m_fTextureRotationU;
-  float  m_fTextureRotationV;
-  float  m_fSlopeMax;
-  float  m_fSlopeMaxFade;
-  float  m_fSlopeMin;
-  float  m_fSlopeMinFade;
-  float  m_fTextureStretchX;
-  float  m_fTextureStretchY;
-  float  m_fCoverageFade;
-  float  m_fAltitudeMaxNoise;
-  BOOL  m_bApplyMaxAltitude;
-  BOOL  m_bApplyMaxSlope;
-  BOOL  m_bApplyMinAltitude;
-  BOOL  m_bApplyMinSlope;
-  float  m_fAltitudeMinNoise;
-  float  m_fSlopeMaxNoise;
-  float  m_fSlopeMinNoise;
+  BOOL m_bAutoGenerate;
+  float m_fAltitudeMax;
+  float m_fAltitudeMaxFade;
+  float m_fAltitudeMin;
+  float m_fAltitudeMinFade;
+  float m_fLayerCoverage;
+  CString m_strLayerName;
+  float m_fTextureOffsetX;
+  float m_fTextureOffsetY;
+  float m_fTextureRotationU;
+  float m_fTextureRotationV;
+  float m_fSlopeMax;
+  float m_fSlopeMaxFade;
+  float m_fSlopeMin;
+  float m_fSlopeMinFade;
+  float m_fTextureStretchX;
+  float m_fTextureStretchY;
+  float m_fCoverageFade;
+  float m_fAltitudeMaxNoise;
+  BOOL m_bApplyMaxAltitude;
+  BOOL m_bApplyMaxSlope;
+  BOOL m_bApplyMinAltitude;
+  BOOL m_bApplyMinSlope;
+  float m_fAltitudeMinNoise;
+  float m_fSlopeMaxNoise;
+  float m_fSlopeMinNoise;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgEditTerrainLayer)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgEditTerrainLayer)
-    // NOTE: the ClassWizard will add member functions here
+  // NOTE: the ClassWizard will add member functions here
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

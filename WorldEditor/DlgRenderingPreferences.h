@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -21,56 +21,53 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRenderingPreferences dialog
 
-class CDlgRenderingPreferences : public CDialog
-{
-// Construction
-public:
-  CDlgRenderingPreferences(INDEX iBuffer, CWnd* pParent = NULL);   // standard constructor
+class CDlgRenderingPreferences : public CDialog {
+  // Construction
+  public:
+  CDlgRenderingPreferences(INDEX iBuffer, CWnd* pParent = NULL); // standard constructor
   void UpdateEditRangeControl();
   INDEX m_iBuffer;
 
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgRenderingPreferences)
   enum { IDD = IDD_RENDERING_PREFERENCES };
-  CComboBox  m_comboFlareFX;
-  CColoredButton  m_SelectionColor;
-  CColoredButton  m_GridColor;
-  CColoredButton  m_PaperColor;
-  CComboBox  m_TextureFillType;
-  CComboBox  m_EdgesFillType;
-  CComboBox  m_PolygonFillType;
-  CComboBox  m_VertexFillType;
-  CColoredButton  m_VertexColors;
-  CColoredButton  m_PolygonColors;
-  CColoredButton  m_EdgesColors;
-  BOOL  m_bBoundingBox;
-  BOOL  m_bHidenLines;
-  BOOL  m_bShadows;
-  BOOL  m_bWireFrame;
-  float  m_fRenderingRange;
-  BOOL  m_bAutoRenderingRange;
-  BOOL  m_bRenderEditorModels;
-  BOOL  m_bUseTextureForBcg;
-  BOOL  m_bRenderFieldBrushes;
-  BOOL  m_bRenderFog;
-  BOOL  m_bRenderHaze;
-  BOOL  m_bRenderMirrors;
-  CString  m_strBcgTexture;
-  float  m_fFarClipPlane;
-  BOOL  m_bApplyFarClipInIsometricProjection;
+  CComboBox m_comboFlareFX;
+  CColoredButton m_SelectionColor;
+  CColoredButton m_GridColor;
+  CColoredButton m_PaperColor;
+  CComboBox m_TextureFillType;
+  CComboBox m_EdgesFillType;
+  CComboBox m_PolygonFillType;
+  CComboBox m_VertexFillType;
+  CColoredButton m_VertexColors;
+  CColoredButton m_PolygonColors;
+  CColoredButton m_EdgesColors;
+  BOOL m_bBoundingBox;
+  BOOL m_bHidenLines;
+  BOOL m_bShadows;
+  BOOL m_bWireFrame;
+  float m_fRenderingRange;
+  BOOL m_bAutoRenderingRange;
+  BOOL m_bRenderEditorModels;
+  BOOL m_bUseTextureForBcg;
+  BOOL m_bRenderFieldBrushes;
+  BOOL m_bRenderFog;
+  BOOL m_bRenderHaze;
+  BOOL m_bRenderMirrors;
+  CString m_strBcgTexture;
+  float m_fFarClipPlane;
+  BOOL m_bApplyFarClipInIsometricProjection;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgRenderingPreferences)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgRenderingPreferences)
   virtual BOOL OnInitDialog();

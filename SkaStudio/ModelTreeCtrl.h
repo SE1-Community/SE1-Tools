@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -24,30 +24,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #pragma once
 #endif // _MSC_VER > 1000
 
-struct NodeInfo
-{
+struct NodeInfo {
   INDEX ni_iType;
-  BOOL  ni_bSelected;
-  void *ni_pPtr;
-  CModelInstance *pmi;
+  BOOL ni_bSelected;
+  void* ni_pPtr;
+  CModelInstance* pmi;
 };
 
-
-class CModelTreeCtrl : public CTreeCtrl
-{
-public:
+class CModelTreeCtrl : public CTreeCtrl {
+  public:
   CModelTreeCtrl();
-// Operations
-public:
-// Overrides
+  // Operations
+  public:
+  // Overrides
   HTREEITEM hLastSelected;
 
-// Implementation
-public:
+  // Implementation
+  public:
   virtual ~CModelTreeCtrl();
 
   // Generated message map functions
-protected:
+  protected:
   //{{AFX_MSG(CModelTreeCtrl)
   afx_msg void OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult);
   afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
@@ -58,7 +55,6 @@ protected:
   afx_msg void OnRdblclk(NMHDR* pNMHDR, LRESULT* pResult);
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 };
 
 #endif // !defined(AFX_MODELTREECTRL_H__C5D259C2_AD00_11D5_8AB4_00C0262D9BFE__INCLUDED_)

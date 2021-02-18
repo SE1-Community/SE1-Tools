@@ -1,4 +1,4 @@
-/* Copyright (c) 2002-2012 Croteam Ltd. 
+/* Copyright (c) 2002-2012 Croteam Ltd.
 This program is free software; you can redistribute it and/or modify
 it under the terms of version 2 of the GNU General Public License as published by
 the Free Software Foundation
@@ -25,47 +25,45 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /////////////////////////////////////////////////////////////////////////////
 // CDlgLinkTree dialog
 
-class CDlgLinkTree : public CDialog 
-{
-// Construction
-public:
-  CDlgLinkTree(CEntity *pen, CPoint pt, BOOL bWhoTargets, BOOL bPropertyNames, CWnd* pParent = NULL);
-  void AddEntityPtrsRecursiv(CEntity *pen, HTREEITEM hParent, CTString strPropertyName);
-  void ExpandTree(HTREEITEM pItem, BOOL bExpand, INDEX iMaxLevel=-1, BOOL bNoNextSibling=FALSE);
+class CDlgLinkTree : public CDialog {
+  // Construction
+  public:
+  CDlgLinkTree(CEntity* pen, CPoint pt, BOOL bWhoTargets, BOOL bPropertyNames, CWnd* pParent = NULL);
+  void AddEntityPtrsRecursiv(CEntity* pen, HTREEITEM hParent, CTString strPropertyName);
+  void ExpandTree(HTREEITEM pItem, BOOL bExpand, INDEX iMaxLevel = -1, BOOL bNoNextSibling = FALSE);
   void ExpandRecursivly(HTREEITEM pItem, BOOL bExpand, BOOL bNoNextSibling);
-  void CalculateOccupiedSpace(HTREEITEM hItem, CRect &rect);
+  void CalculateOccupiedSpace(HTREEITEM hItem, CRect& rect);
   INDEX GetItemLevel(HTREEITEM item);
   void SetNewWindowOrigin(void);
   void InitializeTree(void);
   CPoint m_pt;
-  CEntity *m_pen;
+  CEntity* m_pen;
   HTREEITEM m_HitItem;
   CPoint m_ptLastMouse;
   CPoint m_ptMouseDown;
   CRect m_rectWndOnMouseDown;
-// Dialog Data
+  // Dialog Data
   //{{AFX_DATA(CDlgLinkTree)
   enum { IDD = IDD_LINK_TREE };
-  CTreeCtrl  m_ctrTree;
-  BOOL  m_bClass;
-  BOOL  m_bName;
-  BOOL  m_bProperty;
-  BOOL  m_bWho;
+  CTreeCtrl m_ctrTree;
+  BOOL m_bClass;
+  BOOL m_bName;
+  BOOL m_bProperty;
+  BOOL m_bWho;
   //}}AFX_DATA
 
-
-// Overrides
+  // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CDlgLinkTree)
   public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
+
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
   //}}AFX_VIRTUAL
 
-// Implementation
-protected:
-
+  // Implementation
+  protected:
   // Generated message map functions
   //{{AFX_MSG(CDlgLinkTree)
   virtual BOOL OnInitDialog();
