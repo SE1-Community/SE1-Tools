@@ -63,16 +63,15 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX) {
     BOOL bValidX, bValidY, bValidZ;
     bValidX = bValidY = bValidZ = TRUE;
     // for each of the dynamic container
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
-        if (itvtx->bvx_vAbsolute(1) != vFirst(1))
-          bValidX = FALSE;
-        if (itvtx->bvx_vAbsolute(2) != vFirst(2))
-          bValidY = FALSE;
-        if (itvtx->bvx_vAbsolute(3) != vFirst(3))
-          bValidZ = FALSE;
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+      if (itvtx->bvx_vAbsolute(1) != vFirst(1))
+        bValidX = FALSE;
+      if (itvtx->bvx_vAbsolute(2) != vFirst(2))
+        bValidY = FALSE;
+      if (itvtx->bvx_vAbsolute(3) != vFirst(3))
+        bValidZ = FALSE;
+    }}
+
     if (!bValidX)
       GetDlgItem(IDC_VTX_SNAP_X)->SetWindowText(L"");
     if (!bValidY)
@@ -100,18 +99,17 @@ void CDlgSnapVertex::DoDataExchange(CDataExchange* pDX) {
       pDoc->RememberUndo();
       pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
       // for each of the dynamic container
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
-          DOUBLE3D vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
-          if (bApplyX)
-            vNew(1) = m_fX;
-          if (bApplyY)
-            vNew(2) = m_fY;
-          if (bApplyZ)
-            vNew(3) = m_fZ;
-          itvtx->SetAbsolutePosition(vNew);
-        }
-      }
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+        DOUBLE3D vNew = FLOATtoDOUBLE(itvtx->bvx_vAbsolute);
+        if (bApplyX)
+          vNew(1) = m_fX;
+        if (bApplyY)
+          vNew(2) = m_fY;
+        if (bApplyZ)
+          vNew(3) = m_fZ;
+        itvtx->SetAbsolutePosition(vNew);
+      }}
+
       pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
       pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
       pDoc->UpdateAllViews(NULL);

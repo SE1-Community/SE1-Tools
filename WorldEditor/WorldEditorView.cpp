@@ -1620,13 +1620,13 @@ void CWorldEditorView::StartMouseInput(CPoint point) {
       FLOATaabbox3D box;
       CPlacement3D plEntityCenter;
       plEntityCenter = CPlacement3D(FLOAT3D(0.0f, 0.0f, 0.0f), ANGLE3D(0.0f, 0.0f, 0.0f));
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          // accumulate positions
-          box |= iten->GetPlacement().pl_PositionVector;
-          // plEntityCenter.pl_OrientationAngle += iten->GetPlacement().pl_OrientationAngle;
-        }
-      }
+
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        // accumulate positions
+        box |= iten->GetPlacement().pl_PositionVector;
+        // plEntityCenter.pl_OrientationAngle += iten->GetPlacement().pl_OrientationAngle;
+      }}
+
       plEntityCenter.pl_PositionVector = box.Center();
       plEntityCenter.pl_PositionVector(2) = box.Min()(2);
       // calculate average rotation
@@ -1635,14 +1635,13 @@ void CWorldEditorView::StartMouseInput(CPoint point) {
       pDoc->m_aSelectedEntityPlacements.Clear();
       pDoc->m_aSelectedEntityPlacements.New(pDoc->m_selEntitySelection.Count());
       INDEX ienCurrent = 0;
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          CPlacement3D plRelative = iten->GetPlacement();
-          plRelative.AbsoluteToRelativeSmooth(plEntityCenter);
-          pDoc->m_aSelectedEntityPlacements[ienCurrent] = plRelative;
-          ienCurrent++;
-        }
-      }
+
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        CPlacement3D plRelative = iten->GetPlacement();
+        plRelative.AbsoluteToRelativeSmooth(plEntityCenter);
+        pDoc->m_aSelectedEntityPlacements[ienCurrent] = plRelative;
+        ienCurrent++;
+      }}
 
       // copy it's placement for continous moving
       m_plMouseMove = plEntityCenter;
@@ -1653,13 +1652,12 @@ void CWorldEditorView::StartMouseInput(CPoint point) {
     if (ctDragVertices != 0) {
       // remember coordinates of vertices for dragging
       pDoc->m_avStartDragVertices.New(ctDragVertices);
+
       INDEX iVtx = 0;
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
-          pDoc->m_avStartDragVertices[iVtx] = FLOATtoDOUBLE(itbvx->bvx_vAbsolute);
-          iVtx++;
-        }
-      }
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+        pDoc->m_avStartDragVertices[iVtx] = FLOATtoDOUBLE(itbvx->bvx_vAbsolute);
+        iVtx++;
+      }}
     }
   }
 
@@ -3032,8 +3030,9 @@ void CWorldEditorView::OnLButtonDblClk(UINT nFlags, CPoint point) {
       CBrushPolygon &bpo = *crRayHit.cr_pbpoBrushPolygon;
       // select vertices
       FOREACHINSTATICARRAY(bpo.bpo_apbvxTriangleVertices, CBrushVertex *, itpbvx) {
-        if (!(*itpbvx)->IsSelected(BVXF_SELECTED))
+        if (!(*itpbvx)->IsSelected(BVXF_SELECTED)) {
           pDoc->m_selVertexSelection.Select(**itpbvx);
+        }
       }
 
       pDoc->m_chSelections.MarkChanged();
@@ -3056,11 +3055,9 @@ void CWorldEditorView::OnLButtonDblClk(UINT nFlags, CPoint point) {
       // lock selection's dynamic container
       pDoc->m_selEntitySelection.Lock();
       FLOATaabbox3D box;
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          box |= iten->GetPlacement().pl_PositionVector;
-        }
-      }
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        box |= iten->GetPlacement().pl_PositionVector;
+      }}
 
       FLOAT3D f3dCenter = box.Center();
       f3dCenter(2) = box.Min()(2);
@@ -4177,50 +4174,48 @@ void CWorldEditorView::OnMouseMove(UINT nFlags, CPoint point) {
         return;
       // if there is no anchored entity in selection or if moving of
       // anchored entities is allowed
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          if (((iten->GetFlags() & ENF_ANCHORED) != 0) && (!GetChildFrame()->m_bAncoredMovingAllowed))
-            return;
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        if (((iten->GetFlags() & ENF_ANCHORED) != 0) && (!GetChildFrame()->m_bAncoredMovingAllowed)) {
+          return;
         }
-      }
+      }}
 
       INDEX ienCurrent = 0;
       CEntity *penBrush = NULL;
+
       // for each of the selected entities
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          if (iten->en_RenderType == CEntity::RT_BRUSH) {
-            penBrush = &*iten;
-          }
-          if ((iten->GetParent() == NULL) || !(iten->GetParent()->IsSelected(ENF_SELECTED))) {
-            // set new entity placement
-            CPlacement3D plEntityPlacement = pDoc->m_aSelectedEntityPlacements[ienCurrent];
-            plEntityPlacement.RelativeToAbsoluteSmooth(m_plMouseMove);
-            pDoc->SnapToGrid(plEntityPlacement, m_fGridInMeters / GRID_DISCRETE_VALUES);
-            iten->SetPlacement(plEntityPlacement);
-            pDoc->SetModifiedFlag();
-          }
-          ienCurrent++;
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        if (iten->en_RenderType == CEntity::RT_BRUSH) {
+          penBrush = &*iten;
         }
-      }
+        if ((iten->GetParent() == NULL) || !(iten->GetParent()->IsSelected(ENF_SELECTED))) {
+          // set new entity placement
+          CPlacement3D plEntityPlacement = pDoc->m_aSelectedEntityPlacements[ienCurrent];
+          plEntityPlacement.RelativeToAbsoluteSmooth(m_plMouseMove);
+          pDoc->SnapToGrid(plEntityPlacement, m_fGridInMeters / GRID_DISCRETE_VALUES);
+          iten->SetPlacement(plEntityPlacement);
+          pDoc->SetModifiedFlag();
+        }
+        ienCurrent++;
+      }}
+
       if (penBrush != NULL) {
         DiscardShadows(penBrush);
       }
+
       if (m_iaInputAction == IA_ROTATING_ENTITY_SELECTION) {
         // check for terrain updating
-        {
-          FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-            CLightSource *pls = iten->GetLightSource();
-            if (pls != NULL) {
-              // if light is directional
-              if (pls->ls_ulFlags & LSF_DIRECTIONAL) {
-                CTerrain *ptrTerrain = GetTerrain();
-                if (ptrTerrain != NULL)
-                  ptrTerrain->UpdateShadowMap();
-              }
+        {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+          CLightSource *pls = iten->GetLightSource();
+          if (pls != NULL) {
+            // if light is directional
+            if (pls->ls_ulFlags & LSF_DIRECTIONAL) {
+              CTerrain *ptrTerrain = GetTerrain();
+              if (ptrTerrain != NULL)
+                ptrTerrain->UpdateShadowMap();
             }
           }
-        }
+        }}
       }
     }
   }
@@ -4552,21 +4547,19 @@ void CWorldEditorView::RotateOrStretchBrushVertex(FLOAT fDX, FLOAT fDY, BOOL bRo
 
   // for each vertex
   INDEX iVtx = 0;
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
-      DOUBLE3D vRelative = pDoc->m_avStartDragVertices[iVtx] - vCenter;
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+    DOUBLE3D vRelative = pDoc->m_avStartDragVertices[iVtx] - vCenter;
 
-      // rotate vertex around bbox center to get new position
-      DOUBLE3D vNew = vRelative * fFactor * t3ddRotation;
+    // rotate vertex around bbox center to get new position
+    DOUBLE3D vNew = vRelative * fFactor * t3ddRotation;
 
-      // snap resulting vertex coordinate
-      SnapVector(vNew);
+    // snap resulting vertex coordinate
+    SnapVector(vNew);
 
-      // set its new position
-      itbvx->SetAbsolutePosition(vNew + vCenter);
-      iVtx++;
-    }
-  }
+    // set its new position
+    itbvx->SetAbsolutePosition(vNew + vCenter);
+    iVtx++;
+  }}
 
   // update sectors
   pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
@@ -4610,16 +4603,14 @@ void CWorldEditorView::DragBrushVertex(FLOAT fDX, FLOAT fDY, FLOAT fDZ) {
 
   // for each vertex
   INDEX iVtx = 0;
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
-      // get new position
-      DOUBLE3D vNew = pDoc->m_avStartDragVertices[iVtx] + vDelta;
-      SnapVector(vNew);
-      // set its new position
-      itbvx->SetAbsolutePosition(vNew);
-      iVtx++;
-    }
-  }
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+    // get new position
+    DOUBLE3D vNew = pDoc->m_avStartDragVertices[iVtx] + vDelta;
+    SnapVector(vNew);
+    // set its new position
+    itbvx->SetAbsolutePosition(vNew);
+    iVtx++;
+  }}
 
   // update sectors
   pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
@@ -4876,12 +4867,11 @@ void CWorldEditorView::OnDeleteEntities() {
   } else {
     // if any of selected entities is anchored, anchored operation flag must be allowed or deleting is disabled
     FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          if ((iten->GetFlags() & ENF_ANCHORED) && !GetChildFrame()->m_bAncoredMovingAllowed)
-            return;
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        if ((iten->GetFlags() & ENF_ANCHORED) && !GetChildFrame()->m_bAncoredMovingAllowed) {
+          return;
         }
-      }
+      }}
     }
 
     if (pDoc->m_selEntitySelection.Count() != 0) {
@@ -4890,45 +4880,47 @@ void CWorldEditorView::OnDeleteEntities() {
       }
     }
     // check for deleting terrain
-    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {CEntity &en = *iten;
-    // if it is terrain
-    if (en.GetRenderType() == CEntity::RT_TERRAIN) {
-      // if it is selected terrain
-      if (pDoc->m_ptrSelectedTerrain == en.GetTerrain()) {
-        pDoc->m_ptrSelectedTerrain = NULL;
-        theApp.m_ctTerrainPage.MarkChanged();
-        break;
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      CEntity &en = *iten;
+      // if it is terrain
+      if (en.GetRenderType() == CEntity::RT_TERRAIN) {
+        // if it is selected terrain
+        if (pDoc->m_ptrSelectedTerrain == en.GetTerrain()) {
+          pDoc->m_ptrSelectedTerrain = NULL;
+          theApp.m_ctTerrainPage.MarkChanged();
+          break;
+        }
       }
-    }
-  }
-}
+    }}
 
-// for each of the selected entities
-{FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {if (pDoc->m_cenEntitiesSelectedByVolume.IsMember(iten))
-                                                                         pDoc->m_cenEntitiesSelectedByVolume.Remove(iten);
-}
-}
-// for each of the selected entities
-{
-  FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-    RemoveFromLinkedChain(iten);
+    // for each of the selected entities
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      if (pDoc->m_cenEntitiesSelectedByVolume.IsMember(iten)) {
+        pDoc->m_cenEntitiesSelectedByVolume.Remove(iten);
+      }
+    }}
+
+    // for each of the selected entities
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      RemoveFromLinkedChain(iten);
+    }}
+
+    // clear selections
+    pDoc->m_selVertexSelection.Clear();
+    pDoc->m_selSectorSelection.Clear();
+    pDoc->m_selPolygonSelection.Clear();
+    // delete all selected entities
+    pDoc->m_woWorld.DestroyEntities(pDoc->m_selEntitySelection);
   }
-}
-// clear selections
-pDoc->m_selVertexSelection.Clear();
-pDoc->m_selSectorSelection.Clear();
-pDoc->m_selPolygonSelection.Clear();
-// delete all selected entities
-pDoc->m_woWorld.DestroyEntities(pDoc->m_selEntitySelection);
-}
-// mark that document was changed (for saving)
-pDoc->SetModifiedFlag();
-// mark that document changeable was changed to update CSG target combo box
-pDoc->m_chDocument.MarkChanged();
-// mark that selections have been changed to update entity intersection properties
-pDoc->m_chSelections.MarkChanged();
-// update all views
-pDoc->UpdateAllViews(NULL);
+
+  // mark that document was changed (for saving)
+  pDoc->SetModifiedFlag();
+  // mark that document changeable was changed to update CSG target combo box
+  pDoc->m_chDocument.MarkChanged();
+  // mark that selections have been changed to update entity intersection properties
+  pDoc->m_chSelections.MarkChanged();
+  // update all views
+  pDoc->UpdateAllViews(NULL);
 }
 
 void CWorldEditorView::OnUpdateDeleteEntities(CCmdUI *pCmdUI) {
@@ -5122,36 +5114,32 @@ void CWorldEditorView::EditCopy(BOOL bAlternative) {
         CDynamicContainer<CEntity> selClones;
         CPlacement3D plPaste = GetMouseInWorldPlacement();
         // for all selected entities
-        {
-          FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-            CEntity *pClone = pDoc->m_woWorld.CopyEntityInWorld(*iten, plPaste);
-            selClones.Add(pClone);
-          }
-        }
+        {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+          CEntity *pClone = pDoc->m_woWorld.CopyEntityInWorld(*iten, plPaste);
+          selClones.Add(pClone);
+        }}
 
         // clear old selection and select clones
         pDoc->m_selEntitySelection.Clear();
-        {
-          FOREACHINDYNAMICCONTAINER(selClones, CEntity, itenClone) {
-            pDoc->m_selEntitySelection.Select(*itenClone);
-          }
-        }
+
+        {FOREACHINDYNAMICCONTAINER(selClones, CEntity, itenClone) {
+          pDoc->m_selEntitySelection.Select(*itenClone);
+        }}
 
         pDoc->m_chSelections.MarkChanged();
         pDoc->SetModifiedFlag();
         pDoc->UpdateAllViews(NULL);
+
       } else {
         // calculate bounding boxes of all selected entities
         FLOATaabbox3D boxEntities;
         // for all selected entities
-        {
-          FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-            FLOATaabbox3D boxCurrentEntity;
-            iten->GetSize(boxCurrentEntity);
-            boxCurrentEntity += iten->GetPlacement().pl_PositionVector;
-            boxEntities |= boxCurrentEntity;
-          }
-        }
+        {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+          FLOATaabbox3D boxCurrentEntity;
+          iten->GetSize(boxCurrentEntity);
+          boxCurrentEntity += iten->GetPlacement().pl_PositionVector;
+          boxEntities |= boxCurrentEntity;
+        }}
 
         // average for all vectors of entities
         FLOAT3D vCenter = boxEntities.Center();
@@ -5333,14 +5321,14 @@ void CWorldEditorView::OnEditPaste() {
     // make container of entities to copy
     CDynamicContainer<CEntity> cenToCopy;
     cenToCopy = woEntityClipboard.wo_cenEntities;
+
     // remove empty brushes from it
-    {
-      FOREACHINDYNAMICCONTAINER(woEntityClipboard.wo_cenEntities, CEntity, iten) {
-        if (iten->IsEmptyBrush() && (iten->GetFlags() & ENF_ZONING)) {
-          cenToCopy.Remove(iten);
-        }
+    {FOREACHINDYNAMICCONTAINER(woEntityClipboard.wo_cenEntities, CEntity, iten) {
+      if (iten->IsEmptyBrush() && (iten->GetFlags() & ENF_ZONING)) {
+        cenToCopy.Remove(iten);
       }
-    }
+    }}
+
     // copy entities in clipboard
     pDoc->m_woWorld.CopyEntities(woEntityClipboard, cenToCopy, pDoc->m_selEntitySelection, plPaste);
 
@@ -5510,8 +5498,9 @@ BOOL CWorldEditorView::PreTranslateMessage(MSG *pMsg) {
           // select all polygons in hitted sector
           CBrushSector *pbscSector = crRayHit.cr_pbpoBrushPolygon->bpo_pbscSector;
           FOREACHINSTATICARRAY(pbscSector->bsc_abpoPolygons, CBrushPolygon, itpo) {
-            if (!itpo->IsSelected(BPOF_SELECTED))
+            if (!itpo->IsSelected(BPOF_SELECTED)) {
               pDoc->m_selPolygonSelection.Select(*itpo);
+            }
           }
           pDoc->m_chSelections.MarkChanged();
         }
@@ -5539,8 +5528,9 @@ BOOL CWorldEditorView::PreTranslateMessage(MSG *pMsg) {
         if ((crRayHit.cr_penHit != NULL) && (crRayHit.cr_pbpoBrushPolygon != NULL)) {
           // select all vertices on hitted polygon
           FOREACHINSTATICARRAY(crRayHit.cr_pbpoBrushPolygon->bpo_apbvxTriangleVertices, CBrushVertex *, itpbvx) {
-            if (!(*itpbvx)->IsSelected(BVXF_SELECTED))
+            if (!(*itpbvx)->IsSelected(BVXF_SELECTED)) {
               pDoc->m_selVertexSelection.Select(**itpbvx);
+            }
           }
         }
         pDoc->m_chSelections.MarkChanged();
@@ -6171,20 +6161,19 @@ void CWorldEditorView::SnapSelectedVerticesToPlane(void) {
     pr.Project(pbpo->bpo_pbplPlane->bpl_pldPreciseRelative, plAbsPrecise);
 
     // snap vertices to plane
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
-        CEntity *pen = itbvx->bvx_pbscSector->bsc_pbmBrushMip->bm_pbrBrush->br_penEntity;
-        CSimpleProjection3D_DOUBLE pr;
-        pr.ObjectPlacementL() = pen->GetPlacement();
-        pr.ViewerPlacementL() = _plOrigin;
-        pr.Prepare();
-        DOUBLE3D vAbsPrecise;
-        pr.ProjectCoordinate(itbvx->bvx_vdPreciseRelative, vAbsPrecise);
-        DOUBLE3D vOnPlaneAbsPrecise = plAbsPrecise.ProjectPoint(vAbsPrecise);
-        itbvx->SetAbsolutePosition(vOnPlaneAbsPrecise);
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+      CEntity *pen = itbvx->bvx_pbscSector->bsc_pbmBrushMip->bm_pbrBrush->br_penEntity;
+      CSimpleProjection3D_DOUBLE pr;
+      pr.ObjectPlacementL() = pen->GetPlacement();
+      pr.ViewerPlacementL() = _plOrigin;
+      pr.Prepare();
+      DOUBLE3D vAbsPrecise;
+      pr.ProjectCoordinate(itbvx->bvx_vdPreciseRelative, vAbsPrecise);
+      DOUBLE3D vOnPlaneAbsPrecise = plAbsPrecise.ProjectPoint(vAbsPrecise);
+      itbvx->SetAbsolutePosition(vOnPlaneAbsPrecise);
+    }}
   }
+
   pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
   pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
   pDoc->UpdateAllViews(NULL);
@@ -7170,26 +7159,27 @@ void CWorldEditorView::GetToolTipText(char *pToolTipText) {
     // add count of occupiing sectors and their names
     INDEX ctIntersectingSectors = penEntity->en_rdSectors.Count();
     INDEX ctWithName = 0;
-    {
-      FOREACHSRCOFDST(penEntity->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
-      if (pbsc->bsc_strName != "")
+    {FOREACHSRCOFDST(penEntity->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+      if (pbsc->bsc_strName != "") {
         ctWithName++;
-      ENDFOR
-    }
+      }
+    ENDFOR}
+
     INDEX ctLetters = sprintf(pchrCursor, "In %d sectors (%d with name):\n", ctIntersectingSectors, ctWithName);
-    if (ctLetters > iLongestLineLetters)
+    if (ctLetters > iLongestLineLetters) {
       iLongestLineLetters = ctLetters;
+    }
+
     pchrCursor += ctLetters;
-    {
-      FOREACHSRCOFDST(penEntity->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+    {FOREACHSRCOFDST(penEntity->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
       if (pbsc->bsc_strName != "") {
         INDEX ctLetters = sprintf(pchrCursor, "In: %-24.24s\n", pbsc->bsc_strName);
-        if (ctLetters > iLongestLineLetters)
+        if (ctLetters > iLongestLineLetters) {
           iLongestLineLetters = ctLetters;
+        }
         pchrCursor += ctLetters;
       }
-      ENDFOR
-    }
+    ENDFOR}
 
     for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase) {
       CTString strValue;
@@ -7478,22 +7468,18 @@ void CWorldEditorView::OnSelectAllEntitiesInSectors() {
   // if right clicked on nothing or selected sector
   if ((pbscHitted == NULL) || pbscHitted->IsSelected(BSCF_SELECTED)) {
     FOREACHINDYNAMICCONTAINER(pDoc->m_selSectorSelection, CBrushSector, itbsc) {
-      {
-        FOREACHDSTOFSRC(itbsc->bsc_rsEntities, CEntity, en_rdSectors, pen)
+      {FOREACHDSTOFSRC(itbsc->bsc_rsEntities, CEntity, en_rdSectors, pen)
         if (!pen->IsSelected(ENF_SELECTED)) {
           pDoc->m_selEntitySelection.Select(*pen);
         }
-        ENDFOR
-      }
+      ENDFOR}
     }
   } else {
-    {
-      FOREACHDSTOFSRC(pbscHitted->bsc_rsEntities, CEntity, en_rdSectors, pen)
+    {FOREACHDSTOFSRC(pbscHitted->bsc_rsEntities, CEntity, en_rdSectors, pen)
       if (!pen->IsSelected(ENF_SELECTED)) {
         pDoc->m_selEntitySelection.Select(*pen);
       }
-      ENDFOR
-    }
+    ENDFOR}
   }
   pDoc->SetEditingMode(ENTITY_MODE);
   pDoc->m_chSelections.MarkChanged();
@@ -8044,28 +8030,26 @@ void CWorldEditorView::OnSelectSectorsArroundEntity() {
     BOOL bHitFields = pDoc->GetEditingMode() == ENTITY_MODE;
     CCastRay crRayHit = GetMouseHitInformation(m_ptMouse, FALSE, bHitModels, bHitFields);
     // if none of entities is hitted
-    if (crRayHit.cr_penHit == NULL)
+    if (crRayHit.cr_penHit == NULL) {
       return;
-    {
-      FOREACHSRCOFDST(crRayHit.cr_penHit->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+    }
+
+    {FOREACHSRCOFDST(crRayHit.cr_penHit->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
       // if sector is not hidden and not selected
       if (!(pbsc->bsc_ulFlags & BSCF_HIDDEN) && !pbsc->IsSelected(BSCF_SELECTED)) {
         // select it
         pDoc->m_selSectorSelection.Select(*pbsc);
       }
-      ENDFOR
-    }
+    ENDFOR}
   } else {
     FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      {
-        FOREACHSRCOFDST(iten->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+      {FOREACHSRCOFDST(iten->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
         // if sector is not hidden and not selected
         if (!(pbsc->bsc_ulFlags & BSCF_HIDDEN) && !pbsc->IsSelected(BSCF_SELECTED)) {
           // select it
           pDoc->m_selSectorSelection.Select(*pbsc);
         }
-        ENDFOR
-      }
+      ENDFOR}
     }
   }
 
@@ -8083,26 +8067,22 @@ void CWorldEditorView::OnSelectSectorsArroundEntityOnContext() {
   // perform select sectors on whole entity selection
   if (m_penEntityHitOnContext->IsSelected(ENF_SELECTED)) {
     FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      {
-        FOREACHSRCOFDST(iten->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+      {FOREACHSRCOFDST(iten->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
         // if sector is not hidden and not selected
         if (!(pbsc->bsc_ulFlags & BSCF_HIDDEN) && !pbsc->IsSelected(BSCF_SELECTED)) {
           // select it
           pDoc->m_selSectorSelection.Select(*pbsc);
         }
-        ENDFOR
-      }
+      ENDFOR}
     }
   } else {
-    {
-      FOREACHSRCOFDST(m_penEntityHitOnContext->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
+    {FOREACHSRCOFDST(m_penEntityHitOnContext->en_rdSectors, CBrushSector, bsc_rsEntities, pbsc)
       // if sector is not hidden and not selected
       if (!(pbsc->bsc_ulFlags & BSCF_HIDDEN) && !pbsc->IsSelected(BSCF_SELECTED)) {
         // select it
         pDoc->m_selSectorSelection.Select(*pbsc);
       }
-      ENDFOR
-    }
+    ENDFOR}
   }
 
   pDoc->SetEditingMode(SECTOR_MODE);
@@ -8837,39 +8817,39 @@ void CWorldEditorView::Rotate(FLOAT fAngleLR, FLOAT fAngleUD, BOOL bSmooth /*=FA
     pDoc->m_plSecondLayer.pl_OrientationAngle += a3dForRotation;
   } else if ((pDoc->GetEditingMode() == ENTITY_MODE)) {
     CEntity *penBrush = NULL;
-    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity,
-                               iten) {if (iten->en_RenderType == CEntity::RT_BRUSH) {penBrush = &*iten;
-  }
-  if (!(iten->GetFlags() & ENF_ANCHORED) || GetChildFrame()->m_bAncoredMovingAllowed) {
-    CPlacement3D plEntity = iten->GetPlacement();
-    plEntity.pl_OrientationAngle += a3dForRotation;
-    iten->SetPlacement(plEntity);
-  }
-}
-}
-
-// check for terrain updating
-{
-  FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-    CLightSource *pls = iten->GetLightSource();
-    if (pls != NULL) {
-      // if light is directional
-      if (pls->ls_ulFlags & LSF_DIRECTIONAL) {
-        CTerrain *ptrTerrain = GetTerrain();
-        if (ptrTerrain != NULL)
-          ptrTerrain->UpdateShadowMap();
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      if (iten->en_RenderType == CEntity::RT_BRUSH) {
+        penBrush = &*iten;
       }
+
+      if (!(iten->GetFlags() & ENF_ANCHORED) || GetChildFrame()->m_bAncoredMovingAllowed) {
+        CPlacement3D plEntity = iten->GetPlacement();
+        plEntity.pl_OrientationAngle += a3dForRotation;
+        iten->SetPlacement(plEntity);
+      }
+    }}
+
+    // check for terrain updating
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      CLightSource *pls = iten->GetLightSource();
+
+      if (pls != NULL) {
+        // if light is directional
+        if (pls->ls_ulFlags & LSF_DIRECTIONAL) {
+          CTerrain *ptrTerrain = GetTerrain();
+          if (ptrTerrain != NULL)
+            ptrTerrain->UpdateShadowMap();
+        }
+      }
+    }}
+
+    if (penBrush != NULL) {
+      DiscardShadows(penBrush);
     }
   }
-}
-
-if (penBrush != NULL) {
-  DiscardShadows(penBrush);
-}
-}
-pDoc->m_chSelections.MarkChanged();
-pDoc->SetModifiedFlag(TRUE);
-pDoc->UpdateAllViews(NULL);
+  pDoc->m_chSelections.MarkChanged();
+  pDoc->SetModifiedFlag(TRUE);
+  pDoc->UpdateAllViews(NULL);
 }
 
 void CWorldEditorView::MultiplyMappingOnPolygon(FLOAT fFactor) {
@@ -9057,11 +9037,9 @@ void CWorldEditorView::OnSelectWhoTargetsOnContext() {
   // if right-clicked on void or selected entity
   if ((m_penEntityHitOnContext == NULL) || (m_penEntityHitOnContext->IsSelected(ENF_SELECTED))) {
     // perform on whole selection
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-        dcEntities.Add(iten);
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+      dcEntities.Add(iten);
+    }}
   } else {
     // perform only on right-clicked entity
     dcEntities.Add(m_penEntityHitOnContext);
@@ -9072,14 +9050,15 @@ void CWorldEditorView::OnSelectWhoTargetsOnContext() {
 
 void CWorldEditorView::OnSelectWhoTargets() {
   CWorldEditorDoc *pDoc = GetDocument();
+
   // to hold entities for selecting
   CDynamicContainer<CEntity> dcEntities;
+
   // perform on whole selection
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      dcEntities.Add(iten);
-    }
-  }
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    dcEntities.Add(iten);
+  }}
+
   // select all entities that target ones from dynamic container
   SelectWhoTargets(dcEntities);
 }
@@ -9141,28 +9120,26 @@ void CWorldEditorView::SelectAllTargetsOfSelectedEntities(void) {
   CWorldEditorDoc *pDoc = GetDocument();
   // to hold entities for selecting
   CDynamicContainer<CEntity> dcEntities;
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      // obtain entity class ptr
-      CDLLEntityClass *pdecDLLClass = iten->GetClass()->ec_pdecDLLClass;
-      // for all classes in hierarchy of this entity
-      for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase) {
-        // for all properties
-        for (INDEX iProperty = 0; iProperty < pdecDLLClass->dec_ctProperties; iProperty++) {
-          CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
-          if (epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR && epProperty.ep_strName != NULL
-              && CTString(epProperty.ep_strName) != "") {
-            // obtain property ptr
-            CEntity *penTarget = ENTITYPROPERTY(&*iten, epProperty.ep_slOffset, CEntityPointer);
-            if (penTarget != NULL) {
-              // add it to container
-              dcEntities.Add(penTarget);
-            }
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    // obtain entity class ptr
+    CDLLEntityClass *pdecDLLClass = iten->GetClass()->ec_pdecDLLClass;
+    // for all classes in hierarchy of this entity
+    for (; pdecDLLClass != NULL; pdecDLLClass = pdecDLLClass->dec_pdecBase) {
+      // for all properties
+      for (INDEX iProperty = 0; iProperty < pdecDLLClass->dec_ctProperties; iProperty++) {
+        CEntityProperty &epProperty = pdecDLLClass->dec_aepProperties[iProperty];
+        if (epProperty.ep_eptType == CEntityProperty::EPT_ENTITYPTR && epProperty.ep_strName != NULL
+            && CTString(epProperty.ep_strName) != "") {
+          // obtain property ptr
+          CEntity *penTarget = ENTITYPROPERTY(&*iten, epProperty.ep_slOffset, CEntityPointer);
+          if (penTarget != NULL) {
+            // add it to container
+            dcEntities.Add(penTarget);
           }
         }
       }
     }
-  }
+  }}
 
   // for all entities in dynamic container
   FOREACHINDYNAMICCONTAINER(dcEntities, CEntity, iten) {
@@ -9332,13 +9309,11 @@ void CWorldEditorView::OnSelectSectorsOtherSide() {
       && (crRayHit.cr_pbpoBrushPolygon->bpo_ulFlags & BPOF_PORTAL)) {
     CBrushPolygon &bpo = *crRayHit.cr_pbpoBrushPolygon;
     // for all sectors behind portal
-    {
-      FOREACHDSTOFSRC(bpo.bpo_rsOtherSideSectors, CBrushSector, bsc_rdOtherSidePortals, pbsc)
+    {FOREACHDSTOFSRC(bpo.bpo_rsOtherSideSectors, CBrushSector, bsc_rdOtherSidePortals, pbsc)
       if (!pbsc->IsSelected(BSCF_SELECTED)) {
         pDoc->m_selSectorSelection.Select(*pbsc);
       }
-      ENDFOR
-    }
+    ENDFOR}
 
     pDoc->SetEditingMode(SECTOR_MODE);
     pDoc->m_chSelections.MarkChanged();
@@ -9355,13 +9330,11 @@ void CWorldEditorView::OnSelectLinksToSector() {
     CBrushSector &bsc = *crRayHit.cr_pbpoBrushPolygon->bpo_pbscSector;
 
     // for all sectors behind portal
-    {
-      FOREACHSRCOFDST(bsc.bsc_rdOtherSidePortals, CBrushPolygon, bpo_rsOtherSideSectors, pbpo)
+    {FOREACHSRCOFDST(bsc.bsc_rdOtherSidePortals, CBrushPolygon, bpo_rsOtherSideSectors, pbpo)
       if (!pbpo->IsSelected(BPOF_SELECTED)) {
         pDoc->m_selPolygonSelection.Select(*pbpo);
       }
-      ENDFOR
-    }
+    ENDFOR}
 
     pDoc->SetEditingMode(POLYGON_MODE);
     pDoc->m_chSelections.MarkChanged();
@@ -9382,31 +9355,32 @@ void CWorldEditorView::OnRemainSelectedByOrientation(BOOL bBothSides) {
   // obtain information about where mouse points into the world
   CCastRay crRayHit = GetMouseHitInformation(m_ptMouse);
   CBrushPolygon *pbpoPolygon = crRayHit.cr_pbpoBrushPolygon;
+
   // if we hit brush entity
   if ((crRayHit.cr_penHit != NULL) && (pbpoPolygon != NULL)) {
     FLOAT3D vReference = pbpoPolygon->bpo_pbplPlane->bpl_plAbsolute;
     // copy polygon selection to container
     CDynamicContainer<CBrushPolygon> dcTemp;
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
-        dcTemp.Add(itbpo);
-      }
-    }
-    pDoc->m_selPolygonSelection.Clear();
-    {
-      FOREACHINDYNAMICCONTAINER(dcTemp, CBrushPolygon, itbpo) {
-        FLOAT fCos;
-        if (bBothSides) {
-          fCos = Abs(vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute);
-        } else {
-          fCos = vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute;
-        }
 
-        if (fCos > CosFast(360.0f / 8.0f)) {
-          pDoc->m_selPolygonSelection.Select(*itbpo);
-        }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
+      dcTemp.Add(itbpo);
+    }}
+
+    pDoc->m_selPolygonSelection.Clear();
+
+    {FOREACHINDYNAMICCONTAINER(dcTemp, CBrushPolygon, itbpo) {
+      FLOAT fCos;
+      if (bBothSides) {
+        fCos = Abs(vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute);
+      } else {
+        fCos = vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute;
       }
-    }
+
+      if (fCos > CosFast(360.0f / 8.0f)) {
+        pDoc->m_selPolygonSelection.Select(*itbpo);
+      }
+    }}
+
     pDoc->m_chSelections.MarkChanged();
     pDoc->UpdateAllViews(NULL);
   }
@@ -9422,20 +9396,19 @@ void CWorldEditorView::OnDeselectByOrientation() {
     FLOAT3D vReference = pbpoPolygon->bpo_pbplPlane->bpl_plAbsolute;
     // copy polygon selection to container
     CDynamicContainer<CBrushPolygon> dcTemp;
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
-        dcTemp.Add(itbpo);
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
+      dcTemp.Add(itbpo);
+    }}
+
     pDoc->m_selPolygonSelection.Clear();
-    {
-      FOREACHINDYNAMICCONTAINER(dcTemp, CBrushPolygon, itbpo) {
-        FLOAT fCos = Abs(vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute);
-        if (fCos < CosFast(360.0f / 8.0f)) {
-          pDoc->m_selPolygonSelection.Select(*itbpo);
-        }
+
+    {FOREACHINDYNAMICCONTAINER(dcTemp, CBrushPolygon, itbpo) {
+      FLOAT fCos = Abs(vReference % itbpo->bpo_pbplPlane->bpl_plAbsolute);
+      if (fCos < CosFast(360.0f / 8.0f)) {
+        pDoc->m_selPolygonSelection.Select(*itbpo);
       }
-    }
+    }}
+
     pDoc->m_chSelections.MarkChanged();
     pDoc->UpdateAllViews(NULL);
   }
@@ -9454,24 +9427,23 @@ void CWorldEditorView::OnReoptimizeBrushes() {
     BOOL bSelected = crRayHit.cr_penHit->IsSelected(ENF_SELECTED);
 
     if (bSelected && (pDoc->GetEditingMode() == ENTITY_MODE)) {
-      {
-        FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-          if (iten->en_RenderType == CEntity::RT_BRUSH) {
-            CBrush3D *pbrBrush = iten->GetBrush();
-            // for each mip in the brush
-            FOREACHINLIST(CBrushMip, bm_lnInBrush, pbrBrush->br_lhBrushMips, itbm) {
-              // reoptimize it
-              itbm->Reoptimize();
-            }
-            DiscardShadows(&*iten);
-            if (iten->GetFlags() & ENF_ZONING) {
-              pbrBrush->SwitchToZoning();
-            } else {
-              pbrBrush->SwitchToNonZoning();
-            }
+      {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+        if (iten->en_RenderType == CEntity::RT_BRUSH) {
+          CBrush3D *pbrBrush = iten->GetBrush();
+          // for each mip in the brush
+          FOREACHINLIST(CBrushMip, bm_lnInBrush, pbrBrush->br_lhBrushMips, itbm) {
+            // reoptimize it
+            itbm->Reoptimize();
+          }
+
+          DiscardShadows(&*iten);
+          if (iten->GetFlags() & ENF_ZONING) {
+            pbrBrush->SwitchToZoning();
+          } else {
+            pbrBrush->SwitchToNonZoning();
           }
         }
-      }
+      }}
     } else {
       if (penEntityHit->en_RenderType == CEntity::RT_BRUSH) {
         CBrush3D *pbrBrush = penEntityHit->GetBrush();
@@ -9525,44 +9497,40 @@ void CWorldEditorView::OnMergeVertices() {
   CDynamicContainer<CBrushVertex> cbvxAllreadyDone;
 
   DOUBLE3D vMergeToVertex;
-  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex,
-                             itbvx) {vMergeToVertex = FLOATtoDOUBLE(itbvx->bvx_vAbsolute);
-}
-}
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+    vMergeToVertex = FLOATtoDOUBLE(itbvx->bvx_vAbsolute);
+  }}
 
-// deselect vertices that are on right spot, to avoid unnecessary triangularisation
-{FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex,
-                           itbvx) {if (FLOATtoDOUBLE(itbvx->bvx_vAbsolute) == vMergeToVertex) {cbvxAllreadyDone.Add(itbvx);
-}
-}
-}
-{
-  FOREACHINDYNAMICCONTAINER(cbvxAllreadyDone, CBrushVertex, itbvx) {
+  // deselect vertices that are on right spot, to avoid unnecessary triangularisation
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+    if (FLOATtoDOUBLE(itbvx->bvx_vAbsolute) == vMergeToVertex) {
+      cbvxAllreadyDone.Add(itbvx);
+    }
+  }}
+
+  {FOREACHINDYNAMICCONTAINER(cbvxAllreadyDone, CBrushVertex, itbvx) {
     pDoc->m_selVertexSelection.Deselect(*itbvx);
-  }
-}
+  }}
 
-// triangularize all influenced polygons
-pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
+  // triangularize all influenced polygons
+  pDoc->m_woWorld.TriangularizeForVertices(pDoc->m_selVertexSelection);
 
-// for each vertex
-{FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {// set its new position
-                                                                             itbvx->SetAbsolutePosition(vMergeToVertex);
-}
-}
+  // for each vertex
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itbvx) {
+    // set its new position
+    itbvx->SetAbsolutePosition(vMergeToVertex);
+  }}
 
-// reselect vertices
-{
-  FOREACHINDYNAMICCONTAINER(cbvxAllreadyDone, CBrushVertex, itbvx) {
+  // reselect vertices
+  {FOREACHINDYNAMICCONTAINER(cbvxAllreadyDone, CBrushVertex, itbvx) {
     pDoc->m_selVertexSelection.Select(*itbvx);
-  }
-}
+  }}
 
-// update sectors
-pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
-pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
-pDoc->UpdateAllViews(NULL);
-pDoc->SetModifiedFlag();
+  // update sectors
+  pDoc->m_woWorld.UpdateSectorsDuringVertexChange(pDoc->m_selVertexSelection);
+  pDoc->m_woWorld.UpdateSectorsAfterVertexChange(pDoc->m_selVertexSelection);
+  pDoc->UpdateAllViews(NULL);
+  pDoc->SetModifiedFlag();
 }
 
 void CWorldEditorView::OnExportDisplaceMap() {
@@ -9856,13 +9824,12 @@ void CWorldEditorView::OnSelectOfSameClass() {
   CDynamicContainer<CEntity> dcEntities;
 
   // for all selected entities
-  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {dcEntities.Add(&*iten);
-}
-}
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    dcEntities.Add(&*iten);
+  }}
 
-// for each non-hidden entity in the world
-{
-  FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten) {
+  // for each non-hidden entity in the world
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten) {
     CBrushSector *pbscSector = iten->GetFirstSector();
     BOOL bSectorVisible = (pbscSector == NULL) || !(pbscSector->bsc_ulFlags & BSCF_HIDDEN);
     // if it isn't classified in hidden sector and is not hidden itself
@@ -9874,25 +9841,22 @@ void CWorldEditorView::OnSelectOfSameClass() {
     CEntityClass *pdecClass = iten->GetClass();
 
     // test all classes
-    {
-      FOREACHINDYNAMICCONTAINER(dcEntities, CEntity, itenClass) {
-        CEntityClass *pdecClassTest = itenClass->GetClass();
-        // if of same class
-        if (pdecClassTest == pdecClass) {
-          // if not yet selected
-          if (!iten->IsSelected(ENF_SELECTED)) {
-            // select it
-            pDoc->m_selEntitySelection.Select(*iten);
-          }
+    {FOREACHINDYNAMICCONTAINER(dcEntities, CEntity, itenClass) {
+      CEntityClass *pdecClassTest = itenClass->GetClass();
+      // if of same class
+      if (pdecClassTest == pdecClass) {
+        // if not yet selected
+        if (!iten->IsSelected(ENF_SELECTED)) {
+          // select it
+          pDoc->m_selEntitySelection.Select(*iten);
         }
       }
-    }
-  }
-}
+    }}
+  }}
 
-// mark that selections have been changed
-pDoc->m_chSelections.MarkChanged();
-pDoc->UpdateAllViews(NULL);
+  // mark that selections have been changed
+  pDoc->m_chSelections.MarkChanged();
+  pDoc->UpdateAllViews(NULL);
 }
 
 void CWorldEditorView::OnSelectOfSameClassOnContext() {
@@ -9905,26 +9869,25 @@ void CWorldEditorView::OnSelectOfSameClassOnContext() {
     CEntityClass *pdecClassTest = pen->GetClass();
 
     // for each non-hidden entity in the world
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten) {
-        CBrushSector *pbscSector = iten->GetFirstSector();
-        BOOL bSectorVisible = (pbscSector == NULL) || !(pbscSector->bsc_ulFlags & BSCF_HIDDEN);
-        // if it isn't classified in hidden sector and is not hidden itself
-        if (!bSectorVisible || (iten->en_ulFlags & ENF_HIDDEN)) {
-          continue;
-        }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_woWorld.wo_cenEntities, CEntity, iten) {
+      CBrushSector *pbscSector = iten->GetFirstSector();
+      BOOL bSectorVisible = (pbscSector == NULL) || !(pbscSector->bsc_ulFlags & BSCF_HIDDEN);
 
-        CEntityClass *pdecClass = iten->GetClass();
-        // if of same class
-        if (pdecClassTest == pdecClass) {
-          // if not yet selected
-          if (!iten->IsSelected(ENF_SELECTED)) {
-            // select it
-            pDoc->m_selEntitySelection.Select(*iten);
-          }
+      // if it isn't classified in hidden sector and is not hidden itself
+      if (!bSectorVisible || (iten->en_ulFlags & ENF_HIDDEN)) {
+        continue;
+      }
+
+      CEntityClass *pdecClass = iten->GetClass();
+      // if of same class
+      if (pdecClassTest == pdecClass) {
+        // if not yet selected
+        if (!iten->IsSelected(ENF_SELECTED)) {
+          // select it
+          pDoc->m_selEntitySelection.Select(*iten);
         }
       }
-    }
+    }}
   }
 
   // mark that selections have been changed
@@ -10813,36 +10776,35 @@ void CWorldEditorView::Align(BOOL bX, BOOL bY, BOOL bZ, BOOL bH, BOOL bP, BOOL b
   CWorldEditorDoc *pDoc = GetDocument();
   INDEX ctSelected = pDoc->m_woWorld.wo_cenEntities.Count();
   CEntity *penLast = NULL;
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      penLast = &*iten;
-    }
-  }
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    penLast = &*iten;
+  }}
+
   CPlacement3D penSrc = penLast->GetPlacement();
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      CPlacement3D pl = iten->GetPlacement();
-      if (bX) {
-        pl.pl_PositionVector(1) = penSrc.pl_PositionVector(1);
-      };
-      if (bY) {
-        pl.pl_PositionVector(2) = penSrc.pl_PositionVector(2);
-      };
-      if (bZ) {
-        pl.pl_PositionVector(3) = penSrc.pl_PositionVector(3);
-      };
-      if (bH) {
-        pl.pl_OrientationAngle(1) = penSrc.pl_OrientationAngle(1);
-      };
-      if (bP) {
-        pl.pl_OrientationAngle(2) = penSrc.pl_OrientationAngle(2);
-      };
-      if (bB) {
-        pl.pl_OrientationAngle(3) = penSrc.pl_OrientationAngle(3);
-      };
-      iten->SetPlacement(pl);
-    }
-  }
+
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    CPlacement3D pl = iten->GetPlacement();
+    if (bX) {
+      pl.pl_PositionVector(1) = penSrc.pl_PositionVector(1);
+    };
+    if (bY) {
+      pl.pl_PositionVector(2) = penSrc.pl_PositionVector(2);
+    };
+    if (bZ) {
+      pl.pl_PositionVector(3) = penSrc.pl_PositionVector(3);
+    };
+    if (bH) {
+      pl.pl_OrientationAngle(1) = penSrc.pl_OrientationAngle(1);
+    };
+    if (bP) {
+      pl.pl_OrientationAngle(2) = penSrc.pl_OrientationAngle(2);
+    };
+    if (bB) {
+      pl.pl_OrientationAngle(3) = penSrc.pl_OrientationAngle(3);
+    };
+    iten->SetPlacement(pl);
+  }}
+
   pDoc->SetModifiedFlag(TRUE);
   pDoc->UpdateAllViews(NULL);
 }
@@ -11167,17 +11129,16 @@ void CWorldEditorView::AutoApplyTexture(FLOATaabbox3D boxBrush, CTFileName &fnTe
 void CWorldEditorView::OnAutotexturizeMips() {
   CWorldEditorDoc *pDoc = GetDocument();
   FLOATaabbox3D boxBrush;
+
   // for each entity in the world
-  {
-    FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
-      CEntity *pen = &*iten;
-      if (pen->GetRenderType() == CEntity::RT_BRUSH) {
-        CBrush3D *pbrBrush = pen->GetBrush();
-        CBrushMip *pbrMip = pbrBrush->GetFirstMip();
-        boxBrush |= pbrMip->bm_boxBoundingBox;
-      }
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    CEntity *pen = &*iten;
+    if (pen->GetRenderType() == CEntity::RT_BRUSH) {
+      CBrush3D *pbrBrush = pen->GetBrush();
+      CBrushMip *pbrMip = pbrBrush->GetFirstMip();
+      boxBrush |= pbrMip->bm_boxBoundingBox;
     }
-  }
+  }}
 
   CTFileName fnTex;
   BOOL bSuccess = SaveAutoTexture(boxBrush, fnTex);
@@ -11430,13 +11391,11 @@ void CWorldEditorView::OnFlipPolygon() {
     itbsc->UpdateSector();
   }
 
-  {
-    FOREACHINDYNAMICCONTAINER(dcPolygons, CBrushPolygon, itbpo) {
-      CBrushPolygon &bpo = *itbpo;
-      INDEX iTriVtx = bpo.bpo_aiTriangleElements.Count();
-      INDEX tmpa = 0;
-    }
-  }
+  {FOREACHINDYNAMICCONTAINER(dcPolygons, CBrushPolygon, itbpo) {
+    CBrushPolygon &bpo = *itbpo;
+    INDEX iTriVtx = bpo.bpo_aiTriangleElements.Count();
+    INDEX tmpa = 0;
+  }}
 
   pDoc->SetModifiedFlag(TRUE);
   pDoc->UpdateAllViews(NULL);

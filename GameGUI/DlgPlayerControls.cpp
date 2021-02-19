@@ -159,6 +159,7 @@ void CDlgPlayerControls::FillActionsList(void) {
   itItem.mask = LVIF_TEXT;
   // index for automatic counting of added items
   INDEX ctItemsAdded = 0;
+
   // now add all button actions
   FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
     // macro for adding single button action into list control
@@ -324,10 +325,12 @@ void CDlgPlayerControls::ActivatePressKey(char *strFirstOrSecond) {
         _pInput->DisableInput();
         // if new button is mounted allready, set owner's action mounting to "key none"
         FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
-          if (itButtonAction->ba_iFirstKey == iButton)
+          if (itButtonAction->ba_iFirstKey == iButton) {
             itButtonAction->ba_iFirstKey = KID_NONE;
-          if (itButtonAction->ba_iSecondKey == iButton)
+          }
+          if (itButtonAction->ba_iSecondKey == iButton) {
             itButtonAction->ba_iSecondKey = KID_NONE;
+          }
         }
 
         CButtonAction *pbaCurrent = GetSelectedButtonAction();
@@ -472,30 +475,28 @@ void CDlgPlayerControls::OnMoveControlUp() {
   INDEX iCurrent = 0;
   CButtonAction *pbaButtonToMove = NULL;
 
-  {
-    FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
-      if (iCurrent == iSelectedButton) {
-        // remove it from list
-        itButtonAction->ba_lnNode.Remove();
-        pbaButtonToMove = &itButtonAction.Current();
-        break;
-      }
-      iCurrent++;
+  {FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
+    if (iCurrent == iSelectedButton) {
+      // remove it from list
+      itButtonAction->ba_lnNode.Remove();
+      pbaButtonToMove = &itButtonAction.Current();
+      break;
     }
-  }
+    iCurrent++;
+  }}
+
   ASSERT(pbaButtonToMove != NULL);
 
   // insert removed member again but before its predcessor
   iCurrent = 0;
-  {
-    FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
-      if (iCurrent == (iSelectedButton - 1)) {
-        itButtonAction->ba_lnNode.AddBefore(pbaButtonToMove->ba_lnNode);
-        break;
-      }
-      iCurrent++;
+  {FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
+    if (iCurrent == (iSelectedButton - 1)) {
+      itButtonAction->ba_lnNode.AddBefore(pbaButtonToMove->ba_lnNode);
+      break;
     }
-  }
+    iCurrent++;
+  }}
+
   // refresh list control
   FillActionsList();
   // get no of items
@@ -522,30 +523,29 @@ void CDlgPlayerControls::OnMoveControlDown() {
   // find member to move down
   INDEX iCurrent = 0;
   CButtonAction *pbaButtonToMove = NULL;
-  {
-    FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
-      if (iCurrent == iSelectedButton) {
-        // remove it from list
-        itButtonAction->ba_lnNode.Remove();
-        pbaButtonToMove = &itButtonAction.Current();
-        break;
-      }
-      iCurrent++;
+
+  {FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
+    if (iCurrent == iSelectedButton) {
+      // remove it from list
+      itButtonAction->ba_lnNode.Remove();
+      pbaButtonToMove = &itButtonAction.Current();
+      break;
     }
-  }
+    iCurrent++;
+  }}
+
   ASSERT(pbaButtonToMove != NULL);
 
   // insert removed member again but before its predcessor
   iCurrent = 0;
-  {
-    FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
-      if (iCurrent == (iSelectedButton)) {
-        itButtonAction->ba_lnNode.AddAfter(pbaButtonToMove->ba_lnNode);
-        break;
-      }
-      iCurrent++;
+  {FOREACHINLIST(CButtonAction, ba_lnNode, m_ctrlControls.ctrl_lhButtonActions, itButtonAction) {
+    if (iCurrent == (iSelectedButton)) {
+      itButtonAction->ba_lnNode.AddAfter(pbaButtonToMove->ba_lnNode);
+      break;
     }
-  }
+    iCurrent++;
+  }}
+
   // refresh list control
   FillActionsList();
   // get no of items

@@ -96,6 +96,7 @@ BOOL CDlgConsole::OnInitDialog() {
 
   // fill symbols combo box
   m_ctrConsoleSymbolsCombo.ResetContent();
+
   // for each of symbols in the shell
   FOREACHINDYNAMICARRAY(_pShell->sh_assSymbols, CShellSymbol, itss) {
     // if it is not visible to user
@@ -108,6 +109,7 @@ BOOL CDlgConsole::OnInitDialog() {
     // add string to console
     m_ctrConsoleSymbolsCombo.AddString(CString(strSymbol));
   }
+
   // select first combo member
   m_ctrConsoleSymbolsCombo.SetCurSel(0);
 

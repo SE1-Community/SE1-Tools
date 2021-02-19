@@ -3027,8 +3027,9 @@ void CModelerView::OnCreateMipModels() {
             iFrame++;
           }
           // clear list of frames
-          FORDELETELIST(CFileNameNode, cfnn_Node, FrameNamesList, litDel)
-          delete &litDel.Current();
+          FORDELETELIST(CFileNameNode, cfnn_Node, FrameNamesList, litDel) {
+            delete &litDel.Current();
+          }
         }
       }
     } catch (char *pstrError) {

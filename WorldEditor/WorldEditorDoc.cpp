@@ -666,8 +666,7 @@ void CWorldEditorDoc::StartTemplateCSG(CPlacement3D plTemplate, const CTFileName
   /*
   // if none of entities in dropped world has brush rendering type
   // for all of the world's entities
-  {FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, iten)
-  {
+  {FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, iten) {
     CEntity::RenderType rt = iten->GetRenderType();
     // if the entity is brush and it is not empty
     if ((rt == CEntity::RT_BRUSH || rt == CEntity::RT_FIELDBRUSH) && ( !iten->IsEmptyBrush()) &&
@@ -813,15 +812,14 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType) {
     }
 
     // find other entity
-    {
-      FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, itenOther) {
-        if (CTString(itenOther->GetClass()->ec_pdecDLLClass->dec_strName) == "WorldBase") {
-          penOther = &itenOther.Current();
-          bOtherFound = TRUE;
-          break;
-        }
+    {FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, itenOther) {
+      if (CTString(itenOther->GetClass()->ec_pdecDLLClass->dec_strName) == "WorldBase") {
+        penOther = &itenOther.Current();
+        bOtherFound = TRUE;
+        break;
       }
-    }
+    }}
+
     // if other entity can't be obtained, switch to join layers mode
     if (!bOtherFound) {
       CSGType = CSG_JOIN_LAYERS;
@@ -909,13 +907,12 @@ void CWorldEditorDoc::ApplyCSG(enum CSGType CSGType) {
       CDynamicContainer<CEntity> cenToCopy;
       cenToCopy = m_pwoSecondLayer->wo_cenEntities;
       // remove empty brushes from it
-      {
-        FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, iten) {
-          if (iten->IsEmptyBrush() && (iten->GetFlags() & ENF_ZONING)) {
-            cenToCopy.Remove(iten);
-          }
+      {FOREACHINDYNAMICCONTAINER(m_pwoSecondLayer->wo_cenEntities, CEntity, iten) {
+        if (iten->IsEmptyBrush() && (iten->GetFlags() & ENF_ZONING)) {
+          cenToCopy.Remove(iten);
         }
-      }
+      }}
+
       // copy entities in container
       m_woWorld.CopyEntities(*m_pwoSecondLayer, cenToCopy, m_selEntitySelection, m_plSecondLayer);
       m_iPreCSGMode = ENTITY_MODE;
@@ -2687,87 +2684,85 @@ void CWorldEditorDoc::PreApplyCSG(enum CSGType CSGType) {
 
     CDynamicContainer<CEntity> dcenDummy;
     // for all still selected brush entities
-    {FOREACHINDYNAMICCONTAINER(m_selEntitySelection, CEntity, iten) {CEntity::RenderType rt = iten->GetRenderType();
-    // if the entity is brush and it is not empty
-    if (rt == CEntity::RT_BRUSH || rt == CEntity::RT_FIELDBRUSH) {
-      // copy entity into dummy world
-      woDummyWorld.CopyOneEntity(*iten, plZeroPlacement);
-    }
-    // deselect entities that are not brushes
-    else {
-      // deselect clicked sector
-      dcenDummy.Add(&iten.Current());
-    }
+    {FOREACHINDYNAMICCONTAINER(m_selEntitySelection, CEntity, iten) {
+      CEntity::RenderType rt = iten->GetRenderType();
+      // if the entity is brush and it is not empty
+      if (rt == CEntity::RT_BRUSH || rt == CEntity::RT_FIELDBRUSH) {
+        // copy entity into dummy world
+        woDummyWorld.CopyOneEntity(*iten, plZeroPlacement);
+      // deselect entities that are not brushes
+      } else {
+        // deselect clicked sector
+        dcenDummy.Add(&iten.Current());
+      }
+    }}
+
+    // for entities that should be deselected
+    {FOREACHINDYNAMICCONTAINER(dcenDummy, CEntity, iten) {
+      m_selEntitySelection.Deselect(*iten);
+    }}
+    dcenDummy.Clear();
+
+    // remember undo before doing CSG operations
+    RememberUndo();
+
+    // clear all selections except entity
+    ClearSelections(ST_ENTITY);
+
+    // delete all brush entities that are still selected
+    m_woWorld.DestroyEntities(m_selEntitySelection);
+
+    // set wait cursor
+    CWaitCursor StartWaitCursor;
+    m_csgtLastUsedCSGOperation = CSG_ADD_ENTITIES;
+    m_bPreLastUsedPrimitiveMode = m_bLastUsedPrimitiveMode;
+    m_bLastUsedPrimitiveMode = FALSE;
+
+    // for all of the dummy world's entities
+    {FOREACHINDYNAMICCONTAINER(woDummyWorld.wo_cenEntities, CEntity, iten) {
+      // create another dummy world
+      CWorld woOneBrush;
+      // copy entity from dummy world to world containing only one brush
+      CEntity *penOnlyBrush = woOneBrush.CopyOneEntity(*iten, plZeroPlacement);
+      // ----------- Do CSG beetween current entity and destination combo's entity
+      switch (CSGType) {
+        case CSG_ADD: {
+          m_woWorld.CSGAdd(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
+          break;
+        }
+        case CSG_ADD_REVERSE: {
+          m_woWorld.CSGAddReverse(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
+          break;
+        }
+        case CSG_REMOVE: {
+          m_woWorld.CSGRemove(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
+          break;
+        }
+        case CSG_SPLIT_SECTORS: {
+          m_woWorld.SplitSectors(*penTarget, m_selSectorSelection, woOneBrush, *penOnlyBrush, plZeroPlacement);
+          break;
+        }
+        case CSG_SPLIT_POLYGONS: {
+          m_woWorld.SplitPolygons(*penTarget, m_selPolygonSelection, woOneBrush, *penOnlyBrush, plZeroPlacement);
+          break;
+        }
+        default: {
+          ASSERTALWAYS("PreAplyCSG() function called with illegal CSG operation.");
+          return;
+        }
+      }
+    }}
+
+    // mark that selections have been changed
+    SetModifiedFlag(TRUE);
+    m_chSelections.MarkChanged();
+    m_chDocument.MarkChanged();
+
+  } else {
+    ApplyCSG(CSGType);
   }
-}
 
-// for entities that should be deselected
-{
-  FOREACHINDYNAMICCONTAINER(dcenDummy, CEntity, iten) {
-    m_selEntitySelection.Deselect(*iten);
-  }
-}
-dcenDummy.Clear();
-
-// remember undo before doing CSG operations
-RememberUndo();
-
-// clear all selections except entity
-ClearSelections(ST_ENTITY);
-
-// delete all brush entities that are still selected
-m_woWorld.DestroyEntities(m_selEntitySelection);
-
-// set wait cursor
-CWaitCursor StartWaitCursor;
-m_csgtLastUsedCSGOperation = CSG_ADD_ENTITIES;
-m_bPreLastUsedPrimitiveMode = m_bLastUsedPrimitiveMode;
-m_bLastUsedPrimitiveMode = FALSE;
-// for all of the dummy world's entities
-{
-  FOREACHINDYNAMICCONTAINER(woDummyWorld.wo_cenEntities, CEntity, iten) {
-    // create another dummy world
-    CWorld woOneBrush;
-    // copy entity from dummy world to world containing only one brush
-    CEntity *penOnlyBrush = woOneBrush.CopyOneEntity(*iten, plZeroPlacement);
-    // ----------- Do CSG beetween current entity and destination combo's entity
-    switch (CSGType) {
-      case CSG_ADD: {
-        m_woWorld.CSGAdd(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
-        break;
-      }
-      case CSG_ADD_REVERSE: {
-        m_woWorld.CSGAddReverse(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
-        break;
-      }
-      case CSG_REMOVE: {
-        m_woWorld.CSGRemove(*penTarget, woOneBrush, *penOnlyBrush, plZeroPlacement);
-        break;
-      }
-      case CSG_SPLIT_SECTORS: {
-        m_woWorld.SplitSectors(*penTarget, m_selSectorSelection, woOneBrush, *penOnlyBrush, plZeroPlacement);
-        break;
-      }
-      case CSG_SPLIT_POLYGONS: {
-        m_woWorld.SplitPolygons(*penTarget, m_selPolygonSelection, woOneBrush, *penOnlyBrush, plZeroPlacement);
-        break;
-      }
-      default: {
-        ASSERTALWAYS("PreAplyCSG() function called with illegal CSG operation.");
-        return;
-      }
-    }
-  }
-}
-// mark that selections have been changed
-SetModifiedFlag(TRUE);
-m_chSelections.MarkChanged();
-m_chDocument.MarkChanged();
-}
-else {
-  ApplyCSG(CSGType);
-}
-UpdateAllViews(NULL);
+  UpdateAllViews(NULL);
 }
 
 BOOL CWorldEditorDoc::IsEntityCSGEnabled(void) {
@@ -3648,14 +3643,12 @@ void CWorldEditorDoc::OnUpdateClones() {
   RememberUndo();
 
   CDynamicContainer<CEntity> apenClones;
-  {
-    FOREACHINDYNAMICCONTAINER(m_woWorld.wo_cenEntities, CEntity, iten) {
-      // if this is clone (by name), it is not original and it is not child of some other entity
-      if ((strName == iten->GetName()) && (&*iten != penOnlySelected) && (iten->GetParent() == NULL)) {
-        apenClones.Add(&*iten);
-      }
+  {FOREACHINDYNAMICCONTAINER(m_woWorld.wo_cenEntities, CEntity, iten) {
+    // if this is clone (by name), it is not original and it is not child of some other entity
+    if ((strName == iten->GetName()) && (&*iten != penOnlySelected) && (iten->GetParent() == NULL)) {
+      apenClones.Add(&*iten);
     }
-  }
+  }}
 
   apenClones.Lock();
   // remember placements of clones
@@ -4944,12 +4937,10 @@ void CWorldEditorDoc::OnExportEntities() {
     CDynamicContainer<CEntity> dcEntitiesToExport;
 
     // for each entity in world
-    {
-      FOREACHINDYNAMICCONTAINER(m_woWorld.wo_cenEntities, CEntity, iten) {
-        CEntity &en = *iten;
-        dcEntitiesToExport.Add(&en);
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(m_woWorld.wo_cenEntities, CEntity, iten) {
+      CEntity &en = *iten;
+      dcEntitiesToExport.Add(&en);
+    }}
 
     // write count of entities
     CTString strLine;

@@ -149,52 +149,48 @@ void CDlgFilterPolygonSelection::DoDataExchange(CDataExchange *pDX) {
     ADD_TO_FLAG_MASK(ulTexMask, ulTexValue, IDC_AFTER_SHADOW2, BPTF_AFTERSHADOW);
 
     CDynamicContainer<CBrushPolygon> dcPolygons;
-    {
-      FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
-        dcPolygons.Add(itbpo);
-      }
-    }
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selPolygonSelection, CBrushPolygon, itbpo) {
+      dcPolygons.Add(itbpo);
+    }}
 
     INDEX iClusterItem = m_ctrlClusterSizeCombo.GetCurSel();
     INDEX iMemoryItem = m_ctrlClusterMemoryCombo.GetCurSel();
     INDEX iSurface = m_ctrFilterPolygonSurface.GetCurSel();
     // for each of the dynamic container
-    {
-      FOREACHINDYNAMICCONTAINER(dcPolygons, CBrushPolygon, itbpo) {
-        CBrushPolygon &bpo = *itbpo;
-        BOOL bDeselect
-          = ((bpo.bpo_ulFlags & ulMask) != ulValue)
-            || ((bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubFlags & ulTexMask) != ulTexValue)
-            || ((iClusterItem != CB_ERR) && (iClusterItem - 4 != bpo.bpo_bppProperties.bpp_sbShadowClusterSize))
-            || ((iSurface != CB_ERR) && (iSurface != bpo.bpo_bppProperties.bpp_ubSurfaceType))
-            || ((iMemoryItem != CB_ERR) && ((1 << (16 - iMemoryItem)) * BYTES_PER_TEXEL != bpo.bpo_smShadowMap.GetShadowSize()))
-            || (m_ctrlMultiplyColor.IsColorValid()
-                && (m_ctrlMultiplyColor.GetColor() != bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor));
-        if (!bDeselect) {
-          FLOATplane3D &pl = bpo.bpo_pbplPlane->bpl_plAbsolute;
-          ANGLE3D ang;
-          DirectionVectorToAngles(pl, ang);
-          if (ang(1) < m_fMinH || ang(1) > m_fMaxH)
-            bDeselect = TRUE;
-          if (ang(2) < m_fMinP || ang(2) > m_fMaxP)
-            bDeselect = TRUE;
+    {FOREACHINDYNAMICCONTAINER(dcPolygons, CBrushPolygon, itbpo) {
+      CBrushPolygon &bpo = *itbpo;
+      BOOL bDeselect
+        = ((bpo.bpo_ulFlags & ulMask) != ulValue)
+          || ((bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_ubFlags & ulTexMask) != ulTexValue)
+          || ((iClusterItem != CB_ERR) && (iClusterItem - 4 != bpo.bpo_bppProperties.bpp_sbShadowClusterSize))
+          || ((iSurface != CB_ERR) && (iSurface != bpo.bpo_bppProperties.bpp_ubSurfaceType))
+          || ((iMemoryItem != CB_ERR) && ((1 << (16 - iMemoryItem)) * BYTES_PER_TEXEL != bpo.bpo_smShadowMap.GetShadowSize()))
+          || (m_ctrlMultiplyColor.IsColorValid()
+              && (m_ctrlMultiplyColor.GetColor() != bpo.bpo_abptTextures[pDoc->m_iTexture].s.bpt_colColor));
+      if (!bDeselect) {
+        FLOATplane3D &pl = bpo.bpo_pbplPlane->bpl_plAbsolute;
+        ANGLE3D ang;
+        DirectionVectorToAngles(pl, ang);
+        if (ang(1) < m_fMinH || ang(1) > m_fMaxH)
+          bDeselect = TRUE;
+        if (ang(2) < m_fMinP || ang(2) > m_fMaxP)
+          bDeselect = TRUE;
 
-          FLOAT3D vMin = bpo.bpo_boxBoundingBox.Min();
-          FLOAT3D vMax = bpo.bpo_boxBoundingBox.Max();
-          if (vMin(1) > m_fMaxX || vMax(1) < m_fMinX)
-            bDeselect = TRUE;
-          if (vMin(2) > m_fMaxY || vMax(2) < m_fMinY)
-            bDeselect = TRUE;
-          if (vMin(3) > m_fMaxZ || vMax(3) < m_fMinZ)
-            bDeselect = TRUE;
-        }
-
-        // deselect if is not acording to filter
-        if (bDeselect) {
-          pDoc->m_selPolygonSelection.Deselect(*itbpo);
-        }
+        FLOAT3D vMin = bpo.bpo_boxBoundingBox.Min();
+        FLOAT3D vMax = bpo.bpo_boxBoundingBox.Max();
+        if (vMin(1) > m_fMaxX || vMax(1) < m_fMinX)
+          bDeselect = TRUE;
+        if (vMin(2) > m_fMaxY || vMax(2) < m_fMinY)
+          bDeselect = TRUE;
+        if (vMin(3) > m_fMaxZ || vMax(3) < m_fMinZ)
+          bDeselect = TRUE;
       }
-    }
+
+      // deselect if is not acording to filter
+      if (bDeselect) {
+        pDoc->m_selPolygonSelection.Deselect(*itbpo);
+      }
+    }}
 
     // refresh selection
     pDoc->m_chSelections.MarkChanged();

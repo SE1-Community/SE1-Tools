@@ -67,32 +67,30 @@ void CDlgFilterVertexSelection::DoDataExchange(CDataExchange* pDX) {
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE) {
     CDynamicContainer<CBrushVertex> dcVertices;
-    {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {dcVertices.Add(itvtx);
+    {FOREACHINDYNAMICCONTAINER(pDoc->m_selVertexSelection, CBrushVertex, itvtx) {
+      dcVertices.Add(itvtx);
+    }}
+
+    // for each of the dynamic container
+    {FOREACHINDYNAMICCONTAINER(dcVertices, CBrushVertex, itvtx) {
+      BOOL bDeselect = FALSE;
+      FLOAT3D vVtx = itvtx->bvx_vAbsolute;
+      if (vVtx(1) < m_fMinX || vVtx(1) > m_fMaxX)
+        bDeselect = TRUE;
+      if (vVtx(2) < m_fMinY || vVtx(2) > m_fMaxY)
+        bDeselect = TRUE;
+      if (vVtx(3) < m_fMinZ || vVtx(3) > m_fMaxZ)
+        bDeselect = TRUE;
+
+      if (bDeselect) {
+        pDoc->m_selVertexSelection.Deselect(*itvtx);
+      }
+    }}
+
+    // refresh selection
+    pDoc->m_chSelections.MarkChanged();
+    pDoc->UpdateAllViews(NULL);
   }
-}
-
-// for each of the dynamic container
-{
-  FOREACHINDYNAMICCONTAINER(dcVertices, CBrushVertex, itvtx) {
-    BOOL bDeselect = FALSE;
-    FLOAT3D vVtx = itvtx->bvx_vAbsolute;
-    if (vVtx(1) < m_fMinX || vVtx(1) > m_fMaxX)
-      bDeselect = TRUE;
-    if (vVtx(2) < m_fMinY || vVtx(2) > m_fMaxY)
-      bDeselect = TRUE;
-    if (vVtx(3) < m_fMinZ || vVtx(3) > m_fMaxZ)
-      bDeselect = TRUE;
-
-    if (bDeselect) {
-      pDoc->m_selVertexSelection.Deselect(*itvtx);
-    }
-  }
-}
-
-// refresh selection
-pDoc->m_chSelections.MarkChanged();
-pDoc->UpdateAllViews(NULL);
-}
 }
 
 BEGIN_MESSAGE_MAP(CDlgFilterVertexSelection, CDialog)

@@ -879,41 +879,40 @@ void CDlgBrowseByClass::OnDeleteBrowseByClass() {
   }
 
   // check for deleting terrain
-  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {CEntity &en = *iten;
-  // if it is terrain
-  if (en.GetRenderType() == CEntity::RT_TERRAIN) {
-    // if it is selected terrain
-    if (pDoc->m_ptrSelectedTerrain == en.GetTerrain()) {
-      pDoc->m_ptrSelectedTerrain = NULL;
-      theApp.m_ctTerrainPage.MarkChanged();
-      break;
-    }
-  }
-}
-}
+  {FOREACHINDYNAMICCONTAINER(pDoc->m_selEntitySelection, CEntity, iten) {
+    CEntity &en = *iten;
 
-{
-  FOREACHINDYNAMICCONTAINER(dcEntitiesToDelete, CEntity, itenToDelete) {
+    // if it is terrain
+    if (en.GetRenderType() == CEntity::RT_TERRAIN) {
+      // if it is selected terrain
+      if (pDoc->m_ptrSelectedTerrain == en.GetTerrain()) {
+        pDoc->m_ptrSelectedTerrain = NULL;
+        theApp.m_ctTerrainPage.MarkChanged();
+        break;
+      }
+    }
+  }}
+
+  {FOREACHINDYNAMICCONTAINER(dcEntitiesToDelete, CEntity, itenToDelete) {
     dcEntities.Remove(itenToDelete);
     // select it
     pDoc->m_selEntitySelection.Select(*itenToDelete);
-  }
-}
+  }}
 
-// delete all selected entities
-pDoc->m_woWorld.DestroyEntities(pDoc->m_selEntitySelection);
-pDoc->m_selEntitySelection.Clear();
-pDoc->SetModifiedFlag(TRUE);
-pDoc->m_chDocument.MarkChanged();
+  // delete all selected entities
+  pDoc->m_woWorld.DestroyEntities(pDoc->m_selEntitySelection);
+  pDoc->m_selEntitySelection.Clear();
+  pDoc->SetModifiedFlag(TRUE);
+  pDoc->m_chDocument.MarkChanged();
 
-m_listEntities.SetRedraw(TRUE);
-m_listEntities.Invalidate(TRUE);
-m_listEntities.UpdateWindow();
+  m_listEntities.SetRedraw(TRUE);
+  m_listEntities.Invalidate(TRUE);
+  m_listEntities.UpdateWindow();
 
-// fill again list with non-deleted entities
-FillListWithEntities();
+  // fill again list with non-deleted entities
+  FillListWithEntities();
 
-UpdateData(FALSE);
+  UpdateData(FALSE);
 }
 
 void CDlgBrowseByClass::OnDisplayVolume() {

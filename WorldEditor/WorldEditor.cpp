@@ -1972,8 +1972,7 @@ int CWorldEditorApp::ExitInstance() {
   }
 
   /*
-  FORDELETELIST( CDisplayMode, dm_Node, m_AvailableModes, litDM)
-  {
+  FORDELETELIST( CDisplayMode, dm_Node, m_AvailableModes, litDM) {
     delete &litDM.Current();
   } */
 
@@ -2451,15 +2450,15 @@ INDEX CWorldEditorApp::Insert3DObjects(CWorldEditorDoc *pDoc) {
   CTString strMin = "a";
   ((char *)(const char *)strMin)[0] = char(255);
   CTFileName *pfn = NULL;
-  {
-    FOREACHINDYNAMICARRAY(afnFiles, CTFileName, itfn) {
-      CTString str = itfn->FileName();
-      if (strcmp(str, strMin) < 0) {
-        strMin = str;
-        pfn = &*itfn;
-      }
+
+  {FOREACHINDYNAMICARRAY(afnFiles, CTFileName, itfn) {
+    CTString str = itfn->FileName();
+    if (strcmp(str, strMin) < 0) {
+      strMin = str;
+      pfn = &*itfn;
     }
-  }
+  }}
+
   ASSERT(pfn != NULL);
   if (pfn == NULL)
     return ctInserted;
@@ -2477,21 +2476,21 @@ INDEX CWorldEditorApp::Insert3DObjects(CWorldEditorDoc *pDoc) {
 
   // remove added file from dynamic container
   afnFiles.Delete(pfn);
+
   // add other files
-  {
-    FOREACHINDYNAMICARRAY(afnFiles, CTFileName, itfn) {
-      CTString &str = *itfn;
-      CTString strName = itfn->FileName();
-      if (((char *)(const char *)strName)[strlen(strName) - 1] == 'E') {
-        // join layers
-        Add3DObject(pDoc, pwb, *itfn, FALSE);
-      } else {
-        // CSG add
-        Add3DObject(pDoc, pwb, *itfn, TRUE);
-      }
-      ctInserted++;
+  {FOREACHINDYNAMICARRAY(afnFiles, CTFileName, itfn) {
+    CTString &str = *itfn;
+    CTString strName = itfn->FileName();
+    if (((char *)(const char *)strName)[strlen(strName) - 1] == 'E') {
+      // join layers
+      Add3DObject(pDoc, pwb, *itfn, FALSE);
+    } else {
+      // CSG add
+      Add3DObject(pDoc, pwb, *itfn, TRUE);
     }
-  }
+    ctInserted++;
+  }}
+
   return ctInserted;
 }
 
