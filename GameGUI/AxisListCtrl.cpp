@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CAxisListCtrl
 
 CAxisListCtrl::CAxisListCtrl() {}
@@ -49,6 +48,7 @@ void CAxisListCtrl::OnLButtonDown(UINT nFlags, CPoint point) {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(TRUE);
   CListCtrl::OnLButtonDown(nFlags, point);
+
   // set state of new controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
@@ -57,6 +57,7 @@ void CAxisListCtrl::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(TRUE);
   CListCtrl::OnKeyUp(nChar, nRepCnt, nFlags);
+
   // set state of new controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
@@ -65,6 +66,7 @@ void CAxisListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
   // remember current state of controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(TRUE);
   CListCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
+
   // set state of new controler's attributes
   ((CDlgPlayerControls *)GetParent())->UpdateData(FALSE);
 }
@@ -72,10 +74,12 @@ void CAxisListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 void CAxisListCtrl::OnSetFocus(CWnd *pOldWnd) {
   // get selected action
   INDEX iSelectedAction = GetNextItem(-1, LVNI_DROPHILITED);
+
   // if none is selected (initial state)
   if (iSelectedAction == -1) {
     iSelectedAction = 0;
     SetItemState(iSelectedAction, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
+
   } else {
     // clear hilighted state
     SetItemState(iSelectedAction, 0, LVIS_DROPHILITED);
@@ -89,6 +93,7 @@ void CAxisListCtrl::OnKillFocus(CWnd *pNewWnd) {
 
   // get selected action
   INDEX iSelectedAction = GetNextItem(-1, LVNI_SELECTED);
+
   // set hilighted state
   SetItemState(iSelectedAction, LVIS_DROPHILITED, LVIS_DROPHILITED);
 }
@@ -100,5 +105,6 @@ BOOL CAxisListCtrl::PreTranslateMessage(MSG *pMsg) {
     // don't translate messages
     return TRUE;
   }
+
   return CListCtrl::PreTranslateMessage(pMsg);
 }

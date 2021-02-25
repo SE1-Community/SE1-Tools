@@ -135,12 +135,11 @@ void CDlgPreferences::DoDataExchange(CDataExchange *pDX) {
     if (iCurSel != CB_ERR) {
       switch (iCurSel) {
         case 0: theApp.m_iApi = GAT_OGL; break;
-#ifdef SE1_D3D
+        #ifdef SE1_D3D
         case 1: theApp.m_iApi = GAT_D3D; break;
-#endif // SE1_D3D
-        default: {
-        }
+        #endif // SE1_D3D
       }
+
       if (iOldGfxApi != theApp.m_iApi) {
         _pGfx->ResetDisplayMode((enum GfxAPIType)theApp.m_iApi);
       }
@@ -163,16 +162,16 @@ BOOL CDlgPreferences::OnInitDialog() {
 
   m_ctrlGfxApi.ResetContent();
   m_ctrlGfxApi.AddString(L"OpenGL");
-#ifdef SE1_D3D
+  #ifdef SE1_D3D
   m_ctrlGfxApi.AddString(L"DirectX");
-#endif // SE1_D3D
+  #endif // SE1_D3D
 
   if (IsWindow(m_ctrlGfxApi.m_hWnd)) {
     switch (theApp.m_iApi) {
       case GAT_OGL: m_ctrlGfxApi.SetCurSel(0); break;
-#ifdef SE1_D3D
+      #ifdef SE1_D3D
       case GAT_D3D: m_ctrlGfxApi.SetCurSel(1); break;
-#endif // SE1_D3D
+      #endif // SE1_D3D
     }
   }
 

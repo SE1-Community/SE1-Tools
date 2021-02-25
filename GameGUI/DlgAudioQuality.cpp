@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgAudioQuality dialog
 
 CDlgAudioQuality::CDlgAudioQuality(CWnd* pParent /*=NULL*/) : CDialog(CDlgAudioQuality::IDD, pParent) {
@@ -41,14 +40,13 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX) {
   // if dialog is recieving data
   if (pDX->m_bSaveAndValidate == FALSE) {
     // set current state of audio quality radio button
-    /*    switch (Flesh.gm_aqAudioQuality)
-        {
-        case CGame::AQ_LOW:{ m_iAudioQualityRadio = 0; break; }
-        case CGame::AQ_MEDIUM:{ m_iAudioQualityRadio = 1; break; }
-        case CGame::AQ_HIGH:{ m_iAudioQualityRadio = 2; break; }
-        default:{ ASSERTALWAYS( "Illegal audio quality value found!"); }
-        }
-        */
+    /*switch (Flesh.gm_aqAudioQuality) {
+      case CGame::AQ_LOW:    { m_iAudioQualityRadio = 0; break; }
+      case CGame::AQ_MEDIUM: { m_iAudioQualityRadio = 1; break; }
+      case CGame::AQ_HIGH:   { m_iAudioQualityRadio = 2; break; }
+      default:               { ASSERTALWAYS( "Illegal audio quality value found!"); }
+    }*/
+
     m_bUseDirectSound3D = FALSE;
   }
 
@@ -60,15 +58,14 @@ void CDlgAudioQuality::DoDataExchange(CDataExchange* pDX) {
   // if dialog is giving data
   if (pDX->m_bSaveAndValidate != FALSE) {
     // apply selected state of audio quality radio button
-    /*    switch (m_iAudioQualityRadio)
-        {
-        case 0:{ Flesh.gm_aqAudioQuality = CGame::AQ_LOW; break; }
-        case 1:{ Flesh.gm_aqAudioQuality = CGame::AQ_MEDIUM; break; }
-        case 2:{ Flesh.gm_aqAudioQuality = CGame::AQ_HIGH; break; }
-        default:{ ASSERTALWAYS( "Illegal audio quality radio value found!"); }
-        }
-        */
-    // Flesh.gm_bUseDirectSound3D = m_bUseDirectSound3D;
+    /*switch (m_iAudioQualityRadio) {
+      case 0:{ Flesh.gm_aqAudioQuality = CGame::AQ_LOW; break; }
+      case 1:{ Flesh.gm_aqAudioQuality = CGame::AQ_MEDIUM; break; }
+      case 2:{ Flesh.gm_aqAudioQuality = CGame::AQ_HIGH; break; }
+      default:{ ASSERTALWAYS( "Illegal audio quality radio value found!"); }
+    }*/
+
+    //Flesh.gm_bUseDirectSound3D = m_bUseDirectSound3D;
   }
 }
 
@@ -78,5 +75,4 @@ BEGIN_MESSAGE_MAP(CDlgAudioQuality, CDialog)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgAudioQuality message handlers

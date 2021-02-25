@@ -84,11 +84,12 @@ CTFileName fnmPersistentSymbols = CTString("Scripts\\PersistentSymbols.ini");
 
 void InitializeGame(void) {
   try {
-#ifndef NDEBUG
-#define GAMEDLL _fnmApplicationExe.FileDir() + "GameGUID.dll"
-#else
-#define GAMEDLL _fnmApplicationExe.FileDir() + "GameGUI.dll"
-#endif
+    #ifndef NDEBUG
+    #define GAMEDLL _fnmApplicationExe.FileDir() + "GameGUID.dll"
+    #else
+    #define GAMEDLL _fnmApplicationExe.FileDir() + "GameGUI.dll"
+    #endif
+
     CTFileName fnmExpanded;
     ExpandFilePath(EFP_READ, CTString(GAMEDLL), fnmExpanded);
 

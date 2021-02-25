@@ -19,12 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "stdafx.h"
 
 #ifdef _DEBUG
-#define GAMEGUI_DLL_NAME "GameGUIMPD.dll"
+#define GAMEGUI_DLL_NAME "GameGUID.dll"
 #else
-#define GAMEGUI_DLL_NAME "GameGUIMP.dll"
+#define GAMEGUI_DLL_NAME "GameGUI.dll"
 #endif
 
 extern CGame *_pGame = NULL;
+
 // global game object
 CGameGUI _GameGUI;
 
@@ -33,29 +34,36 @@ static struct GameGUI_interface _Interface;
 // initialize game and load settings
 void Initialize(const CTFileName &fnGameSettings) {
   try {
-#ifndef NDEBUG
-#define GAMEDLL "Bin\\Debug\\GameD.dll"
-#else
-#define GAMEDLL "Bin\\Game.dll"
-#endif
+    #ifndef NDEBUG
+    #define GAMEDLL "Bin\\Debug\\GameD.dll"
+    #else
+    #define GAMEDLL "Bin\\Game.dll"
+    #endif
+
     CTFileName fnmExpanded;
     ExpandFilePath(EFP_READ, CTString(GAMEDLL), fnmExpanded);
+
     HMODULE hGame = LoadLibraryA(fnmExpanded);
     if (hGame == NULL) {
       ThrowF_t("%s", GetWindowsError(GetLastError()));
     }
+
     CGame *(*GAME_Create)(void) = (CGame * (*)(void)) GetProcAddress(hGame, "GAME_Create");
+
     if (GAME_Create == NULL) {
       ThrowF_t("%s", GetWindowsError(GetLastError()));
     }
+
     _pGame = GAME_Create();
 
   } catch (char *strError) {
     FatalError("%s", strError);
   }
+
   // init game - this will load persistent symbols
   _pGame->Initialize(fnGameSettings);
 }
+
 // save settings and cleanup
 void End(void) {
   _pGame->End();

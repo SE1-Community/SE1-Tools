@@ -22,39 +22,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 // ConsoleSymbolsCombo.h : header file
 //
 
-/////////////////////////////////////////////////////////////////////////////
 // CConsoleSymbolsCombo window
 
 class CConsoleSymbolsCombo : public CComboBox {
   // Construction
   public:
-  CConsoleSymbolsCombo();
+    CConsoleSymbolsCombo();
 
-  // Attributes
-  public:
-  // Operations
-  public:
   // Overrides
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CConsoleSymbolsCombo)
   public:
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
+    virtual BOOL PreTranslateMessage(MSG* pMsg);
   //}}AFX_VIRTUAL
 
   // Implementation
   public:
-  virtual ~CConsoleSymbolsCombo();
+    virtual ~CConsoleSymbolsCombo();
 
   // Generated message map functions
   protected:
-  //{{AFX_MSG(CConsoleSymbolsCombo)
-  afx_msg void OnSelchange();
-  //}}AFX_MSG
+    //{{AFX_MSG(CConsoleSymbolsCombo)
+    afx_msg void OnSelchange();
+    //}}AFX_MSG
 
-  DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
-
-/////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.

@@ -22,80 +22,80 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 // WndDisplayTexture.h : header file
 //
 
-/////////////////////////////////////////////////////////////////////////////
 // CWndDisplayTexture window
 
 class CWndDisplayTexture : public CWnd {
   // Construction
   public:
-  CWndDisplayTexture();
+    CWndDisplayTexture();
 
-  // function that is called when lmb is clicked
-  inline void SetLeftMouseButtonClicked(void (*pLeftMouseButtonClicked)(PIX pixX, PIX pixY)) {
-    m_pLeftMouseButtonClicked = pLeftMouseButtonClicked;
-  };
-  // function that is called when lmb is released
-  inline void SetLeftMouseButtonReleased(void (*pLeftMouseButtonReleased)(PIX pixX, PIX pixY)) {
-    m_pLeftMouseButtonReleased = pLeftMouseButtonReleased;
-  };
-  // function that is called when rmb is clicked
-  inline void SetRightMouseButtonClicked(void (*pRightMouseButtonClicked)(PIX pixX, PIX pixY)) {
-    m_pRightMouseButtonClicked = pRightMouseButtonClicked;
-  };
-  // function that is called when rmb is moved
-  inline void SetRightMouseButtonMoved(void (*pRightMouseButtonMoved)(PIX pixX, PIX pixY)) {
-    m_pRightMouseButtonMoved = pRightMouseButtonMoved;
-  };
+    // function that is called when lmb is clicked
+    inline void SetLeftMouseButtonClicked(void (*pLeftMouseButtonClicked)(PIX pixX, PIX pixY)) {
+      m_pLeftMouseButtonClicked = pLeftMouseButtonClicked;
+    };
 
-  void (*m_pLeftMouseButtonClicked)(PIX pixX, PIX pixY);
-  void (*m_pLeftMouseButtonReleased)(PIX pixX, PIX pixY);
-  void (*m_pRightMouseButtonClicked)(PIX pixX, PIX pixY);
-  void (*m_pRightMouseButtonMoved)(PIX pixX, PIX pixY);
-  CTextureObject m_toTexture;
-  CDrawPort *m_pDrawPort;
-  CViewPort *m_pViewPort;
-  int m_iTimerID;
-  BOOL m_bChequeredAlpha;
-  BOOL m_bForce32;
-  FLOAT m_fWndTexRatio;
-  PIX m_pixWinWidth;
-  PIX m_pixWinHeight;
-  PIX m_pixWinOffsetU;
-  PIX m_pixWinOffsetV;
+    // function that is called when lmb is released
+    inline void SetLeftMouseButtonReleased(void (*pLeftMouseButtonReleased)(PIX pixX, PIX pixY)) {
+      m_pLeftMouseButtonReleased = pLeftMouseButtonReleased;
+    };
+
+    // function that is called when rmb is clicked
+    inline void SetRightMouseButtonClicked(void (*pRightMouseButtonClicked)(PIX pixX, PIX pixY)) {
+      m_pRightMouseButtonClicked = pRightMouseButtonClicked;
+    };
+
+    // function that is called when rmb is moved
+    inline void SetRightMouseButtonMoved(void (*pRightMouseButtonMoved)(PIX pixX, PIX pixY)) {
+      m_pRightMouseButtonMoved = pRightMouseButtonMoved;
+    };
+
+    void (*m_pLeftMouseButtonClicked)(PIX pixX, PIX pixY);
+    void (*m_pLeftMouseButtonReleased)(PIX pixX, PIX pixY);
+    void (*m_pRightMouseButtonClicked)(PIX pixX, PIX pixY);
+    void (*m_pRightMouseButtonMoved)(PIX pixX, PIX pixY);
+    CTextureObject m_toTexture;
+    CDrawPort *m_pDrawPort;
+    CViewPort *m_pViewPort;
+    int m_iTimerID;
+    BOOL m_bChequeredAlpha;
+    BOOL m_bForce32;
+    FLOAT m_fWndTexRatio;
+    PIX m_pixWinWidth;
+    PIX m_pixWinHeight;
+    PIX m_pixWinOffsetU;
+    PIX m_pixWinOffsetV;
 
   public:
-  BOOL m_bDrawLine;
-  PIX m_pixLineStartU;
-  PIX m_pixLineStartV;
-  PIX m_pixLineStopU;
-  PIX m_pixLineStopV;
+    BOOL m_bDrawLine;
+    PIX m_pixLineStartU;
+    PIX m_pixLineStartV;
+    PIX m_pixLineStopU;
+    PIX m_pixLineStopV;
 
   // Operations
   public:
-  // Overrides
-  // ClassWizard generated virtual function overrides
-  //{{AFX_VIRTUAL(CWndDisplayTexture)
-  //}}AFX_VIRTUAL
+    // Overrides
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CWndDisplayTexture)
+    //}}AFX_VIRTUAL
 
   // Implementation
   public:
-  virtual ~CWndDisplayTexture();
+    virtual ~CWndDisplayTexture();
 
   // Generated message map functions
   protected:
-  //{{AFX_MSG(CWndDisplayTexture)
-  afx_msg void OnDestroy();
-  afx_msg void OnPaint();
-  afx_msg void OnTimer(UINT nIDEvent);
-  afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-  afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-  afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-  afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-  //}}AFX_MSG
-  DECLARE_MESSAGE_MAP()
+    //{{AFX_MSG(CWndDisplayTexture)
+    afx_msg void OnDestroy();
+    afx_msg void OnPaint();
+    afx_msg void OnTimer(UINT nIDEvent);
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+    afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
 };
-
-/////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.

@@ -27,19 +27,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <afxole.h>   // MFC OLE classes
 #include <afxodlgs.h> // MFC OLE dialog classes
 #include <afxdisp.h>  // MFC OLE automation classes
-#endif                // _AFX_NO_OLE_SUPPORT
+#endif // _AFX_NO_OLE_SUPPORT
 
 #ifndef _AFX_NO_DB_SUPPORT
 #include <afxdb.h> // MFC ODBC database classes
-#endif             // _AFX_NO_DB_SUPPORT
+#endif // _AFX_NO_DB_SUPPORT
 
 #ifndef _AFX_NO_DAO_SUPPORT
 #include <afxdao.h> // MFC DAO database classes
-#endif              // _AFX_NO_DAO_SUPPORT
+#endif // _AFX_NO_DAO_SUPPORT
 
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h> // MFC support for Windows Common Controls
-#endif              // _AFX_NO_AFXCMN_SUPPORT
+#endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <EngineGUI/EngineGUI.h>
 #include <Game/Game.h>
@@ -47,8 +47,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <Engine/GameShell.h>
 
 extern class CGame *_pGame;
-
-/////////////////////////////////////////////////////////////////////////////
 
 #include "resource.h"
 #include "ConsoleSymbolsCombo.h"

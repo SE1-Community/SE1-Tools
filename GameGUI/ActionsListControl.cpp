@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CActionsListControl
 
 CActionsListControl::CActionsListControl() {}
@@ -48,27 +47,24 @@ ON_UPDATE_COMMAND_UI(ID_BUTTON_ACTION_REMOVE, OnUpdateButtonActionRemove)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CActionsListControl message handlers
 
 void CActionsListControl::OnLButtonDown(UINT nFlags, CPoint point) {
   // get no of items
   INDEX iButtonsCt = ((CDlgPlayerControls *)GetParent())->m_listButtonActions.GetItemCount();
+
   // get no of items
   for (INDEX iListItem = 0; iListItem < iButtonsCt; iListItem++) {
-    ((CDlgPlayerControls *)GetParent())
-      ->m_listButtonActions.SetItemState(iListItem, 0, LVIS_FOCUSED | LVIS_SELECTED | LVIS_DROPHILITED);
+    ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetItemState(iListItem, 0, LVIS_FOCUSED | LVIS_SELECTED | LVIS_DROPHILITED);
   }
 
   CListCtrl::OnLButtonDown(nFlags, point);
 
-  /*
   // select wanted item
-  ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetItemState( iSelectedButton+1,
-    LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED, LVIS_FOCUSED|LVIS_SELECTED|LVIS_DROPHILITED);
+  /*((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetItemState(iSelectedButton+1,
+    LVIS_FOCUSED | LVIS_SELECTED | LVIS_DROPHILITED, LVIS_FOCUSED | LVIS_SELECTED | LVIS_DROPHILITED);
   ((CDlgPlayerControls *)GetParent())->m_listButtonActions.EnsureVisible( iSelectedButton+1, FALSE);
-  ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetFocus();
-  */
+  ((CDlgPlayerControls *)GetParent())->m_listButtonActions.SetFocus();*/
   ((CDlgPlayerControls *)GetParent())->SetFirstAndSecondButtonNames();
 }
 
@@ -85,10 +81,12 @@ void CActionsListControl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) {
 void CActionsListControl::OnSetFocus(CWnd *pOldWnd) {
   // get selected action
   INDEX iSelectedAction = GetNextItem(-1, LVIS_SELECTED);
+
   // if none is selected (initial state)
   if (iSelectedAction == -1) {
     iSelectedAction = 0;
     SetItemState(iSelectedAction, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
+
   } else {
     // clear hilighted state
     SetItemState(iSelectedAction, 0, LVIS_DROPHILITED);
@@ -102,6 +100,7 @@ void CActionsListControl::OnKillFocus(CWnd *pNewWnd) {
 
   // get selected action
   INDEX iSelectedAction = GetNextItem(-1, LVNI_SELECTED);
+
   // set hilighted state
   SetItemState(iSelectedAction, LVIS_DROPHILITED, LVIS_DROPHILITED);
 }
@@ -113,11 +112,13 @@ BOOL CActionsListControl::PreTranslateMessage(MSG *pMsg) {
     // don't translate messages
     return TRUE;
   }
+
   return CListCtrl::PreTranslateMessage(pMsg);
 }
 
 void CActionsListControl::OnContextMenu(CWnd *pWnd, CPoint point) {
   CMenu menu;
+
   if (menu.LoadMenu(IDR_BUTTON_ACTION_POPUP)) {
     CMenu *pPopup = menu.GetSubMenu(0);
     ASSERT(pPopup != NULL);
@@ -127,11 +128,14 @@ void CActionsListControl::OnContextMenu(CWnd *pWnd, CPoint point) {
 
 void CActionsListControl::OnButtonActionAdd() {
   CDlgPlayerControls *pDlg = (CDlgPlayerControls *)GetParent();
+
   // create new button action
   CButtonAction *pbaAddedButtonAction = &pDlg->m_ctrlControls.AddButtonAction();
+
   // call edit button dialog
   CDlgEditButtonAction dlgEditButtonAction(pbaAddedButtonAction);
   dlgEditButtonAction.DoModal();
+
   // refresh list of button actions
   pDlg->FillActionsList();
 }

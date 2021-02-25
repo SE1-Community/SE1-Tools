@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgRenameControls dialog
 
 CDlgRenameControls::CDlgRenameControls(CWnd* pParent /*=NULL*/) : CDialog(CDlgRenameControls::IDD, pParent) {
@@ -47,5 +46,4 @@ BEGIN_MESSAGE_MAP(CDlgRenameControls, CDialog)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgRenameControls message handlers

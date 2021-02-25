@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgEditButtonAction dialog
 
 CDlgEditButtonAction::CDlgEditButtonAction(CButtonAction* pbaButtonAction, CWnd* pParent /*=NULL*/) :
@@ -69,5 +68,4 @@ BEGIN_MESSAGE_MAP(CDlgEditButtonAction, CDialog)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgEditButtonAction message handlers

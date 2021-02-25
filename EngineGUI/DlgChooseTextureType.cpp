@@ -26,7 +26,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgChooseTextureType dialog
 
 CDlgChooseTextureType::CDlgChooseTextureType(CWnd* pParent /*=NULL*/) : CDialog(CDlgChooseTextureType::IDD, pParent) {
@@ -50,7 +49,6 @@ ON_BN_CLICKED(ID_NORMAL_TEXTURE, OnNormalTexture)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgChooseTextureType message handlers
 
 void CDlgChooseTextureType::OnNormalTexture() {

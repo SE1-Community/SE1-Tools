@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CConsoleSymbolsCombo
 
 CConsoleSymbolsCombo::CConsoleSymbolsCombo() {}
@@ -38,12 +37,12 @@ ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelchange)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CConsoleSymbolsCombo message handlers
 
 BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG *pMsg) {
   if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN) {
     INDEX iSelectedSymbol = GetCurSel();
+
     // if there is a valid player selected
     if (iSelectedSymbol != LB_ERR) {
       CString strSelectedSymbolW;
@@ -53,9 +52,11 @@ BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG *pMsg) {
       INDEX ctLetters = strlen(strSelectedSymbol);
       char achrSelectedSymbol[256];
       sprintf(achrSelectedSymbol, strSelectedSymbol);
+
       if (achrSelectedSymbol[ctLetters - 1] == ']') {
         for (INDEX iLetter = ctLetters - 2; iLetter > 0; iLetter--) {
           ASSERT(iLetter > 0);
+
           if (((char *)achrSelectedSymbol)[iLetter] == '[') {
             achrSelectedSymbol[iLetter + 1] = ']';
             achrSelectedSymbol[iLetter + 2] = 0;
@@ -70,6 +71,7 @@ BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG *pMsg) {
       return TRUE;
     }
   }
+
   return CComboBox::PreTranslateMessage(pMsg);
 }
 

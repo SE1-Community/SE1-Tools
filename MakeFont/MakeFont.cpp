@@ -25,6 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 void SubMain(int argc, char *argv[]) {
   printf("\nMakeFONT - Font Tables Maker (2.51)\n");
   printf("           (C)1999 CROTEAM Ltd\n\n");
+
   // 5 to 7 parameters are allowed as input
   if ((argc < 5) || (argc > 6)) {
     printf("USAGE: MakeFont <texture_file> <char_width> <char_height> ");
@@ -40,6 +41,7 @@ void SubMain(int argc, char *argv[]) {
     printf("NOTES: - out file will have the name as texture file, but \".fnt\" extension\n");
     printf("       - texture file must begin with character that will be a replacement for\n");
     printf("         each character that hasn't got definition in this texture file\n");
+
     exit(EXIT_FAILURE);
   }
 
@@ -48,56 +50,66 @@ void SubMain(int argc, char *argv[]) {
 
   // first input parameter is texture name
   CTFileName fnTextureFileName = CTString(argv[1]);
+
   // parameters 2 and 3 give us character dimensions
   ULONG ulCharWidth = strtoul(argv[2], NULL, 10);
   ULONG ulCharHeight = strtoul(argv[3], NULL, 10);
+
   // parameter 4 specifies text file for character arrangements
   CTFileName fnOrderFile = CTString(argv[4]);
 
   // alpha channel ignore check
   BOOL bUseAlpha = TRUE;
-  if (argc == 6 && (argv[5][1] == 'a' || argv[5][1] == 'A'))
+
+  if (argc == 6 && (argv[5][1] == 'a' || argv[5][1] == 'A')) {
     bUseAlpha = FALSE;
+  }
 
   // font generation starts
   printf("- Generating font table.\n");
+
   // try to create font
   CFontData fdFontData;
+
   try {
     // remove application path from font texture file
     fnTextureFileName.RemoveApplicationPath_t();
     // create font
     fdFontData.Make_t(fnTextureFileName, ulCharWidth, ulCharHeight, fnOrderFile, bUseAlpha);
-  }
+
   // catch and report errors
-  catch (char *strError) {
+  } catch (char *strError) {
     printf("! Cannot create font.\n  %s\n", strError);
     exit(EXIT_FAILURE);
   }
 
   // save processed data
   printf("- Saving font table file.\n");
+
   // create font name
   CTFileName strFontFileName;
   strFontFileName = fnTextureFileName.FileDir() + fnTextureFileName.FileName() + ".fnt";
-  // try to
+
+  // save the font
   try {
     fdFontData.Save_t(strFontFileName);
+
   } catch (char *strError) {
     printf("! Cannot save font.\n  %s\n", strError);
     exit(EXIT_FAILURE);
   }
+
   printf("- '%s' created successfuly.\n", strFontFileName);
 
   exit(EXIT_SUCCESS);
 }
 
-// ---------------- Main
+// Entry point
 int main(int argc, char *argv[]) {
   CTSTREAM_BEGIN {
     SubMain(argc, argv);
-  }
-  CTSTREAM_END;
+  } CTSTREAM_END;
+
   getch();
   return 0;
 }

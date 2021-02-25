@@ -1225,10 +1225,11 @@ void CWorldEditorDoc::ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjected
 
   // try to
   try {
-// turn this on to dump all primitives
-#ifndef NDEBUG
-// theApp.m_vfpCurrent.vfp_o3dPrimitive.DebugDump();
-#endif // NDEBUG
+    // turn this on to dump all primitives
+    #ifndef NDEBUG
+    // theApp.m_vfpCurrent.vfp_o3dPrimitive.DebugDump();
+    #endif // NDEBUG
+
     if (!obTmp.ArePolygonsPlanar()) {
       throw("ERROR: Primitive that You want to use has non planar polygons.\n"
             "Make sure that stretch x and stretch y are same or use triangularisation.");

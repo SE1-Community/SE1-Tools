@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CLocalPlayersList
 
 CLocalPlayersList::CLocalPlayersList() {}
@@ -38,5 +37,4 @@ BEGIN_MESSAGE_MAP(CLocalPlayersList, CCheckListBox)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CLocalPlayersList message handlers

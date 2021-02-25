@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CPressKeyEditControl
 
 CPressKeyEditControl::CPressKeyEditControl() {}
@@ -37,7 +36,6 @@ BEGIN_MESSAGE_MAP(CPressKeyEditControl, CEdit)
 //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CPressKeyEditControl message handlers
 
 BOOL CPressKeyEditControl::PreTranslateMessage(MSG* pMsg) {
@@ -47,12 +45,14 @@ BOOL CPressKeyEditControl::PreTranslateMessage(MSG* pMsg) {
     if (pMsg->message == WM_SYSKEYDOWN) {
       // get key data
       int lKeyData = pMsg->lParam;
+
       // test if it is ghost Alt-F4 situation
       if (lKeyData & (1L << 29)) {
         // don't continue translating the message
         return TRUE;
       }
     }
+
     // test if game is paused, stop messages otherwise let messages trough
     if (pMsg->message == WM_KEYDOWN) {
       // direct input is enabled, so don't translate messages

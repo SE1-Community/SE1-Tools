@@ -25,7 +25,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
 // CDlgSelectPlayer dialog
 
 CDlgSelectPlayer::CDlgSelectPlayer(CWnd* pParent /*=NULL*/) : CDialog(CDlgSelectPlayer::IDD, pParent) {
@@ -36,6 +35,7 @@ CDlgSelectPlayer::CDlgSelectPlayer(CWnd* pParent /*=NULL*/) : CDialog(CDlgSelect
 
 void CDlgSelectPlayer::DoDataExchange(CDataExchange* pDX) {
   CDialog::DoDataExchange(pDX);
+
   //{{AFX_DATA_MAP(CDlgSelectPlayer)
   DDX_Control(pDX, IDC_COMBO_AVAILABLE_CONTROLS, m_comboAvailableControls);
   DDX_Control(pDX, IDC_COMBO_AVAILABLE_PLAYERS, m_comboAvailablePlayers);
@@ -45,10 +45,12 @@ void CDlgSelectPlayer::DoDataExchange(CDataExchange* pDX) {
   if (pDX->m_bSaveAndValidate != FALSE) {
     INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
     INDEX iSelectedControls = m_comboAvailableControls.GetCurSel();
+
     // if there is no player selected
     if ((iSelectedPlayer == CB_ERR) || (iSelectedControls == CB_ERR)) {
       // end dialog as if user pressed escape key
       EndDialog(IDCANCEL);
+
     } else {
       _pGame->gm_iWEDSinglePlayer = iSelectedPlayer;
       _pGame->SavePlayersAndControls();
@@ -73,9 +75,11 @@ BOOL CDlgSelectPlayer::OnInitDialog() {
   for (INDEX iPC = 0; iPC < 8; iPC++) {
     CTString strPlayer = _pGame->gm_apcPlayers[iPC].pc_strName;
     m_comboAvailablePlayers.AddString(strPlayer);
-    //    CTString strControls = _pGame->gm_actrlControls[ iPC].ctrl_strName;
+
+    //CTString strControls = _pGame->gm_actrlControls[iPC].ctrl_strName;
     m_comboAvailableControls.AddString("dummy");
   }
+
   m_comboAvailablePlayers.SetCurSel(_pGame->gm_iWEDSinglePlayer);
   m_comboAvailableControls.SetCurSel(_pGame->gm_iWEDSinglePlayer);
 
@@ -84,14 +88,18 @@ BOOL CDlgSelectPlayer::OnInitDialog() {
 
 void CDlgSelectPlayer::OnSelchangeComboAvailablePlayers() {
   INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
-  if (iSelectedPlayer == CB_ERR)
+  if (iSelectedPlayer == CB_ERR) {
     return;
+  }
+
   m_comboAvailableControls.SetCurSel(iSelectedPlayer);
 }
 
 void CDlgSelectPlayer::OnSelchangeComboAvailableControls() {
   INDEX iSelectedPlayer = m_comboAvailablePlayers.GetCurSel();
-  if (iSelectedPlayer == CB_ERR)
+  if (iSelectedPlayer == CB_ERR) {
     return;
+  }
+
   INDEX iSelectedControls = m_comboAvailableControls.GetCurSel();
 }
