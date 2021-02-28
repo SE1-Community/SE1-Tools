@@ -14,7 +14,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
 // EditConsole.cpp : implementation file
-//
 
 #include "stdafx.h"
 
@@ -25,10 +24,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CEditConsole
-
+// Constructor
 CEditConsole::CEditConsole() {}
 
+// Destructor
 CEditConsole::~CEditConsole() {}
 
 BEGIN_MESSAGE_MAP(CEditConsole, CEdit)

@@ -26,12 +26,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 extern CGame *_pGame = NULL;
 
-// global game object
+// Global game object
 CGameGUI _GameGUI;
 
 static struct GameGUI_interface _Interface;
 
-// initialize game and load settings
+// Initialize game and load settings
 void Initialize(const CTFileName &fnGameSettings) {
   try {
     #ifndef NDEBUG
@@ -64,37 +64,37 @@ void Initialize(const CTFileName &fnGameSettings) {
   _pGame->Initialize(fnGameSettings);
 }
 
-// save settings and cleanup
+// Save settings and cleanup
 void End(void) {
   _pGame->End();
 }
 
-// run a quicktest game from within editor
+// Run a quicktest game from within editor
 void QuickTest(const CTFileName &fnMapName, CDrawPort *pdpDrawport, CViewPort *pvpViewport) {
   _pGame->QuickTest(fnMapName, pdpDrawport, pvpViewport);
 }
 
-// show console window
+// Show console window
 void OnInvokeConsole(void) {
   _GameGUI.OnInvokeConsole();
 }
 
-// adjust players and controls
+// Adjust players and controls
 void OnPlayerSettings(void) {
   _GameGUI.OnPlayerSettings();
 }
 
-// adjust audio settings
+// Adjust audio settings
 void OnAudioQuality(void) {
   _GameGUI.OnAudioQuality();
 }
 
-// adjust video settings
+// Adjust video settings
 void OnVideoQuality(void) {
   _GameGUI.OnVideoQuality();
 }
 
-// select current active player and controls
+// Select current active player and controls
 void OnSelectPlayerAndControls(void) {
   _GameGUI.OnSelectPlayerAndControls();
 }
@@ -133,36 +133,29 @@ static int iDialogResult;
       iDialogResult = IDCANCEL; \
     }
 
-/*
- We cannot use dllmain if using MFC.
- See MSDN article "Regular DLLs Dynamically Linked to MFC" if initialization is needed.
+// We cannot use dllmain if using MFC.
+// See MSDN article "Regular DLLs Dynamically Linked to MFC" if initialization is needed.
 
-BOOL APIENTRY DllMain( HANDLE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-           )
-{
-    switch (ul_reason_for_call)
-  {
+/*BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
+  switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
       break;
     }
-    return TRUE;
-}
-*/
 
-/////////////////////////////////////////////////////////////////////////////
-// global routines called trough game's application menu
+    return TRUE;
+}*/
+
+// Global routines called trough game's application menu
 
 void CGameGUI::OnInvokeConsole(void) {
   CALL_DIALOG(CDlgConsole, dlgConsole);
 }
 
 void CGameGUI::OnPlayerSettings(void) {
-  // CALL_DIALOG( CDlgPlayerSettings, dlgPlayerSettings);
+  //CALL_DIALOG(CDlgPlayerSettings, dlgPlayerSettings);
 }
 
 void CGameGUI::OnAudioQuality(void) {
@@ -174,5 +167,5 @@ void CGameGUI::OnVideoQuality(void) {
 }
 
 void CGameGUI::OnSelectPlayerAndControls(void) {
-  // CALL_DIALOG( CDlgSelectPlayer, dlgSelectPlayerAndControls);
+  //CALL_DIALOG(CDlgSelectPlayer, dlgSelectPlayerAndControls);
 }

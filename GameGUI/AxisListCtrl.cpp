@@ -25,10 +25,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CAxisListCtrl
-
+// Constructor
 CAxisListCtrl::CAxisListCtrl() {}
 
+// Destructor
 CAxisListCtrl::~CAxisListCtrl() {}
 
 BEGIN_MESSAGE_MAP(CAxisListCtrl, CListCtrl)
@@ -102,6 +102,7 @@ BOOL CAxisListCtrl::PreTranslateMessage(MSG *pMsg) {
   // if return pressed
   if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN) {
     ((CDlgPlayerControls *)GetParent())->m_comboControlerAxis.SetFocus();
+
     // don't translate messages
     return TRUE;
   }

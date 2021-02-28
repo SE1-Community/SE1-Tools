@@ -26,10 +26,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CWndDisplayTexture
-
 TICK _llLastTick;
 
+// Constructor
 CWndDisplayTexture::CWndDisplayTexture() {
   m_pLeftMouseButtonClicked = NULL;
   m_pLeftMouseButtonReleased = NULL;
@@ -43,6 +42,7 @@ CWndDisplayTexture::CWndDisplayTexture() {
   m_bDrawLine = FALSE;
 }
 
+// Destructor
 CWndDisplayTexture::~CWndDisplayTexture() {}
 
 BEGIN_MESSAGE_MAP(CWndDisplayTexture, CWnd)
@@ -59,16 +59,20 @@ END_MESSAGE_MAP()
 
 // CWndDisplayTexture message handlers
 
-// converts window mouse coordinates to buffer coordinates
+// Convert window mouse coordinates to buffer coordinates
 static void ConvertCoords(CTextureData *pTD, PIX &pixU, PIX &pixV) {}
 
 void CWndDisplayTexture::OnPaint() {
-  { CPaintDC dc(this); } // device context for painting
+  {
+    // device context for painting
+    CPaintDC dc(this);
+  }
 
   if (m_iTimerID == -1)
     m_iTimerID = (int)SetTimer(1, 50, NULL);
 
-  if (m_pViewPort == NULL && m_pDrawPort == NULL) { // initialize canvas for active texture button
+  if (m_pViewPort == NULL && m_pDrawPort == NULL) {
+    // initialize canvas for active texture button
     _pGfx->CreateWindowCanvas(m_hWnd, &m_pViewPort, &m_pDrawPort);
   }
 
@@ -120,7 +124,8 @@ void CWndDisplayTexture::OnPaint() {
     #define CHESS_BOX_WIDTH  16
     #define CHESS_BOX_HEIGHT 16
 
-    if (m_bChequeredAlpha && bAlphaChannel) { // create chess looking background
+    if (m_bChequeredAlpha && bAlphaChannel) {
+      // create chess looking background
       for (INDEX iVert = 0; iVert < (m_pixWinHeight / CHESS_BOX_HEIGHT) + 1; iVert++) {
         // create chess looking background
         for (INDEX iHoriz = 0; iHoriz < (m_pixWinWidth / CHESS_BOX_WIDTH) + 1; iHoriz++) {
@@ -206,6 +211,7 @@ void CWndDisplayTexture::OnDestroy() {
 
   KillTimer(m_iTimerID);
   _pTimer->SetGameTick(0);
+
   CWnd::OnDestroy();
 }
 

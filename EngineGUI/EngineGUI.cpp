@@ -16,29 +16,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "StdH.h"
 #include <Engine/Templates/Stock_CTextureData.h>
 
-// global engine gui handling object
+// Global engine gui handling object
 CEngineGUI _EngineGUI;
 
-/*
- We cannot use dllmain if using MFC.
- See MSDN article "Regular DLLs Dynamically Linked to MFC" if initialization is needed.
+// We cannot use dllmain if using MFC.
+// See MSDN article "Regular DLLs Dynamically Linked to MFC" if initialization is needed.
 
-BOOL APIENTRY DllMain( HANDLE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-           )
-{
-    switch (ul_reason_for_call)
-  {
+/*BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
+  switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
       break;
     }
+
     return TRUE;
-}
-*/
+}*/
 
 void CEngineGUI::SelectMode(CDisplayMode &dm, GfxAPIType &gat) {
   // stupid way to change resources, but it must be done
@@ -60,8 +54,7 @@ void CEngineGUI::SelectMode(CDisplayMode &dm, GfxAPIType &gat) {
   }
 }
 
-CTFileName CEngineGUI::CreateTexture(CTFileName fnTexFileToRecreate /*=CTString("")*/,
-                                     CDynamicArray<CTFileName> *pafnCreatedTextures /*=NULL*/) {
+CTFileName CEngineGUI::CreateTexture(CTFileName fnTexFileToRecreate, CDynamicArray<CTFileName> *pafnCreatedTextures) {
   CTFileName fnResult;
 
   // stupid way to change resources, but it must be done

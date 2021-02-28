@@ -13,10 +13,10 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
-#include "stdh.h"
+#include "StdH.h"
 #include <Engine/Templates/Stock_CTextureData.h>
 
-// thumbnail window
+// Thumbnail window
 static CWnd _wndThumbnail;
 CDrawPort *_pDrawPort = NULL;
 CViewPort *_pViewPort = NULL;
@@ -51,12 +51,14 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
       POINT pointThumbnail;
       pointThumbnail.x = 0;
       pointThumbnail.y = 0;
+
       ClientToScreen(hdlg, &pointParent);
       ClientToScreen(hwnd, &pointThumbnail);
 
       POINT point;
       point.x = pointThumbnail.x - pointParent.x;
       point.y = pointThumbnail.y - pointParent.y;
+
       OffsetRect(&rect, point.x, point.y);
 
       if (!bSuccess) {
@@ -69,9 +71,8 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
 
       // try to create thumbnail window
       _wndThumbnail.Create(NULL, NULL, WS_BORDER | WS_VISIBLE, rect, CWnd::FromHandle(hdlg), IDW_FILE_THUMBNAIL);
-      /*_wndThumbnail.Create( NULL, NULL, WS_BORDER|WS_VISIBLE,
-                            CRect( pixLeft, pixTop, pixLeft+128, pixTop+128),
-                            CWnd::FromHandle(hdlg), IDW_FILE_THUMBNAIL);*/
+      /*_wndThumbnail.Create(NULL, NULL, WS_BORDER|WS_VISIBLE, CRect(pixLeft, pixTop, pixLeft + 128, pixTop + 128),
+                           CWnd::FromHandle(hdlg), IDW_FILE_THUMBNAIL);*/
 
       // initialize canvas for thumbnail window
       _pGfx->CreateWindowCanvas(_wndThumbnail.m_hWnd, &_pViewPort, &_pDrawPort);
@@ -86,7 +87,6 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
     // if multi select was turned on
     fnSelectedFileFullPath = CTString(strSelectedFullPath);
 
-    // try to
     try {
       // remove application path
       fnSelectedFileFullPath.RemoveApplicationPath_t();
@@ -133,6 +133,7 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
 
         // clear texture area to black
         _pDrawPort->Fill(C_BLACK | CT_OPAQUE);
+
         // erase z-buffer
         _pDrawPort->FillZBuffer(ZBUF_BACK);
 
@@ -143,6 +144,7 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
           _pDrawPort->PutTexture(&toPreview, rectPict);
 
           CWnd::FromHandle(GetDlgItem(hdlg, IDC_THUMBNAIL_DESCRIPTION))->SetWindowText(CString(pTextureData->GetDescription()));
+
           // release the texture
           _pTextureStock->Release(pTextureData);
 
@@ -171,13 +173,13 @@ UINT APIENTRY FileOpenRequesterHook(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM
       }
     }
   }
+
   return 0;
 }
 
-CTFileName CEngineGUI::FileRequester(char *pchrTitle /*="Choose file"*/, char *pchrFilters /*=FILTER_ALL FILTER_END*/,
-                                     char *pchrRegistry /*="KEY_NAME_REQUEST_FILE_DIR"*/, CTString strDefaultDir /*=""*/,
-                                     CTString strFileSelectedByDefault /*=""*/,
-                                     CDynamicArray<CTFileName> *pafnSelectedFiles /*=NULL*/, BOOL bIfOpen /*=TRUE*/) {
+CTFileName CEngineGUI::FileRequester(char *pchrTitle, char *pchrFilters, char *pchrRegistry,
+                                     CTString strDefaultDir, CTString strFileSelectedByDefault,
+                                     CDynamicArray<CTFileName> *pafnSelectedFiles, BOOL bIfOpen) {
   _pDrawPort = NULL;
   _pViewPort = NULL;
 
@@ -201,12 +203,14 @@ CTFileName CEngineGUI::FileRequester(char *pchrTitle /*="Choose file"*/, char *p
   ofnRequestFiles.nMaxFile = 2048;
 
   CString strRequestInDirectory = _fnmApplicationPath + strDefaultDir;
+
   if (pchrRegistry != NULL) {
     strRequestInDirectory = AfxGetApp()->GetProfileString(L"Scape", CString(pchrRegistry), CString(_fnmApplicationPath + strDefaultDir));
   }
 
   // if directory is not inside engine dir
   CTString strTest = CStringA(strRequestInDirectory);
+
   if (!strTest.RemovePrefix(_fnmApplicationPath)) {
     // force it there
     strRequestInDirectory = _fnmApplicationPath;
@@ -322,7 +326,6 @@ ENGINEGUI_API CTFileName FileRequester(char *pchrTitle, char *pchrFilters, char 
   return _EngineGUI.FileRequester(pchrTitle, pchrFilters, pchrRegistry, "", pchrFileSelectedByDefault);
 }
 
-CTFileName CEngineGUI::BrowseTexture(CTFileName fnDefaultSelected /*=""*/, char *pchrIniKeyName /*=KEY_NAME_REQUEST_FILE_DIR*/,
-                                     char *pchrWindowTitle /*="Choose texture"*/, BOOL bIfOpen /*=TRUE*/) {
+CTFileName CEngineGUI::BrowseTexture(CTFileName fnDefaultSelected, char *pchrIniKeyName, char *pchrWindowTitle, BOOL bIfOpen) {
   return FileRequester(pchrWindowTitle, FILTER_TEX FILTER_END, pchrIniKeyName, "Textures\\", fnDefaultSelected, NULL, bIfOpen);
 }

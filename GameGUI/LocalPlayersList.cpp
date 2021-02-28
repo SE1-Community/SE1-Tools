@@ -25,10 +25,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CLocalPlayersList
-
+// Constructor
 CLocalPlayersList::CLocalPlayersList() {}
 
+// Destructor
 CLocalPlayersList::~CLocalPlayersList() {}
 
 BEGIN_MESSAGE_MAP(CLocalPlayersList, CCheckListBox)

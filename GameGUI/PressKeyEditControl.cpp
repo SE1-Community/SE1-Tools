@@ -25,10 +25,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CPressKeyEditControl
-
+// Constructor
 CPressKeyEditControl::CPressKeyEditControl() {}
 
+// Destructor
 CPressKeyEditControl::~CPressKeyEditControl() {}
 
 BEGIN_MESSAGE_MAP(CPressKeyEditControl, CEdit)

@@ -18,3 +18,7 @@ License
 -------
 
 Serious Engine is licensed under the GNU GPL v2 (see LICENSE file).
+
+Some of the code included with the engine sources is not licensed under the GNU GPL v2:
+
+* LightWave SDK (located in `LWSkaExporter/SDK`) by NewTek Inc.

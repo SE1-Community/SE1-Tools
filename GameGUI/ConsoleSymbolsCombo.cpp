@@ -25,10 +25,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// CConsoleSymbolsCombo
-
+// Constructor
 CConsoleSymbolsCombo::CConsoleSymbolsCombo() {}
 
+// Dstructor
 CConsoleSymbolsCombo::~CConsoleSymbolsCombo() {}
 
 BEGIN_MESSAGE_MAP(CConsoleSymbolsCombo, CComboBox)
@@ -47,6 +47,7 @@ BOOL CConsoleSymbolsCombo::PreTranslateMessage(MSG *pMsg) {
     if (iSelectedSymbol != LB_ERR) {
       CString strSelectedSymbolW;
       GetLBText(iSelectedSymbol, strSelectedSymbolW);
+
       CTString strSelectedSymbol = CStringA(strSelectedSymbolW);
 
       INDEX ctLetters = strlen(strSelectedSymbol);
