@@ -293,9 +293,9 @@ CModelerView::CModelerView() {
     m_iCurrentFrame = 0;
     m_LightColor = 0xBFBFBF00;
     m_plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f); // center
-    m_plLightPlacement.pl_OrientationAngle(1) = AngleDeg(45.0f);      // heading
-    m_plLightPlacement.pl_OrientationAngle(2) = AngleDeg(-45.0f);     // pitch
-    m_plLightPlacement.pl_OrientationAngle(3) = AngleDeg(0.0f);       // banking
+    m_plLightPlacement.pl_OrientationAngle(1) = 45.0f; // heading
+    m_plLightPlacement.pl_OrientationAngle(2) = -45.0f; // pitch
+    m_plLightPlacement.pl_OrientationAngle(3) = 0.0f; // banking
     m_RenderPrefs.SetRenderType(RT_TEXTURE);
     m_RenderPrefs.SetShadowQuality(0);
     m_offx = 0;
@@ -310,7 +310,7 @@ CModelerView::CModelerView() {
     m_fFOW = theApp.m_Preferences.ap_fDefaultFOW;
 
     m_plModelPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f);
-    m_plModelPlacement.pl_OrientationAngle = ANGLE3D(AngleDeg(fHeading), AngleDeg(fPitch), AngleDeg(fBanking));
+    m_plModelPlacement.pl_OrientationAngle = ANGLE3D(fHeading, fPitch, fBanking);
     m_ShowAllSurfaces = TRUE;
   }
 
@@ -342,7 +342,7 @@ void CModelerView::ResetViewerPosition(void) {
   // set initial target distance
   m_fTargetDistance = fModelInitialDistance;
   // set default orientation
-  m_angViewerOrientation = ANGLE3D(AngleDeg(-10.0f), AngleDeg(-30.0f), 0);
+  m_angViewerOrientation = ANGLE3D(-10.0f, -30.0f, 0);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -373,7 +373,7 @@ BOOL CModelerView::AssureValidTDI() {
 // CModelerView drawing
 
 void CModelerView::SetProjectionData(CPerspectiveProjection3D &prProjection, CDrawPort *pDP) {
-  prProjection.FOVL() = AngleDeg(m_fFOW);
+  prProjection.FOVL() = m_fFOW;
   prProjection.ScreenBBoxL() = FLOATaabbox2D(FLOAT2D(0.0f, 0.0f), FLOAT2D((float)pDP->GetWidth(), (float)pDP->GetHeight()));
   prProjection.AspectRatioL() = 1.0f;
   prProjection.FrontClipDistanceL() = 0.05f;
@@ -1147,11 +1147,11 @@ void CModelerView::OnMouseMove(UINT nFlags, CPoint point) {
   FLOAT dy = 0.001f * offset.y * fDistance;
   FLOAT dz = 0.01f * offset.y * fDistance;
   // angles need lot for rotation
-  ANGLE dAngleX = AngleDeg(-0.5f * offset.x);
-  ANGLE dAngleY = AngleDeg(-0.5f * offset.y);
+  ANGLE dAngleX = -0.5f * offset.x;
+  ANGLE dAngleY = -0.5f * offset.y;
   /*
-  ANGLE dAngleX = AngleDeg( 0.5f * offset.x * fDistance);
-  ANGLE dAngleY = AngleDeg( 0.5f * offset.y * fDistance);
+  ANGLE dAngleX = 0.5f * offset.x * fDistance;
+  ANGLE dAngleY = 0.5f * offset.y * fDistance;
   */
 
   switch (m_InputAction) {
@@ -1698,7 +1698,7 @@ void CModelerView::OnIdle(void) {
     TICK llTimeNow = _pTimer->GetTimeTick();
     TICK llDelta = (llTimeNow - m_llLastTick);
 
-    m_plModelPlacement.pl_OrientationAngle(1) -= AngleDeg(CTimer::InSeconds(160) * llDelta);
+    m_plModelPlacement.pl_OrientationAngle(1) -= CTimer::InSeconds(160) * llDelta;
     theApp.m_chPlacement.MarkChanged();
     m_llLastTick = llTimeNow;
   }
@@ -1709,8 +1709,8 @@ void CModelerView::OnIdle(void) {
 
   if (m_bDollyViewer) {
     m_fTargetDistance += (FLOAT)sin(fTimeVar1) / 10;
-    m_angViewerOrientation(1) += AngleDeg(10.0f);
-    m_angViewerOrientation(2) = AngleDeg(DegAngle(m_angViewerOrientation(2)) + (FLOAT)sin(fTimeVar1) / 2.0f);
+    m_angViewerOrientation(1) += 10.0f;
+    m_angViewerOrientation(2) = DegAngle(m_angViewerOrientation(2)) + (FLOAT)sin(fTimeVar1) / 2.0f;
     theApp.m_chPlacement.MarkChanged();
   }
 
@@ -1730,9 +1730,8 @@ void CModelerView::OnIdle(void) {
   }
 
   if (m_bDollyLight) {
-    m_plLightPlacement.pl_OrientationAngle(1) += AngleDeg(6.0f);
-    m_plLightPlacement.pl_OrientationAngle(2)
-      = AngleDeg(DegAngle(m_plLightPlacement.pl_OrientationAngle(2)) + (FLOAT)sin(fTimeVar3) * 4.0f);
+    m_plLightPlacement.pl_OrientationAngle(1) += 6.0f;
+    m_plLightPlacement.pl_OrientationAngle(2) = DegAngle(m_plLightPlacement.pl_OrientationAngle(2)) + (FLOAT)sin(fTimeVar3) * 4.0f;
     theApp.m_chPlacement.MarkChanged();
   }
 
@@ -2556,7 +2555,7 @@ void CModelerView::OnFallDown() {
     FLOAT fHeading = theApp.m_Preferences.ap_fDefaultHeading;
     FLOAT fPitch = theApp.m_Preferences.ap_fDefaultPitch;
     FLOAT fBanking = theApp.m_Preferences.ap_fDefaultBanking;
-    m_plModelPlacement.pl_OrientationAngle = ANGLE3D(AngleDeg(fHeading), AngleDeg(fPitch), AngleDeg(fBanking));
+    m_plModelPlacement.pl_OrientationAngle = ANGLE3D(fHeading, fPitch, fBanking);
   }
   theApp.m_chGlobal.MarkChanged();
 }
@@ -2693,17 +2692,17 @@ void CModelerView::OnUpdateFrameRate(CCmdUI *pCmdUI) {
 }
 
 void CModelerView::OnHeading() {
-  m_plModelPlacement.pl_OrientationAngle(1) += AngleDeg(90.0f);
+  m_plModelPlacement.pl_OrientationAngle(1) += 90.0f;
   theApp.m_chGlobal.MarkChanged();
 }
 
 void CModelerView::OnPitch() {
-  m_plModelPlacement.pl_OrientationAngle(2) += AngleDeg(90.0f);
+  m_plModelPlacement.pl_OrientationAngle(2) += 90.0f;
   theApp.m_chGlobal.MarkChanged();
 }
 
 void CModelerView::OnBanking() {
-  m_plModelPlacement.pl_OrientationAngle(3) += AngleDeg(90.0f);
+  m_plModelPlacement.pl_OrientationAngle(3) += 90.0f;
   theApp.m_chGlobal.MarkChanged();
 }
 

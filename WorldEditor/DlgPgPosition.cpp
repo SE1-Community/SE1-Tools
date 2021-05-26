@@ -109,9 +109,9 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX) {
     // is CSG on?
     if (pDoc->m_pwoSecondLayer != NULL) {
       // yes, copy coordinates from editting controls into second layer
-      pDoc->m_plSecondLayer.pl_OrientationAngle(1) = AngleDeg(m_fHeading);
-      pDoc->m_plSecondLayer.pl_OrientationAngle(2) = AngleDeg(m_fPitch);
-      pDoc->m_plSecondLayer.pl_OrientationAngle(3) = AngleDeg(m_fBanking);
+      pDoc->m_plSecondLayer.pl_OrientationAngle(1) = m_fHeading;
+      pDoc->m_plSecondLayer.pl_OrientationAngle(2) = m_fPitch;
+      pDoc->m_plSecondLayer.pl_OrientationAngle(3) = m_fBanking;
       pDoc->m_plSecondLayer.pl_PositionVector(1) = m_fX;
       pDoc->m_plSecondLayer.pl_PositionVector(2) = m_fY;
       pDoc->m_plSecondLayer.pl_PositionVector(3) = m_fZ;
@@ -137,9 +137,9 @@ void CDlgPgPosition::DoDataExchange(CDataExchange* pDX) {
 
       // get placement of first entity
       CPlacement3D plEntityOnePlacement = penEntityOne->GetPlacement();
-      plEntityOnePlacement.pl_OrientationAngle(1) = AngleDeg(m_fHeading);
-      plEntityOnePlacement.pl_OrientationAngle(2) = AngleDeg(m_fPitch);
-      plEntityOnePlacement.pl_OrientationAngle(3) = AngleDeg(m_fBanking);
+      plEntityOnePlacement.pl_OrientationAngle(1) = m_fHeading;
+      plEntityOnePlacement.pl_OrientationAngle(2) = m_fPitch;
+      plEntityOnePlacement.pl_OrientationAngle(3) = m_fBanking;
 
       plEntityOnePlacement.pl_PositionVector(1) = m_fX;
       plEntityOnePlacement.pl_PositionVector(2) = m_fY;

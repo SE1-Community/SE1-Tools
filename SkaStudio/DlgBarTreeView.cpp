@@ -24,8 +24,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "MainFrm.h"
 #include "ChildFrm.h"
 #include "DlgTemplate.h"
-#include <Engine\Base\Stream.h>
-#include <Engine\Ska\Skeleton.h>
+#include <Engine/Base/Stream.h>
+#include <Engine/Ska/Skeleton.h>
 
 #ifdef _DEBUG
 #undef new

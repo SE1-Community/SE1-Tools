@@ -82,15 +82,15 @@ void CDlgInfoPgPos::DoDataExchange(CDataExchange *pDX) {
   //}}AFX_DATA_MAP
 
   if (pDX->m_bSaveAndValidate) {
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(1) = AngleDeg((FLOAT)m_fHeading);
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(2) = AngleDeg((FLOAT)m_fPitch);
-    pModelerView->m_plModelPlacement.pl_OrientationAngle(3) = AngleDeg((FLOAT)m_fBanking);
-    pModelerView->m_plModelPlacement.pl_PositionVector(1) = (FLOAT)m_fX;
-    pModelerView->m_plModelPlacement.pl_PositionVector(2) = (FLOAT)m_fY;
-    pModelerView->m_plModelPlacement.pl_PositionVector(3) = -(FLOAT)m_fZ;
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(1) = m_fHeading;
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(2) = m_fPitch;
+    pModelerView->m_plModelPlacement.pl_OrientationAngle(3) = m_fBanking;
+    pModelerView->m_plModelPlacement.pl_PositionVector(1) = m_fX;
+    pModelerView->m_plModelPlacement.pl_PositionVector(2) = m_fY;
+    pModelerView->m_plModelPlacement.pl_PositionVector(3) = -m_fZ;
     pModelerView->m_LightDistance = m_fLightDist;
     pModelerView->m_fFOW = m_fFOW;
-    pModelerView->m_plModelPlacement.pl_PositionVector(3) = -(FLOAT)m_fZ;
+    pModelerView->m_plModelPlacement.pl_PositionVector(3) = -m_fZ;
     pModelerView->Invalidate(FALSE);
   }
 }

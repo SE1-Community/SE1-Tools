@@ -30,7 +30,7 @@ extern FLOAT wed_fFrontClipDistance;
 CMasterViewer::CMasterViewer(void) {
   // set initial viewer variables, viewing tovards origin from ten meters distance
   mv_plViewer.pl_PositionVector = FLOAT3D(3.0f, 4.0f, 10.0f);
-  mv_plViewer.pl_OrientationAngle = ANGLE3D(AngleDeg(20.0f), AngleDeg(-20.0f), 0);
+  mv_plViewer.pl_OrientationAngle = ANGLE3D(20.0f, -20.0f, 0.0f);
   mv_fTargetDistance = 10.0f; // this must never be very small!
 }
 
@@ -123,7 +123,7 @@ FLOAT CSlaveViewer::GetZoomFactor(void) {
   // calculate the zoom factor that as ratio of size in pixels and size in meters
   // for target object
   FLOAT fScreenX = (float)sv_pdpDrawPort->GetWidth();
-  ANGLE aHalfI = AngleDeg(90.0f) / 2; // assume FOV of 90 degrees for perspective
+  ANGLE aHalfI = 90.0f / 2.0f; // assume FOV of 90 degrees for perspective
   FLOAT fPerspectiveRatio = fScreenX / (2.0f * Tan(aHalfI));
   FLOAT fZoomFactor = fPerspectiveRatio / sv_fTargetDistance;
   ASSERT(fZoomFactor > 0);
@@ -137,7 +137,7 @@ FLOAT CSlaveViewer::GetDistanceForZoom(FLOAT fZoom) {
   // calculate the zoom factor that as ratio of size in pixels and size in meters
   // for target object
   FLOAT fScreenX = (float)sv_pdpDrawPort->GetWidth();
-  ANGLE aHalfI = AngleDeg(90.0f) / 2; // assume FOV of 90 degrees for perspective
+  ANGLE aHalfI = 90.0f / 2.0f; // assume FOV of 90 degrees for perspective
   FLOAT fPerspectiveRatio = fScreenX / (2.0f * Tan(aHalfI));
   FLOAT fDistance = fPerspectiveRatio / fZoom;
   ASSERT(fDistance > 0);
@@ -208,7 +208,7 @@ void CSlaveViewer::MakePerspectiveProjection(CPerspectiveProjection3D &prPerspec
   ASSERT(IsPerspective());
 
   // init projection parameters
-  prPerspectiveProjection.FOVL() = AngleDeg(90.0f);
+  prPerspectiveProjection.FOVL() = 90.0f;
   prPerspectiveProjection.ScreenBBoxL()
     = FLOATaabbox2D(FLOAT2D(0.0f, 0.0f), FLOAT2D((float)sv_pdpDrawPort->GetWidth(), (float)sv_pdpDrawPort->GetHeight()));
   wed_fFrontClipDistance = Clamp(wed_fFrontClipDistance, 0.02f, 2.00f);
@@ -313,7 +313,7 @@ void CSlaveViewer::Rotate_HPB(PIX pixDI, PIX pixDJ, PIX pixDK) {
     // project viewer placement to the target placement
     sv_plViewer.AbsoluteToRelative(plTarget);
     // rotate the target
-    plTarget.Rotate_HPB(ANGLE3D(AngleDeg((FLOAT)-pixDI), AngleDeg((FLOAT)-pixDJ), AngleDeg((FLOAT)-pixDK)));
+    plTarget.Rotate_HPB(ANGLE3D((FLOAT)-pixDI, (FLOAT)-pixDJ, (FLOAT)-pixDK));
     // project viewer placement back from the target placement
     sv_plViewer.RelativeToAbsolute(plTarget);
   }
@@ -330,7 +330,7 @@ void CSlaveViewer::Rotate_Local_HPB(FLOAT fdX, FLOAT fdY, FLOAT fdZ) {
   // if is perspective
   if (IsPerspective()) {
     // rotate the viewer
-    sv_plViewer.Rotate_HPB(ANGLE3D(AngleDeg(-fdX), AngleDeg(-fdY), AngleDeg(-fdZ)));
+    sv_plViewer.Rotate_HPB(ANGLE3D(-fdX, -fdY, -fdZ));
   }
   // if is isometric
   else {
@@ -378,7 +378,7 @@ void CSlaveViewer::RotatePlacement_HPB(CPlacement3D &plToRotate, PIX pixDI, PIX 
   // project the placement to the viewer's system
   plToRotate.AbsoluteToRelative(sv_plViewer);
   // rotate it
-  plToRotate.Rotate_HPB(ANGLE3D(AngleDeg((FLOAT)-pixDI), AngleDeg((FLOAT)-pixDJ), AngleDeg((FLOAT)-pixDK)));
+  plToRotate.Rotate_HPB(ANGLE3D((FLOAT)-pixDI, (FLOAT)-pixDJ, (FLOAT)-pixDK));
   // project the placement back from viewer's system
   plToRotate.RelativeToAbsolute(sv_plViewer);
 }
@@ -390,7 +390,7 @@ void CSlaveViewer::RotatePlacement_TrackBall(CPlacement3D &plToRotate, PIX pixDI
     // project the placement to the viewer's system
     plToRotate.AbsoluteToRelative(sv_plViewer);
     // rotate it
-    plToRotate.Rotate_TrackBall(ANGLE3D(AngleDeg((FLOAT)-pixDI), AngleDeg((FLOAT)-pixDJ), AngleDeg((FLOAT)-pixDK)));
+    plToRotate.Rotate_TrackBall(ANGLE3D((FLOAT)-pixDI, (FLOAT)-pixDJ, (FLOAT)-pixDK));
     // project the placement back from viewer's system
     plToRotate.RelativeToAbsolute(sv_plViewer);
 
@@ -399,7 +399,7 @@ void CSlaveViewer::RotatePlacement_TrackBall(CPlacement3D &plToRotate, PIX pixDI
     // project the placement to the viewer's system
     plToRotate.AbsoluteToRelative(sv_plViewer);
     // rotate it only around banking axis
-    plToRotate.Rotate_TrackBall(ANGLE3D(0, 0, AngleDeg((FLOAT)-pixDI)));
+    plToRotate.Rotate_TrackBall(ANGLE3D(0.0f, 0.0f, (FLOAT)-pixDI));
     // project the placement back from viewer's system
     plToRotate.RelativeToAbsolute(sv_plViewer);
   }

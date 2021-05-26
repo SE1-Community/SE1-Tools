@@ -1243,7 +1243,7 @@ void CWorldEditorDoc::ConvertObject3DToBrush(CObject3D &ob, BOOL bApplyProjected
       // create mapping to be stretched over the top of primitive
       FLOATplane3D plHorizontal(FLOAT3D(0.0f, 1.0f, 0.0f), 0);
       CMappingDefinitionUI mduiHorizontal;
-      mduiHorizontal.mdui_aURotation = mduiHorizontal.mdui_aVRotation = AngleDeg(90.0f);
+      mduiHorizontal.mdui_aURotation = mduiHorizontal.mdui_aVRotation = 90.0f;
       mduiHorizontal.mdui_fUStretch = FLOAT((xMax - xMin) / _fTextureWidth);
       mduiHorizontal.mdui_fVStretch = FLOAT((zMax - zMin) / _fTextureHeight);
       mduiHorizontal.mdui_fUOffset = FLOAT(xMin) / mduiHorizontal.mdui_fUStretch;
@@ -1410,7 +1410,7 @@ void CWorldEditorDoc::CreateTorusPrimitive(void) {
   INDEX iSlice = 0;
   for (; iSlice < iNoOfSlices + 1; iSlice++) {
     // create rotation matrix
-    ANGLE3D angSlice = ANGLE3D(0, 0, AngleDeg((360.0f / iSlicesIn360) * iSlice));
+    ANGLE3D angSlice = ANGLE3D(0.0f, 0.0f, 360.0f / iSlicesIn360 * iSlice);
     if (theApp.m_vfpCurrent.vfp_fRadius > 0.0f) {
       angSlice(3) = -angSlice(3);
     }
@@ -1504,11 +1504,11 @@ void CWorldEditorDoc::CreateStaircasesPrimitive(void) {
     ANGLE3D angRotation2;
 
     if (fRadius > 0.0f) {
-      angRotation1 = ANGLE3D(-AngleDeg(FLOAT((angle)*iStair + angleAdd)), 0, 0);
-      angRotation2 = ANGLE3D(-AngleDeg(FLOAT((angle) * (iStair + 1) + angleAdd)), 0, 0);
+      angRotation1 = ANGLE3D(-FLOAT((angle)*iStair + angleAdd), 0.0f, 0.0f);
+      angRotation2 = ANGLE3D(-FLOAT((angle) * (iStair + 1) + angleAdd), 0.0f, 0.0f);
     } else {
-      angRotation1 = ANGLE3D(AngleDeg(FLOAT((angle)*iStair + angleAdd)), 0, 0);
-      angRotation2 = ANGLE3D(AngleDeg(FLOAT((angle) * (iStair + 1) + angleAdd)), 0, 0);
+      angRotation1 = ANGLE3D(FLOAT((angle)*iStair + angleAdd), 0.0f, 0.0f);
+      angRotation2 = ANGLE3D(FLOAT((angle) * (iStair + 1) + angleAdd), 0.0f, 0.0f);
     }
 
     DOUBLEmatrix3D matrixRot1;
@@ -1716,7 +1716,7 @@ void CWorldEditorDoc::CreateSpherePrimitive(void) {
 
   // calculate bases
   DOUBLE3D **papvSlices = new DOUBLE3D *[iParalels + 1];
-  ANGLE angleSliceDelta = AngleDeg(180.0f) / iParalels;
+  ANGLE angleSliceDelta = 180.0f / iParalels;
   ANGLE angleSlice = -90.0f;
   // calculate all slices on sphere
   INDEX iSlice = 0;
@@ -1737,7 +1737,7 @@ void CWorldEditorDoc::CreateSpherePrimitive(void) {
 
     // array for vertices of this slice
     papvSlices[iSlice] = new DOUBLE3D[iMeridians];
-    ANGLE angle = AngleDeg(360.0f) / iMeridians;
+    ANGLE angle = 360.0f / iMeridians;
     ANGLE angleCt = 0;
     for (INDEX iVtx = 0; iVtx < iMeridians; iVtx++) {
       DOUBLE x = Cos(angleCt) * dA + (theApp.m_vfpCurrent.vfp_fXMin + theApp.m_vfpCurrent.vfp_fXMax) / 2.0f;

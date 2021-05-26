@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define SNAP_FLOAT_CM   0.015625f
 #define SNAP_FLOAT_12   0.125f
 #define SNAP_FLOAT_25   0.25f
-#define SNAP_ANGLE_GRID (AngleDeg(2.5f))
+#define SNAP_ANGLE_GRID (2.5f)
 
 #define POLYGON_MODE 1
 #define SECTOR_MODE  2

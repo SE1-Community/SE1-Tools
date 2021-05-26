@@ -214,7 +214,7 @@ void CDlgCreateSpecularTexture::DrawPreview(CDrawPort *pdp, FLOAT fExp) {
     m_plPlacement.pl_OrientationAngle = a3dObjectAngles;
     AnglesToDirectionVector(a3dLightAngles, rmRenderModel.rm_vLightDirection);
 
-    prPerspectiveProjection.FOVL() = AngleDeg(50.0f);
+    prPerspectiveProjection.FOVL() = 50.0f;
     prPerspectiveProjection.ScreenBBoxL()
       = FLOATaabbox2D(FLOAT2D(0.0f, 0.0f), FLOAT2D((float)pdp->GetWidth(), (float)pdp->GetHeight()));
     prPerspectiveProjection.AspectRatioL() = 1.0f;

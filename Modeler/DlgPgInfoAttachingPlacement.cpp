@@ -222,9 +222,9 @@ void CDlgPgInfoAttachingPlacement::DoDataExchange(CDataExchange *pDX) {
     pDoc->m_emEditModel.edm_aamAttachedModels.Lock();
 
     CPlacement3D plCurrent;
-    plCurrent.pl_OrientationAngle(1) = AngleDeg(m_fHeading);
-    plCurrent.pl_OrientationAngle(2) = AngleDeg(m_fPitch);
-    plCurrent.pl_OrientationAngle(3) = AngleDeg(m_fBanking);
+    plCurrent.pl_OrientationAngle(1) = m_fHeading;
+    plCurrent.pl_OrientationAngle(2) = m_fPitch;
+    plCurrent.pl_OrientationAngle(3) = m_fBanking;
     plCurrent.pl_PositionVector(1) = m_fXOffset;
     plCurrent.pl_PositionVector(2) = m_fYOffset;
     plCurrent.pl_PositionVector(3) = m_fZOffset;

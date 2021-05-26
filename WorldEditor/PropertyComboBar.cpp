@@ -385,10 +385,10 @@ void CPropertyComboBar::DoDataExchange(CDataExchange *pDX) {
             if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE3D) {
               // set new angle 3d
               ENTITYPROPERTY(&*iten, penpProperty->ep_slOffset, ANGLE3D)
-                = ANGLE3D(AngleDeg(m_fEditingHeading), AngleDeg(m_fEditingPitch), AngleDeg(m_fEditingBanking));
+                = ANGLE3D(m_fEditingHeading, m_fEditingPitch, m_fEditingBanking);
             } else if (ppidProperty->pid_eptType == CEntityProperty::EPT_ANGLE) {
               // set new angle
-              ENTITYPROPERTY(&*iten, penpProperty->ep_slOffset, FLOAT) = AngleDeg(m_fEditingFloat);
+              ENTITYPROPERTY(&*iten, penpProperty->ep_slOffset, FLOAT) = m_fEditingFloat;
             } else {
               // set new float or range
               ENTITYPROPERTY(&*iten, penpProperty->ep_slOffset, FLOAT) = m_fEditingFloat;

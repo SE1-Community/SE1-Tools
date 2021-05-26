@@ -131,9 +131,9 @@ CSeriousSkaStudioView::CSeriousSkaStudioView() {
   m_pvpViewPort = NULL;
   m_angModelAngle = ANGLE3D(0.0f, 0.0f, 0.0f);
   m_plLightPlacement.pl_PositionVector = FLOAT3D(0.0f, 0.0f, 0.0f); // center
-  m_plLightPlacement.pl_OrientationAngle(1) = AngleDeg(45.0f);      // heading
-  m_plLightPlacement.pl_OrientationAngle(2) = AngleDeg(-45.0f);     // pitch
-  m_plLightPlacement.pl_OrientationAngle(3) = AngleDeg(0.0f);       // banking
+  m_plLightPlacement.pl_OrientationAngle(1) = 45.0f; // heading
+  m_plLightPlacement.pl_OrientationAngle(2) = -45.0f; // pitch
+  m_plLightPlacement.pl_OrientationAngle(3) = 0.0f; // banking
   m_fLightDistance = 3.5f;
   OnResetView();
 }
@@ -141,7 +141,7 @@ CSeriousSkaStudioView::CSeriousSkaStudioView() {
 CSeriousSkaStudioView::~CSeriousSkaStudioView() {}
 
 void CSeriousSkaStudioView::SetProjectionData(CPerspectiveProjection3D &prProjection, CDrawPort *pDP) {
-  prProjection.FOVL() = AngleDeg(m_fFOV);
+  prProjection.FOVL() = m_fFOV;
   prProjection.ScreenBBoxL() = FLOATaabbox2D(FLOAT2D(0.0f, 0.0f), FLOAT2D((float)pDP->GetWidth(), (float)pDP->GetHeight()));
   prProjection.AspectRatioL() = 1.0f;
   prProjection.FrontClipDistanceL() = 0.05f;
@@ -635,8 +635,8 @@ void CSeriousSkaStudioView::OnMouseMove(UINT nFlags, CPoint point) {
   FLOAT dy = 0.001f * pntDelta.y * fDistance;
   FLOAT dz = 0.01f * pntDelta.y * fDistance;
   // angles need lot for rotation
-  ANGLE dAngleX = AngleDeg(-0.5f * pntDelta.x);
-  ANGLE dAngleY = AngleDeg(-0.5f * pntDelta.y);
+  ANGLE dAngleX = -0.5f * pntDelta.x;
+  ANGLE dAngleY = -0.5f * pntDelta.y;
 
   if (bSpace && bCtrl) {
     // if only space
