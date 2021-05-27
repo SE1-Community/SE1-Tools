@@ -1435,7 +1435,7 @@ void CValuesForPrimitive::CalculatePrimitiveBase(void) {
     fLenght = SNAP_FLOAT_12;
 
   // We calculate vertices as this is box-type primitive
-  // Step, ammount of angle ct increasement
+  // Step, amount of angle ct increase
   ANGLE angle = 360.0f / vtxCt;
   ANGLE angleCt = -angle / 2;
   // Radius of circle surrounding polygon if height of polygon's basic triangle is 1 m
