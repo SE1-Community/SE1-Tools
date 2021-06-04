@@ -18,7 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "StdH.h"
 #include "DlgCreateNormalTexture.h"
-#include <Engine/Templates/Stock_CTextureData.h>
+#include <Engine/Graphics/Texture.h>
 
 #ifdef _DEBUG
 #undef new

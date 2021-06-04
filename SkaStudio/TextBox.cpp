@@ -19,8 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "stdafx.h"
 #include "SkaStudio.h"
 #include "TextBox.h"
-#include <Engine/Templates/Stock_CMesh.h>
-#include <Engine/Templates/Stock_CSkeleton.h>
+#include <Engine/Sound/SoundData.h>
+#include <Engine/SKA/Skeleton.h>
 
 #ifdef _DEBUG
 #undef new

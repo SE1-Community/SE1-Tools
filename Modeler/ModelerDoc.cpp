@@ -17,10 +17,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 
 #include "stdafx.h"
-#include <Engine/Templates/Stock_CAnimData.h>
-#include <Engine/Templates/Stock_CTextureData.h>
-#include <Engine/Templates/Stock_CSoundData.h>
-#include <Engine/Templates/Stock_CModelData.h>
+#include <Engine/Anim/AnimData.h>
+#include <Engine/Graphics/Texture.h>
+#include <Engine/Sound/SoundData.h>
+#include <Engine/Models/ModelData.h>
 
 #include <Engine/Build.h>
 

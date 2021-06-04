@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "stdafx.h"
 #include "WorldEditor.h"
 #include "DlgLightAnimationEditor.h"
-#include <Engine/Templates/Stock_CAnimData.h>
+#include <Engine/Anim/AnimData.h>
 
 #ifdef _DEBUG
 #undef new

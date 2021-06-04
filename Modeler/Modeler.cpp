@@ -17,8 +17,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //
 
 #include "stdafx.h"
-#include <Engine/Templates/Stock_CModelData.h>
-#include <Engine/Templates/Stock_CTextureData.h>
+#include <Engine/Models/ModelData.h>
+#include <Engine/Graphics/Texture.h>
 
 #ifdef _DEBUG
 #undef new

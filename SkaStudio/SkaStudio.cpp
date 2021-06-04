@@ -26,10 +26,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <afxwin.h>
 
 #include <Engine/Ska/ModelInstance.h>
-#include <Engine/Templates/Stock_CMesh.h>
-#include <Engine/Templates/Stock_CSkeleton.h>
-#include <Engine/Templates/Stock_CAnimSet.h>
-#include <Engine/Templates/Stock_CTextureData.h>
+#include <Engine/Sound/SoundData.h>
+#include <Engine/SKA/Skeleton.h>
+#include <Engine/SKA/AnimSet.h>
+#include <Engine/Graphics/Texture.h>
 
 #ifdef _DEBUG
 #undef new

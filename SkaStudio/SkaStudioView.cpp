@@ -22,10 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "SkaStudioDoc.h"
 #include "SkaStudioView.h"
 
-#include <Engine/Templates/Stock_CMesh.h>
-#include <Engine/Templates/Stock_CSkeleton.h>
-#include <Engine/Templates/Stock_CAnimSet.h>
-#include <Engine/Templates/Stock_CTextureData.h>
+#include <Engine/Sound/SoundData.h>
+#include <Engine/SKA/Skeleton.h>
+#include <Engine/SKA/AnimSet.h>
+#include <Engine/Graphics/Texture.h>
 #include <Engine/Graphics/GfxLibrary.h>
 
 #include "MainFrm.h"

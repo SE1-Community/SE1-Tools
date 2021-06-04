@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "WorldEditor.h"
 #include <Engine/Base/Profiling.h>
 #include <Engine/Base/Statistics.h>
-#include <Engine/Templates/Stock_CTextureData.h>
+#include <Engine/Graphics/Texture.h>
 #include <Engine/Terrain/TerrainEditing.h>
 #include <Engine/Terrain/TerrainMisc.h>
 

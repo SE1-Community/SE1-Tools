@@ -19,8 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "stdafx.h"
 #include "WorldEditor.h"
 #include "DlgTipOfTheDay.h"
-#include <Engine/Templates/Stock_CTextureData.h>
-#include <Engine/Templates/Stock_CModelData.h>
+#include <Engine/Graphics/Texture.h>
+#include <Engine/Models/ModelData.h>
 
 #include <sys/stat.h>
 #include <sys/utime.h>
