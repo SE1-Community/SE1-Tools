@@ -35,9 +35,9 @@ static struct GameGUI_interface _Interface;
 void Initialize(const CTFileName &fnGameSettings) {
   try {
     #ifndef NDEBUG
-    #define GAMEDLL "Bin\\Debug\\GameD.dll"
+    #define GAMEDLL (_fnmApplicationExe.FileDir() + "GameD.dll")
     #else
-    #define GAMEDLL "Bin\\Game.dll"
+    #define GAMEDLL (_fnmApplicationExe.FileDir() + "Game.dll")
     #endif
 
     CTFileName fnmExpanded;
