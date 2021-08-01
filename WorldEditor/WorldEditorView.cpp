@@ -5010,21 +5010,69 @@ BOOL CWorldEditorView::OnSetCursor(CWnd *pWnd, UINT nHitTest, UINT message) {
 }
 
 void CWorldEditorView::OnTakeSs() {
-  // get draw port
-  CDrawPort *pdpValidDrawPort = GetDrawPort();
-  // if it is not valid
-  if (pdpValidDrawPort == NULL) {
+  // create high quality canvas for the screenshot
+  CDrawPort *pdpScreenshot;
+  _pGfx->CreateWorkCanvas(8192, 6144, &pdpScreenshot);
+
+  // no drawport has been created
+  if (pdpScreenshot == NULL) {
     return;
   }
+
+  // get child frame of the editor view
+  CChildFrame *pChild = GetChildFrame();
+
+  // screenshot info
   CImageInfo iiImageInfo;
-  // First remember current screen-shot in memory.
-  if (pdpValidDrawPort->Lock()) {
-    RenderView(pdpValidDrawPort);
-    pdpValidDrawPort->Unlock();
+
+  if (pdpScreenshot->Lock()) {
+    // remember old render settings
+    CViewPrefs vpOld = m_vpViewPrefs;
+    enum CSlaveViewer::ProjectionType ptOld = m_ptProjectionType;
+
+    // set render settings for the world
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetHiddenLinesOn(FALSE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetEditorModelsOn(FALSE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetFieldBrushesOn(FALSE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetBackgroundTextureOn(TRUE);
+
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetFogOn(TRUE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetHazeOn(TRUE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetMirrorsOn(TRUE);
+
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetVerticesFillType(CWorldRenderPrefs::FT_NONE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetEdgesFillType(CWorldRenderPrefs::FT_NONE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetPolygonsFillType(CWorldRenderPrefs::FT_TEXTURE);
+    m_vpViewPrefs.m_wrpWorldRenderPrefs.SetLensFlaresType(CWorldRenderPrefs::LFT_REFLECTIONS_AND_GLARE);
+
+    // set render settings for models
+    m_vpViewPrefs.m_mrpModelRenderPrefs.SetRenderType(RT_TEXTURE);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.SetShadingType(RT_SHADING_PHONG);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.SetShadowQuality(0);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.SetWire(FALSE);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.SetHiddenLines(FALSE);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.BBoxFrameShow(FALSE);
+    m_vpViewPrefs.m_mrpModelRenderPrefs.BBoxAllShow(FALSE);
+
+    // set projection type
+    m_ptProjectionType = CSlaveViewer::PT_PERSPECTIVE;
+
+    // render world
+    RenderView(pdpScreenshot);
+
+    // restore original settings
+    m_ptProjectionType = ptOld;
+    m_vpViewPrefs = vpOld;
+
+    pdpScreenshot->Unlock();
   }
 
-  // grab screen creating image info
-  pdpValidDrawPort->GrabScreen(iiImageInfo, 1);
+  // create screenshot info by grabbing the screen
+  pdpScreenshot->GrabScreen(iiImageInfo, 1);
+
+  // destroy screenshot canvas
+  _pGfx->DestroyWorkCanvas(pdpScreenshot);
+  pdpScreenshot = NULL;
 
   // ask for save screen shot name
   CTFileName fnDocName = CTString(CStringA(GetDocument()->GetPathName()));
